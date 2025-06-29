@@ -11955,6 +11955,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
               var st$tailLocal1$2$8___3 = st$tailLocal1$1___3;
               var st$tailLocal1$2$8___4 = st$tailLocal1$1___4;
               if ($x_8.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19, $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : ($n(v$lzy1$2$8), $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : $n(v$lzy1$2$8).initialize__O__O($as_sci_Map(st$tailLocal1$2$8___2))))))))) {
+                var self$2 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
                 var v$lzy1$2$9 = v$lzy1$1;
                 var st$tailLocal1$2$9___1 = st$tailLocal1$1___1;
                 var st$tailLocal1$2$9___2 = st$tailLocal1$1___2;
@@ -11962,10 +11963,11 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
                 var st$tailLocal1$2$9___4 = st$tailLocal1$1___4;
                 var _2$8 = $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : ($n(v$lzy1$2$9), $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : $n(v$lzy1$2$9).initialize__O__O($as_sci_Map(st$tailLocal1$2$9___2)))))));
                 var y$5 = new $c_T4(x20, _2$8, t$1, lp$1);
-                var value$2 = new $c_T2("if-true", y$5);
+                var value$2 = new $c_T2(self$2, y$5);
                 var this$87 = new $c_s_Some(value$2);
                 break;
               } else {
+                var self$3 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
                 var v$lzy1$2$10 = v$lzy1$1;
                 var st$tailLocal1$2$10___1 = st$tailLocal1$1___1;
                 var st$tailLocal1$2$10___2 = st$tailLocal1$1___2;
@@ -11973,7 +11975,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
                 var st$tailLocal1$2$10___4 = st$tailLocal1$1___4;
                 var _2$9 = $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : ($n(v$lzy1$2$10), $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : $n(v$lzy1$2$10).initialize__O__O($as_sci_Map(st$tailLocal1$2$10___2)))))));
                 var y$6 = new $c_T4(x21, _2$9, t$1, lp$1);
-                var value$3 = new $c_T2("if-false", y$6);
+                var value$3 = new $c_T2(self$3, y$6);
                 var this$87 = new $c_s_Some(value$3);
                 break;
               }
@@ -11991,7 +11993,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
               var st$tailLocal1$2$11___3 = st$tailLocal1$1___3;
               var st$tailLocal1$2$11___4 = st$tailLocal1$1___4;
               if ($x_9.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15, $as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : ($n(v$lzy1$2$11), $as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : $n(v$lzy1$2$11).initialize__O__O($as_sci_Map(st$tailLocal1$2$11___2))))))))) {
-                var self$2 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
+                var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
                 var _1$5 = new $c_Llince_syntax_Lince$Program$Seq(x16, x13);
                 var v$lzy1$2$12 = v$lzy1$1;
                 var st$tailLocal1$2$12___1 = st$tailLocal1$1___1;
@@ -12001,11 +12003,11 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
                 var _2$10 = $as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : ($n(v$lzy1$2$12), $as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : $n(v$lzy1$2$12).initialize__O__O($as_sci_Map(st$tailLocal1$2$12___2)))))));
                 var _4$2 = (((-1) + lp$1) | 0);
                 var y$7 = new $c_T4(_1$5, _2$10, t$1, _4$2);
-                var value$4 = new $c_T2(self$2, y$7);
+                var value$4 = new $c_T2(self$4, y$7);
                 var this$87 = new $c_s_Some(value$4);
                 break;
               } else {
-                var self$3 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
+                var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
                 var _1$6 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
                 var v$lzy1$2$13 = v$lzy1$1;
                 var st$tailLocal1$2$13___1 = st$tailLocal1$1___1;
@@ -12014,7 +12016,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
                 var st$tailLocal1$2$13___4 = st$tailLocal1$1___4;
                 var _2$11 = $as_sci_Map(($n(v$lzy1$2$13).sr_LazyRef__f__initialized ? $n(v$lzy1$2$13).sr_LazyRef__f__value : ($n(v$lzy1$2$13), $as_sci_Map(($n(v$lzy1$2$13).sr_LazyRef__f__initialized ? $n(v$lzy1$2$13).sr_LazyRef__f__value : $n(v$lzy1$2$13).initialize__O__O($as_sci_Map(st$tailLocal1$2$13___2)))))));
                 var y$8 = new $c_T4(_1$6, _2$11, t$1, lp$1);
-                var value$5 = new $c_T2(self$3, y$8);
+                var value$5 = new $c_T2(self$5, y$8);
                 var this$87 = new $c_s_Some(value$5);
                 break;
               }
@@ -12108,6 +12110,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
           var st$tailLocal1$2$17___3 = st$tailLocal1___3;
           var st$tailLocal1$2$17___4 = st$tailLocal1___4;
           if ($x_14.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19$1, $as_sci_Map(($n(v$lzy1$2$17).sr_LazyRef__f__initialized ? $n(v$lzy1$2$17).sr_LazyRef__f__value : ($n(v$lzy1$2$17), $as_sci_Map(($n(v$lzy1$2$17).sr_LazyRef__f__initialized ? $n(v$lzy1$2$17).sr_LazyRef__f__value : $n(v$lzy1$2$17).initialize__O__O($as_sci_Map(st$tailLocal1$2$17___2))))))))) {
+            var self$6 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
             var v$lzy1$2$18 = v$lzy1;
             var st$tailLocal1$2$18___1 = st$tailLocal1___1;
             var st$tailLocal1$2$18___2 = st$tailLocal1___2;
@@ -12115,10 +12118,11 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
             var st$tailLocal1$2$18___4 = st$tailLocal1___4;
             var _2$14 = $as_sci_Map(($n(v$lzy1$2$18).sr_LazyRef__f__initialized ? $n(v$lzy1$2$18).sr_LazyRef__f__value : ($n(v$lzy1$2$18), $as_sci_Map(($n(v$lzy1$2$18).sr_LazyRef__f__initialized ? $n(v$lzy1$2$18).sr_LazyRef__f__value : $n(v$lzy1$2$18).initialize__O__O($as_sci_Map(st$tailLocal1$2$18___2)))))));
             var y$12 = new $c_T4(x20$1, _2$14, t, lp);
-            var value$8 = new $c_T2("if-true", y$12);
+            var value$8 = new $c_T2(self$6, y$12);
             var x4 = new $c_s_Some(value$8);
             break;
           } else {
+            var self$7 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
             var v$lzy1$2$19 = v$lzy1;
             var st$tailLocal1$2$19___1 = st$tailLocal1___1;
             var st$tailLocal1$2$19___2 = st$tailLocal1___2;
@@ -12126,7 +12130,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
             var st$tailLocal1$2$19___4 = st$tailLocal1___4;
             var _2$15 = $as_sci_Map(($n(v$lzy1$2$19).sr_LazyRef__f__initialized ? $n(v$lzy1$2$19).sr_LazyRef__f__value : ($n(v$lzy1$2$19), $as_sci_Map(($n(v$lzy1$2$19).sr_LazyRef__f__initialized ? $n(v$lzy1$2$19).sr_LazyRef__f__value : $n(v$lzy1$2$19).initialize__O__O($as_sci_Map(st$tailLocal1$2$19___2)))))));
             var y$13 = new $c_T4(x21$1, _2$15, t, lp);
-            var value$9 = new $c_T2("if-false", y$13);
+            var value$9 = new $c_T2(self$7, y$13);
             var x4 = new $c_s_Some(value$9);
             break;
           }
@@ -12144,7 +12148,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
           var st$tailLocal1$2$20___3 = st$tailLocal1___3;
           var st$tailLocal1$2$20___4 = st$tailLocal1___4;
           if ($x_15.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15$1, $as_sci_Map(($n(v$lzy1$2$20).sr_LazyRef__f__initialized ? $n(v$lzy1$2$20).sr_LazyRef__f__value : ($n(v$lzy1$2$20), $as_sci_Map(($n(v$lzy1$2$20).sr_LazyRef__f__initialized ? $n(v$lzy1$2$20).sr_LazyRef__f__value : $n(v$lzy1$2$20).initialize__O__O($as_sci_Map(st$tailLocal1$2$20___2))))))))) {
-            var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
+            var self$8 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
             var _1$10 = new $c_Llince_syntax_Lince$Program$Seq(x16$1, x13$1);
             var v$lzy1$2$21 = v$lzy1;
             var st$tailLocal1$2$21___1 = st$tailLocal1___1;
@@ -12154,11 +12158,11 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
             var _2$16 = $as_sci_Map(($n(v$lzy1$2$21).sr_LazyRef__f__initialized ? $n(v$lzy1$2$21).sr_LazyRef__f__value : ($n(v$lzy1$2$21), $as_sci_Map(($n(v$lzy1$2$21).sr_LazyRef__f__initialized ? $n(v$lzy1$2$21).sr_LazyRef__f__value : $n(v$lzy1$2$21).initialize__O__O($as_sci_Map(st$tailLocal1$2$21___2)))))));
             var _4$3 = (((-1) + lp) | 0);
             var y$14 = new $c_T4(_1$10, _2$16, t, _4$3);
-            var value$10 = new $c_T2(self$4, y$14);
+            var value$10 = new $c_T2(self$8, y$14);
             var x4 = new $c_s_Some(value$10);
             break;
           } else {
-            var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
+            var self$9 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
             var _1$11 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
             var v$lzy1$2$22 = v$lzy1;
             var st$tailLocal1$2$22___1 = st$tailLocal1___1;
@@ -12167,7 +12171,7 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
             var st$tailLocal1$2$22___4 = st$tailLocal1___4;
             var _2$17 = $as_sci_Map(($n(v$lzy1$2$22).sr_LazyRef__f__initialized ? $n(v$lzy1$2$22).sr_LazyRef__f__value : ($n(v$lzy1$2$22), $as_sci_Map(($n(v$lzy1$2$22).sr_LazyRef__f__initialized ? $n(v$lzy1$2$22).sr_LazyRef__f__value : $n(v$lzy1$2$22).initialize__O__O($as_sci_Map(st$tailLocal1$2$22___2)))))));
             var y$15 = new $c_T4(_1$11, _2$17, t, lp);
-            var value$11 = new $c_T2(self$5, y$15);
+            var value$11 = new $c_T2(self$9, y$15);
             var x4 = new $c_s_Some(value$11);
             break;
           }
@@ -23333,6 +23337,7 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
           var st$tailLocal1$2$4___3 = st$tailLocal1$1___3;
           var st$tailLocal1$2$4___4 = st$tailLocal1$1___4;
           if ($x_6.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19, $as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : ($n(v$lzy1$2$4), $as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : $n(v$lzy1$2$4).initialize__O__O($as_sci_Map(st$tailLocal1$2$4___2))))))))) {
+            var self$2 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
             var v$lzy1$2$5 = v$lzy1$1;
             var st$tailLocal1$2$5___1 = st$tailLocal1$1___1;
             var st$tailLocal1$2$5___2 = st$tailLocal1$1___2;
@@ -23340,10 +23345,11 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
             var st$tailLocal1$2$5___4 = st$tailLocal1$1___4;
             var _2$6 = $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : ($n(v$lzy1$2$5), $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : $n(v$lzy1$2$5).initialize__O__O($as_sci_Map(st$tailLocal1$2$5___2)))))));
             var y$5 = new $c_T4(x20, _2$6, t$1, lp$1);
-            var value$2 = new $c_T2("if-true", y$5);
+            var value$2 = new $c_T2(self$2, y$5);
             var this$71 = new $c_s_Some(value$2);
             break;
           } else {
+            var self$3 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
             var v$lzy1$2$6 = v$lzy1$1;
             var st$tailLocal1$2$6___1 = st$tailLocal1$1___1;
             var st$tailLocal1$2$6___2 = st$tailLocal1$1___2;
@@ -23351,7 +23357,7 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
             var st$tailLocal1$2$6___4 = st$tailLocal1$1___4;
             var _2$7 = $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : ($n(v$lzy1$2$6), $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : $n(v$lzy1$2$6).initialize__O__O($as_sci_Map(st$tailLocal1$2$6___2)))))));
             var y$6 = new $c_T4(x21, _2$7, t$1, lp$1);
-            var value$3 = new $c_T2("if-false", y$6);
+            var value$3 = new $c_T2(self$3, y$6);
             var this$71 = new $c_s_Some(value$3);
             break;
           }
@@ -23369,7 +23375,7 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
           var st$tailLocal1$2$7___3 = st$tailLocal1$1___3;
           var st$tailLocal1$2$7___4 = st$tailLocal1$1___4;
           if ($x_7.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15, $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : ($n(v$lzy1$2$7), $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : $n(v$lzy1$2$7).initialize__O__O($as_sci_Map(st$tailLocal1$2$7___2))))))))) {
-            var self$2 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
+            var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
             var _1$3 = new $c_Llince_syntax_Lince$Program$Seq(x16, x13);
             var v$lzy1$2$8 = v$lzy1$1;
             var st$tailLocal1$2$8___1 = st$tailLocal1$1___1;
@@ -23379,11 +23385,11 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
             var _2$8 = $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : ($n(v$lzy1$2$8), $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : $n(v$lzy1$2$8).initialize__O__O($as_sci_Map(st$tailLocal1$2$8___2)))))));
             var _4 = (((-1) + lp$1) | 0);
             var y$7 = new $c_T4(_1$3, _2$8, t$1, _4);
-            var value$4 = new $c_T2(self$2, y$7);
+            var value$4 = new $c_T2(self$4, y$7);
             var this$71 = new $c_s_Some(value$4);
             break;
           } else {
-            var self$3 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
+            var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
             var _1$4 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
             var v$lzy1$2$9 = v$lzy1$1;
             var st$tailLocal1$2$9___1 = st$tailLocal1$1___1;
@@ -23392,7 +23398,7 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
             var st$tailLocal1$2$9___4 = st$tailLocal1$1___4;
             var _2$9 = $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : ($n(v$lzy1$2$9), $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : $n(v$lzy1$2$9).initialize__O__O($as_sci_Map(st$tailLocal1$2$9___2)))))));
             var y$8 = new $c_T4(_1$4, _2$9, t$1, lp$1);
-            var value$5 = new $c_T2(self$3, y$8);
+            var value$5 = new $c_T2(self$5, y$8);
             var this$71 = new $c_s_Some(value$5);
             break;
           }
@@ -23478,14 +23484,16 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
       var this$79 = $n(x$1$8);
       var x21$1 = this$79.Llince_syntax_Lince$Program$ITE__f_pf;
       if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19$1, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1))) {
+        var self$6 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
         var _2$12 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$12 = new $c_T4(x20$1, _2$12, t, lp);
-        var value$8 = new $c_T2("if-true", y$12);
+        var value$8 = new $c_T2(self$6, y$12);
         return new $c_s_Some(value$8);
       } else {
+        var self$7 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
         var _2$13 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$13 = new $c_T4(x21$1, _2$13, t, lp);
-        var value$9 = new $c_T2("if-false", y$13);
+        var value$9 = new $c_T2(self$7, y$13);
         return new $c_s_Some(value$9);
       }
     }
@@ -23496,19 +23504,19 @@ $c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
       var this$90 = $n(x13$1);
       var x16$1 = this$90.Llince_syntax_Lince$Program$While__f_p;
       if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15$1, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1))) {
-        var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
+        var self$8 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
         var _1$8 = new $c_Llince_syntax_Lince$Program$Seq(x16$1, x13$1);
         var _2$14 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
         var _4$1 = (((-1) + lp) | 0);
         var y$14 = new $c_T4(_1$8, _2$14, t, _4$1);
-        var value$10 = new $c_T2(self$4, y$14);
+        var value$10 = new $c_T2(self$8, y$14);
         return new $c_s_Some(value$10);
       } else {
-        var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
+        var self$9 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
         var _1$9 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
         var _2$15 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$15 = new $c_T4(_1$9, _2$15, t, lp);
-        var value$11 = new $c_T2(self$5, y$15);
+        var value$11 = new $c_T2(self$9, y$15);
         return new $c_s_Some(value$11);
       }
     }
@@ -23617,12 +23625,12 @@ function $c_Llince_frontend_CaosConfig$() {
   var name$3 = $as_T(nameCode$3.T2__f__1);
   this.Llince_frontend_CaosConfig$__f_examples = new $c_sci_$colon$colon($x_3, new $c_sci_$colon$colon($x_2, new $c_sci_$colon$colon($x_1, new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example(example$3, name$3, ""), $m_sci_Nil$()))));
   var y = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => $dp_toString__T($n(_$1)))), $m_Lcaos_view_Text$())));
-  var $x_7 = new $c_T2("View parsed", y);
+  var $x_6 = new $c_T2("View parsed", y);
   var y$1 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p) => {
     var p$1 = $as_Llince_syntax_Lince$Program(p);
     return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Program__T(p$1);
   })), $m_Lcaos_view_Text$());
-  var $x_6 = new $c_T2("View pretty", y$1);
+  var $x_5 = new $c_T2("View pretty", y$1);
   var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().steps__F1__Lcaos_sos_SOS__F1__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$2) => {
     var p$3 = $as_Llince_syntax_Lince$Program(p$2);
     var this$23 = $m_sci_Map$();
@@ -23637,31 +23645,23 @@ function $c_Llince_frontend_CaosConfig$() {
     var this$25 = $n(_$2$1);
     return this$25;
   })), $m_Lcaos_view_Text$())));
-  var $x_5 = new $c_T2("Run semantics", y$2);
+  var $x_4 = new $c_T2("Run semantics", y$2);
   var y$3 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$3$1) => {
     var p$4 = $as_Llince_syntax_Lince$Program(p$3$1);
-    var $x_4 = $m_Llince_backend_Plot$();
     var this$28 = $m_sci_Map$();
     var elems$1 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
     var _2$1 = this$28.from__sc_IterableOnce__sci_Map(elems$1);
-    return $x_4.apply__T4__T__s_Option__I__Z__T(new $c_T4(p$4, _2$1, 3.0, 100), "DIV", $m_s_None$(), 50, true);
+    var from$1 = new $c_T4(p$4, _2$1, 5.0, 100);
+    var range$1 = $m_s_None$();
+    return $m_Llince_backend_Plot$().apply__T4__T__s_Option__I__Z__T(from$1, "divName", range$1, 10, true);
   })), $m_Lcaos_view_Text$());
-  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_7, new $c_sci_$colon$colon($x_6, new $c_sci_$colon$colon($x_5, new $c_sci_$colon$colon(new $c_T2("View bounds", y$3), $m_sci_Nil$()))));
-  this.Llince_frontend_CaosConfig$__f_footer = $m_sc_StringOps$().stripMargin$extension__T__C__T("Simple animator of Lince 2.0, meant to exemplify the\n      | CAOS libraries, used to generate this website. Source code available online:\n      | <a target=\"_blank\" href=\"https://github.com/arcalab/CAOS\">\n      | https://github.com/arcalab/CAOS</a> (CAOS).", 124);
-  var sosRules = $m_sc_StringOps$().stripMargin$extension__T__C__T("The operational rules that we use to reduce programs are provided below.\n      | An extended version can also be found, for example, in the slides available at\n      | <a target=\"_blank\" href=\"https://lmf.di.uminho.pt/CyPhyComp2223/slides/2-behaviour.pdf#page=27\">\n      | https://lmf.di.uminho.pt/CyPhyComp2223/slides/2-behaviour.pdf#page=27</a>.\n      |\n      |<pre>\n      |  --------------------(act)\n      |  label.P --label--> P\n      |\n      |    P1 --label--> P'\n      |  --------------------(sum-1)\n      |  P1 + P2 --label-> P'\n      |\n      |    P2 --label--> P'\n      |  --------------------(sum-2)\n      |  P1 + P2 --label-> P'\n      |\n      |      P1 --label--> P'\n      |  -------------------------(com-1)\n      |  P1 | P2 --label-> P' | P2\n      |\n      |      P2 --label--> P'\n      |  -------------------------(com-2)\n      |  P1 | P2 --label-> P1 | P'\n      |</pre>", 124);
-  var $x_12 = $m_Lcaos_frontend_Configurator$();
+  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_6, new $c_sci_$colon$colon($x_5, new $c_sci_$colon$colon($x_4, new $c_sci_$colon$colon(new $c_T2("Plot debug: up to time 5, 10 samples ", y$3), $m_sci_Nil$()))));
+  this.Llince_frontend_CaosConfig$__f_footer = $m_sc_StringOps$().stripMargin$extension__T__C__T("Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.\n      | Source code available online:\n      | <a target=\"_blank\" href=\"https://github.com/arcalab/lince-2.0\">\n      | https://github.com/arcalab/lince-2.0</a>.", 124);
+  var $x_7 = $m_Lcaos_frontend_Configurator$();
   var self = this.Llince_frontend_CaosConfig$__f_languageName;
   var self$1 = new $c_T2(self, "More information on the syntax of Lince 2.0");
-  var y$4 = $m_sc_StringOps$().stripMargin$extension__T__C__T("A program <code>prog</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  prog ::= term\n        |         | \"let\" (ProcName \"=\" term \";\")* \"in\" term\n        |  term ::= 0\n        |         | ProcName\n        |         | LabelName\n        |         | LabelName \".\" term\n        |         | term \"+\" term\n        |         | term \"|\" term\n        |  compare ::= prog \"~\" prog\n        |</pre>\n        |\n        |In the input field you can either provide a program `prog` or a comparison of two programs `compare`.\n        |The latter is used to check if they are bisimilars, using the corresponding widget.\n        |\n        |The pseudo-terminal <code>ProcName</code> is a string that starts with an upper-case letter,\n        |<code>ActionName</code> is a string that starts with a lower-case letter, and\n        |<code>LabelName</code> is an <code>ActionName</code>.\n        |", 124);
-  var $x_11 = new $c_T2(self$1, y$4);
-  var self$2 = new $c_T2("Build LTS", "More information on the operational rules used here");
-  var $x_10 = new $c_T2(self$2, sosRules);
-  var self$3 = new $c_T2("Build LTS (explore)", "More information on the operational rules used here");
-  var $x_9 = new $c_T2(self$3, sosRules);
-  var self$4 = new $c_T2("Run semantics", "More information on the operational rules used here");
-  var $x_8 = new $c_T2(self$4, sosRules);
-  var self$5 = new $c_T2("Find strong bisimulation (given a program \"A ~ B\")", "More information on this widget");
-  this.Llince_frontend_CaosConfig$__f_documentation = $x_12.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon($x_11, new $c_sci_$colon$colon($x_10, new $c_sci_$colon$colon($x_9, new $c_sci_$colon$colon($x_8, new $c_sci_$colon$colon(new $c_T2(self$5, "<p>When the input consists of the comparison of 2 programs separated by <code>~</code>, this widget searches for a (strong) bisimulation between these 2 programs, providing either a concrete bisimulation or an explanation of where it failed.</p><p>When only a program is provided, it compares it against the empty process <code>0</code>.</p>"), $m_sci_Nil$()))))));
+  var y$4 = $m_sc_StringOps$().stripMargin$extension__T__C__T("A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b then p else p  |  while b {p}\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre>\n        |", 124);
+  this.Llince_frontend_CaosConfig$__f_documentation = $x_7.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon(new $c_T2(self$1, y$4), $m_sci_Nil$()));
 }
 $c_Llince_frontend_CaosConfig$.prototype = new $h_O();
 $c_Llince_frontend_CaosConfig$.prototype.constructor = $c_Llince_frontend_CaosConfig$;

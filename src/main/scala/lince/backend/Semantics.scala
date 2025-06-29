@@ -41,8 +41,8 @@ object Semantics extends SOS[String,St]:
         for (a,(p2,v2,t2,lp2)) <- step((p,v,t,lp))
           yield a -> (Seq(p2,q),v2,t2,lp2)
       case ITE(b, pt, pf) =>
-        if Eval(b) then Some("if-true"  -> (pt,v,t,lp))
-                   else Some("if-false" -> (pf,v,t,lp))
+        if Eval(b) then Some(s"if-true (${Show(b)})"  -> (pt,v,t,lp))
+                   else Some(s"if-false (${Show(b)})" -> (pf,v,t,lp))
       case wh@While(b, p) =>
         if Eval(b) then Some(s"wh-true (${Show(b)})"  -> (Seq(p,wh),v,t,lp-1))
                    else Some(s"wh-false (${Show(b)})" -> (Skip,v,t,lp))
