@@ -8,10 +8,10 @@ import lince.syntax.Lince.*
 object Show:
 
   def apply(p: Program): String = p match
-    case Program.Skip => "skip"
-    case Program.Assign(v, e) => s"$v:=${apply(e)};"
+    case Program.Skip => "skip; "
+    case Program.Assign(v, e) => s"$v:=${apply(e)}; "
     case Program.EqDiff(eqs, dur) =>
-      eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") + s" for ${apply(dur)}"
+      eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") + s" for ${apply(dur)}; "
     case Program.Seq(p, q) => apply(p)+"\n"+apply(q)
     case Program.ITE(b, pt, Program.Skip) => s"if ${apply(b)}:\n${ind(apply(pt))}"
     case Program.ITE(b, pt, pf) => s"if ${apply(b)}:\n${ind(apply(pt))}\nelse\n${ind(apply(pf))}"
@@ -39,3 +39,14 @@ object Show:
     case Cond.Or(c1, c2) => s"${apply(c1)} || ${apply(c2)}"
     case Cond.Not(c) => s"!(${apply(c)})"
   }
+
+  def simpleStatm(p: Program): String = p match {
+    case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))
+    case Program.Seq(Program.Skip, p2) => "skip;"+simpleStatm(p2)
+    case Program.Seq(p1, p2) => apply(p1)+"..."
+    case _ => apply(p)
+  }
+
+  def simpleSt(st: lince.backend.Semantics.St): String =
+    s"[${st._3}] ${st._2.mkString(",")}: ${simpleStatm(st._1)}"
+

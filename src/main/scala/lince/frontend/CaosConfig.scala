@@ -29,7 +29,9 @@ object CaosConfig extends Configurator[Program]:
     "View parsed" -> view(_.toString,Text).expand,
     "View pretty" -> view[Program](Show.apply,Text),
     "Run semantics" -> steps[Program,String,Semantics.St]
-      (p=>(p,Map(),10,100), Semantics, st=>s"[${st._4}] ${st._2.mkString(",")}", _.toString, Text).expand,
+      (p=>(p,Map(),3,100), Semantics, Show.simpleSt, _.toString, Text).expand,
+    "View bounds" -> view[Program](p=>Plot((p,Map(),3,100), "DIV"), Text),
+
 //    "View pretty data" -> view[System](Show.apply, Code("haskell")).moveTo(1),
 //    "View structure" -> view(Show.mermaid, Mermaid),
 //     "Run semantics" -> steps(e=>e, Semantics, Show.justTerm, _.toString, Text),
