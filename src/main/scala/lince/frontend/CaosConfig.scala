@@ -6,6 +6,7 @@ import caos.view.*
 import lince.backend.*
 import lince.syntax.Lince.Program
 import lince.syntax.{Lince, Show}
+import Semantics.St
 
 /** Object used to configure which analysis appear in the browser */
 object CaosConfig extends Configurator[Program]:
@@ -26,12 +27,14 @@ object CaosConfig extends Configurator[Program]:
 
   /** Description of the widgets that appear in the dashboard. */
   val widgets = List(
-    "View parsed" -> view(_.toString,Text).expand,
-    "View pretty" -> view[Program](Show.apply,Text),
-    "Run semantics" -> steps[Program,String,Semantics.St]
-      (p=>(p,Map(),3,100), Semantics, Show.simpleSt, _.toString, Text).expand,
+    "View parsed" -> view(_.toString,Text).moveTo(1),
+    "View pretty" -> view[Program](Show.apply,Code("clike")).moveTo(1),
+    "Run small-steps (3 time units)" -> steps[Program,String,St]
+      (p=>St(p,Map(),3,100), Semantics, Show.simpleSt, _.toString, Text).expand,
+    "Run all steps (3 time units)" -> lts[Program,String,St]
+      (p=>St(p,Map(),3,100), Semantics, Show.simpleSt, _.toString),
     "Plot debug: up to time 5, 10 samples "
-      -> view[Program](p=>Plot((p,Map(),5,100), "divName", samples = 10), Text),
+      -> view[Program](p=>Plot(St(p,Map(),5,100), "divName", samples = 10), Text),
   )
 
   //// Documentation below

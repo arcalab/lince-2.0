@@ -2,15 +2,33 @@ package lince.backend
 
 import lince.syntax.Lince.Program
 import lince.syntax.Show
+import Semantics.step
+
+import scala.annotation.tailrec
 
 object Plot:
 
-  // Type of intermediate structures
+  // Type of intermediate structures -- experimental
   private type Traces      = Map[String,TraceVar]
   private type TraceVar    = Map[Double,Either[Double,(Double,Double)]] // time -> 1 or 2 points (if boundary)
   private type Boundaries  = Map[String,BoundaryVar]
   private type BoundaryVar = Map[Either[Double,Double],(Double,String)] // left/right of a time t -> value and comment
   private type St = Semantics.St
+
+  /**
+   * Performs discrete steps until no more step can be taken
+   * @param st initial state
+   * @param hist history of actions taken
+   * @return Pair with the list of actions taken and the reached state
+   */
+  @tailrec
+  def discSteps(st: St, hist: List[String] = Nil): (List[String], St) =
+    step(st) match
+      case None => hist -> st // reached the end
+      case Some((a, st2)) =>
+        if st.t == st2.t then discSteps(st2, a :: hist)
+                         else (hist, st) //(a::hist) -> st2
+
 
   def apply(from:St, divName:String, range:Option[(Double,Double)]=None,
             samples:Int=50, hideCont:Boolean=true): String = {
@@ -20,15 +38,20 @@ object Plot:
     val mint: Double = range.map(_._1).getOrElse(0)
     val maxt: Double = range.map(_._2).getOrElse(from._3)
     // need a step size
-    val stepSize: Double = (maxt-mint)/samples
+    val stepSize: Double = (maxt - mint) / samples
     // alternate: discrete step (collect notes + starting), timed step (collect ending)
 
+
+    apply(from.copy(t = maxt), stepSize, mint)
+  }
+
+
+  def apply(from: St, stepSize: Double, timePassed:Double): String = {
     // state while traversing
-    var st = from.copy(_3 = maxt) // initial state
+    var st = from
+    var time = timePassed
     var done: Boolean = false // when to stop
-    var time = mint // time passed
-    var boundaries: Boundaries = Map()
-    var res = s"Starting at ${st._2} / ${st._3}\n"
+    var res = s"Starting at ${st.v} / ${st.t}\n"
 
     // 1: go to starting point
     // st... assuming starting at 0
@@ -36,26 +59,26 @@ object Plot:
 
     while(!done) {
       // Discrete steps
-      val (msgs,st2) = Semantics.nextDisc(st)
-      res += s">>> pre-prog: ${Show.simpleStatm(st._1)}\n"
+      val (msgs,st2) = discSteps(st)
+      res += s">>> pre-prog: ${Show.simpleStatm(st.p)}\n"
       st = st2
-      res += s"[$time] Disc to ${st._2}\n"
-      res += s">>> pos-prog: ${Show.simpleStatm(st._1)}\n"
+      res += s"[$time] Disc to ${st.v}\n"
+      res += s">>> pos-prog: ${Show.simpleStatm(st.p)}\n"
 //      boundaries ++= mkStart(msgs,st2,time,boundaries)
-      Semantics.step(st.copy(_3 = stepSize)) match
+      Semantics.step(st.copy(t = stepSize)) match
         case None =>
           res += s"[$time] Cont DONE\n"
           done = true
         case Some((a,st2)) =>
           // either stopped at final time or end of sub-traj
-          res += s"passed ${stepSize - st2._3} (started at ${stepSize}, ended at ${st2._3})\n"
-          time += stepSize - st2._3 // add time that passed
-          st = st2.copy(_3 = st._3-(stepSize-st2._3)) // take time that passed
+          res += s"passed ${stepSize - st2.t} (started at ${stepSize}, ended at ${st2.t})\n"
+          time += stepSize - st2.t // add time that passed
+          st = st2.copy(t = st.t-(stepSize-st2.t)) // take time that passed
           if Semantics.accepting(st) then {
             res += "accepting!!\n"
             done = true
           }
-          res += s"[$time] Cont to ${st._2}\n"
+          res += s"[$time] Cont to ${st.v}\n"
 
       //          boundaries ++= mkEnd(a,st2,time,boundaries)
     }
@@ -64,15 +87,16 @@ object Plot:
 //    s"Finished @ ${st}\nstep: $stepSize\ntime: $time\nwith\n${boundaries.mkString("\n")}"
   }
 
+  // not yet used - maybe not needed
   def mkStart(msgs:List[String],s:St,t:Double,bs:Boundaries): Boundaries =
-    for (v,n) <- s._2 yield {
+    for (v,n) <- s.v yield {
       // maybe filter msgs first
       val bv: BoundaryVar = Map((Left(t)) -> (n,msgs.mkString(",")))
       v -> (bs.getOrElse(v,Map()) ++ bv)
     }
 
   def mkEnd(a:String,s:St,t:Double,bs:Boundaries) =
-    for (v, n) <- s._2 yield {
+    for (v, n) <- s.v yield {
       // maybe filter msgs first
       val bv: BoundaryVar = Map((Right(t)) -> (n, ""))
       v -> (bs.getOrElse(v,Map()) ++ bv)

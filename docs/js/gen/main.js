@@ -1126,6 +1126,15 @@ $c_Lcaos_frontend_Configurator$.prototype.steps__F1__Lcaos_sos_SOS__F1__F1__Lcao
   }));
   return new $c_Lcaos_frontend_widgets_WidgetInfo$Simulate(sos, v, viewAct, typ, initialSt);
 });
+$c_Lcaos_frontend_Configurator$.prototype.lts__F1__Lcaos_sos_SOS__F1__F1__I__Lcaos_frontend_widgets_WidgetInfo = (function(initialSt, sos, viewSt, viewAct, maxSt) {
+  var v = new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x) => {
+    var code = $m_Lcaos_sos_SOS$().toMermaid__Lcaos_sos_SOS__O__F1__F1__I__T(sos, $n(initialSt).apply__O__O(x), viewSt, viewAct, maxSt);
+    return new $c_Lcaos_view_View(code);
+  }));
+  var typ = $m_Lcaos_view_Mermaid$();
+  var pre = new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x$2) => x$2));
+  return new $c_Lcaos_frontend_widgets_WidgetInfo$Visualize(v, typ, pre);
+});
 $c_Lcaos_frontend_Configurator$.prototype.toDocumentation__sci_List__Lcaos_frontend_Documentation = (function(docs) {
   var docs$1 = $m_Lcaos_frontend_Documentation$().$lessinit$greater$default$1__sci_Map();
   return new $c_Lcaos_frontend_Documentation(docs$1).add__sc_Iterable__Lcaos_frontend_Documentation(docs);
@@ -1302,9 +1311,10 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
       var x78 = this$12.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ;
       var this$13 = $n(x$1$2);
       var x79 = this$13.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_pre;
-      if (false) {
+      if ((x78 instanceof $c_Lcaos_view_Code)) {
         var x$1$3 = $as_Lcaos_view_Code(x78);
-        var x82 = $n(x$1$3)._1__T();
+        var this$15 = $n(x$1$3);
+        var x82 = this$15.Lcaos_view_Code__f_lang;
         return new $c_Lcaos_frontend_widgets_VisualiseCode(new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => $as_Lcaos_view_View($n(x77).apply__O__O($n(x79).apply__O__O($n(get).apply__O()))))), $as_T($n(w)._1__O()), x82, out, doc);
       }
     }
@@ -1345,8 +1355,8 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
         if ((x13 instanceof $c_Lcaos_frontend_widgets_WidgetInfo$Visualize)) {
           var x$1$6 = $as_Lcaos_frontend_widgets_WidgetInfo$Visualize(x13);
           $n(x$1$6);
-          var this$23 = $n(x$1$6);
-          var x63 = this$23.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ;
+          var this$24 = $n(x$1$6);
+          var x63 = this$24.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ;
           $n(x$1$6);
           var x$9 = $m_Lcaos_view_Html$();
           if ((x$9 === x63)) {
@@ -1385,9 +1395,10 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
       var x43 = $n(x$1$9)._2__Lcaos_view_ViewType();
       var x44 = $n(x$1$9)._3__F1();
       var x45 = $n(x$1$9)._4__F1();
-      if (false) {
+      if ((x43 instanceof $c_Lcaos_view_Code)) {
         var x$1$10 = $as_Lcaos_view_Code(x43);
-        var x48 = $n(x$1$10)._1__T();
+        var this$30 = $n(x$1$10);
+        var x48 = this$30.Lcaos_view_Code__f_lang;
         return new $c_Lcaos_frontend_widgets_Tabs(new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => $as_sci_List($n(x42).apply__O__O($n(x45).apply__O__O($n(get).apply__O()))))), $as_T($n(w)._1__O()), new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => $as_sci_List($n(x44).apply__O__O($n(x45).apply__O__O($n(get).apply__O()))))), x48, out, doc);
       }
     }
@@ -1407,8 +1418,8 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
       $n(x28);
       $n(x28);
       $n(x28);
-      var this$34 = $n(x28);
-      var x33 = this$34.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_typ;
+      var this$36 = $n(x28);
+      var x33 = this$36.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_typ;
       $n(x28);
       var x$17 = $m_Lcaos_view_Text$();
       if ((x$17 === x33)) {
@@ -1448,9 +1459,9 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
   } catch (e) {
     var e$1 = e;
     var e$2 = ((e$1 instanceof $c_jl_Throwable) ? e$1 : new $c_sjs_js_JavaScriptException(e$1));
-    var this$41 = $n(out);
+    var this$43 = $n(out);
     var msg = e$2.getMessage__T();
-    $p_Lcaos_frontend_widgets_OutputArea__addBox__T__T__V(this$41, msg, "danger");
+    $p_Lcaos_frontend_widgets_OutputArea__addBox__T__T__V(this$43, msg, "danger");
     throw e$2;
   }
 });
@@ -2124,6 +2135,120 @@ function $isArrayOf_Lcaos_frontend_widgets_WidgetInfo(obj, depth) {
 }
 function $asArrayOf_Lcaos_frontend_widgets_WidgetInfo(obj, depth) {
   return (($isArrayOf_Lcaos_frontend_widgets_WidgetInfo(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lcaos.frontend.widgets.WidgetInfo;", depth));
+}
+function $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$1, _ids$1, s) {
+  if ($n($as_sci_Map($n(_ids$1).sr_ObjectRef__f_elem)).contains__O__Z(s)) {
+    return $uI($n($as_sci_Map($n(_ids$1).sr_ObjectRef__f_elem)).apply__O__O(s));
+  } else {
+    var $x_1 = $as_sci_Map($n(_ids$1).sr_ObjectRef__f_elem);
+    var y = $n(i$1).sr_IntRef__f_elem;
+    var ev$5 = $as_sci_Map($n($x_1).$plus__T2__sci_MapOps(new $c_T2(s, y)));
+    $n(_ids$1).sr_ObjectRef__f_elem = ev$5;
+    var ev$6 = ((1 + $n(i$1).sr_IntRef__f_elem) | 0);
+    $n(i$1).sr_IntRef__f_elem = ev$6;
+    return (((-1) + $n(i$1).sr_IntRef__f_elem) | 0);
+  }
+}
+function $p_Lcaos_sos_SOS$__fix$1__T__T($thiz, s) {
+  var this$1 = $n(s);
+  if ($uZ(this$1.startsWith("$$"))) {
+    return $m_sc_StringOps$().drop$extension__T__I__T(s, 2);
+  } else {
+    return $f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T((("\" " + s) + "\""), "<", "&lt;")), ">", "&gt;")), "\n", "<br>");
+  }
+}
+function $p_Lcaos_sos_SOS$__aux$1__Lcaos_sos_SOS__F1__F1__sr_IntRef__sr_ObjectRef__sci_Queue__sci_Set__I__T($thiz, sos$5, showSt$1, showAct$1, i$2, _ids$2, next, done, limit) {
+  var next$tailLocal1 = next;
+  while (true) {
+    if ((limit <= 0)) {
+      var this$1 = $n(next$tailLocal1);
+      var b = $m_sci_Queue$().newBuilder__scm_Builder();
+      var it = this$1.iterator__sc_Iterator();
+      while ($n(it).hasNext__Z()) {
+        var this$2 = $n(b);
+        var x0 = $n(it).next__O();
+        var elem = (("\n  style " + $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$2, _ids$2, x0)) + " fill:#f87,stroke:#633,stroke-width:4px;");
+        this$2.addOne__O__scm_Growable(elem);
+      }
+      var this$3 = $n($as_sc_IterableOnceOps($n(b).result__O()));
+      return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$3, "", "", "");
+    }
+    var x44 = $n(next$tailLocal1).dequeueOption__s_Option();
+    if ((x44 instanceof $c_s_Some)) {
+      var x50 = $as_T2($n($as_s_Some(x44)).s_Some__f_value);
+      if ((x50 !== null)) {
+        var x51 = $n(x50)._1__O();
+        var x52 = $as_sci_Queue($n(x50)._2__O());
+        if ($n(done).contains__O__Z(x51)) {
+          next$tailLocal1 = x52;
+          continue;
+        }
+        var this$4 = $n(done);
+        var done2 = $as_sci_Set(this$4.incl__O__sci_SetOps(x51));
+        var elem$1 = (((("\n  " + $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$2, _ids$2, x51)) + "([") + $p_Lcaos_sos_SOS$__fix$1__T__T($thiz, $as_T($n(showSt$1).apply__O__O(x51)))) + "]);");
+        var res = new $c_sr_ObjectRef(elem$1);
+        var next3 = new $c_sr_ObjectRef(x52);
+        var this$7 = $n(sos$5);
+        $n($n(this$7.next__Llince_backend_Semantics$St__sci_Set($as_Llince_backend_Semantics$St(x51))).withFilter__F1__sc_WithFilter(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x$1) => {
+          var x$1$1 = $as_T2(x$1);
+          return ((x$1$1 !== null) && ($n(x$1$1)._1__O(), $n(x$1$1)._2__O(), true));
+        })))).foreach__F1__V(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((showSt$1, showAct$1, i$2, _ids$2, x51, res, next3) => ((x$1$2) => {
+          var x$1$3 = $as_T2(x$1$2);
+          matchResult15: {
+            if ((x$1$3 !== null)) {
+              var a$1 = $n(x$1$3)._1__O();
+              var s2$1 = $n(x$1$3)._2__O();
+              var ev$7 = $n($as_sci_Queue(next3.sr_ObjectRef__f_elem)).enqueue__O__sci_Queue(s2$1);
+              next3.sr_ObjectRef__f_elem = ev$7;
+              var ev$8 = (($as_T(res.sr_ObjectRef__f_elem) + ((((((((("\n  " + $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$2, _ids$2, s2$1)) + "([") + $p_Lcaos_sos_SOS$__fix$1__T__T($thiz, $as_T($n(showSt$1).apply__O__O(s2$1)))) + "]);\n  ") + $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$2, _ids$2, x51)) + " -->|") + $p_Lcaos_sos_SOS$__fix$1__T__T($thiz, $as_T($n(showAct$1).apply__O__O(a$1)))) + "| ") + $p_Lcaos_sos_SOS$__ids$1__sr_IntRef__sr_ObjectRef__O__I($thiz, i$2, _ids$2, s2$1))) + ";");
+              res.sr_ObjectRef__f_elem = ev$8;
+              break matchResult15;
+            }
+            throw new $c_s_MatchError(x$1$3);
+          }
+        }))(showSt$1, showAct$1, i$2, _ids$2, x51, res, next3)));
+        return (("" + $as_T(res.sr_ObjectRef__f_elem)) + $p_Lcaos_sos_SOS$__aux$1__Lcaos_sos_SOS__F1__F1__sr_IntRef__sr_ObjectRef__sci_Queue__sci_Set__I__T($thiz, sos$5, showSt$1, showAct$1, i$2, _ids$2, $as_sci_Queue(next3.sr_ObjectRef__f_elem), done2, (((-1) + limit) | 0)));
+      }
+    }
+    var x = $m_s_None$();
+    if ((x === x44)) {
+      return "";
+    }
+    throw new $c_s_MatchError(x44);
+  }
+}
+/** @constructor */
+function $c_Lcaos_sos_SOS$() {
+}
+$c_Lcaos_sos_SOS$.prototype = new $h_O();
+$c_Lcaos_sos_SOS$.prototype.constructor = $c_Lcaos_sos_SOS$;
+/** @constructor */
+function $h_Lcaos_sos_SOS$() {
+}
+$h_Lcaos_sos_SOS$.prototype = $c_Lcaos_sos_SOS$.prototype;
+$c_Lcaos_sos_SOS$.prototype.toMermaid__Lcaos_sos_SOS__O__F1__F1__I__T = (function(sos, s, showSt, showAct, maxNodes) {
+  var i = new $c_sr_IntRef(0);
+  var this$2 = $m_sci_Map$();
+  var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
+  var elem = this$2.from__sc_IterableOnce__sci_Map(elems);
+  var _ids = new $c_sr_ObjectRef(elem);
+  var xs = $m_sr_ScalaRunTime$().genericWrapArray__O__sci_ArraySeq(new $ac_O([s]));
+  var $x_2 = $m_sci_Nil$();
+  var this$5 = $n(xs);
+  var $x_1 = $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $x_2, $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$5));
+  var this$7 = $m_sci_Set$();
+  var elems$1 = $m_sr_ScalaRunTime$().genericWrapArray__O__sci_ArraySeq(new $ac_O([]));
+  return ("graph TD\n  style 0 fill:#8f7,stroke:#363,stroke-width:4px;" + $p_Lcaos_sos_SOS$__aux$1__Lcaos_sos_SOS__F1__F1__sr_IntRef__sr_ObjectRef__sci_Queue__sci_Set__I__T(this, sos, showSt, showAct, i, _ids, $x_1, this$7.from__sc_IterableOnce__sci_Set(elems$1), maxNodes));
+});
+var $d_Lcaos_sos_SOS$ = new $TypeData().initClass($c_Lcaos_sos_SOS$, "caos.sos.SOS$", ({
+  Lcaos_sos_SOS$: 1
+}));
+var $n_Lcaos_sos_SOS$;
+function $m_Lcaos_sos_SOS$() {
+  if ((!$n_Lcaos_sos_SOS$)) {
+    $n_Lcaos_sos_SOS$ = new $c_Lcaos_sos_SOS$();
+  }
+  return $n_Lcaos_sos_SOS$;
 }
 function $is_Lcaos_view_OptionView(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lcaos_view_OptionView)));
@@ -11695,7 +11820,39 @@ $c_Llince_backend_Plot$.prototype.constructor = $c_Llince_backend_Plot$;
 function $h_Llince_backend_Plot$() {
 }
 $h_Llince_backend_Plot$.prototype = $c_Llince_backend_Plot$.prototype;
-$c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(from, divName, range, samples, hideCont) {
+$c_Llince_backend_Plot$.prototype.discSteps__Llince_backend_Semantics$St__sci_List__T2 = (function(st, hist) {
+  var hist$tailLocal1 = hist;
+  var st$tailLocal1 = st;
+  while (true) {
+    var x1 = $m_Llince_backend_Semantics$().step__Llince_backend_Semantics$St__s_Option(st$tailLocal1);
+    var x = $m_s_None$();
+    if ((x === x1)) {
+      var self = hist$tailLocal1;
+      var y = st$tailLocal1;
+      return new $c_T2(self, y);
+    }
+    if ((x1 instanceof $c_s_Some)) {
+      var x3 = $as_T2($n($as_s_Some(x1)).s_Some__f_value);
+      if ((x3 !== null)) {
+        var a = $as_T($n(x3)._1__O());
+        var st2 = $as_Llince_backend_Semantics$St($n(x3)._2__O());
+        if (($n(st$tailLocal1).Llince_backend_Semantics$St__f_t === $n(st2).Llince_backend_Semantics$St__f_t)) {
+          var this$3 = $n(hist$tailLocal1);
+          var hist$tailLocal1$tmp1 = new $c_sci_$colon$colon(a, this$3);
+          st$tailLocal1 = st2;
+          hist$tailLocal1 = hist$tailLocal1$tmp1;
+          continue;
+        } else {
+          var _1 = hist$tailLocal1;
+          var _2 = st$tailLocal1;
+          return new $c_T2(_1, _2);
+        }
+      }
+    }
+    throw new $c_s_MatchError(x1);
+  }
+});
+$c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__T__s_Option__I__Z__T = (function(from, divName, range, samples, hideCont) {
   var this$1 = $n(range);
   if (this$1.isEmpty__Z()) {
     var this$2 = $m_s_None$();
@@ -11713,546 +11870,90 @@ $c_Llince_backend_Plot$.prototype.apply__T4__T__s_Option__I__Z__T = (function(fr
     var _$2 = $as_T2(x0$1);
     var this$4 = new $c_s_Some($uD($n(_$2)._2__O()));
   }
-  var maxt = $uD((this$4.isEmpty__Z() ? $uD($n(from).T4__f__3) : this$4.get__O()));
+  if (this$4.isEmpty__Z()) {
+    var this$5 = $n(from);
+    var $x_1 = this$5.Llince_backend_Semantics$St__f_t;
+  } else {
+    var $x_1 = this$4.get__O();
+  }
+  var maxt = $uD($x_1);
   var stepSize = ((maxt - mint) / samples);
   $n(from);
-  var this$5 = $n(from);
-  var _1 = this$5.T4__f__1;
   var this$6 = $n(from);
-  var _2 = this$6.T4__f__2;
+  var p = this$6.Llince_backend_Semantics$St__f_p;
   var this$7 = $n(from);
-  var _4 = this$7.T4__f__4;
-  var st = new $c_T4(_1, _2, maxt, _4);
+  var v = this$7.Llince_backend_Semantics$St__f_v;
+  var this$8 = $n(from);
+  var lp = this$8.Llince_backend_Semantics$St__f_lp;
+  return this.apply__Llince_backend_Semantics$St__D__D__T(new $c_Llince_backend_Semantics$St(p, v, maxt, lp), stepSize, mint);
+});
+$c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__D__D__T = (function(from, stepSize, timePassed) {
+  var st = from;
+  var time = timePassed;
   var done = false;
-  var time = mint;
-  var this$9 = $m_sci_Map$();
-  var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
-  this$9.from__sc_IterableOnce__sci_Map(elems);
-  var res = (((("Starting at " + $n(st).T4__f__2) + " / ") + $n(st).T4__f__3) + "\n");
+  var res = (((("Starting at " + $n(st).Llince_backend_Semantics$St__f_v) + " / ") + $n(st).Llince_backend_Semantics$St__f_t) + "\n");
   while ((!done)) {
-    matchResult1: {
+    matchResult2: {
       var \u03b41$___1;
       var \u03b41$___2;
-      var x1 = $m_Llince_backend_Semantics$().nextDisc__T4__sci_List__T2(st, $m_sci_Nil$());
-      if ((x1 !== null)) {
-        var msgs = $as_sci_List($n(x1)._1__O());
-        var st2 = $as_T4($n(x1)._2__O());
+      var x6 = this.discSteps__Llince_backend_Semantics$St__sci_List__T2(st, $m_sci_Nil$());
+      if ((x6 !== null)) {
+        var msgs = $as_sci_List($n(x6)._1__O());
+        var st2 = $as_Llince_backend_Semantics$St($n(x6)._2__O());
         var \u03b41$___1 = msgs;
         var \u03b41$___2 = st2;
-        break matchResult1;
-      }
-      throw new $c_s_MatchError(x1);
-    }
-    $as_sci_List(\u03b41$___1);
-    var st2$2 = $as_T4(\u03b41$___2);
-    res = ((res + (">>> pre-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($as_Llince_syntax_Lince$Program($n(st).T4__f__1)))) + "\n");
-    st = st2$2;
-    res = ((res + ((("[" + time) + "] Disc to ") + $n(st).T4__f__2)) + "\n");
-    res = ((res + (">>> pos-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($as_Llince_syntax_Lince$Program($n(st).T4__f__1)))) + "\n");
-    matchResult2: {
-      var this$16 = $m_Llince_backend_Semantics$();
-      var \u03b42$ = st;
-      $n(\u03b42$);
-      var this$12 = $n(\u03b42$);
-      var _1$1 = this$12.T4__f__1;
-      var this$13 = $n(\u03b42$);
-      var _2$1 = this$13.T4__f__2;
-      var this$14 = $n(\u03b42$);
-      var _4$1 = this$14.T4__f__4;
-      var x4;
-      var st$tailLocal1___1 = _1$1;
-      var st$tailLocal1___2 = _2$1;
-      var st$tailLocal1___3 = stepSize;
-      var st$tailLocal1___4 = _4$1;
-      while (true) {
-        var v$lzy1 = new $c_sr_LazyRef();
-        if ((($uD(st$tailLocal1___3) <= 0.0) || ($uI(st$tailLocal1___4) <= 0))) {
-          var x4 = $m_s_None$();
-          break;
-        }
-        var t = $uD(st$tailLocal1___3);
-        var lp = $uI(st$tailLocal1___4);
-        var x8 = $as_Llince_syntax_Lince$Program(st$tailLocal1___1);
-        var x = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-        if (((x === null) ? (x8 === null) : $n(x).equals__O__Z(x8))) {
-          var x4 = $m_s_None$();
-          break;
-        }
-        if ((x8 instanceof $c_Llince_syntax_Lince$Program$Assign)) {
-          var x$1 = $as_Llince_syntax_Lince$Program$Assign(x8);
-          var this$18 = $n(x$1);
-          var x32 = this$18.Llince_syntax_Lince$Program$Assign__f_v;
-          var this$19 = $n(x$1);
-          var x33 = this$19.Llince_syntax_Lince$Program$Assign__f_e;
-          var self = ((x32 + ":=") + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(x33));
-          var _1$2 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-          var v$lzy1$2 = v$lzy1;
-          var st$tailLocal1$2___1 = st$tailLocal1___1;
-          var st$tailLocal1$2___2 = st$tailLocal1___2;
-          var st$tailLocal1$2___3 = st$tailLocal1___3;
-          var st$tailLocal1$2___4 = st$tailLocal1___4;
-          var $x_2 = $n($as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : ($n(v$lzy1$2), $as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : $n(v$lzy1$2).initialize__O__O($as_sci_Map(st$tailLocal1$2___2))))))));
-          var $x_1 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$1 = v$lzy1;
-          var st$tailLocal1$2$1___1 = st$tailLocal1___1;
-          var st$tailLocal1$2$1___2 = st$tailLocal1___2;
-          var st$tailLocal1$2$1___3 = st$tailLocal1___3;
-          var st$tailLocal1$2$1___4 = st$tailLocal1___4;
-          var y = $x_1.apply__Llince_syntax_Lince$Expr__sc_Map__D(x33, $as_sci_Map(($n(v$lzy1$2$1).sr_LazyRef__f__initialized ? $n(v$lzy1$2$1).sr_LazyRef__f__value : ($n(v$lzy1$2$1), $as_sci_Map(($n(v$lzy1$2$1).sr_LazyRef__f__initialized ? $n(v$lzy1$2$1).sr_LazyRef__f__value : $n(v$lzy1$2$1).initialize__O__O($as_sci_Map(st$tailLocal1$2$1___2))))))));
-          var _2$2 = $x_2.$plus__T2__sci_MapOps(new $c_T2(x32, y));
-          var y$1 = new $c_T4(_1$2, _2$2, t, lp);
-          var value = new $c_T2(self, y$1);
-          var x4 = new $c_s_Some(value);
-          break;
-        }
-        if ((x8 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
-          var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x8);
-          var this$27 = $n(x$1$1);
-          var x28 = this$27.Llince_syntax_Lince$Program$Seq__f_p;
-          var this$28 = $n(x$1$1);
-          var x29 = this$28.Llince_syntax_Lince$Program$Seq__f_q;
-          var x$3 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-          if (((x$3 === null) ? (x28 === null) : $n(x$3).equals__O__Z(x28))) {
-            var v$lzy1$2$2 = v$lzy1;
-            var st$tailLocal1$2$2___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$2___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$2___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$2___4 = st$tailLocal1___4;
-            var _2$3 = $as_sci_Map(($n(v$lzy1$2$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2$2).sr_LazyRef__f__value : ($n(v$lzy1$2$2), $as_sci_Map(($n(v$lzy1$2$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2$2).sr_LazyRef__f__value : $n(v$lzy1$2$2).initialize__O__O($as_sci_Map(st$tailLocal1$2$2___2)))))));
-            var $x_3___1 = x29;
-            var $x_3___2 = _2$3;
-            var $x_3___3 = t;
-            var $x_3___4 = lp;
-            st$tailLocal1___1 = $x_3___1;
-            st$tailLocal1___2 = $x_3___2;
-            st$tailLocal1___3 = $x_3___3;
-            st$tailLocal1___4 = $x_3___4;
-            continue;
-          }
-          var v$lzy1$2$3 = v$lzy1;
-          var st$tailLocal1$2$3___1 = st$tailLocal1___1;
-          var st$tailLocal1$2$3___2 = st$tailLocal1___2;
-          var st$tailLocal1$2$3___3 = st$tailLocal1___3;
-          var st$tailLocal1$2$3___4 = st$tailLocal1___4;
-          var _2$4 = $as_sci_Map(($n(v$lzy1$2$3).sr_LazyRef__f__initialized ? $n(v$lzy1$2$3).sr_LazyRef__f__value : ($n(v$lzy1$2$3), $as_sci_Map(($n(v$lzy1$2$3).sr_LazyRef__f__initialized ? $n(v$lzy1$2$3).sr_LazyRef__f__value : $n(v$lzy1$2$3).initialize__O__O($as_sci_Map(st$tailLocal1$2$3___2)))))));
-          var this$87;
-          var st$tailLocal1$1___1 = x28;
-          var st$tailLocal1$1___2 = _2$4;
-          var st$tailLocal1$1___3 = t;
-          var st$tailLocal1$1___4 = lp;
-          while (true) {
-            var v$lzy1$1 = new $c_sr_LazyRef();
-            if ((($uD(st$tailLocal1$1___3) <= 0.0) || ($uI(st$tailLocal1$1___4) <= 0))) {
-              var this$87 = $m_s_None$();
-              break;
-            }
-            var t$1 = $uD(st$tailLocal1$1___3);
-            var lp$1 = $uI(st$tailLocal1$1___4);
-            var x8$1 = $as_Llince_syntax_Lince$Program(st$tailLocal1$1___1);
-            var x$2 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-            if (((x$2 === null) ? (x8$1 === null) : $n(x$2).equals__O__Z(x8$1))) {
-              var this$87 = $m_s_None$();
-              break;
-            }
-            if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$Assign)) {
-              var x$1$2 = $as_Llince_syntax_Lince$Program$Assign(x8$1);
-              var this$32 = $n(x$1$2);
-              var x32$1 = this$32.Llince_syntax_Lince$Program$Assign__f_v;
-              var this$33 = $n(x$1$2);
-              var x33$1 = this$33.Llince_syntax_Lince$Program$Assign__f_e;
-              var self$1 = ((x32$1 + ":=") + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(x33$1));
-              var _1$3 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-              var v$lzy1$2$4 = v$lzy1$1;
-              var st$tailLocal1$2$4___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$4___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$4___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$4___4 = st$tailLocal1$1___4;
-              var $x_5 = $n($as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : ($n(v$lzy1$2$4), $as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : $n(v$lzy1$2$4).initialize__O__O($as_sci_Map(st$tailLocal1$2$4___2))))))));
-              var $x_4 = $m_Llince_backend_Eval$();
-              var v$lzy1$2$5 = v$lzy1$1;
-              var st$tailLocal1$2$5___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$5___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$5___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$5___4 = st$tailLocal1$1___4;
-              var y$2 = $x_4.apply__Llince_syntax_Lince$Expr__sc_Map__D(x33$1, $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : ($n(v$lzy1$2$5), $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : $n(v$lzy1$2$5).initialize__O__O($as_sci_Map(st$tailLocal1$2$5___2))))))));
-              var _2$5 = $x_5.$plus__T2__sci_MapOps(new $c_T2(x32$1, y$2));
-              var y$3 = new $c_T4(_1$3, _2$5, t$1, lp$1);
-              var value$1 = new $c_T2(self$1, y$3);
-              var this$87 = new $c_s_Some(value$1);
-              break;
-            }
-            if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
-              var x$1$3 = $as_Llince_syntax_Lince$Program$Seq(x8$1);
-              var this$41 = $n(x$1$3);
-              var x28$1 = this$41.Llince_syntax_Lince$Program$Seq__f_p;
-              var this$42 = $n(x$1$3);
-              var x29$1 = this$42.Llince_syntax_Lince$Program$Seq__f_q;
-              var x$3$1 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-              if (((x$3$1 === null) ? (x28$1 === null) : $n(x$3$1).equals__O__Z(x28$1))) {
-                var v$lzy1$2$6 = v$lzy1$1;
-                var st$tailLocal1$2$6___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$6___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$6___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$6___4 = st$tailLocal1$1___4;
-                var _2$6 = $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : ($n(v$lzy1$2$6), $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : $n(v$lzy1$2$6).initialize__O__O($as_sci_Map(st$tailLocal1$2$6___2)))))));
-                var $x_6___1 = x29$1;
-                var $x_6___2 = _2$6;
-                var $x_6___3 = t$1;
-                var $x_6___4 = lp$1;
-                st$tailLocal1$1___1 = $x_6___1;
-                st$tailLocal1$1___2 = $x_6___2;
-                st$tailLocal1$1___3 = $x_6___3;
-                st$tailLocal1$1___4 = $x_6___4;
-                continue;
-              }
-              var v$lzy1$2$7 = v$lzy1$1;
-              var st$tailLocal1$2$7___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$7___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$7___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$7___4 = st$tailLocal1$1___4;
-              var _2$7 = $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : ($n(v$lzy1$2$7), $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : $n(v$lzy1$2$7).initialize__O__O($as_sci_Map(st$tailLocal1$2$7___2)))))));
-              var this$45 = $n(this$16.step__T4__s_Option(new $c_T4(x28$1, _2$7, t$1, lp$1)));
-              if (this$45.isEmpty__Z()) {
-                var this$87 = $m_s_None$();
-                break;
-              } else {
-                var x0$2 = this$45.get__O();
-                var x$1$4 = $as_T2(x0$2);
-                matchResult1$2: {
-                  var $x_7;
-                  if ((x$1$4 !== null)) {
-                    var x3 = $as_T4($n(x$1$4)._2__O());
-                    var a = $as_T($n(x$1$4)._1__O());
-                    if ((x3 !== null)) {
-                      var p2 = $as_Llince_syntax_Lince$Program($n(x3).T4__f__1);
-                      var v2 = $as_sci_Map($n(x3).T4__f__2);
-                      var t2 = $uD($n(x3).T4__f__3);
-                      var lp2 = $uI($n(x3).T4__f__4);
-                      var _1$4 = new $c_Llince_syntax_Lince$Program$Seq(p2, x29$1);
-                      var y$4 = new $c_T4(_1$4, v2, t2, lp2);
-                      var $x_7 = new $c_T2(a, y$4);
-                      break matchResult1$2;
-                    }
-                  }
-                  throw new $c_s_MatchError(x$1$4);
-                }
-                var this$87 = new $c_s_Some($x_7);
-                break;
-              }
-            }
-            if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
-              var x$1$5 = $as_Llince_syntax_Lince$Program$ITE(x8$1);
-              var this$51 = $n(x$1$5);
-              var x19 = this$51.Llince_syntax_Lince$Program$ITE__f_b;
-              var this$52 = $n(x$1$5);
-              var x20 = this$52.Llince_syntax_Lince$Program$ITE__f_pt;
-              var this$53 = $n(x$1$5);
-              var x21 = this$53.Llince_syntax_Lince$Program$ITE__f_pf;
-              var $x_8 = $m_Llince_backend_Eval$();
-              var v$lzy1$2$8 = v$lzy1$1;
-              var st$tailLocal1$2$8___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$8___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$8___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$8___4 = st$tailLocal1$1___4;
-              if ($x_8.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19, $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : ($n(v$lzy1$2$8), $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : $n(v$lzy1$2$8).initialize__O__O($as_sci_Map(st$tailLocal1$2$8___2))))))))) {
-                var self$2 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
-                var v$lzy1$2$9 = v$lzy1$1;
-                var st$tailLocal1$2$9___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$9___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$9___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$9___4 = st$tailLocal1$1___4;
-                var _2$8 = $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : ($n(v$lzy1$2$9), $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : $n(v$lzy1$2$9).initialize__O__O($as_sci_Map(st$tailLocal1$2$9___2)))))));
-                var y$5 = new $c_T4(x20, _2$8, t$1, lp$1);
-                var value$2 = new $c_T2(self$2, y$5);
-                var this$87 = new $c_s_Some(value$2);
-                break;
-              } else {
-                var self$3 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
-                var v$lzy1$2$10 = v$lzy1$1;
-                var st$tailLocal1$2$10___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$10___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$10___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$10___4 = st$tailLocal1$1___4;
-                var _2$9 = $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : ($n(v$lzy1$2$10), $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : $n(v$lzy1$2$10).initialize__O__O($as_sci_Map(st$tailLocal1$2$10___2)))))));
-                var y$6 = new $c_T4(x21, _2$9, t$1, lp$1);
-                var value$3 = new $c_T2(self$3, y$6);
-                var this$87 = new $c_s_Some(value$3);
-                break;
-              }
-            }
-            if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$While)) {
-              var x13 = $as_Llince_syntax_Lince$Program$While(x8$1);
-              var this$63 = $n(x13);
-              var x15 = this$63.Llince_syntax_Lince$Program$While__f_b;
-              var this$64 = $n(x13);
-              var x16 = this$64.Llince_syntax_Lince$Program$While__f_p;
-              var $x_9 = $m_Llince_backend_Eval$();
-              var v$lzy1$2$11 = v$lzy1$1;
-              var st$tailLocal1$2$11___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$11___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$11___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$11___4 = st$tailLocal1$1___4;
-              if ($x_9.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15, $as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : ($n(v$lzy1$2$11), $as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : $n(v$lzy1$2$11).initialize__O__O($as_sci_Map(st$tailLocal1$2$11___2))))))))) {
-                var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
-                var _1$5 = new $c_Llince_syntax_Lince$Program$Seq(x16, x13);
-                var v$lzy1$2$12 = v$lzy1$1;
-                var st$tailLocal1$2$12___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$12___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$12___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$12___4 = st$tailLocal1$1___4;
-                var _2$10 = $as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : ($n(v$lzy1$2$12), $as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : $n(v$lzy1$2$12).initialize__O__O($as_sci_Map(st$tailLocal1$2$12___2)))))));
-                var _4$2 = (((-1) + lp$1) | 0);
-                var y$7 = new $c_T4(_1$5, _2$10, t$1, _4$2);
-                var value$4 = new $c_T2(self$4, y$7);
-                var this$87 = new $c_s_Some(value$4);
-                break;
-              } else {
-                var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
-                var _1$6 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-                var v$lzy1$2$13 = v$lzy1$1;
-                var st$tailLocal1$2$13___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$13___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$13___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$13___4 = st$tailLocal1$1___4;
-                var _2$11 = $as_sci_Map(($n(v$lzy1$2$13).sr_LazyRef__f__initialized ? $n(v$lzy1$2$13).sr_LazyRef__f__value : ($n(v$lzy1$2$13), $as_sci_Map(($n(v$lzy1$2$13).sr_LazyRef__f__initialized ? $n(v$lzy1$2$13).sr_LazyRef__f__value : $n(v$lzy1$2$13).initialize__O__O($as_sci_Map(st$tailLocal1$2$13___2)))))));
-                var y$8 = new $c_T4(_1$6, _2$11, t$1, lp$1);
-                var value$5 = new $c_T2(self$5, y$8);
-                var this$87 = new $c_s_Some(value$5);
-                break;
-              }
-            }
-            if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
-              var x$1$6 = $as_Llince_syntax_Lince$Program$EqDiff(x8$1);
-              var this$75 = $n(x$1$6);
-              var x11 = this$75.Llince_syntax_Lince$Program$EqDiff__f_eqs;
-              var this$76 = $n(x$1$6);
-              var x12 = this$76.Llince_syntax_Lince$Program$EqDiff__f_dur;
-              var $x_10 = $m_Llince_backend_Eval$();
-              var v$lzy1$2$14 = v$lzy1$1;
-              var st$tailLocal1$2$14___1 = st$tailLocal1$1___1;
-              var st$tailLocal1$2$14___2 = st$tailLocal1$1___2;
-              var st$tailLocal1$2$14___3 = st$tailLocal1$1___3;
-              var st$tailLocal1$2$14___4 = st$tailLocal1$1___4;
-              var dur = $x_10.apply__Llince_syntax_Lince$Expr__sc_Map__D(x12, $as_sci_Map(($n(v$lzy1$2$14).sr_LazyRef__f__initialized ? $n(v$lzy1$2$14).sr_LazyRef__f__value : ($n(v$lzy1$2$14), $as_sci_Map(($n(v$lzy1$2$14).sr_LazyRef__f__initialized ? $n(v$lzy1$2$14).sr_LazyRef__f__value : $n(v$lzy1$2$14).initialize__O__O($as_sci_Map(st$tailLocal1$2$14___2))))))));
-              if ((dur > t$1)) {
-                var n = (dur - t$1);
-                var dur$1 = new $c_Llince_syntax_Lince$Expr$Num(n);
-                var _1$7 = new $c_Llince_syntax_Lince$Program$EqDiff(x11, dur$1);
-                var $x_11 = $m_Llince_backend_RungeKutta$();
-                var v$lzy1$2$15 = v$lzy1$1;
-                var st$tailLocal1$2$15___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$15___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$15___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$15___4 = st$tailLocal1$1___4;
-                var _2$12 = $x_11.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$15).sr_LazyRef__f__initialized ? $n(v$lzy1$2$15).sr_LazyRef__f__value : ($n(v$lzy1$2$15), $as_sci_Map(($n(v$lzy1$2$15).sr_LazyRef__f__initialized ? $n(v$lzy1$2$15).sr_LazyRef__f__value : $n(v$lzy1$2$15).initialize__O__O($as_sci_Map(st$tailLocal1$2$15___2))))))), x11, t$1);
-                var y$9 = new $c_T4(_1$7, _2$12, 0.0, lp$1);
-                var value$6 = new $c_T2("diff-stop", y$9);
-                var this$87 = new $c_s_Some(value$6);
-                break;
-              } else {
-                var _1$8 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-                var $x_12 = $m_Llince_backend_RungeKutta$();
-                var v$lzy1$2$16 = v$lzy1$1;
-                var st$tailLocal1$2$16___1 = st$tailLocal1$1___1;
-                var st$tailLocal1$2$16___2 = st$tailLocal1$1___2;
-                var st$tailLocal1$2$16___3 = st$tailLocal1$1___3;
-                var st$tailLocal1$2$16___4 = st$tailLocal1$1___4;
-                var _2$13 = $x_12.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$16).sr_LazyRef__f__initialized ? $n(v$lzy1$2$16).sr_LazyRef__f__value : ($n(v$lzy1$2$16), $as_sci_Map(($n(v$lzy1$2$16).sr_LazyRef__f__initialized ? $n(v$lzy1$2$16).sr_LazyRef__f__value : $n(v$lzy1$2$16).initialize__O__O($as_sci_Map(st$tailLocal1$2$16___2))))))), x11, dur);
-                var _3 = (t$1 - dur);
-                var y$10 = new $c_T4(_1$8, _2$13, _3, lp$1);
-                var value$7 = new $c_T2("diff-skip", y$10);
-                var this$87 = new $c_s_Some(value$7);
-                break;
-              }
-            }
-            throw new $c_s_MatchError(x8$1);
-          }
-          if (this$87.isEmpty__Z()) {
-            var x4 = $m_s_None$();
-            break;
-          } else {
-            var x0$3 = this$87.get__O();
-            var x$1$7 = $as_T2(x0$3);
-            matchResult1$4: {
-              var $x_13;
-              if ((x$1$7 !== null)) {
-                var x3$1 = $as_T4($n(x$1$7)._2__O());
-                var a$1 = $as_T($n(x$1$7)._1__O());
-                if ((x3$1 !== null)) {
-                  var p2$1 = $as_Llince_syntax_Lince$Program($n(x3$1).T4__f__1);
-                  var v2$1 = $as_sci_Map($n(x3$1).T4__f__2);
-                  var t2$1 = $uD($n(x3$1).T4__f__3);
-                  var lp2$1 = $uI($n(x3$1).T4__f__4);
-                  var _1$9 = new $c_Llince_syntax_Lince$Program$Seq(p2$1, x29);
-                  var y$11 = new $c_T4(_1$9, v2$1, t2$1, lp2$1);
-                  var $x_13 = new $c_T2(a$1, y$11);
-                  break matchResult1$4;
-                }
-              }
-              throw new $c_s_MatchError(x$1$7);
-            }
-            var x4 = new $c_s_Some($x_13);
-            break;
-          }
-        }
-        if ((x8 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
-          var x$1$8 = $as_Llince_syntax_Lince$Program$ITE(x8);
-          var this$93 = $n(x$1$8);
-          var x19$1 = this$93.Llince_syntax_Lince$Program$ITE__f_b;
-          var this$94 = $n(x$1$8);
-          var x20$1 = this$94.Llince_syntax_Lince$Program$ITE__f_pt;
-          var this$95 = $n(x$1$8);
-          var x21$1 = this$95.Llince_syntax_Lince$Program$ITE__f_pf;
-          var $x_14 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$17 = v$lzy1;
-          var st$tailLocal1$2$17___1 = st$tailLocal1___1;
-          var st$tailLocal1$2$17___2 = st$tailLocal1___2;
-          var st$tailLocal1$2$17___3 = st$tailLocal1___3;
-          var st$tailLocal1$2$17___4 = st$tailLocal1___4;
-          if ($x_14.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19$1, $as_sci_Map(($n(v$lzy1$2$17).sr_LazyRef__f__initialized ? $n(v$lzy1$2$17).sr_LazyRef__f__value : ($n(v$lzy1$2$17), $as_sci_Map(($n(v$lzy1$2$17).sr_LazyRef__f__initialized ? $n(v$lzy1$2$17).sr_LazyRef__f__value : $n(v$lzy1$2$17).initialize__O__O($as_sci_Map(st$tailLocal1$2$17___2))))))))) {
-            var self$6 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
-            var v$lzy1$2$18 = v$lzy1;
-            var st$tailLocal1$2$18___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$18___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$18___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$18___4 = st$tailLocal1___4;
-            var _2$14 = $as_sci_Map(($n(v$lzy1$2$18).sr_LazyRef__f__initialized ? $n(v$lzy1$2$18).sr_LazyRef__f__value : ($n(v$lzy1$2$18), $as_sci_Map(($n(v$lzy1$2$18).sr_LazyRef__f__initialized ? $n(v$lzy1$2$18).sr_LazyRef__f__value : $n(v$lzy1$2$18).initialize__O__O($as_sci_Map(st$tailLocal1$2$18___2)))))));
-            var y$12 = new $c_T4(x20$1, _2$14, t, lp);
-            var value$8 = new $c_T2(self$6, y$12);
-            var x4 = new $c_s_Some(value$8);
-            break;
-          } else {
-            var self$7 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
-            var v$lzy1$2$19 = v$lzy1;
-            var st$tailLocal1$2$19___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$19___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$19___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$19___4 = st$tailLocal1___4;
-            var _2$15 = $as_sci_Map(($n(v$lzy1$2$19).sr_LazyRef__f__initialized ? $n(v$lzy1$2$19).sr_LazyRef__f__value : ($n(v$lzy1$2$19), $as_sci_Map(($n(v$lzy1$2$19).sr_LazyRef__f__initialized ? $n(v$lzy1$2$19).sr_LazyRef__f__value : $n(v$lzy1$2$19).initialize__O__O($as_sci_Map(st$tailLocal1$2$19___2)))))));
-            var y$13 = new $c_T4(x21$1, _2$15, t, lp);
-            var value$9 = new $c_T2(self$7, y$13);
-            var x4 = new $c_s_Some(value$9);
-            break;
-          }
-        }
-        if ((x8 instanceof $c_Llince_syntax_Lince$Program$While)) {
-          var x13$1 = $as_Llince_syntax_Lince$Program$While(x8);
-          var this$105 = $n(x13$1);
-          var x15$1 = this$105.Llince_syntax_Lince$Program$While__f_b;
-          var this$106 = $n(x13$1);
-          var x16$1 = this$106.Llince_syntax_Lince$Program$While__f_p;
-          var $x_15 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$20 = v$lzy1;
-          var st$tailLocal1$2$20___1 = st$tailLocal1___1;
-          var st$tailLocal1$2$20___2 = st$tailLocal1___2;
-          var st$tailLocal1$2$20___3 = st$tailLocal1___3;
-          var st$tailLocal1$2$20___4 = st$tailLocal1___4;
-          if ($x_15.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15$1, $as_sci_Map(($n(v$lzy1$2$20).sr_LazyRef__f__initialized ? $n(v$lzy1$2$20).sr_LazyRef__f__value : ($n(v$lzy1$2$20), $as_sci_Map(($n(v$lzy1$2$20).sr_LazyRef__f__initialized ? $n(v$lzy1$2$20).sr_LazyRef__f__value : $n(v$lzy1$2$20).initialize__O__O($as_sci_Map(st$tailLocal1$2$20___2))))))))) {
-            var self$8 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
-            var _1$10 = new $c_Llince_syntax_Lince$Program$Seq(x16$1, x13$1);
-            var v$lzy1$2$21 = v$lzy1;
-            var st$tailLocal1$2$21___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$21___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$21___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$21___4 = st$tailLocal1___4;
-            var _2$16 = $as_sci_Map(($n(v$lzy1$2$21).sr_LazyRef__f__initialized ? $n(v$lzy1$2$21).sr_LazyRef__f__value : ($n(v$lzy1$2$21), $as_sci_Map(($n(v$lzy1$2$21).sr_LazyRef__f__initialized ? $n(v$lzy1$2$21).sr_LazyRef__f__value : $n(v$lzy1$2$21).initialize__O__O($as_sci_Map(st$tailLocal1$2$21___2)))))));
-            var _4$3 = (((-1) + lp) | 0);
-            var y$14 = new $c_T4(_1$10, _2$16, t, _4$3);
-            var value$10 = new $c_T2(self$8, y$14);
-            var x4 = new $c_s_Some(value$10);
-            break;
-          } else {
-            var self$9 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
-            var _1$11 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-            var v$lzy1$2$22 = v$lzy1;
-            var st$tailLocal1$2$22___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$22___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$22___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$22___4 = st$tailLocal1___4;
-            var _2$17 = $as_sci_Map(($n(v$lzy1$2$22).sr_LazyRef__f__initialized ? $n(v$lzy1$2$22).sr_LazyRef__f__value : ($n(v$lzy1$2$22), $as_sci_Map(($n(v$lzy1$2$22).sr_LazyRef__f__initialized ? $n(v$lzy1$2$22).sr_LazyRef__f__value : $n(v$lzy1$2$22).initialize__O__O($as_sci_Map(st$tailLocal1$2$22___2)))))));
-            var y$15 = new $c_T4(_1$11, _2$17, t, lp);
-            var value$11 = new $c_T2(self$9, y$15);
-            var x4 = new $c_s_Some(value$11);
-            break;
-          }
-        }
-        if ((x8 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
-          var x$1$9 = $as_Llince_syntax_Lince$Program$EqDiff(x8);
-          var this$117 = $n(x$1$9);
-          var x11$1 = this$117.Llince_syntax_Lince$Program$EqDiff__f_eqs;
-          var this$118 = $n(x$1$9);
-          var x12$1 = this$118.Llince_syntax_Lince$Program$EqDiff__f_dur;
-          var $x_16 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$23 = v$lzy1;
-          var st$tailLocal1$2$23___1 = st$tailLocal1___1;
-          var st$tailLocal1$2$23___2 = st$tailLocal1___2;
-          var st$tailLocal1$2$23___3 = st$tailLocal1___3;
-          var st$tailLocal1$2$23___4 = st$tailLocal1___4;
-          var dur$2 = $x_16.apply__Llince_syntax_Lince$Expr__sc_Map__D(x12$1, $as_sci_Map(($n(v$lzy1$2$23).sr_LazyRef__f__initialized ? $n(v$lzy1$2$23).sr_LazyRef__f__value : ($n(v$lzy1$2$23), $as_sci_Map(($n(v$lzy1$2$23).sr_LazyRef__f__initialized ? $n(v$lzy1$2$23).sr_LazyRef__f__value : $n(v$lzy1$2$23).initialize__O__O($as_sci_Map(st$tailLocal1$2$23___2))))))));
-          if ((dur$2 > t)) {
-            var n$1 = (dur$2 - t);
-            var dur$3 = new $c_Llince_syntax_Lince$Expr$Num(n$1);
-            var _1$12 = new $c_Llince_syntax_Lince$Program$EqDiff(x11$1, dur$3);
-            var $x_17 = $m_Llince_backend_RungeKutta$();
-            var v$lzy1$2$24 = v$lzy1;
-            var st$tailLocal1$2$24___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$24___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$24___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$24___4 = st$tailLocal1___4;
-            var _2$18 = $x_17.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$24).sr_LazyRef__f__initialized ? $n(v$lzy1$2$24).sr_LazyRef__f__value : ($n(v$lzy1$2$24), $as_sci_Map(($n(v$lzy1$2$24).sr_LazyRef__f__initialized ? $n(v$lzy1$2$24).sr_LazyRef__f__value : $n(v$lzy1$2$24).initialize__O__O($as_sci_Map(st$tailLocal1$2$24___2))))))), x11$1, t);
-            var y$16 = new $c_T4(_1$12, _2$18, 0.0, lp);
-            var value$12 = new $c_T2("diff-stop", y$16);
-            var x4 = new $c_s_Some(value$12);
-            break;
-          } else {
-            var _1$13 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-            var $x_18 = $m_Llince_backend_RungeKutta$();
-            var v$lzy1$2$25 = v$lzy1;
-            var st$tailLocal1$2$25___1 = st$tailLocal1___1;
-            var st$tailLocal1$2$25___2 = st$tailLocal1___2;
-            var st$tailLocal1$2$25___3 = st$tailLocal1___3;
-            var st$tailLocal1$2$25___4 = st$tailLocal1___4;
-            var _2$19 = $x_18.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$25).sr_LazyRef__f__initialized ? $n(v$lzy1$2$25).sr_LazyRef__f__value : ($n(v$lzy1$2$25), $as_sci_Map(($n(v$lzy1$2$25).sr_LazyRef__f__initialized ? $n(v$lzy1$2$25).sr_LazyRef__f__value : $n(v$lzy1$2$25).initialize__O__O($as_sci_Map(st$tailLocal1$2$25___2))))))), x11$1, dur$2);
-            var _3$1 = (t - dur$2);
-            var y$17 = new $c_T4(_1$13, _2$19, _3$1, lp);
-            var value$13 = new $c_T2("diff-skip", y$17);
-            var x4 = new $c_s_Some(value$13);
-            break;
-          }
-        }
-        throw new $c_s_MatchError(x8);
-      }
-      var x$4 = $m_s_None$();
-      if ((x$4 === x4)) {
-        res = ((res + ("[" + time)) + "] Cont DONE\n");
-        done = true;
         break matchResult2;
       }
-      if ((x4 instanceof $c_s_Some)) {
-        var x6 = $as_T2($n($as_s_Some(x4)).s_Some__f_value);
-        if ((x6 !== null)) {
-          $as_T($n(x6)._1__O());
-          var st2$3 = $as_T4($n(x6)._2__O());
-          res = ((res + ((((("passed " + (stepSize - $uD($n(st2$3).T4__f__3))) + " (started at ") + stepSize) + ", ended at ") + $n(st2$3).T4__f__3)) + ")\n");
-          time = (time + (stepSize - $uD($n(st2$3).T4__f__3)));
-          var _3$1$1 = ($uD($n(st).T4__f__3) - (stepSize - $uD($n(st2$3).T4__f__3)));
-          var this$129 = $n(st2$3);
-          var _1$1$1 = $as_Llince_syntax_Lince$Program(this$129.T4__f__1);
-          var this$130 = $n(st2$3);
-          var _2$1$1 = $as_sci_Map(this$130.T4__f__2);
-          var this$131 = $n(st2$3);
-          var _4$1$1 = $uI(this$131.T4__f__4);
+      throw new $c_s_MatchError(x6);
+    }
+    $as_sci_List(\u03b41$___1);
+    var st2$2 = $as_Llince_backend_Semantics$St(\u03b41$___2);
+    res = ((res + (">>> pre-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($n(st).Llince_backend_Semantics$St__f_p))) + "\n");
+    st = st2$2;
+    res = ((res + ((("[" + time) + "] Disc to ") + $n(st).Llince_backend_Semantics$St__f_v)) + "\n");
+    res = ((res + (">>> pos-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($n(st).Llince_backend_Semantics$St__f_p))) + "\n");
+    matchResult3: {
+      var $x_1 = $m_Llince_backend_Semantics$();
+      var \u03b42$ = st;
+      $n(\u03b42$);
+      var this$2 = $n(\u03b42$);
+      var p = this$2.Llince_backend_Semantics$St__f_p;
+      var this$3 = $n(\u03b42$);
+      var v = this$3.Llince_backend_Semantics$St__f_v;
+      var this$4 = $n(\u03b42$);
+      var lp = this$4.Llince_backend_Semantics$St__f_lp;
+      var x9 = $x_1.step__Llince_backend_Semantics$St__s_Option(new $c_Llince_backend_Semantics$St(p, v, stepSize, lp));
+      var x = $m_s_None$();
+      if ((x === x9)) {
+        res = ((res + ("[" + time)) + "] Cont DONE\n");
+        done = true;
+        break matchResult3;
+      }
+      if ((x9 instanceof $c_s_Some)) {
+        var x11 = $as_T2($n($as_s_Some(x9)).s_Some__f_value);
+        if ((x11 !== null)) {
+          $as_T($n(x11)._1__O());
+          var st2$3 = $as_Llince_backend_Semantics$St($n(x11)._2__O());
+          res = ((res + ((((("passed " + (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t)) + " (started at ") + stepSize) + ", ended at ") + $n(st2$3).Llince_backend_Semantics$St__f_t)) + ")\n");
+          time = (time + (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t));
+          var t$1 = ($n(st).Llince_backend_Semantics$St__f_t - (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t));
+          var this$6 = $n(st2$3);
+          var p$1 = this$6.Llince_backend_Semantics$St__f_p;
+          var this$7 = $n(st2$3);
+          var v$1 = this$7.Llince_backend_Semantics$St__f_v;
+          var this$8 = $n(st2$3);
+          var lp$1 = this$8.Llince_backend_Semantics$St__f_lp;
           $n(st2$3);
-          st = new $c_T4(_1$1$1, _2$1$1, _3$1$1, _4$1$1);
-          if ($m_Llince_backend_Semantics$().accepting__T4__Z(st)) {
+          st = new $c_Llince_backend_Semantics$St(p$1, v$1, t$1, lp$1);
+          if ($m_Llince_backend_Semantics$().accepting__Llince_backend_Semantics$St__Z(st)) {
             res = (res + "accepting!!\n");
             done = true;
           }
-          res = ((res + ((("[" + time) + "] Cont to ") + $n(st).T4__f__2)) + "\n");
-          break matchResult2;
+          res = ((res + ((("[" + time) + "] Cont to ") + $n(st).Llince_backend_Semantics$St__f_v)) + "\n");
+          break matchResult3;
         }
       }
-      throw new $c_s_MatchError(x4);
+      throw new $c_s_MatchError(x9);
     }
   }
   return res;
@@ -13187,10 +12888,14 @@ $c_Llince_syntax_Show$.prototype.simpleStatm__Llince_syntax_Lince$Program__T = (
     return this.apply__Llince_syntax_Lince$Program__T(p$tailLocal1);
   }
 });
-$c_Llince_syntax_Show$.prototype.simpleSt__T4__T = (function(st) {
-  var $x_1 = $n(st).T4__f__3;
-  var this$1 = $n($as_sc_IterableOnceOps($n(st).T4__f__2));
-  return ((((("[" + $x_1) + "] ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$1, "", ",", "")) + ": ") + this.simpleStatm__Llince_syntax_Lince$Program__T($as_Llince_syntax_Lince$Program($n(st).T4__f__1)));
+$c_Llince_syntax_Show$.prototype.simpleSt__Llince_backend_Semantics$St__T = (function(st) {
+  var this$1 = $n(st);
+  var $x_2 = this$1.Llince_backend_Semantics$St__f_t;
+  var this$2 = $n(st);
+  var this$3 = $n(this$2.Llince_backend_Semantics$St__f_v);
+  var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$3, "", ",", "");
+  var this$4 = $n(st);
+  return ((((("[" + $x_2) + "] ") + $x_1) + ": ") + this.simpleStatm__Llince_syntax_Lince$Program__T(this$4.Llince_backend_Semantics$St__f_p));
 });
 var $d_Llince_syntax_Show$ = new $TypeData().initClass($c_Llince_syntax_Show$, "lince.syntax.Show$", ({
   Llince_syntax_Show$: 1
@@ -19530,7 +19235,7 @@ $c_Lcaos_frontend_widgets_Explore.prototype.initialise__V = (function() {
     var self = this.Lcaos_frontend_widgets_Explore__f_root;
     var this$2 = $n(this.Lcaos_frontend_widgets_Explore__f_sos);
     var s = this.Lcaos_frontend_widgets_Explore__f_root;
-    var y = this$2.next__T4__sci_Set($as_T4(s));
+    var y = this$2.next__Llince_backend_Semantics$St__sci_Set($as_Llince_backend_Semantics$St(s));
     var elems = $x_1.wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([new $c_T2(self, y)]));
     this.Lcaos_frontend_widgets_Explore__f_tree = this$4.from__sc_IterableOnce__sci_Map(elems);
     this.updateDiagram__V();
@@ -19549,7 +19254,7 @@ $c_Lcaos_frontend_widgets_Explore.prototype.expandState__O__V = (function(st) {
   try {
     var $x_1 = this.Lcaos_frontend_widgets_Explore__f_tree;
     var this$2 = $n(this.Lcaos_frontend_widgets_Explore__f_sos);
-    var y = this$2.next__T4__sci_Set($as_T4(st));
+    var y = this$2.next__Llince_backend_Semantics$St__sci_Set($as_Llince_backend_Semantics$St(st));
     this.Lcaos_frontend_widgets_Explore__f_tree = $as_sci_Map($n($x_1).$plus__T2__sci_MapOps(new $c_T2(st, y)));
     this.updateDiagram__V();
     $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().location.replace(("#" + this.mkStId__O__T(st)));
@@ -20077,7 +19782,7 @@ $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.updateEnabledActions__O__V =
 });
 $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.showTerminal__O__V = (function(from) {
   var this$1 = $n($n(this.Lcaos_frontend_widgets_SimulateMermaid__f_simulate).Lcaos_frontend_widgets_WidgetInfo$Simulate__f_sos);
-  if (this$1.accepting__T4__Z($as_T4(from))) {
+  if (this$1.accepting__Llince_backend_Semantics$St__Z($as_Llince_backend_Semantics$St(from))) {
     $n($n($n($n(this.Lcaos_frontend_widgets_SimulateMermaid__f_top).append__T__Lcaos_frontend_widgets_DomElem("p")).append__T__Lcaos_frontend_widgets_DomElem("span")).style__T__Lcaos_frontend_widgets_DomElem("font-weight:bold;")).textEl__T__Lcaos_frontend_widgets_DomElem("- Terminal -");
   }
 });
@@ -20107,7 +19812,7 @@ $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.showTrace__V = (function() {
 $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.showEnabled__O__V = (function(from) {
   $n(this.Lcaos_frontend_widgets_SimulateMermaid__f_left).html__T__Lcaos_frontend_widgets_DomElem("");
   var this$1 = $n($n(this.Lcaos_frontend_widgets_SimulateMermaid__f_simulate).Lcaos_frontend_widgets_WidgetInfo$Simulate__f_sos);
-  var enabled = this$1.next__T4__sci_Set($as_T4(from));
+  var enabled = this$1.next__Llince_backend_Semantics$St__sci_Set($as_Llince_backend_Semantics$St(from));
   var ul = $n($n(this.Lcaos_frontend_widgets_SimulateMermaid__f_left).append__T__Lcaos_frontend_widgets_DomElem("ul")).style__T__Lcaos_frontend_widgets_DomElem("list-style-type:none;padding:0;margin:0;");
   $n($n($n($n(ul).append__T__Lcaos_frontend_widgets_DomElem("li")).append__T__Lcaos_frontend_widgets_DomElem("span")).style__T__Lcaos_frontend_widgets_DomElem("font-weight:bold;")).textEl__T__Lcaos_frontend_widgets_DomElem("Enabled transitions:");
   var this$2 = $n(enabled);
@@ -20353,14 +20058,14 @@ $c_Lcaos_frontend_widgets_SimulateText.prototype.showTrace__V = (function() {
 });
 $c_Lcaos_frontend_widgets_SimulateText.prototype.showTerminal__O__V = (function(from) {
   var this$1 = $n($n(this.Lcaos_frontend_widgets_SimulateText__f_simulate).Lcaos_frontend_widgets_WidgetInfo$Simulate__f_sos);
-  if (this$1.accepting__T4__Z($as_T4(from))) {
+  if (this$1.accepting__Llince_backend_Semantics$St__Z($as_Llince_backend_Semantics$St(from))) {
     $n($n($n($n(this.Lcaos_frontend_widgets_SimulateText__f_top).append__T__Lcaos_frontend_widgets_DomElem("p")).append__T__Lcaos_frontend_widgets_DomElem("span")).style__T__Lcaos_frontend_widgets_DomElem("font-weight:bold;")).textEl__T__Lcaos_frontend_widgets_DomElem("- Terminal -");
   }
 });
 $c_Lcaos_frontend_widgets_SimulateText.prototype.showEnabled__O__V = (function(from) {
   $n(this.Lcaos_frontend_widgets_SimulateText__f_left).html__T__Lcaos_frontend_widgets_DomElem("");
   var this$1 = $n($n(this.Lcaos_frontend_widgets_SimulateText__f_simulate).Lcaos_frontend_widgets_WidgetInfo$Simulate__f_sos);
-  var enabled = this$1.next__T4__sci_Set($as_T4(from));
+  var enabled = this$1.next__Llince_backend_Semantics$St__sci_Set($as_Llince_backend_Semantics$St(from));
   var ul = $n($n(this.Lcaos_frontend_widgets_SimulateText__f_left).append__T__Lcaos_frontend_widgets_DomElem("ul")).style__T__Lcaos_frontend_widgets_DomElem("list-style-type:none;padding:0;margin:0;");
   $n($n($n($n(ul).append__T__Lcaos_frontend_widgets_DomElem("li")).append__T__Lcaos_frontend_widgets_DomElem("span")).style__T__Lcaos_frontend_widgets_DomElem("font-weight:bold;")).textEl__T__Lcaos_frontend_widgets_DomElem("Enabled transitions:");
   var this$2 = $n(enabled);
@@ -23152,12 +22857,12 @@ var $d_ju_regex_Pattern = new $TypeData().initClass($c_ju_regex_Pattern, "java.u
   ju_regex_Pattern: 1,
   Ljava_io_Serializable: 1
 }));
-function $p_Llince_backend_Semantics$__v$lzyINIT1$1__sr_LazyRef__T4__sci_Map($thiz, v$lzy1$1, st$tailLocal1$1) {
+function $p_Llince_backend_Semantics$__v$lzyINIT1$1__sr_LazyRef__Llince_backend_Semantics$St__sci_Map($thiz, v$lzy1$1, st$tailLocal1$1) {
   $n(v$lzy1$1);
-  return $as_sci_Map(($n(v$lzy1$1).sr_LazyRef__f__initialized ? $n(v$lzy1$1).sr_LazyRef__f__value : $n(v$lzy1$1).initialize__O__O($as_sci_Map($n(st$tailLocal1$1).T4__f__2))));
+  return $as_sci_Map(($n(v$lzy1$1).sr_LazyRef__f__initialized ? $n(v$lzy1$1).sr_LazyRef__f__value : $n(v$lzy1$1).initialize__O__O($n(st$tailLocal1$1).Llince_backend_Semantics$St__f_v)));
 }
-function $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map($thiz, v$lzy1$2, st$tailLocal1$2) {
-  return $as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : $p_Llince_backend_Semantics$__v$lzyINIT1$1__sr_LazyRef__T4__sci_Map($thiz, v$lzy1$2, st$tailLocal1$2)));
+function $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map($thiz, v$lzy1$2, st$tailLocal1$2) {
+  return $as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : $p_Llince_backend_Semantics$__v$lzyINIT1$1__sr_LazyRef__Llince_backend_Semantics$St__sci_Map($thiz, v$lzy1$2, st$tailLocal1$2)));
 }
 /** @constructor */
 function $c_Llince_backend_Semantics$() {
@@ -23168,415 +22873,157 @@ $c_Llince_backend_Semantics$.prototype.constructor = $c_Llince_backend_Semantics
 function $h_Llince_backend_Semantics$() {
 }
 $h_Llince_backend_Semantics$.prototype = $c_Llince_backend_Semantics$.prototype;
-$c_Llince_backend_Semantics$.prototype.accepting__T4__Z = (function(s) {
-  return (($uD($n(s).T4__f__3) <= 0.0) || ($uI($n(s).T4__f__4) <= 0));
+$c_Llince_backend_Semantics$.prototype.accepting__Llince_backend_Semantics$St__Z = (function(s) {
+  return (($n(s).Llince_backend_Semantics$St__f_t <= 0.0) || ($n(s).Llince_backend_Semantics$St__f_lp <= 0));
 });
-$c_Llince_backend_Semantics$.prototype.next__T4__sci_Set = (function(st) {
-  var this$1 = $n($m_s_Option$().option2Iterable__s_Option__sc_Iterable(this.step__T4__s_Option(st)));
+$c_Llince_backend_Semantics$.prototype.next__Llince_backend_Semantics$St__sci_Set = (function(st) {
+  var this$1 = $n($m_s_Option$().option2Iterable__s_Option__sc_Iterable(this.step__Llince_backend_Semantics$St__s_Option(st)));
   return $m_sci_Set$().from__sc_IterableOnce__sci_Set(this$1);
 });
-$c_Llince_backend_Semantics$.prototype.step__T4__s_Option = (function(st) {
+$c_Llince_backend_Semantics$.prototype.step__Llince_backend_Semantics$St__s_Option = (function(st) {
   var st$tailLocal1 = st;
   while (true) {
     var v$lzy1 = new $c_sr_LazyRef();
-    if ((($uD($n(st$tailLocal1).T4__f__3) <= 0.0) || ($uI($n(st$tailLocal1).T4__f__4) <= 0))) {
+    if ((($n(st$tailLocal1).Llince_backend_Semantics$St__f_t <= 0.0) || ($n(st$tailLocal1).Llince_backend_Semantics$St__f_lp <= 0))) {
       return $m_s_None$();
     }
-    var t = $uD($n(st$tailLocal1).T4__f__3);
-    var lp = $uI($n(st$tailLocal1).T4__f__4);
-    var x8 = $as_Llince_syntax_Lince$Program($n(st$tailLocal1).T4__f__1);
+    var t = $n(st$tailLocal1).Llince_backend_Semantics$St__f_t;
+    var lp = $n(st$tailLocal1).Llince_backend_Semantics$St__f_lp;
+    var this$1 = $n(st$tailLocal1);
+    var x13 = this$1.Llince_backend_Semantics$St__f_p;
     var x = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-    if (((x === null) ? (x8 === null) : $n(x).equals__O__Z(x8))) {
+    if (((x === null) ? (x13 === null) : $n(x).equals__O__Z(x13))) {
       return $m_s_None$();
     }
-    if ((x8 instanceof $c_Llince_syntax_Lince$Program$Assign)) {
-      var x$1 = $as_Llince_syntax_Lince$Program$Assign(x8);
-      var this$2 = $n(x$1);
-      var x32 = this$2.Llince_syntax_Lince$Program$Assign__f_v;
+    if ((x13 instanceof $c_Llince_syntax_Lince$Program$Assign)) {
+      var x$1 = $as_Llince_syntax_Lince$Program$Assign(x13);
       var this$3 = $n(x$1);
-      var x33 = this$3.Llince_syntax_Lince$Program$Assign__f_e;
-      var self = ((x32 + ":=") + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(x33));
-      var _1 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-      var $x_1 = $n($p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1));
-      var y = $m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Expr__sc_Map__D(x33, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1));
-      var _2 = $x_1.$plus__T2__sci_MapOps(new $c_T2(x32, y));
-      var y$1 = new $c_T4(_1, _2, t, lp);
+      var x37 = this$3.Llince_syntax_Lince$Program$Assign__f_v;
+      var this$4 = $n(x$1);
+      var x38 = this$4.Llince_syntax_Lince$Program$Assign__f_e;
+      var self = ((x37 + ":=") + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(x38));
+      var p = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
+      var $x_1 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+      var y = $m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Expr__sc_Map__D(x38, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1));
+      var v = $as_sci_Map($n($x_1).$plus__T2__sci_MapOps(new $c_T2(x37, y)));
+      var y$1 = new $c_Llince_backend_Semantics$St(p, v, t, lp);
       var value = new $c_T2(self, y$1);
       return new $c_s_Some(value);
     }
-    if ((x8 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
-      var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x8);
-      var this$11 = $n(x$1$1);
-      var x28 = this$11.Llince_syntax_Lince$Program$Seq__f_p;
+    if ((x13 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
+      var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x13);
       var this$12 = $n(x$1$1);
-      var x29 = this$12.Llince_syntax_Lince$Program$Seq__f_q;
+      var x33 = this$12.Llince_syntax_Lince$Program$Seq__f_p;
+      var this$13 = $n(x$1$1);
+      var x34 = this$13.Llince_syntax_Lince$Program$Seq__f_q;
       var x$3 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-      if (((x$3 === null) ? (x28 === null) : $n(x$3).equals__O__Z(x28))) {
-        var _2$1 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-        st$tailLocal1 = new $c_T4(x29, _2$1, t, lp);
+      if (((x$3 === null) ? (x33 === null) : $n(x$3).equals__O__Z(x33))) {
+        var v$1 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+        st$tailLocal1 = new $c_Llince_backend_Semantics$St(x34, v$1, t, lp);
         continue;
       }
-      var _2$2 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-      var this$71;
-      var st$tailLocal1$1___1 = x28;
-      var st$tailLocal1$1___2 = _2$2;
-      var st$tailLocal1$1___3 = t;
-      var st$tailLocal1$1___4 = lp;
-      while (true) {
-        var v$lzy1$1 = new $c_sr_LazyRef();
-        if ((($uD(st$tailLocal1$1___3) <= 0.0) || ($uI(st$tailLocal1$1___4) <= 0))) {
-          var this$71 = $m_s_None$();
-          break;
-        }
-        var t$1 = $uD(st$tailLocal1$1___3);
-        var lp$1 = $uI(st$tailLocal1$1___4);
-        var x8$1 = $as_Llince_syntax_Lince$Program(st$tailLocal1$1___1);
-        var x$2 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-        if (((x$2 === null) ? (x8$1 === null) : $n(x$2).equals__O__Z(x8$1))) {
-          var this$71 = $m_s_None$();
-          break;
-        }
-        if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$Assign)) {
-          var x$1$2 = $as_Llince_syntax_Lince$Program$Assign(x8$1);
-          var this$16 = $n(x$1$2);
-          var x32$1 = this$16.Llince_syntax_Lince$Program$Assign__f_v;
-          var this$17 = $n(x$1$2);
-          var x33$1 = this$17.Llince_syntax_Lince$Program$Assign__f_e;
-          var self$1 = ((x32$1 + ":=") + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(x33$1));
-          var _1$1 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-          var v$lzy1$2 = v$lzy1$1;
-          var st$tailLocal1$2___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2___4 = st$tailLocal1$1___4;
-          var $x_3 = $n($as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : ($n(v$lzy1$2), $as_sci_Map(($n(v$lzy1$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2).sr_LazyRef__f__value : $n(v$lzy1$2).initialize__O__O($as_sci_Map(st$tailLocal1$2___2))))))));
-          var $x_2 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$1 = v$lzy1$1;
-          var st$tailLocal1$2$1___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2$1___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2$1___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2$1___4 = st$tailLocal1$1___4;
-          var y$2 = $x_2.apply__Llince_syntax_Lince$Expr__sc_Map__D(x33$1, $as_sci_Map(($n(v$lzy1$2$1).sr_LazyRef__f__initialized ? $n(v$lzy1$2$1).sr_LazyRef__f__value : ($n(v$lzy1$2$1), $as_sci_Map(($n(v$lzy1$2$1).sr_LazyRef__f__initialized ? $n(v$lzy1$2$1).sr_LazyRef__f__value : $n(v$lzy1$2$1).initialize__O__O($as_sci_Map(st$tailLocal1$2$1___2))))))));
-          var _2$3 = $x_3.$plus__T2__sci_MapOps(new $c_T2(x32$1, y$2));
-          var y$3 = new $c_T4(_1$1, _2$3, t$1, lp$1);
-          var value$1 = new $c_T2(self$1, y$3);
-          var this$71 = new $c_s_Some(value$1);
-          break;
-        }
-        if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
-          var x$1$3 = $as_Llince_syntax_Lince$Program$Seq(x8$1);
-          var this$25 = $n(x$1$3);
-          var x28$1 = this$25.Llince_syntax_Lince$Program$Seq__f_p;
-          var this$26 = $n(x$1$3);
-          var x29$1 = this$26.Llince_syntax_Lince$Program$Seq__f_q;
-          var x$3$1 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-          if (((x$3$1 === null) ? (x28$1 === null) : $n(x$3$1).equals__O__Z(x28$1))) {
-            var v$lzy1$2$2 = v$lzy1$1;
-            var st$tailLocal1$2$2___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$2___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$2___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$2___4 = st$tailLocal1$1___4;
-            var _2$4 = $as_sci_Map(($n(v$lzy1$2$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2$2).sr_LazyRef__f__value : ($n(v$lzy1$2$2), $as_sci_Map(($n(v$lzy1$2$2).sr_LazyRef__f__initialized ? $n(v$lzy1$2$2).sr_LazyRef__f__value : $n(v$lzy1$2$2).initialize__O__O($as_sci_Map(st$tailLocal1$2$2___2)))))));
-            var $x_4___1 = x29$1;
-            var $x_4___2 = _2$4;
-            var $x_4___3 = t$1;
-            var $x_4___4 = lp$1;
-            st$tailLocal1$1___1 = $x_4___1;
-            st$tailLocal1$1___2 = $x_4___2;
-            st$tailLocal1$1___3 = $x_4___3;
-            st$tailLocal1$1___4 = $x_4___4;
-            continue;
-          }
-          var v$lzy1$2$3 = v$lzy1$1;
-          var st$tailLocal1$2$3___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2$3___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2$3___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2$3___4 = st$tailLocal1$1___4;
-          var _2$5 = $as_sci_Map(($n(v$lzy1$2$3).sr_LazyRef__f__initialized ? $n(v$lzy1$2$3).sr_LazyRef__f__value : ($n(v$lzy1$2$3), $as_sci_Map(($n(v$lzy1$2$3).sr_LazyRef__f__initialized ? $n(v$lzy1$2$3).sr_LazyRef__f__value : $n(v$lzy1$2$3).initialize__O__O($as_sci_Map(st$tailLocal1$2$3___2)))))));
-          var this$29 = $n(this.step__T4__s_Option(new $c_T4(x28$1, _2$5, t$1, lp$1)));
-          if (this$29.isEmpty__Z()) {
-            var this$71 = $m_s_None$();
-            break;
-          } else {
-            var x0 = this$29.get__O();
-            var x$1$4 = $as_T2(x0);
-            matchResult1$1: {
-              var $x_5;
-              if ((x$1$4 !== null)) {
-                var x3 = $as_T4($n(x$1$4)._2__O());
-                var a = $as_T($n(x$1$4)._1__O());
-                if ((x3 !== null)) {
-                  var p2 = $as_Llince_syntax_Lince$Program($n(x3).T4__f__1);
-                  var v2 = $as_sci_Map($n(x3).T4__f__2);
-                  var t2 = $uD($n(x3).T4__f__3);
-                  var lp2 = $uI($n(x3).T4__f__4);
-                  var _1$2 = new $c_Llince_syntax_Lince$Program$Seq(p2, x29$1);
-                  var y$4 = new $c_T4(_1$2, v2, t2, lp2);
-                  var $x_5 = new $c_T2(a, y$4);
-                  break matchResult1$1;
-                }
-              }
-              throw new $c_s_MatchError(x$1$4);
-            }
-            var this$71 = new $c_s_Some($x_5);
-            break;
-          }
-        }
-        if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
-          var x$1$5 = $as_Llince_syntax_Lince$Program$ITE(x8$1);
-          var this$35 = $n(x$1$5);
-          var x19 = this$35.Llince_syntax_Lince$Program$ITE__f_b;
-          var this$36 = $n(x$1$5);
-          var x20 = this$36.Llince_syntax_Lince$Program$ITE__f_pt;
-          var this$37 = $n(x$1$5);
-          var x21 = this$37.Llince_syntax_Lince$Program$ITE__f_pf;
-          var $x_6 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$4 = v$lzy1$1;
-          var st$tailLocal1$2$4___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2$4___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2$4___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2$4___4 = st$tailLocal1$1___4;
-          if ($x_6.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19, $as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : ($n(v$lzy1$2$4), $as_sci_Map(($n(v$lzy1$2$4).sr_LazyRef__f__initialized ? $n(v$lzy1$2$4).sr_LazyRef__f__value : $n(v$lzy1$2$4).initialize__O__O($as_sci_Map(st$tailLocal1$2$4___2))))))))) {
-            var self$2 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
-            var v$lzy1$2$5 = v$lzy1$1;
-            var st$tailLocal1$2$5___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$5___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$5___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$5___4 = st$tailLocal1$1___4;
-            var _2$6 = $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : ($n(v$lzy1$2$5), $as_sci_Map(($n(v$lzy1$2$5).sr_LazyRef__f__initialized ? $n(v$lzy1$2$5).sr_LazyRef__f__value : $n(v$lzy1$2$5).initialize__O__O($as_sci_Map(st$tailLocal1$2$5___2)))))));
-            var y$5 = new $c_T4(x20, _2$6, t$1, lp$1);
-            var value$2 = new $c_T2(self$2, y$5);
-            var this$71 = new $c_s_Some(value$2);
-            break;
-          } else {
-            var self$3 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19)) + ")");
-            var v$lzy1$2$6 = v$lzy1$1;
-            var st$tailLocal1$2$6___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$6___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$6___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$6___4 = st$tailLocal1$1___4;
-            var _2$7 = $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : ($n(v$lzy1$2$6), $as_sci_Map(($n(v$lzy1$2$6).sr_LazyRef__f__initialized ? $n(v$lzy1$2$6).sr_LazyRef__f__value : $n(v$lzy1$2$6).initialize__O__O($as_sci_Map(st$tailLocal1$2$6___2)))))));
-            var y$6 = new $c_T4(x21, _2$7, t$1, lp$1);
-            var value$3 = new $c_T2(self$3, y$6);
-            var this$71 = new $c_s_Some(value$3);
-            break;
-          }
-        }
-        if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$While)) {
-          var x13 = $as_Llince_syntax_Lince$Program$While(x8$1);
-          var this$47 = $n(x13);
-          var x15 = this$47.Llince_syntax_Lince$Program$While__f_b;
-          var this$48 = $n(x13);
-          var x16 = this$48.Llince_syntax_Lince$Program$While__f_p;
-          var $x_7 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$7 = v$lzy1$1;
-          var st$tailLocal1$2$7___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2$7___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2$7___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2$7___4 = st$tailLocal1$1___4;
-          if ($x_7.apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15, $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : ($n(v$lzy1$2$7), $as_sci_Map(($n(v$lzy1$2$7).sr_LazyRef__f__initialized ? $n(v$lzy1$2$7).sr_LazyRef__f__value : $n(v$lzy1$2$7).initialize__O__O($as_sci_Map(st$tailLocal1$2$7___2))))))))) {
-            var self$4 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
-            var _1$3 = new $c_Llince_syntax_Lince$Program$Seq(x16, x13);
-            var v$lzy1$2$8 = v$lzy1$1;
-            var st$tailLocal1$2$8___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$8___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$8___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$8___4 = st$tailLocal1$1___4;
-            var _2$8 = $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : ($n(v$lzy1$2$8), $as_sci_Map(($n(v$lzy1$2$8).sr_LazyRef__f__initialized ? $n(v$lzy1$2$8).sr_LazyRef__f__value : $n(v$lzy1$2$8).initialize__O__O($as_sci_Map(st$tailLocal1$2$8___2)))))));
-            var _4 = (((-1) + lp$1) | 0);
-            var y$7 = new $c_T4(_1$3, _2$8, t$1, _4);
-            var value$4 = new $c_T2(self$4, y$7);
-            var this$71 = new $c_s_Some(value$4);
-            break;
-          } else {
-            var self$5 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15)) + ")");
-            var _1$4 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-            var v$lzy1$2$9 = v$lzy1$1;
-            var st$tailLocal1$2$9___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$9___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$9___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$9___4 = st$tailLocal1$1___4;
-            var _2$9 = $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : ($n(v$lzy1$2$9), $as_sci_Map(($n(v$lzy1$2$9).sr_LazyRef__f__initialized ? $n(v$lzy1$2$9).sr_LazyRef__f__value : $n(v$lzy1$2$9).initialize__O__O($as_sci_Map(st$tailLocal1$2$9___2)))))));
-            var y$8 = new $c_T4(_1$4, _2$9, t$1, lp$1);
-            var value$5 = new $c_T2(self$5, y$8);
-            var this$71 = new $c_s_Some(value$5);
-            break;
-          }
-        }
-        if ((x8$1 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
-          var x$1$6 = $as_Llince_syntax_Lince$Program$EqDiff(x8$1);
-          var this$59 = $n(x$1$6);
-          var x11 = this$59.Llince_syntax_Lince$Program$EqDiff__f_eqs;
-          var this$60 = $n(x$1$6);
-          var x12 = this$60.Llince_syntax_Lince$Program$EqDiff__f_dur;
-          var $x_8 = $m_Llince_backend_Eval$();
-          var v$lzy1$2$10 = v$lzy1$1;
-          var st$tailLocal1$2$10___1 = st$tailLocal1$1___1;
-          var st$tailLocal1$2$10___2 = st$tailLocal1$1___2;
-          var st$tailLocal1$2$10___3 = st$tailLocal1$1___3;
-          var st$tailLocal1$2$10___4 = st$tailLocal1$1___4;
-          var dur = $x_8.apply__Llince_syntax_Lince$Expr__sc_Map__D(x12, $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : ($n(v$lzy1$2$10), $as_sci_Map(($n(v$lzy1$2$10).sr_LazyRef__f__initialized ? $n(v$lzy1$2$10).sr_LazyRef__f__value : $n(v$lzy1$2$10).initialize__O__O($as_sci_Map(st$tailLocal1$2$10___2))))))));
-          if ((dur > t$1)) {
-            var n = (dur - t$1);
-            var dur$1 = new $c_Llince_syntax_Lince$Expr$Num(n);
-            var _1$5 = new $c_Llince_syntax_Lince$Program$EqDiff(x11, dur$1);
-            var $x_9 = $m_Llince_backend_RungeKutta$();
-            var v$lzy1$2$11 = v$lzy1$1;
-            var st$tailLocal1$2$11___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$11___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$11___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$11___4 = st$tailLocal1$1___4;
-            var _2$10 = $x_9.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : ($n(v$lzy1$2$11), $as_sci_Map(($n(v$lzy1$2$11).sr_LazyRef__f__initialized ? $n(v$lzy1$2$11).sr_LazyRef__f__value : $n(v$lzy1$2$11).initialize__O__O($as_sci_Map(st$tailLocal1$2$11___2))))))), x11, t$1);
-            var y$9 = new $c_T4(_1$5, _2$10, 0.0, lp$1);
-            var value$6 = new $c_T2("diff-stop", y$9);
-            var this$71 = new $c_s_Some(value$6);
-            break;
-          } else {
-            var _1$6 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-            var $x_10 = $m_Llince_backend_RungeKutta$();
-            var v$lzy1$2$12 = v$lzy1$1;
-            var st$tailLocal1$2$12___1 = st$tailLocal1$1___1;
-            var st$tailLocal1$2$12___2 = st$tailLocal1$1___2;
-            var st$tailLocal1$2$12___3 = st$tailLocal1$1___3;
-            var st$tailLocal1$2$12___4 = st$tailLocal1$1___4;
-            var _2$11 = $x_10.apply__sci_Map__sci_Map__D__sci_Map($as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : ($n(v$lzy1$2$12), $as_sci_Map(($n(v$lzy1$2$12).sr_LazyRef__f__initialized ? $n(v$lzy1$2$12).sr_LazyRef__f__value : $n(v$lzy1$2$12).initialize__O__O($as_sci_Map(st$tailLocal1$2$12___2))))))), x11, dur);
-            var _3 = (t$1 - dur);
-            var y$10 = new $c_T4(_1$6, _2$11, _3, lp$1);
-            var value$7 = new $c_T2("diff-skip", y$10);
-            var this$71 = new $c_s_Some(value$7);
-            break;
-          }
-        }
-        throw new $c_s_MatchError(x8$1);
-      }
-      if (this$71.isEmpty__Z()) {
+      var v$2 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+      var this$16 = $n(this.step__Llince_backend_Semantics$St__s_Option(new $c_Llince_backend_Semantics$St(x33, v$2, t, lp)));
+      if (this$16.isEmpty__Z()) {
         return $m_s_None$();
       } else {
-        var x0$1 = this$71.get__O();
-        var x$1$7 = $as_T2(x0$1);
-        matchResult1$2: {
-          var $x_11;
-          if ((x$1$7 !== null)) {
-            var x3$1 = $as_T4($n(x$1$7)._2__O());
-            var a$1 = $as_T($n(x$1$7)._1__O());
-            if ((x3$1 !== null)) {
-              var p2$1 = $as_Llince_syntax_Lince$Program($n(x3$1).T4__f__1);
-              var v2$1 = $as_sci_Map($n(x3$1).T4__f__2);
-              var t2$1 = $uD($n(x3$1).T4__f__3);
-              var lp2$1 = $uI($n(x3$1).T4__f__4);
-              var _1$7 = new $c_Llince_syntax_Lince$Program$Seq(p2$1, x29);
-              var y$11 = new $c_T4(_1$7, v2$1, t2$1, lp2$1);
-              var $x_11 = new $c_T2(a$1, y$11);
-              break matchResult1$2;
+        var x0 = this$16.get__O();
+        var x$1$2 = $as_T2(x0);
+        matchResult4: {
+          var $x_2;
+          if ((x$1$2 !== null)) {
+            var x7 = $as_Llince_backend_Semantics$St($n(x$1$2)._2__O());
+            var a = $as_T($n(x$1$2)._1__O());
+            if ((x7 !== null)) {
+              var this$18 = $n(x7);
+              var x9 = this$18.Llince_backend_Semantics$St__f_p;
+              var this$19 = $n(x7);
+              var x10 = this$19.Llince_backend_Semantics$St__f_v;
+              var this$20 = $n(x7);
+              var x11 = this$20.Llince_backend_Semantics$St__f_t;
+              var this$21 = $n(x7);
+              var x12 = this$21.Llince_backend_Semantics$St__f_lp;
+              var p$1 = new $c_Llince_syntax_Lince$Program$Seq(x9, x34);
+              var y$2 = new $c_Llince_backend_Semantics$St(p$1, x10, x11, x12);
+              var $x_2 = new $c_T2(a, y$2);
+              break matchResult4;
             }
           }
-          throw new $c_s_MatchError(x$1$7);
+          throw new $c_s_MatchError(x$1$2);
         }
-        return new $c_s_Some($x_11);
+        return new $c_s_Some($x_2);
       }
     }
-    if ((x8 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
-      var x$1$8 = $as_Llince_syntax_Lince$Program$ITE(x8);
-      var this$77 = $n(x$1$8);
-      var x19$1 = this$77.Llince_syntax_Lince$Program$ITE__f_b;
-      var this$78 = $n(x$1$8);
-      var x20$1 = this$78.Llince_syntax_Lince$Program$ITE__f_pt;
-      var this$79 = $n(x$1$8);
-      var x21$1 = this$79.Llince_syntax_Lince$Program$ITE__f_pf;
-      if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x19$1, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1))) {
-        var self$6 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
-        var _2$12 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-        var y$12 = new $c_T4(x20$1, _2$12, t, lp);
-        var value$8 = new $c_T2(self$6, y$12);
-        return new $c_s_Some(value$8);
+    if ((x13 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
+      var x$1$3 = $as_Llince_syntax_Lince$Program$ITE(x13);
+      var this$27 = $n(x$1$3);
+      var x24 = this$27.Llince_syntax_Lince$Program$ITE__f_b;
+      var this$28 = $n(x$1$3);
+      var x25 = this$28.Llince_syntax_Lince$Program$ITE__f_pt;
+      var this$29 = $n(x$1$3);
+      var x26 = this$29.Llince_syntax_Lince$Program$ITE__f_pf;
+      if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x24, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1))) {
+        var self$1 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24)) + ")");
+        var v$3 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+        var y$3 = new $c_Llince_backend_Semantics$St(x25, v$3, t, lp);
+        var value$1 = new $c_T2(self$1, y$3);
+        return new $c_s_Some(value$1);
       } else {
-        var self$7 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x19$1)) + ")");
-        var _2$13 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-        var y$13 = new $c_T4(x21$1, _2$13, t, lp);
-        var value$9 = new $c_T2(self$7, y$13);
-        return new $c_s_Some(value$9);
+        var self$2 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24)) + ")");
+        var v$4 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+        var y$4 = new $c_Llince_backend_Semantics$St(x26, v$4, t, lp);
+        var value$2 = new $c_T2(self$2, y$4);
+        return new $c_s_Some(value$2);
       }
     }
-    if ((x8 instanceof $c_Llince_syntax_Lince$Program$While)) {
-      var x13$1 = $as_Llince_syntax_Lince$Program$While(x8);
-      var this$89 = $n(x13$1);
-      var x15$1 = this$89.Llince_syntax_Lince$Program$While__f_b;
-      var this$90 = $n(x13$1);
-      var x16$1 = this$90.Llince_syntax_Lince$Program$While__f_p;
-      if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x15$1, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1))) {
-        var self$8 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
-        var _1$8 = new $c_Llince_syntax_Lince$Program$Seq(x16$1, x13$1);
-        var _2$14 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-        var _4$1 = (((-1) + lp) | 0);
-        var y$14 = new $c_T4(_1$8, _2$14, t, _4$1);
-        var value$10 = new $c_T2(self$8, y$14);
-        return new $c_s_Some(value$10);
+    if ((x13 instanceof $c_Llince_syntax_Lince$Program$While)) {
+      var x18 = $as_Llince_syntax_Lince$Program$While(x13);
+      var this$39 = $n(x18);
+      var x20 = this$39.Llince_syntax_Lince$Program$While__f_b;
+      var this$40 = $n(x18);
+      var x21 = this$40.Llince_syntax_Lince$Program$While__f_p;
+      if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x20, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1))) {
+        var self$3 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20)) + ")");
+        var p$2 = new $c_Llince_syntax_Lince$Program$Seq(x21, x18);
+        var v$5 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+        var lp$1 = (((-1) + lp) | 0);
+        var y$5 = new $c_Llince_backend_Semantics$St(p$2, v$5, t, lp$1);
+        var value$3 = new $c_T2(self$3, y$5);
+        return new $c_s_Some(value$3);
       } else {
-        var self$9 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x15$1)) + ")");
-        var _1$9 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-        var _2$15 = $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1);
-        var y$15 = new $c_T4(_1$9, _2$15, t, lp);
-        var value$11 = new $c_T2(self$9, y$15);
-        return new $c_s_Some(value$11);
+        var self$4 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20)) + ")");
+        var p$3 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
+        var v$6 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
+        var y$6 = new $c_Llince_backend_Semantics$St(p$3, v$6, t, lp);
+        var value$4 = new $c_T2(self$4, y$6);
+        return new $c_s_Some(value$4);
       }
     }
-    if ((x8 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
-      var x$1$9 = $as_Llince_syntax_Lince$Program$EqDiff(x8);
-      var this$101 = $n(x$1$9);
-      var x11$1 = this$101.Llince_syntax_Lince$Program$EqDiff__f_eqs;
-      var this$102 = $n(x$1$9);
-      var x12$1 = this$102.Llince_syntax_Lince$Program$EqDiff__f_dur;
-      var dur$2 = $m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Expr__sc_Map__D(x12$1, $p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1));
-      if ((dur$2 > t)) {
-        var n$1 = (dur$2 - t);
-        var dur$3 = new $c_Llince_syntax_Lince$Expr$Num(n$1);
-        var _1$10 = new $c_Llince_syntax_Lince$Program$EqDiff(x11$1, dur$3);
-        var _2$16 = $m_Llince_backend_RungeKutta$().apply__sci_Map__sci_Map__D__sci_Map($p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1), x11$1, t);
-        var y$16 = new $c_T4(_1$10, _2$16, 0.0, lp);
-        var value$12 = new $c_T2("diff-stop", y$16);
-        return new $c_s_Some(value$12);
+    if ((x13 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
+      var x$1$4 = $as_Llince_syntax_Lince$Program$EqDiff(x13);
+      var this$51 = $n(x$1$4);
+      var x16 = this$51.Llince_syntax_Lince$Program$EqDiff__f_eqs;
+      var this$52 = $n(x$1$4);
+      var x17 = this$52.Llince_syntax_Lince$Program$EqDiff__f_dur;
+      var dur = $m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Expr__sc_Map__D(x17, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1));
+      if ((dur > t)) {
+        var n = (dur - t);
+        var dur$1 = new $c_Llince_syntax_Lince$Expr$Num(n);
+        var p$4 = new $c_Llince_syntax_Lince$Program$EqDiff(x16, dur$1);
+        var v$7 = $m_Llince_backend_RungeKutta$().apply__sci_Map__sci_Map__D__sci_Map($p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1), x16, t);
+        var y$7 = new $c_Llince_backend_Semantics$St(p$4, v$7, 0.0, lp);
+        var value$5 = new $c_T2("diff-stop", y$7);
+        return new $c_s_Some(value$5);
       } else {
-        var _1$11 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-        var _2$17 = $m_Llince_backend_RungeKutta$().apply__sci_Map__sci_Map__D__sci_Map($p_Llince_backend_Semantics$__v$1__sr_LazyRef__T4__sci_Map(this, v$lzy1, st$tailLocal1), x11$1, dur$2);
-        var _3$1 = (t - dur$2);
-        var y$17 = new $c_T4(_1$11, _2$17, _3$1, lp);
-        var value$13 = new $c_T2("diff-skip", y$17);
-        return new $c_s_Some(value$13);
+        var p$5 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
+        var v$8 = $m_Llince_backend_RungeKutta$().apply__sci_Map__sci_Map__D__sci_Map($p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1), x16, dur);
+        var t$1 = (t - dur);
+        var y$8 = new $c_Llince_backend_Semantics$St(p$5, v$8, t$1, lp);
+        var value$6 = new $c_T2("diff-skip", y$8);
+        return new $c_s_Some(value$6);
       }
     }
-    throw new $c_s_MatchError(x8);
-  }
-});
-$c_Llince_backend_Semantics$.prototype.nextDisc__T4__sci_List__T2 = (function(st, hist) {
-  var hist$tailLocal1 = hist;
-  var st$tailLocal2 = st;
-  while (true) {
-    var x34 = this.step__T4__s_Option(st$tailLocal2);
-    var x = $m_s_None$();
-    if ((x === x34)) {
-      var self = hist$tailLocal1;
-      var y = st$tailLocal2;
-      return new $c_T2(self, y);
-    }
-    if ((x34 instanceof $c_s_Some)) {
-      var x36 = $as_T2($n($as_s_Some(x34)).s_Some__f_value);
-      if ((x36 !== null)) {
-        var a = $as_T($n(x36)._1__O());
-        var st2 = $as_T4($n(x36)._2__O());
-        if (($uD($n(st$tailLocal2).T4__f__3) === $uD($n(st2).T4__f__3))) {
-          var this$3 = $n(hist$tailLocal1);
-          var hist$tailLocal1$tmp1 = new $c_sci_$colon$colon(a, this$3);
-          st$tailLocal2 = st2;
-          hist$tailLocal1 = hist$tailLocal1$tmp1;
-          continue;
-        } else {
-          var _1 = hist$tailLocal1;
-          var _2 = st$tailLocal2;
-          return new $c_T2(_1, _2);
-        }
-      }
-    }
-    throw new $c_s_MatchError(x34);
+    throw new $c_s_MatchError(x13);
   }
 });
 var $d_Llince_backend_Semantics$ = new $TypeData().initClass($c_Llince_backend_Semantics$, "lince.backend.Semantics$", ({
@@ -23624,44 +23071,59 @@ function $c_Llince_frontend_CaosConfig$() {
   var example$3 = $as_T(nameCode$3.T2__f__2);
   var name$3 = $as_T(nameCode$3.T2__f__1);
   this.Llince_frontend_CaosConfig$__f_examples = new $c_sci_$colon$colon($x_3, new $c_sci_$colon$colon($x_2, new $c_sci_$colon$colon($x_1, new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example(example$3, name$3, ""), $m_sci_Nil$()))));
-  var y = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => $dp_toString__T($n(_$1)))), $m_Lcaos_view_Text$())));
-  var $x_6 = new $c_T2("View parsed", y);
-  var y$1 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p) => {
+  var y = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => $dp_toString__T($n(_$1)))), $m_Lcaos_view_Text$())), 1);
+  var $x_7 = new $c_T2("View parsed", y);
+  var y$1 = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p) => {
     var p$1 = $as_Llince_syntax_Lince$Program(p);
     return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Program__T(p$1);
-  })), $m_Lcaos_view_Text$());
-  var $x_5 = new $c_T2("View pretty", y$1);
+  })), new $c_Lcaos_view_Code("clike"))), 1);
+  var $x_6 = new $c_T2("View pretty", y$1);
   var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().steps__F1__Lcaos_sos_SOS__F1__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$2) => {
     var p$3 = $as_Llince_syntax_Lince$Program(p$2);
-    var this$23 = $m_sci_Map$();
+    var this$24 = $m_sci_Map$();
     var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
-    var _2 = this$23.from__sc_IterableOnce__sci_Map(elems);
-    return new $c_T4(p$3, _2, 3.0, 100);
+    var v = this$24.from__sc_IterableOnce__sci_Map(elems);
+    return new $c_Llince_backend_Semantics$St(p$3, v, 3.0, 100);
   })), $m_Llince_backend_Semantics$(), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((st) => {
-    var st$1 = $as_T4(st);
-    return $m_Llince_syntax_Show$().simpleSt__T4__T(st$1);
+    var st$1 = $as_Llince_backend_Semantics$St(st);
+    return $m_Llince_syntax_Show$().simpleSt__Llince_backend_Semantics$St__T(st$1);
   })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$2) => {
     var _$2$1 = $as_T(_$2);
-    var this$25 = $n(_$2$1);
-    return this$25;
+    var this$26 = $n(_$2$1);
+    return this$26;
   })), $m_Lcaos_view_Text$())));
-  var $x_4 = new $c_T2("Run semantics", y$2);
-  var y$3 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$3$1) => {
+  var $x_5 = new $c_T2("Run small-steps (3 time units)", y$2);
+  var y$3 = $m_Lcaos_frontend_Configurator$().lts__F1__Lcaos_sos_SOS__F1__F1__I__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$3$1) => {
     var p$4 = $as_Llince_syntax_Lince$Program(p$3$1);
-    var this$28 = $m_sci_Map$();
+    var this$29 = $m_sci_Map$();
     var elems$1 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
-    var _2$1 = this$28.from__sc_IterableOnce__sci_Map(elems$1);
-    var from$1 = new $c_T4(p$4, _2$1, 5.0, 100);
+    var v$1 = this$29.from__sc_IterableOnce__sci_Map(elems$1);
+    return new $c_Llince_backend_Semantics$St(p$4, v$1, 3.0, 100);
+  })), $m_Llince_backend_Semantics$(), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((st$2) => {
+    var st$3 = $as_Llince_backend_Semantics$St(st$2);
+    return $m_Llince_syntax_Show$().simpleSt__Llince_backend_Semantics$St__T(st$3);
+  })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$3) => {
+    var _$3$1 = $as_T(_$3);
+    var this$31 = $n(_$3$1);
+    return this$31;
+  })), 80);
+  var $x_4 = new $c_T2("Run all steps (3 time units)", y$3);
+  var y$4 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((p$4$1) => {
+    var p$5 = $as_Llince_syntax_Lince$Program(p$4$1);
+    var this$34 = $m_sci_Map$();
+    var elems$2 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
+    var v$2 = this$34.from__sc_IterableOnce__sci_Map(elems$2);
+    var from$1 = new $c_Llince_backend_Semantics$St(p$5, v$2, 5.0, 100);
     var range$1 = $m_s_None$();
-    return $m_Llince_backend_Plot$().apply__T4__T__s_Option__I__Z__T(from$1, "divName", range$1, 10, true);
+    return $m_Llince_backend_Plot$().apply__Llince_backend_Semantics$St__T__s_Option__I__Z__T(from$1, "divName", range$1, 10, true);
   })), $m_Lcaos_view_Text$());
-  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_6, new $c_sci_$colon$colon($x_5, new $c_sci_$colon$colon($x_4, new $c_sci_$colon$colon(new $c_T2("Plot debug: up to time 5, 10 samples ", y$3), $m_sci_Nil$()))));
+  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_7, new $c_sci_$colon$colon($x_6, new $c_sci_$colon$colon($x_5, new $c_sci_$colon$colon($x_4, new $c_sci_$colon$colon(new $c_T2("Plot debug: up to time 5, 10 samples ", y$4), $m_sci_Nil$())))));
   this.Llince_frontend_CaosConfig$__f_footer = $m_sc_StringOps$().stripMargin$extension__T__C__T("Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.\n      | Source code available online:\n      | <a target=\"_blank\" href=\"https://github.com/arcalab/lince-2.0\">\n      | https://github.com/arcalab/lince-2.0</a>.", 124);
-  var $x_7 = $m_Lcaos_frontend_Configurator$();
+  var $x_8 = $m_Lcaos_frontend_Configurator$();
   var self = this.Llince_frontend_CaosConfig$__f_languageName;
   var self$1 = new $c_T2(self, "More information on the syntax of Lince 2.0");
-  var y$4 = $m_sc_StringOps$().stripMargin$extension__T__C__T("A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b then p else p  |  while b {p}\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre>\n        |", 124);
-  this.Llince_frontend_CaosConfig$__f_documentation = $x_7.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon(new $c_T2(self$1, y$4), $m_sci_Nil$()));
+  var y$5 = $m_sc_StringOps$().stripMargin$extension__T__C__T("A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b then p else p  |  while b {p}\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre>\n        |", 124);
+  this.Llince_frontend_CaosConfig$__f_documentation = $x_8.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon(new $c_T2(self$1, y$5), $m_sci_Nil$()));
 }
 $c_Llince_frontend_CaosConfig$.prototype = new $h_O();
 $c_Llince_frontend_CaosConfig$.prototype.constructor = $c_Llince_frontend_CaosConfig$;
@@ -33762,6 +33224,124 @@ function $m_ju_internal_GenericArrayOps$ShortArrayOps$() {
   return $n_ju_internal_GenericArrayOps$ShortArrayOps$;
 }
 /** @constructor */
+function $c_Llince_backend_Semantics$St(p, v, t, lp) {
+  this.Llince_backend_Semantics$St__f_p = null;
+  this.Llince_backend_Semantics$St__f_v = null;
+  this.Llince_backend_Semantics$St__f_t = 0.0;
+  this.Llince_backend_Semantics$St__f_lp = 0;
+  this.Llince_backend_Semantics$St__f_p = p;
+  this.Llince_backend_Semantics$St__f_v = v;
+  this.Llince_backend_Semantics$St__f_t = t;
+  this.Llince_backend_Semantics$St__f_lp = lp;
+}
+$c_Llince_backend_Semantics$St.prototype = new $h_O();
+$c_Llince_backend_Semantics$St.prototype.constructor = $c_Llince_backend_Semantics$St;
+/** @constructor */
+function $h_Llince_backend_Semantics$St() {
+}
+$h_Llince_backend_Semantics$St.prototype = $c_Llince_backend_Semantics$St.prototype;
+$c_Llince_backend_Semantics$St.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_s_Product$$anon$1(this);
+});
+$c_Llince_backend_Semantics$St.prototype.hashCode__I = (function() {
+  var acc = (-889275714);
+  var hash = acc;
+  acc = $m_sr_Statics$().mix__I__I__I(hash, 2689);
+  var hash$1 = acc;
+  var x = this.Llince_backend_Semantics$St__f_p;
+  var data = $m_sr_Statics$().anyHash__O__I(x);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$1, data);
+  var hash$2 = acc;
+  var x$1 = this.Llince_backend_Semantics$St__f_v;
+  var data$1 = $m_sr_Statics$().anyHash__O__I(x$1);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$2, data$1);
+  var hash$3 = acc;
+  var dv = this.Llince_backend_Semantics$St__f_t;
+  var data$2 = $m_sr_Statics$().doubleHash__D__I(dv);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$3, data$2);
+  var hash$4 = acc;
+  var data$3 = this.Llince_backend_Semantics$St__f_lp;
+  acc = $m_sr_Statics$().mix__I__I__I(hash$4, data$3);
+  var hash$5 = acc;
+  return $m_sr_Statics$().finalizeHash__I__I__I(hash$5, 4);
+});
+$c_Llince_backend_Semantics$St.prototype.equals__O__Z = (function(x$0) {
+  if ((this === x$0)) {
+    return true;
+  } else if ((x$0 instanceof $c_Llince_backend_Semantics$St)) {
+    var x$0$2 = $as_Llince_backend_Semantics$St(x$0);
+    if (((this.Llince_backend_Semantics$St__f_t === $n(x$0$2).Llince_backend_Semantics$St__f_t) && (this.Llince_backend_Semantics$St__f_lp === $n(x$0$2).Llince_backend_Semantics$St__f_lp))) {
+      var x = this.Llince_backend_Semantics$St__f_p;
+      var x$2 = $n(x$0$2).Llince_backend_Semantics$St__f_p;
+      var $x_2 = ((x === null) ? (x$2 === null) : $n(x).equals__O__Z(x$2));
+    } else {
+      var $x_2 = false;
+    }
+    if ($x_2) {
+      var x$3 = this.Llince_backend_Semantics$St__f_v;
+      var x$4 = $n(x$0$2).Llince_backend_Semantics$St__f_v;
+      var $x_1 = ((x$3 === null) ? (x$4 === null) : $n(x$3).equals__O__Z(x$4));
+    } else {
+      var $x_1 = false;
+    }
+    if ($x_1) {
+      $n(x$0$2);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+});
+$c_Llince_backend_Semantics$St.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$()._toString__s_Product__T(this);
+});
+$c_Llince_backend_Semantics$St.prototype.productArity__I = (function() {
+  return 4;
+});
+$c_Llince_backend_Semantics$St.prototype.productPrefix__T = (function() {
+  return "St";
+});
+$c_Llince_backend_Semantics$St.prototype.productElement__I__O = (function(n) {
+  switch (n) {
+    case 0: {
+      return this.Llince_backend_Semantics$St__f_p;
+      break;
+    }
+    case 1: {
+      return this.Llince_backend_Semantics$St__f_v;
+      break;
+    }
+    case 2: {
+      return this.Llince_backend_Semantics$St__f_t;
+      break;
+    }
+    case 3: {
+      return this.Llince_backend_Semantics$St__f_lp;
+      break;
+    }
+    default: {
+      throw $ct_jl_IndexOutOfBoundsException__T__(new $c_jl_IndexOutOfBoundsException(), ("" + n));
+    }
+  }
+});
+function $as_Llince_backend_Semantics$St(obj) {
+  return (((obj instanceof $c_Llince_backend_Semantics$St) || (obj === null)) ? obj : $throwClassCastException(obj, "lince.backend.Semantics$St"));
+}
+function $isArrayOf_Llince_backend_Semantics$St(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Llince_backend_Semantics$St)));
+}
+function $asArrayOf_Llince_backend_Semantics$St(obj, depth) {
+  return (($isArrayOf_Llince_backend_Semantics$St(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Llince.backend.Semantics$St;", depth));
+}
+var $d_Llince_backend_Semantics$St = new $TypeData().initClass($c_Llince_backend_Semantics$St, "lince.backend.Semantics$St", ({
+  Llince_backend_Semantics$St: 1,
+  s_Equals: 1,
+  s_Product: 1,
+  Ljava_io_Serializable: 1
+}));
+/** @constructor */
 function $c_s_$eq$colon$eq() {
 }
 $c_s_$eq$colon$eq.prototype = new $h_s_$less$colon$less();
@@ -35354,12 +34934,7 @@ $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.equals__O__Z = (function
     if ($x_3) {
       var x$7 = this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_typ;
       var x$8 = $n(x$0$2).Lcaos_frontend_widgets_WidgetInfo$Simulate__f_typ;
-      if ((x$7 === null)) {
-        var $x_2 = (x$8 === null);
-      } else {
-        var this$2 = $n(x$7);
-        var $x_2 = (this$2 === x$8);
-      }
+      var $x_2 = ((x$7 === null) ? (x$8 === null) : $n(x$7).equals__O__Z(x$8));
     } else {
       var $x_2 = false;
     }
@@ -35479,12 +35054,7 @@ $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.equals__O__Z = (functio
     if (((x === null) ? (x$2 === null) : $n(x).equals__O__Z(x$2))) {
       var x$3 = this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ;
       var x$4 = $n(x$0$2).Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ;
-      if ((x$3 === null)) {
-        var $x_2 = (x$4 === null);
-      } else {
-        var this$1 = $n(x$3);
-        var $x_2 = (this$1 === x$4);
-      }
+      var $x_2 = ((x$3 === null) ? (x$4 === null) : $n(x$3).equals__O__Z(x$4));
     } else {
       var $x_2 = false;
     }
@@ -35576,8 +35146,51 @@ function $isArrayOf_Lcaos_frontend_widgets_WidgetInfo$VisualizeTab(obj, depth) {
 function $asArrayOf_Lcaos_frontend_widgets_WidgetInfo$VisualizeTab(obj, depth) {
   return (($isArrayOf_Lcaos_frontend_widgets_WidgetInfo$VisualizeTab(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lcaos.frontend.widgets.WidgetInfo$VisualizeTab;", depth));
 }
+/** @constructor */
+function $c_Lcaos_view_Code(lang) {
+  this.Lcaos_view_Code__f_lang = null;
+  this.Lcaos_view_Code__f_lang = lang;
+}
+$c_Lcaos_view_Code.prototype = new $h_Lcaos_view_ViewType();
+$c_Lcaos_view_Code.prototype.constructor = $c_Lcaos_view_Code;
+/** @constructor */
+function $h_Lcaos_view_Code() {
+}
+$h_Lcaos_view_Code.prototype = $c_Lcaos_view_Code.prototype;
+$c_Lcaos_view_Code.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_s_Product$$anon$1(this);
+});
+$c_Lcaos_view_Code.prototype.hashCode__I = (function() {
+  var this$2 = $m_s_util_hashing_MurmurHash3$();
+  return this$2.productHash__s_Product__I__Z__I(this, (-889275714), false);
+});
+$c_Lcaos_view_Code.prototype.equals__O__Z = (function(x$0) {
+  if ((this === x$0)) {
+    return true;
+  } else if ((x$0 instanceof $c_Lcaos_view_Code)) {
+    var x$0$2 = $as_Lcaos_view_Code(x$0);
+    return ((this.Lcaos_view_Code__f_lang === $n(x$0$2).Lcaos_view_Code__f_lang) && ($n(x$0$2), true));
+  } else {
+    return false;
+  }
+});
+$c_Lcaos_view_Code.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$()._toString__s_Product__T(this);
+});
+$c_Lcaos_view_Code.prototype.productArity__I = (function() {
+  return 1;
+});
+$c_Lcaos_view_Code.prototype.productPrefix__T = (function() {
+  return "Code";
+});
+$c_Lcaos_view_Code.prototype.productElement__I__O = (function(n) {
+  if ((n === 0)) {
+    return this.Lcaos_view_Code__f_lang;
+  }
+  throw $ct_jl_IndexOutOfBoundsException__T__(new $c_jl_IndexOutOfBoundsException(), ("" + n));
+});
 function $as_Lcaos_view_Code(obj) {
-  return ((false || (obj === null)) ? obj : $throwClassCastException(obj, "caos.view.Code"));
+  return (((obj instanceof $c_Lcaos_view_Code) || (obj === null)) ? obj : $throwClassCastException(obj, "caos.view.Code"));
 }
 function $isArrayOf_Lcaos_view_Code(obj, depth) {
   return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lcaos_view_Code)));
@@ -35585,6 +35198,13 @@ function $isArrayOf_Lcaos_view_Code(obj, depth) {
 function $asArrayOf_Lcaos_view_Code(obj, depth) {
   return (($isArrayOf_Lcaos_view_Code(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lcaos.view.Code;", depth));
 }
+var $d_Lcaos_view_Code = new $TypeData().initClass($c_Lcaos_view_Code, "caos.view.Code", ({
+  Lcaos_view_Code: 1,
+  Lcaos_view_ViewType: 1,
+  s_Equals: 1,
+  s_Product: 1,
+  Ljava_io_Serializable: 1
+}));
 /** @constructor */
 function $c_Lcats_Eval$Ident(ev) {
   this.Lcats_Eval$Ident__f_ev = null;
@@ -39888,6 +39508,13 @@ function $f_sc_LinearSeqOps__apply__I__O($thiz, n) {
   }
   return $n(skipped).head__O();
 }
+function $f_sc_LinearSeqOps__foreach__F1__V($thiz, f) {
+  var these = $as_sc_LinearSeq($thiz);
+  while ((!$n(these).isEmpty__Z())) {
+    $n(f).apply__O__O($n(these).head__O());
+    these = $as_sc_LinearSeq($n(these).tail__O());
+  }
+}
 function $f_sc_LinearSeqOps__exists__F1__Z($thiz, p) {
   var these = $as_sc_LinearSeq($thiz);
   while ((!$n(these).isEmpty__Z())) {
@@ -39897,6 +39524,16 @@ function $f_sc_LinearSeqOps__exists__F1__Z($thiz, p) {
     these = $as_sc_LinearSeq($n(these).tail__O());
   }
   return false;
+}
+function $f_sc_LinearSeqOps__find__F1__s_Option($thiz, p) {
+  var these = $as_sc_LinearSeq($thiz);
+  while ((!$n(these).isEmpty__Z())) {
+    if ($uZ($n(p).apply__O__O($n(these).head__O()))) {
+      return new $c_s_Some($n(these).head__O());
+    }
+    these = $as_sc_LinearSeq($n(these).tail__O());
+  }
+  return $m_s_None$();
 }
 function $f_sc_LinearSeqOps__foldLeft__O__F2__O($thiz, z, op) {
   var acc = z;
@@ -41094,6 +40731,55 @@ var $d_sci_MapBuilderImpl = new $TypeData().initClass($c_sci_MapBuilderImpl, "sc
   scm_Growable: 1,
   scm_Clearable: 1
 }));
+/** @constructor */
+function $c_sci_Queue$() {
+}
+$c_sci_Queue$.prototype = new $h_O();
+$c_sci_Queue$.prototype.constructor = $c_sci_Queue$;
+/** @constructor */
+function $h_sci_Queue$() {
+}
+$h_sci_Queue$.prototype = $c_sci_Queue$.prototype;
+$c_sci_Queue$.prototype.newBuilder__scm_Builder = (function() {
+  var this$1 = new $c_scm_ListBuffer();
+  var f = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$2$2) => {
+    var x$2 = $as_sci_List(x$2$2);
+    return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $m_sci_Nil$(), x$2);
+  }));
+  return new $c_scm_Builder$$anon$1(this$1, f);
+});
+$c_sci_Queue$.prototype.from__sc_IterableOnce__sci_Queue = (function(source) {
+  if ((source instanceof $c_sci_Queue)) {
+    var x2 = $as_sci_Queue(source);
+    return x2;
+  } else {
+    var list = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(source);
+    return ($n(list).isEmpty__Z() ? $m_sci_Queue$EmptyQueue$() : $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $m_sci_Nil$(), list));
+  }
+});
+$c_sci_Queue$.prototype.apply__sci_Seq__O = (function(elems) {
+  return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $m_sci_Nil$(), $n(elems).toList__sci_List());
+});
+$c_sci_Queue$.prototype.empty__O = (function() {
+  return $m_sci_Queue$EmptyQueue$();
+});
+$c_sci_Queue$.prototype.from__sc_IterableOnce__O = (function(source) {
+  return this.from__sc_IterableOnce__sci_Queue(source);
+});
+var $d_sci_Queue$ = new $TypeData().initClass($c_sci_Queue$, "scala.collection.immutable.Queue$", ({
+  sci_Queue$: 1,
+  sc_StrictOptimizedSeqFactory: 1,
+  sc_SeqFactory: 1,
+  sc_IterableFactory: 1,
+  Ljava_io_Serializable: 1
+}));
+var $n_sci_Queue$;
+function $m_sci_Queue$() {
+  if ((!$n_sci_Queue$)) {
+    $n_sci_Queue$ = new $c_sci_Queue$();
+  }
+  return $n_sci_Queue$;
+}
 function $p_sci_RedBlackTree$TreeIterator__startFrom__O__sci_RedBlackTree$Tree($thiz, key) {
   return (($thiz.sci_RedBlackTree$TreeIterator__f_root === null) ? null : $p_sci_RedBlackTree$TreeIterator__find$1__sci_RedBlackTree$Tree__O__sci_RedBlackTree$Tree($thiz, $thiz.sci_RedBlackTree$TreeIterator__f_root, key));
 }
@@ -63533,6 +63219,267 @@ function $isArrayOf_sci_List(obj, depth) {
 function $asArrayOf_sci_List(obj, depth) {
   return (($isArrayOf_sci_List(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.List;", depth));
 }
+function $ps_sci_Queue__indexOutOfRange$1__I__E(n$1) {
+  throw $ct_jl_IndexOutOfBoundsException__T__(new $c_jl_IndexOutOfBoundsException(), ("" + n$1));
+}
+function $ct_sci_Queue__sci_List__sci_List__($thiz, in$1, out) {
+  $thiz.sci_Queue__f_in = in$1;
+  $thiz.sci_Queue__f_out = out;
+  return $thiz;
+}
+/** @constructor */
+function $c_sci_Queue() {
+  this.sci_Queue__f_in = null;
+  this.sci_Queue__f_out = null;
+}
+$c_sci_Queue.prototype = new $h_sci_AbstractSeq();
+$c_sci_Queue.prototype.constructor = $c_sci_Queue;
+/** @constructor */
+function $h_sci_Queue() {
+}
+$h_sci_Queue.prototype = $c_sci_Queue.prototype;
+$c_sci_Queue.prototype.distinctBy__F1__O = (function(f) {
+  return $f_sci_StrictOptimizedSeqOps__distinctBy__F1__O(this, f);
+});
+$c_sci_Queue.prototype.sorted__s_math_Ordering__O = (function(ord) {
+  return $f_sc_SeqOps__sorted__s_math_Ordering__O(this, ord);
+});
+$c_sci_Queue.prototype.map__F1__O = (function(f) {
+  return $f_sc_StrictOptimizedIterableOps__map__F1__O(this, f);
+});
+$c_sci_Queue.prototype.flatMap__F1__O = (function(f) {
+  return $f_sc_StrictOptimizedIterableOps__flatMap__F1__O(this, f);
+});
+$c_sci_Queue.prototype.dropRight__I__O = (function(n) {
+  return $f_sc_StrictOptimizedIterableOps__dropRight__I__O(this, n);
+});
+$c_sci_Queue.prototype.stringPrefix__T = (function() {
+  return "LinearSeq";
+});
+$c_sci_Queue.prototype.headOption__s_Option = (function() {
+  return $f_sc_LinearSeqOps__headOption__s_Option(this);
+});
+$c_sci_Queue.prototype.lengthCompare__I__I = (function(len) {
+  return $f_sc_LinearSeqOps__lengthCompare__I__I(this, len);
+});
+$c_sci_Queue.prototype.isDefinedAt__I__Z = (function(x) {
+  return $f_sc_LinearSeqOps__isDefinedAt__I__Z(this, x);
+});
+$c_sci_Queue.prototype.foreach__F1__V = (function(f) {
+  $f_sc_LinearSeqOps__foreach__F1__V(this, f);
+});
+$c_sci_Queue.prototype.find__F1__s_Option = (function(p) {
+  return $f_sc_LinearSeqOps__find__F1__s_Option(this, p);
+});
+$c_sci_Queue.prototype.foldLeft__O__F2__O = (function(z, op) {
+  return $f_sc_LinearSeqOps__foldLeft__O__F2__O(this, z, op);
+});
+$c_sci_Queue.prototype.sameElements__sc_IterableOnce__Z = (function(that) {
+  return $f_sc_LinearSeqOps__sameElements__sc_IterableOnce__Z(this, that);
+});
+$c_sci_Queue.prototype.indexWhere__F1__I__I = (function(p, from) {
+  return $f_sc_LinearSeqOps__indexWhere__F1__I__I(this, p, from);
+});
+$c_sci_Queue.prototype.iterableFactory__sc_SeqFactory = (function() {
+  return $m_sci_Queue$();
+});
+$c_sci_Queue.prototype.apply__I__O = (function(n) {
+  var index = 0;
+  var curr = this.sci_Queue__f_out;
+  while (true) {
+    if ((index < n)) {
+      var this$1 = $n(curr);
+      var $x_1 = (!this$1.isEmpty__Z());
+    } else {
+      var $x_1 = false;
+    }
+    if ($x_1) {
+      index = ((1 + index) | 0);
+      curr = $as_sci_List($n(curr).tail__O());
+    } else {
+      break;
+    }
+  }
+  if ((index === n)) {
+    var this$2 = $n(curr);
+    if ((!this$2.isEmpty__Z())) {
+      return $n(curr).head__O();
+    } else {
+      var this$3 = $n(this.sci_Queue__f_in);
+      if ((!this$3.isEmpty__Z())) {
+        return $n(this.sci_Queue__f_in).last__O();
+      } else {
+        $ps_sci_Queue__indexOutOfRange$1__I__E(n);
+      }
+    }
+  } else {
+    var indexFromBack = ((n - index) | 0);
+    var inLength = $n(this.sci_Queue__f_in).length__I();
+    if ((indexFromBack >= inLength)) {
+      $ps_sci_Queue__indexOutOfRange$1__I__E(n);
+    } else {
+      var this$4 = $n(this.sci_Queue__f_in);
+      var n$1 = (((-1) + ((inLength - indexFromBack) | 0)) | 0);
+      return $f_sc_LinearSeqOps__apply__I__O(this$4, n$1);
+    }
+  }
+});
+$c_sci_Queue.prototype.iterator__sc_Iterator = (function() {
+  return $n($n(this.sci_Queue__f_out).iterator__sc_Iterator()).concat__F0__sc_Iterator(new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $n(this.sci_Queue__f_in).reverse__sci_List())));
+});
+$c_sci_Queue.prototype.isEmpty__Z = (function() {
+  return ($n(this.sci_Queue__f_in).isEmpty__Z() && $n(this.sci_Queue__f_out).isEmpty__Z());
+});
+$c_sci_Queue.prototype.head__O = (function() {
+  var this$1 = $n(this.sci_Queue__f_out);
+  if ((!this$1.isEmpty__Z())) {
+    return $n(this.sci_Queue__f_out).head__O();
+  } else {
+    var this$2 = $n(this.sci_Queue__f_in);
+    if ((!this$2.isEmpty__Z())) {
+      return $n(this.sci_Queue__f_in).last__O();
+    } else {
+      throw new $c_ju_NoSuchElementException("head on empty queue");
+    }
+  }
+});
+$c_sci_Queue.prototype.tail__sci_Queue = (function() {
+  var this$1 = $n(this.sci_Queue__f_out);
+  if ((!this$1.isEmpty__Z())) {
+    return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), this.sci_Queue__f_in, $as_sci_List($n(this.sci_Queue__f_out).tail__O()));
+  } else {
+    var this$2 = $n(this.sci_Queue__f_in);
+    if ((!this$2.isEmpty__Z())) {
+      return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $m_sci_Nil$(), $as_sci_List($n($n(this.sci_Queue__f_in).reverse__sci_List()).tail__O()));
+    } else {
+      throw new $c_ju_NoSuchElementException("tail on empty queue");
+    }
+  }
+});
+$c_sci_Queue.prototype.exists__F1__Z = (function(p) {
+  return ($n(this.sci_Queue__f_in).exists__F1__Z(p) || $n(this.sci_Queue__f_out).exists__F1__Z(p));
+});
+$c_sci_Queue.prototype.className__T = (function() {
+  return "Queue";
+});
+$c_sci_Queue.prototype.length__I = (function() {
+  return (($n(this.sci_Queue__f_in).length__I() + $n(this.sci_Queue__f_out).length__I()) | 0);
+});
+$c_sci_Queue.prototype.prepended__O__sci_Queue = (function(elem) {
+  var $x_1 = this.sci_Queue__f_in;
+  var this$1 = $n(this.sci_Queue__f_out);
+  return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $x_1, new $c_sci_$colon$colon(elem, this$1));
+});
+$c_sci_Queue.prototype.appendedAll__sc_IterableOnce__sci_Queue = (function(that) {
+  if ((that instanceof $c_sci_Queue)) {
+    var x2 = $as_sci_Queue(that);
+    var this$1 = $n($n(x2).sci_Queue__f_in);
+    var rassoc$2 = $n(x2).sci_Queue__f_out;
+    var suffix = $n(this.sci_Queue__f_in).reverse_$colon$colon$colon__sci_List__sci_List(rassoc$2);
+    var newIn = this$1.appendedAll__sc_IterableOnce__sci_List(suffix);
+  } else if ((that instanceof $c_sci_List)) {
+    var x3 = $as_sci_List(that);
+    var newIn = $n(this.sci_Queue__f_in).reverse_$colon$colon$colon__sci_List__sci_List(x3);
+  } else {
+    var result = this.sci_Queue__f_in;
+    var iter = $n(that).iterator__sc_Iterator();
+    while ($n(iter).hasNext__Z()) {
+      var rassoc$4 = $n(iter).next__O();
+      var this$2 = $n(result);
+      result = new $c_sci_$colon$colon(rassoc$4, this$2);
+    }
+    var newIn = result;
+  }
+  return ((newIn === this.sci_Queue__f_in) ? this : $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), newIn, this.sci_Queue__f_out));
+});
+$c_sci_Queue.prototype.enqueue__O__sci_Queue = (function(elem) {
+  var this$1 = $n(this.sci_Queue__f_in);
+  return $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), new $c_sci_$colon$colon(elem, this$1), this.sci_Queue__f_out);
+});
+$c_sci_Queue.prototype.dequeue__T2 = (function() {
+  var x1 = this.sci_Queue__f_out;
+  var x = $m_sci_Nil$();
+  if ((x.equals__O__Z(x1) && (!$n(this.sci_Queue__f_in).isEmpty__Z()))) {
+    var rev = $n(this.sci_Queue__f_in).reverse__sci_List();
+    return new $c_T2($n(rev).head__O(), $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), $m_sci_Nil$(), $as_sci_List($n(rev).tail__O())));
+  } else if ((x1 instanceof $c_sci_$colon$colon)) {
+    var x3 = $as_sci_$colon$colon(x1);
+    var x$3 = $n(x3).sci_$colon$colon__f_head;
+    var xs = $n(x3).sci_$colon$colon__f_next;
+    return new $c_T2(x$3, $ct_sci_Queue__sci_List__sci_List__(new $c_sci_Queue(), this.sci_Queue__f_in, xs));
+  } else {
+    throw new $c_ju_NoSuchElementException("dequeue on empty queue");
+  }
+});
+$c_sci_Queue.prototype.dequeueOption__s_Option = (function() {
+  return (this.isEmpty__Z() ? $m_s_None$() : new $c_s_Some(this.dequeue__T2()));
+});
+$c_sci_Queue.prototype.toString__T = (function() {
+  return $f_sc_IterableOnceOps__mkString__T__T__T__T(this, "Queue(", ", ", ")");
+});
+$c_sci_Queue.prototype.isDefinedAt__O__Z = (function(x) {
+  var x$1 = $uI(x);
+  return $f_sc_LinearSeqOps__isDefinedAt__I__Z(this, x$1);
+});
+$c_sci_Queue.prototype.drop__I__O = (function(n) {
+  return $p_sc_StrictOptimizedLinearSeqOps__loop$2__I__sc_LinearSeq__sc_LinearSeq(this, n, this);
+});
+$c_sci_Queue.prototype.appendedAll__sc_IterableOnce__O = (function(suffix) {
+  return this.appendedAll__sc_IterableOnce__sci_Queue(suffix);
+});
+$c_sci_Queue.prototype.appended__O__O = (function(elem) {
+  return this.enqueue__O__sci_Queue(elem);
+});
+$c_sci_Queue.prototype.prepended__O__O = (function(elem) {
+  return this.prepended__O__sci_Queue(elem);
+});
+$c_sci_Queue.prototype.tail__O = (function() {
+  return this.tail__sci_Queue();
+});
+$c_sci_Queue.prototype.apply__O__O = (function(v1) {
+  return this.apply__I__O($uI(v1));
+});
+$c_sci_Queue.prototype.iterableFactory__sc_IterableFactory = (function() {
+  return $m_sci_Queue$();
+});
+function $as_sci_Queue(obj) {
+  return (((obj instanceof $c_sci_Queue) || (obj === null)) ? obj : $throwClassCastException(obj, "scala.collection.immutable.Queue"));
+}
+function $isArrayOf_sci_Queue(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.sci_Queue)));
+}
+function $asArrayOf_sci_Queue(obj, depth) {
+  return (($isArrayOf_sci_Queue(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.Queue;", depth));
+}
+var $d_sci_Queue = new $TypeData().initClass($c_sci_Queue, "scala.collection.immutable.Queue", ({
+  sci_Queue: 1,
+  sci_AbstractSeq: 1,
+  sc_AbstractSeq: 1,
+  sc_AbstractIterable: 1,
+  sc_Iterable: 1,
+  sc_IterableOnce: 1,
+  sc_IterableOps: 1,
+  sc_IterableOnceOps: 1,
+  sc_IterableFactoryDefaults: 1,
+  sc_Seq: 1,
+  s_PartialFunction: 1,
+  F1: 1,
+  sc_SeqOps: 1,
+  s_Equals: 1,
+  sci_Seq: 1,
+  sci_Iterable: 1,
+  sci_SeqOps: 1,
+  sci_LinearSeq: 1,
+  sc_LinearSeq: 1,
+  sc_LinearSeqOps: 1,
+  sci_LinearSeqOps: 1,
+  sc_StrictOptimizedLinearSeqOps: 1,
+  sc_StrictOptimizedSeqOps: 1,
+  sc_StrictOptimizedIterableOps: 1,
+  sci_StrictOptimizedSeqOps: 1,
+  scg_DefaultSerializable: 1,
+  Ljava_io_Serializable: 1
+}));
 /** @constructor */
 function $c_sci_VectorImpl() {
   this.sci_Vector__f_prefix1 = null;
@@ -64870,6 +64817,55 @@ function $isArrayOf_sci_BigVector(obj, depth) {
 }
 function $asArrayOf_sci_BigVector(obj, depth) {
   return (($isArrayOf_sci_BigVector(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lscala.collection.immutable.BigVector;", depth));
+}
+/** @constructor */
+function $c_sci_Queue$EmptyQueue$() {
+  this.sci_Queue__f_in = null;
+  this.sci_Queue__f_out = null;
+  $ct_sci_Queue__sci_List__sci_List__(this, $m_sci_Nil$(), $m_sci_Nil$());
+}
+$c_sci_Queue$EmptyQueue$.prototype = new $h_sci_Queue();
+$c_sci_Queue$EmptyQueue$.prototype.constructor = $c_sci_Queue$EmptyQueue$;
+/** @constructor */
+function $h_sci_Queue$EmptyQueue$() {
+}
+$h_sci_Queue$EmptyQueue$.prototype = $c_sci_Queue$EmptyQueue$.prototype;
+var $d_sci_Queue$EmptyQueue$ = new $TypeData().initClass($c_sci_Queue$EmptyQueue$, "scala.collection.immutable.Queue$EmptyQueue$", ({
+  sci_Queue$EmptyQueue$: 1,
+  sci_Queue: 1,
+  sci_AbstractSeq: 1,
+  sc_AbstractSeq: 1,
+  sc_AbstractIterable: 1,
+  sc_Iterable: 1,
+  sc_IterableOnce: 1,
+  sc_IterableOps: 1,
+  sc_IterableOnceOps: 1,
+  sc_IterableFactoryDefaults: 1,
+  sc_Seq: 1,
+  s_PartialFunction: 1,
+  F1: 1,
+  sc_SeqOps: 1,
+  s_Equals: 1,
+  sci_Seq: 1,
+  sci_Iterable: 1,
+  sci_SeqOps: 1,
+  sci_LinearSeq: 1,
+  sc_LinearSeq: 1,
+  sc_LinearSeqOps: 1,
+  sci_LinearSeqOps: 1,
+  sc_StrictOptimizedLinearSeqOps: 1,
+  sc_StrictOptimizedSeqOps: 1,
+  sc_StrictOptimizedIterableOps: 1,
+  sci_StrictOptimizedSeqOps: 1,
+  scg_DefaultSerializable: 1,
+  Ljava_io_Serializable: 1
+}));
+var $n_sci_Queue$EmptyQueue$;
+function $m_sci_Queue$EmptyQueue$() {
+  if ((!$n_sci_Queue$EmptyQueue$)) {
+    $n_sci_Queue$EmptyQueue$ = new $c_sci_Queue$EmptyQueue$();
+  }
+  return $n_sci_Queue$EmptyQueue$;
 }
 /** @constructor */
 function $c_sci_Vector1(_data1) {
