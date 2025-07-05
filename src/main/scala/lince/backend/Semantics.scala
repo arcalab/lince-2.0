@@ -32,24 +32,24 @@ object Semantics extends SOS[String,St]:
     val t = st.t
     val lp = st.lp
 
-    st._1 match {
+    st.p match {
       case Skip => None
       case Assign(n, e) =>
-        Some(s"$n:=${Show(e)}" -> St(Skip, v+(n->Eval(e)),t,lp))
-      case Seq(Skip, q) => step(St(q,v,t,lp))
+        Some(s"$n:=${Show(e)}" ->  st.copy(p = Skip, v = v+(n->Eval(e))))
+      case Seq(Skip, q) => step(st.copy(p=q))
       case Seq(p, q) =>
-        for (a,St(p2,v2,t2,lp2)) <- step(St(p,v,t,lp))
-          yield a -> St(Seq(p2,q),v2,t2,lp2)
+        for (a,st2) <- step(st.copy(p=p))
+          yield a -> st2.copy(p=Seq(st2.p,q))
       case ITE(b, pt, pf) =>
-        if Eval(b) then Some(s"if-true: ${Show(b)}"  -> St(pt,v,t,lp))
-                   else Some(s"if-false: ${Show(b)}" -> St(pf,v,t,lp))
+        if Eval(b) then Some(s"if-true: ${Show(b)}"  -> st.copy(p=pt))
+                   else Some(s"if-false: ${Show(b)}" -> st.copy(p=pf))
       case wh@While(b, p) =>
-        if Eval(b) then Some(s"wh-true: ${Show(b)}"  -> St(Seq(p,wh),v,t,lp-1))
-                   else Some(s"wh-false: ${Show(b)}" -> St(Skip,v,t,lp))
+        if Eval(b) then Some(s"wh-true: ${Show(b)}"  -> st.copy(p=Seq(p,wh), lp=lp-1))
+                   else Some(s"wh-false: ${Show(b)}" -> st.copy(p=Skip))
       case EqDiff(eqs, durExp) =>
         val dur = Eval(durExp)
         if dur>t
-        then Some("diff-stop" -> St(EqDiff(eqs,Expr.Num(dur-t)),RungeKutta(v,eqs,t),0,lp))
-        else Some("diff-skip" -> St(Skip,RungeKutta(v,eqs,dur),t-dur,lp))
+        then Some("diff-stop" -> st.copy(p=EqDiff(eqs,Expr.Num(dur-t)), v=RungeKutta(v,eqs,t), t=0))
+        else Some("diff-skip" -> st.copy(p=Skip, v=RungeKutta(v,eqs,dur), t=t-dur))
     }
 
