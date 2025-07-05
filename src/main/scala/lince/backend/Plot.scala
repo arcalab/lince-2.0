@@ -1,8 +1,10 @@
 package lince.backend
 
 import lince.syntax.Lince.Program
-import lince.syntax.Show
+import lince.syntax.{Lince, Show}
 import Semantics.step
+import lince.backend.Eval.Valuation
+import lince.syntax.Lince.Program.EqDiff
 
 import scala.annotation.tailrec
 
@@ -23,12 +25,40 @@ object Plot:
    */
   @tailrec
   def discSteps(st: St, hist: List[String] = Nil): (List[String], St) =
-    step(st) match
-      case None => hist -> st // reached the end
-      case Some((a, st2)) =>
-        if st.t == st2.t then discSteps(st2, a :: hist)
-                         else (hist, st) //(a::hist) -> st2
+    nextStatement(st.p) match
+      case _:EqDiff => hist -> st
+      case _ => step(st) match
+        case None => hist -> st // reached the end
+        case Some((a, st2)) => discSteps(st2, a :: hist)
 
+  def nextStatement(p:Program): Program = p match {
+    case Program.Seq(Program.Seq(p1,p2), q) =>
+      nextStatement(Program.Seq(p1,Program.Seq(p2,q)))
+    case Program.Seq(Program.Skip, q) => nextStatement(q)
+    case Program.Seq(p, q) => nextStatement(p)
+    case _ => p
+  }
+
+  @tailrec
+  def contSteps(st: St, timeStep: Double,
+                baseTime:Double, counter:Int = 1,
+                hist: List[(Double,Valuation)] = Nil): (List[(Double,Valuation)], St) =
+    val goalTime = st.t min (timeStep*counter)
+    nextStatement(st.p) match
+      case ed:EqDiff => step(st.copy(t = goalTime)) match
+        case None =>
+//            println(s"[CS] no step possible using time ${st.t} MIN ${timeStep*counter}");
+          hist -> st
+        case Some(("diff-stop",st2)) => // reached goalTime
+//            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
+          contSteps(st, timeStep, baseTime, counter+1, ((baseTime+goalTime) -> st2.v)::hist)
+        case Some((_,st2)) => // "diff-skip // reached duration
+//            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
+          val timePassed = goalTime-st2.t
+          (((baseTime+timePassed)->st2.v)::hist) -> st2.copy(t = st.t-timePassed)
+      case n =>
+//          println(s"[CS] No ODEs now. Next: ${Show(n)}");
+          hist -> st
 
   def apply(from:St, divName:String, range:Option[(Double,Double)]=None,
             samples:Int=50, hideCont:Boolean=true): String = {
@@ -42,11 +72,25 @@ object Plot:
     // alternate: discrete step (collect notes + starting), timed step (collect ending)
 
 
-    apply(from.copy(t = maxt), stepSize, mint)
+    apply(from.copy(t = maxt), stepSize, mint, "")
   }
 
+//  @tailrec
+  def apply(st: St, stepSize: Double, timePassed:Double, acc:String): String =
+    var res = acc //s"$acc## Round at ${st.v} / ${st.t}\n"
 
-  def apply(from: St, stepSize: Double, timePassed:Double): String = {
+    val (as, st2) = discSteps(st)
+    res += s"-- ${as.mkString(",")} -->\n|  ${Show.simpleSt(st2)}\n"
+
+    val (points,st3) = contSteps(st2, stepSize, timePassed)
+    res += s"== ${points.mkString("; ")} ==>\n|  ${Show.simpleSt(st3)}\n"
+
+    if Semantics.accepting(st3) then res + "## Finished"
+    else apply(st3, stepSize, timePassed + (st2.t-st3.t), res)
+//    res + "finishing"
+
+
+  def applyOld(from: St, stepSize: Double, timePassed:Double): String = {
     // state while traversing
     var st = from
     var time = timePassed

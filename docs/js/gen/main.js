@@ -11824,32 +11824,126 @@ $c_Llince_backend_Plot$.prototype.discSteps__Llince_backend_Semantics$St__sci_Li
   var hist$tailLocal1 = hist;
   var st$tailLocal1 = st;
   while (true) {
-    var x1 = $m_Llince_backend_Semantics$().step__Llince_backend_Semantics$St__s_Option(st$tailLocal1);
-    var x = $m_s_None$();
-    if ((x === x1)) {
+    var x6 = this.nextStatement__Llince_syntax_Lince$Program__Llince_syntax_Lince$Program($n(st$tailLocal1).Llince_backend_Semantics$St__f_p);
+    if ((x6 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
       var self = hist$tailLocal1;
       var y = st$tailLocal1;
       return new $c_T2(self, y);
+    }
+    var x1 = $m_Llince_backend_Semantics$().step__Llince_backend_Semantics$St__s_Option(st$tailLocal1);
+    var x = $m_s_None$();
+    if ((x === x1)) {
+      var self$1 = hist$tailLocal1;
+      var y$1 = st$tailLocal1;
+      return new $c_T2(self$1, y$1);
     }
     if ((x1 instanceof $c_s_Some)) {
       var x3 = $as_T2($n($as_s_Some(x1)).s_Some__f_value);
       if ((x3 !== null)) {
         var a = $as_T($n(x3)._1__O());
         var st2 = $as_Llince_backend_Semantics$St($n(x3)._2__O());
-        if (($n(st$tailLocal1).Llince_backend_Semantics$St__f_t === $n(st2).Llince_backend_Semantics$St__f_t)) {
-          var this$3 = $n(hist$tailLocal1);
-          var hist$tailLocal1$tmp1 = new $c_sci_$colon$colon(a, this$3);
-          st$tailLocal1 = st2;
-          hist$tailLocal1 = hist$tailLocal1$tmp1;
-          continue;
-        } else {
-          var _1 = hist$tailLocal1;
-          var _2 = st$tailLocal1;
-          return new $c_T2(_1, _2);
-        }
+        var this$5 = $n(hist$tailLocal1);
+        var hist$tailLocal1$tmp1 = new $c_sci_$colon$colon(a, this$5);
+        st$tailLocal1 = st2;
+        hist$tailLocal1 = hist$tailLocal1$tmp1;
+        continue;
       }
     }
     throw new $c_s_MatchError(x1);
+  }
+});
+$c_Llince_backend_Plot$.prototype.nextStatement__Llince_syntax_Lince$Program__Llince_syntax_Lince$Program = (function(p) {
+  var p$tailLocal1 = p;
+  while (true) {
+    var x8 = p$tailLocal1;
+    if ((x8 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
+      var x$1 = $as_Llince_syntax_Lince$Program$Seq(x8);
+      var this$2 = $n(x$1);
+      var x19 = this$2.Llince_syntax_Lince$Program$Seq__f_p;
+      var this$3 = $n(x$1);
+      var x20 = this$3.Llince_syntax_Lince$Program$Seq__f_q;
+      if ((x19 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
+        var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x19);
+        var this$5 = $n(x$1$1);
+        var x23 = this$5.Llince_syntax_Lince$Program$Seq__f_p;
+        var this$6 = $n(x$1$1);
+        var x24 = this$6.Llince_syntax_Lince$Program$Seq__f_q;
+        var q = new $c_Llince_syntax_Lince$Program$Seq(x24, x20);
+        p$tailLocal1 = new $c_Llince_syntax_Lince$Program$Seq(x23, q);
+        continue;
+      }
+      var x = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
+      if (((x === null) ? (x19 === null) : $n(x).equals__O__Z(x19))) {
+        p$tailLocal1 = x20;
+        continue;
+      }
+      p$tailLocal1 = x19;
+      continue;
+    }
+    return p$tailLocal1;
+  }
+});
+$c_Llince_backend_Plot$.prototype.contSteps__Llince_backend_Semantics$St__D__D__I__sci_List__T2 = (function(st, timeStep, baseTime, counter, hist) {
+  var hist$tailLocal2 = hist;
+  var counter$tailLocal1 = counter;
+  while (true) {
+    var x = $n(st).Llince_backend_Semantics$St__f_t;
+    var that = (timeStep * counter$tailLocal1);
+    var goalTime = $uD(Math.min(x, that));
+    var x34 = this.nextStatement__Llince_syntax_Lince$Program__Llince_syntax_Lince$Program($n(st).Llince_backend_Semantics$St__f_p);
+    if ((x34 instanceof $c_Llince_syntax_Lince$Program$EqDiff)) {
+      $as_Llince_syntax_Lince$Program$EqDiff(x34);
+      var $x_1 = $m_Llince_backend_Semantics$();
+      $n(st);
+      var this$5 = $n(st);
+      var p = this$5.Llince_backend_Semantics$St__f_p;
+      var this$6 = $n(st);
+      var v = this$6.Llince_backend_Semantics$St__f_v;
+      var this$7 = $n(st);
+      var lp = this$7.Llince_backend_Semantics$St__f_lp;
+      var x25 = $x_1.step__Llince_backend_Semantics$St__s_Option(new $c_Llince_backend_Semantics$St(p, v, goalTime, lp));
+      var x$1 = $m_s_None$();
+      if ((x$1 === x25)) {
+        var self = hist$tailLocal2;
+        return new $c_T2(self, st);
+      }
+      if ((x25 instanceof $c_s_Some)) {
+        var x31 = $as_T2($n($as_s_Some(x25)).s_Some__f_value);
+        if ((x31 !== null)) {
+          var x33 = $as_Llince_backend_Semantics$St($n(x31)._2__O());
+          if (($n(x31)._1__O() === "diff-stop")) {
+            var counter$tailLocal1$tmp1 = ((1 + counter$tailLocal1) | 0);
+            var self$1 = (baseTime + goalTime);
+            var y = $n(x33).Llince_backend_Semantics$St__f_v;
+            var elem$1 = new $c_T2(self$1, y);
+            var this$13 = $n(hist$tailLocal2);
+            var hist$tailLocal2$tmp1 = new $c_sci_$colon$colon(elem$1, this$13);
+            counter$tailLocal1 = counter$tailLocal1$tmp1;
+            hist$tailLocal2 = hist$tailLocal2$tmp1;
+            continue;
+          }
+          var timePassed = (goalTime - $n(x33).Llince_backend_Semantics$St__f_t);
+          var self$2 = (baseTime + timePassed);
+          var y$1 = $n(x33).Llince_backend_Semantics$St__f_v;
+          var elem$2 = new $c_T2(self$2, y$1);
+          var this$16 = $n(hist$tailLocal2);
+          var self$3 = new $c_sci_$colon$colon(elem$2, this$16);
+          var t$1 = ($n(st).Llince_backend_Semantics$St__f_t - timePassed);
+          var this$18 = $n(x33);
+          var p$1 = this$18.Llince_backend_Semantics$St__f_p;
+          var this$19 = $n(x33);
+          var v$1 = this$19.Llince_backend_Semantics$St__f_v;
+          var this$20 = $n(x33);
+          var lp$1 = this$20.Llince_backend_Semantics$St__f_lp;
+          $n(x33);
+          var y$2 = new $c_Llince_backend_Semantics$St(p$1, v$1, t$1, lp$1);
+          return new $c_T2(self$3, y$2);
+        }
+      }
+      throw new $c_s_MatchError(x25);
+    }
+    var self$4 = hist$tailLocal2;
+    return new $c_T2(self$4, st);
   }
 });
 $c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__T__s_Option__I__Z__T = (function(from, divName, range, samples, hideCont) {
@@ -11885,78 +11979,60 @@ $c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__T__s_Optio
   var v = this$7.Llince_backend_Semantics$St__f_v;
   var this$8 = $n(from);
   var lp = this$8.Llince_backend_Semantics$St__f_lp;
-  return this.apply__Llince_backend_Semantics$St__D__D__T(new $c_Llince_backend_Semantics$St(p, v, maxt, lp), stepSize, mint);
+  return this.apply__Llince_backend_Semantics$St__D__D__T__T(new $c_Llince_backend_Semantics$St(p, v, maxt, lp), stepSize, mint, "");
 });
-$c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__D__D__T = (function(from, stepSize, timePassed) {
-  var st = from;
-  var time = timePassed;
-  var done = false;
-  var res = (((("Starting at " + $n(st).Llince_backend_Semantics$St__f_v) + " / ") + $n(st).Llince_backend_Semantics$St__f_t) + "\n");
-  while ((!done)) {
-    matchResult2: {
+$c_Llince_backend_Plot$.prototype.apply__Llince_backend_Semantics$St__D__D__T__T = (function(st, stepSize, timePassed, acc) {
+  var acc$tailLocal1 = acc;
+  var timePassed$tailLocal1 = timePassed;
+  var st$tailLocal2 = st;
+  while (true) {
+    var res = acc$tailLocal1;
+    matchResult6: {
       var \u03b41$___1;
       var \u03b41$___2;
-      var x6 = this.discSteps__Llince_backend_Semantics$St__sci_List__T2(st, $m_sci_Nil$());
-      if ((x6 !== null)) {
-        var msgs = $as_sci_List($n(x6)._1__O());
-        var st2 = $as_Llince_backend_Semantics$St($n(x6)._2__O());
-        var \u03b41$___1 = msgs;
+      var x36 = this.discSteps__Llince_backend_Semantics$St__sci_List__T2(st$tailLocal2, $m_sci_Nil$());
+      if ((x36 !== null)) {
+        var as = $as_sci_List($n(x36)._1__O());
+        var st2 = $as_Llince_backend_Semantics$St($n(x36)._2__O());
+        var \u03b41$___1 = as;
         var \u03b41$___2 = st2;
-        break matchResult2;
+        break matchResult6;
       }
-      throw new $c_s_MatchError(x6);
+      throw new $c_s_MatchError(x36);
     }
-    $as_sci_List(\u03b41$___1);
+    var as$2 = $as_sci_List(\u03b41$___1);
     var st2$2 = $as_Llince_backend_Semantics$St(\u03b41$___2);
-    res = ((res + (">>> pre-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($n(st).Llince_backend_Semantics$St__f_p))) + "\n");
-    st = st2$2;
-    res = ((res + ((("[" + time) + "] Disc to ") + $n(st).Llince_backend_Semantics$St__f_v)) + "\n");
-    res = ((res + (">>> pos-prog: " + $m_Llince_syntax_Show$().simpleStatm__Llince_syntax_Lince$Program__T($n(st).Llince_backend_Semantics$St__f_p))) + "\n");
-    matchResult3: {
-      var $x_1 = $m_Llince_backend_Semantics$();
-      var \u03b42$ = st;
-      $n(\u03b42$);
-      var this$2 = $n(\u03b42$);
-      var p = this$2.Llince_backend_Semantics$St__f_p;
-      var this$3 = $n(\u03b42$);
-      var v = this$3.Llince_backend_Semantics$St__f_v;
-      var this$4 = $n(\u03b42$);
-      var lp = this$4.Llince_backend_Semantics$St__f_lp;
-      var x9 = $x_1.step__Llince_backend_Semantics$St__s_Option(new $c_Llince_backend_Semantics$St(p, v, stepSize, lp));
-      var x = $m_s_None$();
-      if ((x === x9)) {
-        res = ((res + ("[" + time)) + "] Cont DONE\n");
-        done = true;
-        break matchResult3;
+    var $x_1 = res;
+    var this$2 = $n(as$2);
+    res = (($x_1 + ((("-- " + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$2, "", ",", "")) + " -->\n|  ") + $m_Llince_syntax_Show$().simpleSt__Llince_backend_Semantics$St__T(st2$2))) + "\n");
+    matchResult7: {
+      var \u03b42$___1;
+      var \u03b42$___2;
+      var x39 = this.contSteps__Llince_backend_Semantics$St__D__D__I__sci_List__T2(st2$2, stepSize, timePassed$tailLocal1, 1, $m_sci_Nil$());
+      if ((x39 !== null)) {
+        var points = $as_sci_List($n(x39)._1__O());
+        var st3 = $as_Llince_backend_Semantics$St($n(x39)._2__O());
+        var \u03b42$___1 = points;
+        var \u03b42$___2 = st3;
+        break matchResult7;
       }
-      if ((x9 instanceof $c_s_Some)) {
-        var x11 = $as_T2($n($as_s_Some(x9)).s_Some__f_value);
-        if ((x11 !== null)) {
-          $as_T($n(x11)._1__O());
-          var st2$3 = $as_Llince_backend_Semantics$St($n(x11)._2__O());
-          res = ((res + ((((("passed " + (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t)) + " (started at ") + stepSize) + ", ended at ") + $n(st2$3).Llince_backend_Semantics$St__f_t)) + ")\n");
-          time = (time + (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t));
-          var t$1 = ($n(st).Llince_backend_Semantics$St__f_t - (stepSize - $n(st2$3).Llince_backend_Semantics$St__f_t));
-          var this$6 = $n(st2$3);
-          var p$1 = this$6.Llince_backend_Semantics$St__f_p;
-          var this$7 = $n(st2$3);
-          var v$1 = this$7.Llince_backend_Semantics$St__f_v;
-          var this$8 = $n(st2$3);
-          var lp$1 = this$8.Llince_backend_Semantics$St__f_lp;
-          $n(st2$3);
-          st = new $c_Llince_backend_Semantics$St(p$1, v$1, t$1, lp$1);
-          if ($m_Llince_backend_Semantics$().accepting__Llince_backend_Semantics$St__Z(st)) {
-            res = (res + "accepting!!\n");
-            done = true;
-          }
-          res = ((res + ((("[" + time) + "] Cont to ") + $n(st).Llince_backend_Semantics$St__f_v)) + "\n");
-          break matchResult3;
-        }
-      }
-      throw new $c_s_MatchError(x9);
+      throw new $c_s_MatchError(x39);
+    }
+    var points$2 = $as_sci_List(\u03b42$___1);
+    var st3$2 = $as_Llince_backend_Semantics$St(\u03b42$___2);
+    var $x_2 = res;
+    var this$4 = $n(points$2);
+    res = (($x_2 + ((("== " + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$4, "", "; ", "")) + " ==>\n|  ") + $m_Llince_syntax_Show$().simpleSt__Llince_backend_Semantics$St__T(st3$2))) + "\n");
+    if ($m_Llince_backend_Semantics$().accepting__Llince_backend_Semantics$St__Z(st3$2)) {
+      return (res + "## Finished");
+    } else {
+      var timePassed$tailLocal1$tmp1 = (timePassed$tailLocal1 + ($n(st2$2).Llince_backend_Semantics$St__f_t - $n(st3$2).Llince_backend_Semantics$St__f_t));
+      var acc$tailLocal1$tmp1 = res;
+      st$tailLocal2 = st3$2;
+      timePassed$tailLocal1 = timePassed$tailLocal1$tmp1;
+      acc$tailLocal1 = acc$tailLocal1$tmp1;
     }
   }
-  return res;
 });
 var $d_Llince_backend_Plot$ = new $TypeData().initClass($c_Llince_backend_Plot$, "lince.backend.Plot$", ({
   Llince_backend_Plot$: 1
@@ -12866,36 +12942,51 @@ $c_Llince_syntax_Show$.prototype.simpleStatm__Llince_syntax_Lince$Program__T = (
     if ((x65 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
       var x$1 = $as_Llince_syntax_Lince$Program$Seq(x65);
       var this$2 = $n(x$1);
-      var x76 = this$2.Llince_syntax_Lince$Program$Seq__f_p;
+      var x85 = this$2.Llince_syntax_Lince$Program$Seq__f_p;
       var this$3 = $n(x$1);
-      var x77 = this$3.Llince_syntax_Lince$Program$Seq__f_q;
-      if ((x76 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
-        var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x76);
+      var x86 = this$3.Llince_syntax_Lince$Program$Seq__f_q;
+      if ((x85 instanceof $c_Llince_syntax_Lince$Program$Seq)) {
+        var x$1$1 = $as_Llince_syntax_Lince$Program$Seq(x85);
         var this$5 = $n(x$1$1);
-        var x80 = this$5.Llince_syntax_Lince$Program$Seq__f_p;
+        var x89 = this$5.Llince_syntax_Lince$Program$Seq__f_p;
         var this$6 = $n(x$1$1);
-        var x81 = this$6.Llince_syntax_Lince$Program$Seq__f_q;
-        var q = new $c_Llince_syntax_Lince$Program$Seq(x81, x77);
-        p$tailLocal1 = new $c_Llince_syntax_Lince$Program$Seq(x80, q);
+        var x90 = this$6.Llince_syntax_Lince$Program$Seq__f_q;
+        var q = new $c_Llince_syntax_Lince$Program$Seq(x90, x86);
+        p$tailLocal1 = new $c_Llince_syntax_Lince$Program$Seq(x89, q);
         continue;
       }
       var x = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
-      if (((x === null) ? (x76 === null) : $n(x).equals__O__Z(x76))) {
-        return ("skip;" + this.simpleStatm__Llince_syntax_Lince$Program__T(x77));
+      if (((x === null) ? (x85 === null) : $n(x).equals__O__Z(x85))) {
+        return ("skip; " + this.simpleStatm__Llince_syntax_Lince$Program__T(x86));
       }
-      return (this.apply__Llince_syntax_Lince$Program__T(x76) + "...");
+      return (this.simpleStatm__Llince_syntax_Lince$Program__T(x85) + "...");
+    }
+    if ((x65 instanceof $c_Llince_syntax_Lince$Program$While)) {
+      var x$1$2 = $as_Llince_syntax_Lince$Program$While(x65);
+      var this$10 = $n(x$1$2);
+      var x73 = this$10.Llince_syntax_Lince$Program$While__f_b;
+      $n(x$1$2);
+      return (("while " + this.apply__Llince_syntax_Lince$Cond__T(x73)) + " {...}");
+    }
+    if ((x65 instanceof $c_Llince_syntax_Lince$Program$ITE)) {
+      var x$1$3 = $as_Llince_syntax_Lince$Program$ITE(x65);
+      var this$13 = $n(x$1$3);
+      var x68 = this$13.Llince_syntax_Lince$Program$ITE__f_b;
+      $n(x$1$3);
+      $n(x$1$3);
+      return (("if " + this.apply__Llince_syntax_Lince$Cond__T(x68)) + " {...} {...}");
     }
     return this.apply__Llince_syntax_Lince$Program__T(p$tailLocal1);
   }
 });
 $c_Llince_syntax_Show$.prototype.simpleSt__Llince_backend_Semantics$St__T = (function(st) {
+  var $x_3 = $n(st).Llince_backend_Semantics$St__f_t;
+  var $x_2 = $n(st).Llince_backend_Semantics$St__f_lp;
   var this$1 = $n(st);
-  var $x_2 = this$1.Llince_backend_Semantics$St__f_t;
-  var this$2 = $n(st);
-  var this$3 = $n(this$2.Llince_backend_Semantics$St__f_v);
-  var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$3, "", ",", "");
-  var this$4 = $n(st);
-  return ((((("[" + $x_2) + "] ") + $x_1) + ": ") + this.simpleStatm__Llince_syntax_Lince$Program__T(this$4.Llince_backend_Semantics$St__f_p));
+  var this$2 = $n(this$1.Llince_backend_Semantics$St__f_v);
+  var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$2, "", ",", "");
+  var this$3 = $n(st);
+  return ((((((("[" + $x_3) + "/") + $x_2) + "] ") + $x_1) + ": ") + this.simpleStatm__Llince_syntax_Lince$Program__T(this$3.Llince_backend_Semantics$St__f_p));
 });
 var $d_Llince_syntax_Show$ = new $TypeData().initClass($c_Llince_syntax_Show$, "lince.syntax.Show$", ({
   Llince_syntax_Show$: 1
@@ -22963,13 +23054,13 @@ $c_Llince_backend_Semantics$.prototype.step__Llince_backend_Semantics$St__s_Opti
       var this$29 = $n(x$1$3);
       var x26 = this$29.Llince_syntax_Lince$Program$ITE__f_pf;
       if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x24, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1))) {
-        var self$1 = (("if-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24)) + ")");
+        var self$1 = ("if-true: " + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24));
         var v$3 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$3 = new $c_Llince_backend_Semantics$St(x25, v$3, t, lp);
         var value$1 = new $c_T2(self$1, y$3);
         return new $c_s_Some(value$1);
       } else {
-        var self$2 = (("if-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24)) + ")");
+        var self$2 = ("if-false: " + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x24));
         var v$4 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$4 = new $c_Llince_backend_Semantics$St(x26, v$4, t, lp);
         var value$2 = new $c_T2(self$2, y$4);
@@ -22983,7 +23074,7 @@ $c_Llince_backend_Semantics$.prototype.step__Llince_backend_Semantics$St__s_Opti
       var this$40 = $n(x18);
       var x21 = this$40.Llince_syntax_Lince$Program$While__f_p;
       if ($m_Llince_backend_Eval$().apply__Llince_syntax_Lince$Cond__sci_Map__Z(x20, $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1))) {
-        var self$3 = (("wh-true (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20)) + ")");
+        var self$3 = ("wh-true: " + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20));
         var p$2 = new $c_Llince_syntax_Lince$Program$Seq(x21, x18);
         var v$5 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
         var lp$1 = (((-1) + lp) | 0);
@@ -22991,7 +23082,7 @@ $c_Llince_backend_Semantics$.prototype.step__Llince_backend_Semantics$St__s_Opti
         var value$3 = new $c_T2(self$3, y$5);
         return new $c_s_Some(value$3);
       } else {
-        var self$4 = (("wh-false (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20)) + ")");
+        var self$4 = ("wh-false: " + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Cond__T(x20));
         var p$3 = $s_Llince_syntax_Lince$Program$__Skip__Llince_syntax_Lince$Program();
         var v$6 = $p_Llince_backend_Semantics$__v$2__sr_LazyRef__Llince_backend_Semantics$St__sci_Map(this, v$lzy1, st$tailLocal1);
         var y$6 = new $c_Llince_backend_Semantics$St(p$3, v$6, t, lp);

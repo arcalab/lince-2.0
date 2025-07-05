@@ -42,11 +42,13 @@ object Show:
 
   def simpleStatm(p: Program): String = p match {
     case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))
-    case Program.Seq(Program.Skip, p2) => "skip;"+simpleStatm(p2)
-    case Program.Seq(p1, p2) => apply(p1)+"..."
+    case Program.Seq(Program.Skip, p2) => "skip; "+simpleStatm(p2)
+    case Program.Seq(p1, p2) => simpleStatm(p1)+"..."
+    case Program.While(b, p2) => s"while ${apply(b)} {...}"
+    case Program.ITE(b, pt, pf) => s"if ${apply(b)} {...} {...}"
     case _ => apply(p)
   }
 
   def simpleSt(st: lince.backend.Semantics.St): String =
-    s"[${st._3}] ${st._2.mkString(",")}: ${simpleStatm(st._1)}"
+    s"[${st.t}/${st.lp}] ${st._2.mkString(",")}: ${simpleStatm(st._1)}"
 

@@ -41,11 +41,11 @@ object Semantics extends SOS[String,St]:
         for (a,St(p2,v2,t2,lp2)) <- step(St(p,v,t,lp))
           yield a -> St(Seq(p2,q),v2,t2,lp2)
       case ITE(b, pt, pf) =>
-        if Eval(b) then Some(s"if-true (${Show(b)})"  -> St(pt,v,t,lp))
-                   else Some(s"if-false (${Show(b)})" -> St(pf,v,t,lp))
+        if Eval(b) then Some(s"if-true: ${Show(b)}"  -> St(pt,v,t,lp))
+                   else Some(s"if-false: ${Show(b)}" -> St(pf,v,t,lp))
       case wh@While(b, p) =>
-        if Eval(b) then Some(s"wh-true (${Show(b)})"  -> St(Seq(p,wh),v,t,lp-1))
-                   else Some(s"wh-false (${Show(b)})" -> St(Skip,v,t,lp))
+        if Eval(b) then Some(s"wh-true: ${Show(b)}"  -> St(Seq(p,wh),v,t,lp-1))
+                   else Some(s"wh-false: ${Show(b)}" -> St(Skip,v,t,lp))
       case EqDiff(eqs, durExp) =>
         val dur = Eval(durExp)
         if dur>t
