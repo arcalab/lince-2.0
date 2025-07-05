@@ -3,8 +3,9 @@ package lince.syntax
 import cats.parse.Numbers.digits
 import cats.parse.Parser.*
 import cats.parse.{LocationMap, Parser as P, Parser0 as P0}
-import lince.syntax.Lince.{Program,Expr,Cond}
+import lince.syntax.Lince.{Cond, Expr, PlotInfo, Program, Simulation}
 import Program.*
+import caos.frontend.widgets.WidgetInfo.Simulate
 
 import scala.sys.error
 
@@ -16,6 +17,13 @@ object Parser :
       case Left(e) => error(e)
       case Right(c) => c
     }
+
+  def parseSimulation(str: String): Simulation =
+    pp(simulation, str) match {
+      case Left(e) => error(e)
+      case Right(c) => c
+    }
+
 
   /** Applies a parser to a string, and prettifies the error message */
   private def pp[A](parser:P[A], str:String): Either[String,A] =
@@ -61,9 +69,17 @@ object Parser :
 
   //import scala.language.postfixOps
 
+  private def simulation: P[Simulation] =
+//    (sps.with1 *> program ~ plotInfo.? <* sps).map{
+    (program ~ plotInfo.? <* sps).map {
+        case (p,Some(pi)) => Simulation(p,pi)
+        case (p,None) => Simulation(p, PlotInfo(0,10,20,20))
+    }
+
   /** A program is a command with possible spaces or comments around. */
   private def program: P[Program] =
     statement.surroundedBy(sps).rep.map(l => l.tail.fold(l.head)(Program.Seq.apply))
+//    (statement <* sps).rep.map(l => l.tail.fold(l.head)(Program.Seq.apply))
 
   private def block(rec: P[Program]): P[Program] =
     (char('{') *> sps *> (rec<*sps).rep0  <* char('}')).map(l =>
@@ -162,8 +178,22 @@ object Parser :
     listSep(listSep(lit, and), or)
   })
 
+  def plotInfo: P[PlotInfo] =
+    (char('-').rep *> sps *> (plotMod<*sps).rep).map(lst =>
+      lst.foldLeft(PlotInfo(0,100,500,20))((p,f) => f(p))
+    )
 
-//// Auxiliary functions
+  def plotMod: P[PlotInfo => PlotInfo] =
+    (string("until") *> sps *> realP).map(r =>
+      (pi:PlotInfo) => pi.copy(maxTime = r)) |
+    (string("from") *> sps *> realP).map(r =>
+      (pi:PlotInfo) => pi.copy(minTime = r)) |
+    (string("iterations") *> sps *> intP).map(r =>
+      (pi:PlotInfo) => pi.copy(maxLoops = r)) |
+    (string("samples") *> sps *> intP).map(r =>
+      (pi: PlotInfo) => pi.copy(samples = r))
+
+  //// Auxiliary functions
 
   def listSep[A](elem: P[A], op: P[(A, A) => A]): P[A] =
     (elem ~ (op.surroundedBy(sps).backtrack ~ elem).rep0)

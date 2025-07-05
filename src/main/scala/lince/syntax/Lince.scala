@@ -6,6 +6,8 @@ package lince.syntax
 
 object Lince:
 
+  case class Simulation(prog:Program, pi:PlotInfo)
+
   enum Program:
     case Skip
     case Assign(v:String, e:Expr)
@@ -27,6 +29,13 @@ object Lince:
     case Var(x:String)
     case Func(op:String, es:List[Expr])
 
+  case class PlotInfo(
+    minTime:Double,
+    maxTime:Double,
+    maxLoops: Int,
+    samples: Int
+//    variables: Set[String]
+  )
 
 
 
