@@ -8,6 +8,8 @@ object Lince:
 
   case class Simulation(prog:Program, pi:PlotInfo)
 
+  ///// Program ////
+
   enum Program:
     case Skip
     case Assign(v:String, e:Expr)
@@ -29,13 +31,27 @@ object Lince:
     case Var(x:String)
     case Func(op:String, es:List[Expr])
 
+  ///// Actions ////
+
+  enum Action:
+    case Assign(v: String, n:Double)
+    case DiffStop(eqs: Map[String, Expr], time: Double)
+    case DiffSkip(eqs: Map[String, Expr], time: Double)
+    case CheckIf(b: Cond, res:Boolean)
+    case CheckWhile(b: Cond, res:Boolean)
+    override def toString: String = Show(this)
+
+  ///// Plot configuration ////
+
   case class PlotInfo(
     minTime:Double,
     maxTime:Double,
     maxLoops: Int,
-    samples: Int
-//    variables: Set[String]
+    samples: Int,
+    showAll: Boolean,
+    showVar: String=>Boolean
   )
-
+  object PlotInfo:
+    val default = PlotInfo(0,10,20,20,false,_=>true)
 
 

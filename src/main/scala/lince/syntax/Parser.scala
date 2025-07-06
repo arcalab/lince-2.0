@@ -73,7 +73,7 @@ object Parser :
 //    (sps.with1 *> program ~ plotInfo.? <* sps).map{
     (program ~ plotInfo.? <* sps).map {
         case (p,Some(pi)) => Simulation(p,pi)
-        case (p,None) => Simulation(p, PlotInfo(0,10,20,20))
+        case (p,None) => Simulation(p, PlotInfo.default)
     }
 
   /** A program is a command with possible spaces or comments around. */
@@ -180,7 +180,7 @@ object Parser :
 
   def plotInfo: P[PlotInfo] =
     (char('-').rep *> sps *> (plotMod<*sps).rep).map(lst =>
-      lst.foldLeft(PlotInfo(0,100,500,20))((p,f) => f(p))
+      lst.foldLeft(PlotInfo.default)((p,f) => f(p))
     )
 
   def plotMod: P[PlotInfo => PlotInfo] =

@@ -4,7 +4,7 @@ import caos.frontend.Configurator.*
 import caos.frontend.{Configurator, Documentation}
 import caos.view.*
 import lince.backend.*
-import lince.syntax.Lince.{PlotInfo, Program, Simulation}
+import lince.syntax.Lince.{PlotInfo, Program, Simulation, Action}
 import lince.syntax.{Lince, Show}
 import Semantics.St
 
@@ -29,9 +29,9 @@ object CaosConfig extends Configurator[Simulation]:
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
-    "Run small-steps" -> steps[Simulation,String,St]
+    "Run small-steps" -> steps[Simulation,Action,St]
       (mkSt, Semantics, Show.simpleSt, _.toString, Text).expand,
-    "Run all steps" -> lts[Simulation,String,St]
+    "Run all steps" -> lts[Simulation,Action,St]
       (mkSt, Semantics, Show.simpleSt, _.toString),
     "Plot debug"
       -> view[Simulation](sim=>Plot(mkSt(sim), "divName", samples = sim._2.samples), Text),

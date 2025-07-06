@@ -1,6 +1,6 @@
 package lince.backend
 
-import lince.syntax.Lince.Program
+import lince.syntax.Lince.{Action, Program}
 import lince.syntax.{Lince, Show}
 import Semantics.step
 import lince.backend.Eval.Valuation
@@ -24,7 +24,7 @@ object Plot:
    * @return Pair with the list of actions taken and the reached state
    */
   @tailrec
-  def discSteps(st: St, hist: List[String] = Nil): (List[String], St) =
+  def discSteps(st: St, hist: List[Action] = Nil): (List[Action], St) =
     nextStatement(st.p) match
       case _:EqDiff => hist -> st
       case _ => step(st) match
@@ -49,19 +49,20 @@ object Plot:
         case None =>
 //            println(s"[CS] no step possible using time ${st.t} MIN ${timeStep*counter}");
           hist -> st
-        case Some(("diff-stop",st2)) => // reached goalTime
+        case Some((Action.DiffStop(_,_),st2)) => // reached goalTime
 //            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
           contSteps(st, timeStep, baseTime, counter+1, ((baseTime+goalTime) -> st2.v)::hist)
-        case Some((_,st2)) => // "diff-skip // reached duration
+        case Some((Action.DiffSkip(_,timePassed),st2)) => // "diff-skip // reached duration
 //            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
-          val timePassed = goalTime-st2.t
           (((baseTime+timePassed)->st2.v)::hist) -> st2.copy(t = st.t-timePassed)
+        case Some((stp,_)) => sys.error(s"Expected continuous step but found ${Show(stp)}")
       case n =>
 //          println(s"[CS] No ODEs now. Next: ${Show(n)}");
           hist -> st
 
-  def apply(from:St, divName:String, range:Option[(Double,Double)]=None,
-            samples:Int=50, hideCont:Boolean=true): String = {
+  def apply(from:
+            St, divName:String, range:Option[(Double,Double)]=None,
+            samples:Int=50, showCont:Boolean=false): String = {
 
     // need to traverse my trajectory
     // need mint and maxt
@@ -70,7 +71,6 @@ object Plot:
     // need a step size
     val stepSize: Double = (maxt - mint) / samples
     // alternate: discrete step (collect notes + starting), timed step (collect ending)
-
 
     apply(from.copy(t = maxt), stepSize, mint, "")
   }

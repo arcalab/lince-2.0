@@ -40,6 +40,16 @@ object Show:
     case Cond.Not(c) => s"!(${apply(c)})"
   }
 
+  def apply(a:Action): String = a match {
+    case Action.Assign(v, n) => s"$v:=$n"
+    case Action.DiffStop(eqs, time) => s"diff-stop@$time"
+    case Action.DiffSkip(eqs, time) => s"diff-skip@$time"
+    case Action.CheckIf(b, true) => s"if-true: ${apply(b)}"
+    case Action.CheckIf(b, false) => s"if-false: ${apply(b)}"
+    case Action.CheckWhile(b, true) => s"wh-true: ${apply(b)}"
+    case Action.CheckWhile(b, false) => s"wh-false: ${apply(b)}"
+  }
+
   def simpleStatm(p: Program): String = p match {
     case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))
     case Program.Seq(Program.Skip, p2) => "skip; "+simpleStatm(p2)
