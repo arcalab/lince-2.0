@@ -2,63 +2,74 @@ package lince.backend
 
 import lince.syntax.Lince.{Action, Program}
 import lince.syntax.{Lince, Show}
-import Semantics.step
-import lince.backend.Eval.Valuation
-import lince.syntax.Lince.Program.EqDiff
+import BigSteps.{bigStep, contSteps, discSteps, nextStatement}
+import lince.backend.Plot.{Points, Trace, Traces, MarkedPoints}
 
 import scala.annotation.tailrec
 
+
+/**
+ * Structure to compile the data that is in a plot
+ * @param current maps the current trace (a segment in the plot) to each variable
+ * @param traces maps the collection of finished traces to each variable
+ * @param endings maps the ending of traces to each variable
+ * @param beginnings maps the beginning of traces to each variable
+ */
+case class Plot(current: Map[String,Trace], traces: Map[String,Traces],
+                endings: Map[String,Points], beginnings: Map[String,MarkedPoints]):
+  /** Adds a new point to the current plot. Usage: `plot + ("x" -> now -> value)` */
+  def +(varTimeValue:((String,Double),Double)): Plot =
+    val ((x,time),value) = varTimeValue
+    val oldTr: Trace = current.getOrElse(x,Nil)
+    this.copy(current = current + (x -> ((time -> value) :: oldTr)))
+
+  /** Ends the current trace, adding the last point to the ending markers. */
+  private def endTrace(x:String): Plot =
+    current.getOrElse(x,Nil).headOption match
+      case Some(lastValue) =>
+        this.copy(current = current - x, //+ (x -> Nil),
+                  traces  = traces +  (x -> (current.getOrElse(x,Nil)::traces.getOrElse(x,Nil))),
+                  endings = endings + (x -> (lastValue::endings.getOrElse(x,Nil))))
+      case None => this
+
+  @tailrec
+  final def endTraces: Plot =
+    current.headOption match {
+      case Some((v,trace)) => endTrace(v).endTraces
+      case None => this
+    }
+
+  /** Starts a new trace, ending a possible previous one, adding the beginning and ending markers.  */
+  private def startTrace(x: String, time: Double, value: Double, act:List[Action]): Plot =
+    endTrace(x)
+      .copy(beginnings = beginnings + (x -> ((time,value,act)::beginnings.getOrElse(x,Nil))),
+            current = current + (x -> List(time->value)))
+
+  def show: String =
+    (for x <- (current.keys ++ traces.keys ++ endings.keys ++ beginnings.keys) yield
+      s"$x:\n    cur: ${
+        current.getOrElse(x,Nil).mkString(",")}\n    trc: ${
+        traces.getOrElse(x,Nil).map(x => x.mkString(",")).mkString("\n         ")}\n    end: ${
+        endings.getOrElse(x,Nil).mkString(",")}\n    begin: ${
+        beginnings.getOrElse(x,Nil).mkString(",")}")
+      .mkString("\n")
+
+
 object Plot:
 
+  type Traces = List[Trace]
+  type Trace  = List[(Double,Double)]
+  type Points = List[(Double,Double)]
+  type MarkedPoints = List[(Double,Double,List[Action])]
+  def empty = Plot(Map(),Map(),Map(),Map())
+
   // Type of intermediate structures -- experimental
-  private type Traces      = Map[String,TraceVar]
-  private type TraceVar    = Map[Double,Either[Double,(Double,Double)]] // time -> 1 or 2 points (if boundary)
-  private type Boundaries  = Map[String,BoundaryVar]
-  private type BoundaryVar = Map[Either[Double,Double],(Double,String)] // left/right of a time t -> value and comment
-  private type St = Semantics.St
+//  private type Traces      = Map[String,TraceVar]
+//  private type TraceVar    = Map[Double,Either[Double,(Double,Double)]] // time -> 1 or 2 points (if boundary)
+//  private type Boundaries  = Map[String,BoundaryVar]
+//  private type BoundaryVar = Map[Either[Double,Double],(Double,String)] // left/right of a time t -> value and comment
 
-  /**
-   * Performs discrete steps until no more step can be taken
-   * @param st initial state
-   * @param hist history of actions taken
-   * @return Pair with the list of actions taken and the reached state
-   */
-  @tailrec
-  def discSteps(st: St, hist: List[Action] = Nil): (List[Action], St) =
-    nextStatement(st.p) match
-      case _:EqDiff => hist -> st
-      case _ => step(st) match
-        case None => hist -> st // reached the end
-        case Some((a, st2)) => discSteps(st2, a :: hist)
-
-  def nextStatement(p:Program): Program = p match {
-    case Program.Seq(Program.Seq(p1,p2), q) =>
-      nextStatement(Program.Seq(p1,Program.Seq(p2,q)))
-    case Program.Seq(Program.Skip, q) => nextStatement(q)
-    case Program.Seq(p, q) => nextStatement(p)
-    case _ => p
-  }
-
-  @tailrec
-  def contSteps(st: St, timeStep: Double,
-                baseTime:Double, counter:Int = 1,
-                hist: List[(Double,Valuation)] = Nil): (List[(Double,Valuation)], St) =
-    val goalTime = st.t min (timeStep*counter)
-    nextStatement(st.p) match
-      case ed:EqDiff => step(st.copy(t = goalTime)) match
-        case None =>
-//            println(s"[CS] no step possible using time ${st.t} MIN ${timeStep*counter}");
-          hist -> st
-        case Some((Action.DiffStop(_,_),st2)) => // reached goalTime
-//            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
-          contSteps(st, timeStep, baseTime, counter+1, ((baseTime+goalTime) -> st2.v)::hist)
-        case Some((Action.DiffSkip(_,timePassed),st2)) => // "diff-skip // reached duration
-//            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
-          (((baseTime+timePassed)->st2.v)::hist) -> st2.copy(t = st.t-timePassed)
-        case Some((stp,_)) => sys.error(s"Expected continuous step but found ${Show(stp)}")
-      case n =>
-//          println(s"[CS] No ODEs now. Next: ${Show(n)}");
-          hist -> st
+  private type St = SmallStep.St
 
   def apply(from:
             St, divName:String, range:Option[(Double,Double)]=None,
@@ -72,79 +83,223 @@ object Plot:
     val stepSize: Double = (maxt - mint) / samples
     // alternate: discrete step (collect notes + starting), timed step (collect ending)
 
-    apply(from.copy(t = maxt), stepSize, mint, "")
+    val st = from.copy(t = maxt) // need to start after navigating to time mint!
+                                 // need bigstep to mint.
+//    apply(st, stepSize, mint, "")
+    apply(st, stepSize, mint, Plot.empty).endTraces.show  //endTraces.show
   }
 
-//  @tailrec
-  def apply(st: St, stepSize: Double, timePassed:Double, acc:String): String =
-    var res = acc //s"$acc## Round at ${st.v} / ${st.t}\n"
 
+  @tailrec
+  def apply(st: St, stepSize: Double, timePassed: Double, acc: Plot): Plot =
+    var res = acc
+    println("a")
     val (as, st2) = discSteps(st)
-    res += s"-- ${as.mkString(",")} -->\n|  ${Show.simpleSt(st2)}\n"
+    println("b")
+    // update Plot
+    val setVars = for (case Action.Assign(v,_) <- as.toSet) yield v
+    for (v <- setVars) do
+      res = res.startTrace(v,
+        timePassed,
+        st2.v.getOrElse(v,sys.error(s"No value for ${v} after ${as.mkString(",")}")),
+        as
+      )
+    println("c")
 
-    val (points,st3) = contSteps(st2, stepSize, timePassed)
-    res += s"== ${points.mkString("; ")} ==>\n|  ${Show.simpleSt(st3)}\n"
+    val (points, st3) = contSteps(st2, stepSize, timePassed)
+    println("d")
+    // update Plot
+    for ((time,valuation) <- points.reverse; (x,value) <- valuation) do
+      res = res + (x -> time -> value)
+    println("e")
 
-    if Semantics.accepting(st3) then res + "## Finished"
-    else apply(st3, stepSize, timePassed + (st2.t-st3.t), res)
-//    res + "finishing"
+    if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
+    else apply(st3, stepSize, timePassed + (st2.t - st3.t), res)
+  //    res + "finishing"
 
 
-  def applyOld(from: St, stepSize: Double, timePassed:Double): String = {
-    // state while traversing
-    var st = from
-    var time = timePassed
-    var done: Boolean = false // when to stop
-    var res = s"Starting at ${st.v} / ${st.t}\n"
+  def plotToJS(plot: Plot,divName:String): String = {
+    colours = (0,Map())
+    s"""var colors = Plotly.d3.scale.category10();
+       |${traceToJS(plot.traces)}
+       |
+       |${markEndings(plot.endings)}
+       |
+       |${markBeginning(plot.beginnings)}
+       |
+       |var data = [${(plot.traces.keys.map("t_"+_).toList ++
+                       plot.endings.keys.map("end_"+_).toList ++
+                       plot.beginnings.keys.map("beg_"+_).toList
+                      ).mkString(",")}];
+       |var layout = {hovermode:'closest'};
+       |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
+       |""".stripMargin
 
-    // 1: go to starting point
-    // st... assuming starting at 0
-    // 2: traverse
-
-    while(!done) {
-      // Discrete steps
-      val (msgs,st2) = discSteps(st)
-      res += s">>> pre-prog: ${Show.simpleStatm(st.p)}\n"
-      st = st2
-      res += s"[$time] Disc to ${st.v}\n"
-      res += s">>> pos-prog: ${Show.simpleStatm(st.p)}\n"
-//      boundaries ++= mkStart(msgs,st2,time,boundaries)
-      Semantics.step(st.copy(t = stepSize)) match
-        case None =>
-          res += s"[$time] Cont DONE\n"
-          done = true
-        case Some((a,st2)) =>
-          // either stopped at final time or end of sub-traj
-          res += s"passed ${stepSize - st2.t} (started at ${stepSize}, ended at ${st2.t})\n"
-          time += stepSize - st2.t // add time that passed
-          st = st2.copy(t = st.t-(stepSize-st2.t)) // take time that passed
-          if Semantics.accepting(st) then {
-            res += "accepting!!\n"
-            done = true
-          }
-          res += s"[$time] Cont to ${st.v}\n"
-
-      //          boundaries ++= mkEnd(a,st2,time,boundaries)
-    }
-
-    res
-//    s"Finished @ ${st}\nstep: $stepSize\ntime: $time\nwith\n${boundaries.mkString("\n")}"
+    //    val traceNames = traces.keys.map("t_"+_).toList ++
+    //                     boundaries.keys.map("b_out_"+_).toList ++
+    //                     boundaries.keys.map("b_in_"+_).toList ++
+    //                     boundaries.keys.map("w_"+_).toList
+    //
+    //
+    //    js += s"var data = ${traceNames.mkString("[",",","]")};" +
+    //      s"\nvar layout = {hovermode:'closest'};" +
+    //      s"\nPlotly.newPlot('$divName', data, layout, {showSendToCloud: true});"
+    //
   }
 
-  // not yet used - maybe not needed
-  def mkStart(msgs:List[String],s:St,t:Double,bs:Boundaries): Boundaries =
-    for (v,n) <- s.v yield {
-      // maybe filter msgs first
-      val bv: BoundaryVar = Map((Left(t)) -> (n,msgs.mkString(",")))
-      v -> (bs.getOrElse(v,Map()) ++ bv)
-    }
+  private var colours: (Int,Map[String,Int]) = (0,Map())
+  def colour(x:String) = colours._2.get(x) match
+    case Some(i) => i
+    case None =>
+      val oldCol = colours._1
+      colours = (oldCol+1,colours._2+(x->oldCol))
+      oldCol
 
-  def mkEnd(a:String,s:St,t:Double,bs:Boundaries) =
-    for (v, n) <- s.v yield {
-      // maybe filter msgs first
-      val bv: BoundaryVar = Map((Right(t)) -> (n, ""))
-      v -> (bs.getOrElse(v,Map()) ++ bv)
+
+  def traceToJS(tr: Map[String,Traces]): String =
+    var js = ""
+    for (variable,traces) <- tr do
+      val tr = traces.map(tr =>tr.head.copy(_2 = "null")::tr).flatten.tail
+      val (xs,ys) = tr.unzip
+      js +=
+        s"""var t_$variable = {
+           |   x: ${xs.mkString("[",",","]")},
+           |   y: ${ys.mkString("[",",","]")},
+           |   mode: 'lines',
+           |   line: {color: colors(${colour(variable)})},
+           |   legendgroup: 'g_${variable}',
+           |   name: '${variable}'
+           |};
+           |""".stripMargin
+    js
+
+  def markBeginning(ps: Map[String,MarkedPoints]): String =
+    var js = ""
+    for (variable, points) <- ps do {
+      val (xs, ys, acts) = points.unzip3
+      js +=
+        s"""var beg_${variable} = {
+           |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
+           |    y: ${ys.mkString("[", ",null,", "]")},
+           |    text: [${acts.map(x=>s"'${x.reverse.mkString("<br>")}'").mkString(",null,")}],
+           |    mode: 'markers',
+           |    marker: {color: colors(${colour(variable)}),
+           |      size: 10,
+           |      line: {
+           |        color: colors(${colour(variable)}),
+           |        width: 2
+           |    }},
+           |    type: 'scatter',
+           |    legendgroup: 'g_${variable}',
+           |    name: 'beginning of ${variable}',
+           |    showlegend: false,
+           |};
+           |""".stripMargin
     }
+    js
+
+  def markEndings(ps: Map[String,Points]): String =
+    var js = ""
+    for (variable,points) <- ps do {
+      val (xs, ys) = points.unzip
+      js +=
+        s"""var end_${variable} = {
+           |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
+           |    y: ${ys.mkString("[", ",null,", "]")},
+           |    text: [],
+           |    mode: 'markers',
+           |    marker: {color: 'rgb(255, 255, 255)',
+           |      size: 10,
+           |      line: {
+           |        color: colors(${colour(variable)}),
+           |        width: 2
+           |    }},
+           |    type: 'scatter',
+           |    legendgroup: 'g_${variable}',
+           |    name: 'ending of ${variable}',
+           |    showlegend: false,
+           |};
+           |""".stripMargin
+    }
+    js
+
+    //    for ((variable, values) <- boundaries) {
+    //      val (outs,ins) = values.toList.partition(pair=>pair._1.isLeft)
+    //      js += mkMarkers(variable,"out",outs, // open circles
+    //        s"""{color: 'rgb(255, 255, 255)',
+    //           | size: 10,
+    //           | line: {
+    //           |   color: colors(${colorIDs.getOrElse(variable, 0)}),
+    //           |   width: 2}}""".stripMargin)
+    //      js += mkMarkers(variable,"in",ins, // filled circles
+    //        s"""{color: colors(${colorIDs.getOrElse(variable, 0)}),
+    //           | size: 10,
+    //           | line: {
+    //           |   color: colors(${colorIDs.getOrElse(variable, 0)}),
+    //           |   width: 2}}""".stripMargin)
+    //    }
+    //    js  }
+
+  //  def applyOld(from: St, stepSize: Double, timePassed:Double): String = {
+//    // state while traversing
+//    var st = from
+//    var time = timePassed
+//    var done: Boolean = false // when to stop
+//    var res = s"Starting at ${st.v} / ${st.t}\n"
+//
+//    // 1: go to starting point
+//    // st... assuming starting at 0
+//    // 2: traverse
+//
+//    while(!done) {
+//      // Discrete steps
+//      val (msgs,st2) = discSteps(st)
+//      res += s">>> pre-prog: ${Show.simpleStatm(st.p)}\n"
+//      st = st2
+//      res += s"[$time] Disc to ${st.v}\n"
+//      res += s">>> pos-prog: ${Show.simpleStatm(st.p)}\n"
+////      boundaries ++= mkStart(msgs,st2,time,boundaries)
+//      SmallStep.step(st.copy(t = stepSize)) match
+//        case None =>
+//          res += s"[$time] Cont DONE\n"
+//          done = true
+//        case Some((a,st2)) =>
+//          // either stopped at final time or end of sub-traj
+//          res += s"passed ${stepSize - st2.t} (started at $stepSize, ended at ${st2.t})\n"
+//          time += stepSize - st2.t // add time that passed
+//          st = st2.copy(t = st.t-(stepSize-st2.t)) // take time that passed
+//          if SmallStep.accepting(st) then {
+//            res += "accepting!!\n"
+//            done = true
+//          }
+//          res += s"[$time] Cont to ${st.v}\n"
+//
+//      //          boundaries ++= mkEnd(a,st2,time,boundaries)
+//    }
+//
+//    res
+////    s"Finished @ ${st}\nstep: $stepSize\ntime: $time\nwith\n${boundaries.mkString("\n")}"
+//  }
+
+
+
+
+
+
+//  // not yet used - maybe not needed
+//  def mkStart(msgs:List[String],s:St,t:Double,bs:Boundaries): Boundaries =
+//    for (v,n) <- s.v yield {
+//      // maybe filter msgs first
+//      val bv: BoundaryVar = Map((Left(t)) -> (n,msgs.mkString(",")))
+//      v -> (bs.getOrElse(v,Map()) ++ bv)
+//    }
+//
+//  def mkEnd(a:String,s:St,t:Double,bs:Boundaries) =
+//    for (v, n) <- s.v yield {
+//      // maybe filter msgs first
+//      val bv: BoundaryVar = Map(Right(t) -> (n, ""))
+//      v -> (bs.getOrElse(v,Map()) ++ bv)
+//    }
 
   //
 //

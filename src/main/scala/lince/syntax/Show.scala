@@ -59,6 +59,6 @@ object Show:
     case _ => apply(p)
   }
 
-  def simpleSt(st: lince.backend.Semantics.St): String =
-    s"[${st.t}/${st.lp}] ${st._2.mkString(",")}: ${simpleStatm(st._1)}"
+  def simpleSt(st: lince.backend.SmallStep.St): String =
+    s"[${st.t}/${st.lp}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
 

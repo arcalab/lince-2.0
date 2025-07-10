@@ -2,7 +2,7 @@ package lince.backend
 
 import caos.sos.SOS
 import lince.backend.Eval.Valuation
-import lince.backend.Semantics.St
+import lince.backend.SmallStep.St
 import lince.syntax.{Lince, Show}
 import lince.syntax.Lince.*
 import Program.*
@@ -10,7 +10,7 @@ import Program.*
 import scala.annotation.tailrec
 
 /** Small-step semantics for both commands and boolean+integer expressions.  */
-object Semantics extends SOS[Action,St]:
+object SmallStep extends SOS[Action,St]:
 
   case class St(p: Program   // input program
                ,v: Valuation // known variables

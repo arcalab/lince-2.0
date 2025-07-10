@@ -19,6 +19,7 @@ object Eval:
     case Expr.Func("*", List(e1,e2)) => apply(e1) * apply(e2)
     case Expr.Func("/", List(e1,e2)) => apply(e1) / apply(e2)
     case Expr.Func("^", List(e1,e2)) => math.pow(apply(e1),apply(e2))
+    case Expr.Func("pow", List(e1,e2)) => math.pow(apply(e1),apply(e2))
     case Expr.Func("sqrt", List(e)) => math.sqrt(apply(e))
     case Expr.Func("exp", List(e)) => math.exp(apply(e))
     case Expr.Func("sin", List(e)) => math.sin(apply(e))
