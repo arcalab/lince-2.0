@@ -81,7 +81,7 @@ object Plot:
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, from, Plot.empty).endTraces
+    calcPlot(stInit, stepSize, from, showCont, Plot.empty).endTraces
   }
 
   def valToAssign(st:St): St =
@@ -98,11 +98,13 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def calcPlot(st: St, stepSize: Double, timePassed: Double, acc: Plot): Plot =
+  def calcPlot(st: St, stepSize: Double, timePassed: Double, showCont:Boolean, acc: Plot): Plot =
     var res = acc
     val (as, st2) = discSteps(st)
     // update Plot
-    val setVars = for (case Action.Assign(v,_) <- as.toSet) yield v
+    val setVars = if showCont
+      then st2.v.keySet
+      else for (case Action.Assign(v,_) <- as.toSet) yield v
     for (v <- setVars) do
       res = res.startTrace(v,
         timePassed,
@@ -116,7 +118,7 @@ object Plot:
       res = res + (x -> time -> value)
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), res)
+    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res)
 
   /** Converts a plot to JavaScript instructions for Plotly */
   def plotToJS(plot: Plot,divName:String): String =

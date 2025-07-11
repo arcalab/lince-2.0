@@ -191,7 +191,9 @@ object Parser :
     (string("iterations") *> sps *> intP).map(r =>
       (pi:PlotInfo) => pi.copy(maxLoops = r)) |
     (string("samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(samples = r))
+      (pi: PlotInfo) => pi.copy(samples = r)) |
+    string("verbose").map(r =>
+      (pi: PlotInfo) => pi.copy(showAll = true))
 
   //// Auxiliary functions
 

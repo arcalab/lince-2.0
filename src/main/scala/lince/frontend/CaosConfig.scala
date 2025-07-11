@@ -106,7 +106,7 @@ object CaosConfig extends Configurator[Simulation]:
     "Plot"
       -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
       val js = Plot.plotToJS(
-        Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
+        Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples, sim._2.showAll),
         "sim-plotly")
       scala.scalajs.js.eval(js)
     }, buttons = Nil).expand,
@@ -116,12 +116,12 @@ object CaosConfig extends Configurator[Simulation]:
       (mkSt, SmallStep, Show.simpleSt, _.toString),
     "Plot debug"
       -> view[Simulation](sim=>
-          Plot(mkSt(sim), sim._2.minTime, sim._2.maxTime, "divName", samples = sim._2.samples).show,
+          Plot(mkSt(sim), sim._2.minTime, sim._2.maxTime, "divName", samples = sim._2.samples, sim._2.showAll).show,
           Text),
     "Plot JS"
       -> view[Simulation](sim=>
           Plot.plotToJS(
-            Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
+            Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples, sim._2.showAll),
             "sim-plotly"),
           Text),
   )
@@ -154,6 +154,7 @@ object CaosConfig extends Configurator[Simulation]:
         |from 0 // starting time (default 0)
         |iterations 10 // maximum times the while loops are unfolded (default 20)
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
+        |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
         |</p>
         |""".stripMargin,
