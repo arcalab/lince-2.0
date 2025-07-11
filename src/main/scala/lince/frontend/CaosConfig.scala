@@ -54,7 +54,9 @@ object CaosConfig extends Configurator[Simulation]:
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
     "Plot"
       -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
-      val js = Plot.plotToJS(Plot(mkSt(sim), sim._2.maxTime / sim._2.samples, 0.0, Plot.empty).endTraces, "sim-plotly") //            println(js)
+      val js = Plot.plotToJS(
+        Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
+        "sim-plotly")
       scala.scalajs.js.eval(js)
     }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
@@ -62,9 +64,15 @@ object CaosConfig extends Configurator[Simulation]:
     "Run all steps" -> lts[Simulation,Action,St]
       (mkSt, SmallStep, Show.simpleSt, _.toString),
 //    "Plot debug"
-//      -> view[Simulation](sim=>Plot(mkSt(sim), "divName", range = Some(sim._2.minTime->sim._2.maxTime), samples = sim._2.samples), Text),
+//      -> view[Simulation](sim=>
+//          Plot(mkSt(sim), sim._2.minTime, sim._2.maxTime, "divName", samples = sim._2.samples).show,
+//          Text),
 //    "Plot JS"
-//      -> view[Simulation](sim=>Plot.plotToJS(Plot(mkSt(sim), sim._2.maxTime / sim._2.samples, 0.0, Plot.empty).endTraces,"sim-plottly"), Text).expand,
+//      -> view[Simulation](sim=>
+//          Plot.plotToJS(
+//            Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
+//            "sim-plotly"),
+//          Text),
   )
 
   def mkSt(sim:Simulation): St =

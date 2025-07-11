@@ -65,21 +65,20 @@ object Plot:
 
   private type St = SmallStep.St
 
-  def apply(from:
-            St, divName:String, range:Option[(Double,Double)]=None,
-            samples:Int=50, showCont:Boolean=false): String = {
+  def apply(st: St, from: Double, to: Double, divName:String,
+            samples:Int=50, showCont:Boolean=false): Plot = {
 
     // need to traverse my trajectory
     // need mint and maxt
-    val mint: Double = range.map(_._1).getOrElse(0)
-    val maxt: Double = range.map(_._2).getOrElse(from._3)
+    val mint: Double = from
+    val maxt: Double = to min st._3
     // need a step size
     val stepSize: Double = (maxt - mint) / samples
 
-    val st = from.copy(t = maxt) // need to start after navigating to time mint!
+    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    apply(st, stepSize, mint, Plot.empty).endTraces.show
+    calcPlot(stInit, stepSize, mint, Plot.empty).endTraces
   }
 
 
@@ -93,11 +92,9 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def apply(st: St, stepSize: Double, timePassed: Double, acc: Plot): Plot =
+  def calcPlot(st: St, stepSize: Double, timePassed: Double, acc: Plot): Plot =
     var res = acc
-    println("a")
     val (as, st2) = discSteps(st)
-    println("b")
     // update Plot
     val setVars = for (case Action.Assign(v,_) <- as.toSet) yield v
     for (v <- setVars) do
@@ -106,17 +103,14 @@ object Plot:
         st2.v.getOrElse(v,sys.error(s"No value for ${v} after ${as.mkString(",")}")),
         as
       )
-    println("c")
 
     val (points, st3) = contSteps(st2, stepSize, timePassed)
-    println("d")
     // update Plot
     for ((time,valuation) <- points.reverse; (x,value) <- valuation) do
       res = res + (x -> time -> value)
-    println("e")
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else apply(st3, stepSize, timePassed + (st2.t - st3.t), res)
+    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), res)
 
   /** Converts a plot to JavaScript instructions for Plotly */
   def plotToJS(plot: Plot,divName:String): String =
