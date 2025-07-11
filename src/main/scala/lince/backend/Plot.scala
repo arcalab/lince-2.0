@@ -1,9 +1,9 @@
 package lince.backend
 
-import lince.syntax.Lince.{Action, Program}
+import lince.syntax.Lince.{Action, Expr, Program}
 import lince.syntax.{Lince, Show}
 import BigSteps.{bigStep, contSteps, discSteps, nextStatement}
-import lince.backend.Plot.{Points, Trace, Traces, MarkedPoints}
+import lince.backend.Plot.{MarkedPoints, Points, Trace, Traces}
 
 import scala.annotation.tailrec
 
@@ -69,18 +69,24 @@ object Plot:
             samples:Int=50, showCont:Boolean=false): Plot = {
 
     // need to traverse my trajectory
-    // need mint and maxt
-    val mint: Double = from
+    // need a maxt
     val maxt: Double = to min st._3
     // need a step size
-    val stepSize: Double = (maxt - mint) / samples
+    val stepSize: Double = (maxt - from) / samples
 
-    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
+    val stInit = if from!=0
+      then valToAssign(BigSteps.bigStep(st.copy(t=from))._2.copy(t=maxt-from))
+      else st.copy(t = maxt)
+
+//    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, mint, Plot.empty).endTraces
+    calcPlot(stInit, stepSize, from, Plot.empty).endTraces
   }
 
+  def valToAssign(st:St): St =
+    val assign = for (x,value) <- st.v yield Program.Assign(x,Expr.Num(value))
+    st.copy(p = assign.foldRight(st.p)(Program.Seq.apply), v = Map())
 
   /**
    * Main function that produces the plot: at each run performs a collection of

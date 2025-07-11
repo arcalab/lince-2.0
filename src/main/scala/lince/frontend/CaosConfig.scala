@@ -45,7 +45,58 @@ object CaosConfig extends Configurator[Simulation]:
         |}
         |---
         |until 100
-        |iterations 1000""".stripMargin
+        |iterations 1000""".stripMargin,
+    "Water tank (slow)" ->
+      """a1:=1; //Area of tank 1
+        |a2:=1; // Area of tank 2
+        |r1:=1; //Resistance applied to the water flow at the water exit tap of tank 1.
+        |r2:=10; //Resistance applied to the water flow at the water exit tap of tank 2.
+        |h1_p:=10; // initial water level of tank 1 in the aligned  configuration
+        |h2_p:=0; // initial water level of tank 2 in the aligned  configuration.
+        |h1_v:=10; //initial water level of tank 1 in vertical configuration.
+        |h2_v:=0; //initial water level of tank 2 in vertical  configuration.
+        |
+        |// Open tap of the tank 1 and close the tap of the tank 2
+        |qe1:=1;
+        |qe2:=0;
+        |
+        |// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.
+        |h1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,
+        |h2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,
+        |h1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,
+        |h2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;
+        |
+        |// Open tap of the tank 2 and close the tap of the tank 1
+        |qe1:=0;
+        |qe2:=1;
+        |
+        |// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.
+        |h1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,
+        |h2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,
+        |h1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,
+        |h2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;
+        |
+        |//Open both
+        |qe1:=1;
+        |qe2:=1;
+        |
+        |// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.
+        |h1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,
+        |h2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,
+        |h1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,
+        |h2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;
+        |
+        |//Close both
+        |qe1:=0;
+        |qe2:=0;
+        |
+        |// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.
+        |h1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,
+        |h2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,
+        |h1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,
+        |h2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;
+        |---
+        |until 5 // originally 100, but it gets slow """.stripMargin,
   )
 
   /** Description of the widgets that appear in the dashboard. */
@@ -63,16 +114,16 @@ object CaosConfig extends Configurator[Simulation]:
       (mkSt, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
       (mkSt, SmallStep, Show.simpleSt, _.toString),
-//    "Plot debug"
-//      -> view[Simulation](sim=>
-//          Plot(mkSt(sim), sim._2.minTime, sim._2.maxTime, "divName", samples = sim._2.samples).show,
-//          Text),
-//    "Plot JS"
-//      -> view[Simulation](sim=>
-//          Plot.plotToJS(
-//            Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
-//            "sim-plotly"),
-//          Text),
+    "Plot debug"
+      -> view[Simulation](sim=>
+          Plot(mkSt(sim), sim._2.minTime, sim._2.maxTime, "divName", samples = sim._2.samples).show,
+          Text),
+    "Plot JS"
+      -> view[Simulation](sim=>
+          Plot.plotToJS(
+            Plot.apply(mkSt(sim),sim._2.minTime,sim._2.maxTime,"sim-plotly", samples = sim._2.samples),
+            "sim-plotly"),
+          Text),
   )
 
   def mkSt(sim:Simulation): St =
@@ -95,14 +146,14 @@ object CaosConfig extends Configurator[Simulation]:
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>.</p>
+        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---
-        |until 5 // maximum time
-        |from 0 // starting time
-        |iterations 10 // maximum times the while loops are unfolded
-        |samples 40 // minumum number of points to be sampled when drawing the plot
+        |until 5 // maximum time (default 10)
+        |from 0 // starting time (default 0)
+        |iterations 10 // maximum times the while loops are unfolded (default 20)
+        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
         |</pre>
         |</p>
         |""".stripMargin,

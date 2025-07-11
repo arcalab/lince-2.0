@@ -18,8 +18,12 @@ object RungeKutta:
     val stepValuation = MMap[String, Double]()
     stepValuation ++= input //.map(kv=>(kv._1->Eval(kv._2)(using Map())))
 
-    val h:Double=0.001 //step size
-    val numSteps:Int=(time/h).toInt //number of steps until the 'time'
+//    val h:Double=0.001 //step size
+//    val numSteps:Int=(time/h).toInt //number of steps until the 'time'
+    // idea: to avoid taking too long when there are many rounds with ODEs, we can
+    // count how many ODEs were already evaluated, and give less and less precision (discount factor).
+    val numSteps:Int=100 //number of steps until the 'time'
+    val h:Double=time/numSteps //step size
     val accum:MMap[String,Double]=stepValuation.clone() //Map to perform the formulation of runge-kutta
     val k1 = MMap.empty[String,Double].withDefaultValue(0)
     val k2 = MMap.empty[String,Double].withDefaultValue(0)
