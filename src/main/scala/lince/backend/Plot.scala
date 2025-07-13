@@ -70,7 +70,7 @@ object Plot:
 
     // need to traverse my trajectory
     // need a maxt
-    val maxt: Double = to min st._3
+    val maxt: Double = to min st.t
     // need a step size
     val stepSize: Double = (maxt - from) / samples
 

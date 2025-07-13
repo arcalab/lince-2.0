@@ -8,14 +8,17 @@ import lince.syntax.Lince.*
 import Program.*
 
 import scala.annotation.tailrec
+import scala.util.Random
 
 /** Small-step semantics for both commands and boolean+integer expressions.  */
 object SmallStep extends SOS[Action,St]:
 
   case class St(p: Program   // input program
                ,v: Valuation // known variables
+               ,r: Random    // random generator
                ,t: Double    // maximum time
-               ,lp:Int)      // maximum loops
+               ,lp:Int):      // maximum loops
+    def empty = St(Program.Skip, Map(), new Random, 0,0)
 
   override def accepting(s: St): Boolean =
     s.t<=0 || s.lp<=0
@@ -29,6 +32,7 @@ object SmallStep extends SOS[Action,St]:
     if st.t<=0 || st.lp<=0 then
       return None
     given v:Valuation = st.v
+    given r:Random = st.r
 
     st.p match {
       case Skip => None
@@ -47,10 +51,11 @@ object SmallStep extends SOS[Action,St]:
                    else Some(Action.CheckWhile(b,false) -> st.copy(p=Skip))
       case EqDiff(eqs, durExp) =>
         val dur = Eval(durExp)
+        val eqs2 = eqs.map(kv => (kv._1,Eval.rands(kv._2)))
         if dur>st.t
-        then Some(Action.DiffStop(eqs,st.t) ->
-                  st.copy(p=EqDiff(eqs,Expr.Num(dur-st.t)), v=RungeKutta(v,eqs,st.t), t=0))
-        else Some(Action.DiffSkip(eqs,dur) ->
-                  st.copy(p=Skip, v=RungeKutta(v,eqs,dur), t=st.t-dur))
+        then Some(Action.DiffStop(eqs2,st.t) ->
+                  st.copy(p=EqDiff(eqs2,Expr.Num(dur-st.t)), v=RungeKutta(v,eqs2,st.t), t=0))
+        else Some(Action.DiffSkip(eqs2,dur) ->
+                  st.copy(p=Skip, v=RungeKutta(v,eqs2,dur), t=st.t-dur))
     }
 

@@ -8,6 +8,7 @@ import Program.*
 import caos.frontend.widgets.WidgetInfo.Simulate
 
 import scala.sys.error
+import scala.util.Random
 
 object Parser :
 
@@ -192,6 +193,8 @@ object Parser :
       (pi:PlotInfo) => pi.copy(maxLoops = r)) |
     (string("samples") *> sps *> intP).map(r =>
       (pi: PlotInfo) => pi.copy(samples = r)) |
+    (string("seed") *> sps *> intP).map(r =>
+        (pi: PlotInfo) => pi.copy(rand = new Random(r))) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 

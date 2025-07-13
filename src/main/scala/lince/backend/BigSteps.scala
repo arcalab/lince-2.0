@@ -33,6 +33,14 @@ object BigSteps:
     case Seq(p, q) => nextStatement(p)
     case _ => p
   }
+
+  def nextStatementRest(p: Program, rest:Program = Skip): (Program,Program) = p match {
+    case Seq(Seq(p1, p2), q) =>
+      nextStatementRest(Seq(p1, Seq(p2, q)), rest)
+    case Seq(Skip, q) => nextStatementRest(q,rest)
+    case Seq(p, q) => nextStatementRest(p,Seq(q,rest))
+    case _ => (p,rest)
+  }
   
   /**
    * Performs discrete steps until no more step can be taken
@@ -61,14 +69,24 @@ object BigSteps:
    * @param hist accumulator to compile the valuations of points already sampled
    * @return list of valuations at the points sampled while traversing the continuous step
    */
-  @tailrec
-  def contSteps(st: St, timeStep: Double, baseTime:Double,
-                counter:Int = 1,
-                hist: List[(Double,Valuation)] = Nil): (List[(Double,Valuation)], St) =
-    val goalTime = st.t min (timeStep*counter)
-//    println(s"-- contSteps ${st} with goal $goalTime and next ${nextStatement(st.p)}")
-    nextStatement(st.p) match
-      case ed:EqDiff => step(st.copy(t = goalTime)) match
+  def contSteps(st: St, timeStep: Double, baseTime:Double): (List[(Double,Valuation)], St) =
+    // need to evaluate the duration upfront, in case there are random functions.
+    var ok = true
+    val newP: Program = nextStatementRest(st.p) match
+      case (EqDiff(eqs,dur),rest) =>
+        Program.Seq(EqDiff(eqs,Expr.Num(Eval(dur)(using st.v, st.r))),rest)
+      case p2 =>
+        ok = false
+        st.p
+    if !ok then return Nil -> st
+
+    // now apply the recursive steps after fixing the duration
+    @tailrec
+    def contStepsAux(counter:Int,
+                     hist: List[(Double,Valuation)]): (List[(Double,Valuation)], St) =
+      val goalTime = st.t min (timeStep*counter)
+  //    println(s"-- contSteps ${st} with goal $goalTime and next ${nextStatement(st.p)}")
+      step(st.copy(p = newP, t = goalTime)) match
         case None =>
           //            println(s"[CS] no step possible using time ${st.t} MIN ${timeStep*counter}");
           hist -> st
@@ -76,12 +94,12 @@ object BigSteps:
           //            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
           if goalTime == st.t // if it stopped because of the boundaries, then stop, otherwise keep on going
           then (((baseTime+goalTime)->st2.v)::hist) -> st2
-          else contSteps(st, timeStep, baseTime, counter+1, ((baseTime+goalTime) -> st2.v)::hist)
+          else contStepsAux(counter+1, ((baseTime+goalTime) -> st2.v)::hist)
         case Some((Action.DiffSkip(_,timePassed),st2)) => // "diff-skip // reached duration
           //            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
           (((baseTime+timePassed)->st2.v)::hist) -> st2.copy(t = st.t-timePassed)
         case Some((stp,_)) => sys.error(s"Expected continuous step but found ${Show(stp)}")
-      case n =>
-        //          println(s"[CS] No ODEs now. Next: ${Show(n)}");
-        hist -> st
-  
+
+    //
+    contStepsAux(1, Nil)
+

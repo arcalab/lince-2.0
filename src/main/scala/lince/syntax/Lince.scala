@@ -1,5 +1,7 @@
 package lince.syntax
 
+import scala.util.Random
+
 /**
  * Internal structure to represent terms in Lince 2.0.
  */
@@ -43,15 +45,15 @@ object Lince:
 
   ///// Plot configuration ////
 
-  case class PlotInfo(
-    minTime:Double,
-    maxTime:Double,
-    maxLoops: Int,
-    samples: Int,
-    showAll: Boolean,
-    showVar: String=>Boolean
+  case class PlotInfo( minTime:Double,
+                       maxTime:Double,
+                       maxLoops: Int,
+                       samples: Int,
+                       rand: Random,
+                       showAll: Boolean,
+                       showVar: String=>Boolean
   )
   object PlotInfo:
-    val default = PlotInfo(0,10,20,20,false,_=>true)
+    val default = PlotInfo(0,10,50,20,new Random(),false,_=>true)
 
 

@@ -9,6 +9,8 @@ import lince.syntax.{Lince, Show}
 import SmallStep.St
 import caos.frontend.widgets.WidgetInfo.Custom
 
+import scala.util.Random
+
 /** Object used to configure which analysis appear in the browser */
 object CaosConfig extends Configurator[Simulation]:
   val name = "Animator of Lince 2.0"
@@ -26,8 +28,11 @@ object CaosConfig extends Configurator[Simulation]:
     "x'=2,y'=3 for 4" -> "x'=2, y'=3 for 4;",
     "skip" -> "skip",
     "PPDP - Ex.2.6a"
-      -> "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20",
-
+      -> "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20"
+      -> "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty).",
+    "PPDP - Ex.2.6b"
+      -> "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n\ta := unif(-1,1) ;\n  // decide to speed up (acc=2) or brake (acc=-2), assuming a==-1\n  if (v - vl + 3)^2 + 4*(p - pl + v - vl + 3/2) < 0\n  // uncomment the \"if\" below to try version 2.6a (incorrect)\n  // if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nseed 18"
+      -> "Example 2.6b Adaptive cruise control with a leader with an uncertain acceleration (bounded by fixed values).",
     "Single tank (poll-variation)"
       ->
       """// Define initial values of the water tank
@@ -127,7 +132,7 @@ object CaosConfig extends Configurator[Simulation]:
   )
 
   def mkSt(sim:Simulation): St =
-    St(sim._1,Map(),sim._2.maxTime,sim._2.maxLoops)
+    St(sim._1,Map(),sim._2.rand, sim._2.maxTime,sim._2.maxLoops)
 
   //// Documentation below
 
@@ -146,14 +151,15 @@ object CaosConfig extends Configurator[Simulation]:
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>.</p>
+        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---
         |until 5 // maximum time (default 10)
         |from 0 // starting time (default 0)
-        |iterations 10 // maximum times the while loops are unfolded (default 20)
+        |iterations 10 // maximum times the while loops are unfolded (default 50)
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
+        |seed 0 // seed for the random generator  (everytime a random one by default)
         |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
         |</p>
