@@ -11884,163 +11884,171 @@ $c_Llince_backend_Eval$.prototype.apply__Llince_syntax_Lince$Expr__sc_Map__s_uti
   if ((e instanceof $c_Llince_syntax_Lince$Expr$Num)) {
     var x$1 = $as_Llince_syntax_Lince$Expr$Num(e);
     var this$2 = $n(x$1);
-    var x118 = this$2.Llince_syntax_Lince$Expr$Num__f_n;
-    return x118;
+    var x124 = this$2.Llince_syntax_Lince$Expr$Num__f_n;
+    return x124;
   }
   if ((e instanceof $c_Llince_syntax_Lince$Expr$Var)) {
     var x$1$1 = $as_Llince_syntax_Lince$Expr$Var(e);
     var this$4 = $n(x$1$1);
-    var x115 = this$4.Llince_syntax_Lince$Expr$Var__f_x;
-    return $uD($n(v).getOrElse__O__F0__O(x115, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => {
+    var x121 = this$4.Llince_syntax_Lince$Expr$Var__f_x;
+    return $uD($n(v).getOrElse__O__F0__O(x121, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => {
       var $x_1 = $m_s_sys_package$();
       var this$5 = $n(v);
       var this$6 = $n(this$5.keySet__sc_Set());
-      $x_1.error__T__E(((("Variable " + x115) + " not found - only ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$6, "", ",", "")));
+      $x_1.error__T__E(((("Variable " + x121) + " not found - only ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$6, "", ",", "")));
     }))));
   }
   if ((e instanceof $c_Llince_syntax_Lince$Expr$Func)) {
     var x$1$2 = $as_Llince_syntax_Lince$Expr$Func(e);
     var this$8 = $n(x$1$2);
-    var x108 = this$8.Llince_syntax_Lince$Expr$Func__f_op;
+    var x114 = this$8.Llince_syntax_Lince$Expr$Func__f_op;
     var this$9 = $n(x$1$2);
-    var x109 = this$9.Llince_syntax_Lince$Expr$Func__f_es;
-    if (((x108 === "+") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$13 = $n(x109);
-        var x111 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$13, 0));
-        var this$15 = $n(x109);
-        var x112 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$15, 1));
-        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x111, v, rand) + this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x112, v, rand));
+    var x115 = this$9.Llince_syntax_Lince$Expr$Func__f_es;
+    if (((x114 === "+") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$13 = $n(x115);
+        var x117 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$13, 0));
+        var this$15 = $n(x115);
+        var x118 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$15, 1));
+        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x117, v, rand) + this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x118, v, rand));
       }
     }
-    if (((x108 === "-") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$19 = $n(x109);
-        var x104 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$19, 0));
-        var this$21 = $n(x109);
-        var x105 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$21, 1));
-        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x104, v, rand) - this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x105, v, rand));
+    if (((x114 === "-") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$19 = $n(x115);
+        var x110 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$19, 0));
+        var this$21 = $n(x115);
+        var x111 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$21, 1));
+        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x110, v, rand) - this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x111, v, rand));
       }
     }
-    if (((x108 === "*") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$25 = $n(x109);
-        var x97 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$25, 0));
-        var this$27 = $n(x109);
-        var x98 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$27, 1));
-        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x97, v, rand) * this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x98, v, rand));
+    if (((x114 === "*") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$25 = $n(x115);
+        var x103 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$25, 0));
+        var this$27 = $n(x115);
+        var x104 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$27, 1));
+        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x103, v, rand) * this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x104, v, rand));
       }
     }
-    if (((x108 === "/") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$31 = $n(x109);
-        var x90 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$31, 0));
-        var this$33 = $n(x109);
-        var x91 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$33, 1));
-        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x90, v, rand) / this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x91, v, rand));
+    if (((x114 === "/") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$31 = $n(x115);
+        var x96 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$31, 0));
+        var this$33 = $n(x115);
+        var x97 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$33, 1));
+        return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x96, v, rand) / this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x97, v, rand));
       }
     }
-    if (((x108 === "^") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$37 = $n(x109);
-        var x83 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$37, 0));
-        var this$39 = $n(x109);
-        var x84 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$39, 1));
-        var x = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x83, v, rand);
-        var y = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x84, v, rand);
+    if (((x114 === "^") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$37 = $n(x115);
+        var x89 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$37, 0));
+        var this$39 = $n(x115);
+        var x90 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$39, 1));
+        var x = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x89, v, rand);
+        var y = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x90, v, rand);
         return $uD(Math.pow(x, y));
       }
     }
-    if (((x108 === "pow") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$45 = $n(x109);
-        var x76 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$45, 0));
-        var this$47 = $n(x109);
-        var x77 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$47, 1));
-        var x$2 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x76, v, rand);
-        var y$1 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x77, v, rand);
+    if (((x114 === "pow") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$45 = $n(x115);
+        var x82 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$45, 0));
+        var this$47 = $n(x115);
+        var x83 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$47, 1));
+        var x$2 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x82, v, rand);
+        var y$1 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x83, v, rand);
         return $uD(Math.pow(x$2, y$1));
       }
     }
-    if (((x108 === "sqrt") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$53 = $n(x109);
-        var x70 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$53, 0));
-        var x$3 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x70, v, rand);
+    if (((x114 === "sqrt") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$53 = $n(x115);
+        var x76 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$53, 0));
+        var x$3 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x76, v, rand);
         return $uD(Math.sqrt(x$3));
       }
     }
-    if (((x108 === "exp") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$59 = $n(x109);
-        var x64 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$59, 0));
-        var x$4 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x64, v, rand);
+    if (((x114 === "exp") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$59 = $n(x115);
+        var x70 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$59, 0));
+        var x$4 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x70, v, rand);
         return $uD(Math.exp(x$4));
       }
     }
-    if (((x108 === "sin") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$65 = $n(x109);
-        var x58 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$65, 0));
-        var x$5 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x58, v, rand);
+    if (((x114 === "sin") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$65 = $n(x115);
+        var x64 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$65, 0));
+        var x$5 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x64, v, rand);
         return $uD(Math.sin(x$5));
       }
     }
-    if (((x108 === "cos") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$71 = $n(x109);
-        var x52 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$71, 0));
-        var x$6 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x52, v, rand);
+    if (((x114 === "cos") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$71 = $n(x115);
+        var x58 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$71, 0));
+        var x$6 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x58, v, rand);
         return $uD(Math.cos(x$6));
       }
     }
-    if (((x108 === "tan") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$77 = $n(x109);
-        var x46 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$77, 0));
-        var x$7 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x46, v, rand);
+    if (((x114 === "tan") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$77 = $n(x115);
+        var x52 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$77, 0));
+        var x$7 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x52, v, rand);
         return $uD(Math.tan(x$7));
       }
     }
-    if (((x108 === "cosh") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$83 = $n(x109);
-        var x40 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$83, 0));
-        var x$8 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x40, v, rand);
+    if (((x114 === "cosh") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$83 = $n(x115);
+        var x46 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$83, 0));
+        var x$8 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x46, v, rand);
         return $m_jl_Math$().cosh__D__D(x$8);
       }
     }
-    if (((x108 === "sinh") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$88 = $n(x109);
-        var x34 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$88, 0));
-        var x$9 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x34, v, rand);
+    if (((x114 === "sinh") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$88 = $n(x115);
+        var x40 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$88, 0));
+        var x$9 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x40, v, rand);
         return $m_jl_Math$().sinh__D__D(x$9);
       }
     }
-    if (((x108 === "tanh") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(1) === 0)) {
-        var this$93 = $n(x109);
-        var x28 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$93, 0));
-        var x$10 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x28, v, rand);
+    if (((x114 === "tanh") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$93 = $n(x115);
+        var x34 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$93, 0));
+        var x$10 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x34, v, rand);
         return $m_jl_Math$().tanh__D__D(x$10);
       }
     }
-    if (((x108 === "pi") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(0) === 0)) {
+    if (((x114 === "ln") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(1) === 0)) {
+        var this$98 = $n(x115);
+        var x28 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$98, 0));
+        var x$11 = this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x28, v, rand);
+        return $uD(Math.log(x$11));
+      }
+    }
+    if (((x114 === "pi") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(0) === 0)) {
         return 3.141592653589793;
       }
     }
-    if (((x108 === "unif") && (x109 !== null))) {
-      if (($n(x109).lengthCompare__I__I(0) === 0)) {
-        var this$99 = $n(rand);
-        return $n(this$99.s_util_Random__f_self).nextDouble__D();
+    if (((x114 === "unif") && (x115 !== null))) {
+      if (($n(x115).lengthCompare__I__I(0) === 0)) {
+        var this$105 = $n(rand);
+        return $n(this$105.s_util_Random__f_self).nextDouble__D();
       }
-      if (($n(x109).lengthCompare__I__I(2) === 0)) {
-        var this$102 = $n(x109);
-        var x11 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$102, 0));
-        var this$104 = $n(x109);
-        var x12 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$104, 1));
+      if (($n(x115).lengthCompare__I__I(2) === 0)) {
+        var this$108 = $n(x115);
+        var x11 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$108, 0));
+        var this$110 = $n(x115);
+        var x12 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$110, 1));
         return $n(rand).between__D__D__D(this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x11, v, rand), this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x12, v, rand));
       }
     }
@@ -12051,78 +12059,78 @@ $c_Llince_backend_Eval$.prototype.apply__Llince_syntax_Lince$Expr__sc_Map__s_uti
 $c_Llince_backend_Eval$.prototype.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z = (function(c, v, rand) {
   var c$tailLocal1 = c;
   while (true) {
-    var x119 = c$tailLocal1;
+    var x125 = c$tailLocal1;
     var x = $s_Llince_syntax_Lince$Cond$__True__Llince_syntax_Lince$Cond();
-    if (((x === null) ? (x119 === null) : $n(x).equals__O__Z(x119))) {
+    if (((x === null) ? (x125 === null) : $n(x).equals__O__Z(x125))) {
       return true;
     }
     var x$3 = $s_Llince_syntax_Lince$Cond$__False__Llince_syntax_Lince$Cond();
-    if (((x$3 === null) ? (x119 === null) : $n(x$3).equals__O__Z(x119))) {
+    if (((x$3 === null) ? (x125 === null) : $n(x$3).equals__O__Z(x125))) {
       return false;
     }
-    if ((x119 instanceof $c_Llince_syntax_Lince$Cond$And)) {
-      var x$1 = $as_Llince_syntax_Lince$Cond$And(x119);
+    if ((x125 instanceof $c_Llince_syntax_Lince$Cond$And)) {
+      var x$1 = $as_Llince_syntax_Lince$Cond$And(x125);
       var this$2 = $n(x$1);
-      var x164 = this$2.Llince_syntax_Lince$Cond$And__f_c1;
+      var x170 = this$2.Llince_syntax_Lince$Cond$And__f_c1;
       var this$3 = $n(x$1);
-      var x165 = this$3.Llince_syntax_Lince$Cond$And__f_c2;
-      if (this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x164, v, rand)) {
-        c$tailLocal1 = x165;
+      var x171 = this$3.Llince_syntax_Lince$Cond$And__f_c2;
+      if (this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x170, v, rand)) {
+        c$tailLocal1 = x171;
         continue;
       } else {
         return false;
       }
     }
-    if ((x119 instanceof $c_Llince_syntax_Lince$Cond$Or)) {
-      var x$1$1 = $as_Llince_syntax_Lince$Cond$Or(x119);
+    if ((x125 instanceof $c_Llince_syntax_Lince$Cond$Or)) {
+      var x$1$1 = $as_Llince_syntax_Lince$Cond$Or(x125);
       var this$5 = $n(x$1$1);
-      var x160 = this$5.Llince_syntax_Lince$Cond$Or__f_c1;
+      var x166 = this$5.Llince_syntax_Lince$Cond$Or__f_c1;
       var this$6 = $n(x$1$1);
-      var x161 = this$6.Llince_syntax_Lince$Cond$Or__f_c2;
-      if (this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x160, v, rand)) {
+      var x167 = this$6.Llince_syntax_Lince$Cond$Or__f_c2;
+      if (this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x166, v, rand)) {
         return true;
       } else {
-        c$tailLocal1 = x161;
+        c$tailLocal1 = x167;
         continue;
       }
     }
-    if ((x119 instanceof $c_Llince_syntax_Lince$Cond$Not)) {
-      var x$1$2 = $as_Llince_syntax_Lince$Cond$Not(x119);
+    if ((x125 instanceof $c_Llince_syntax_Lince$Cond$Not)) {
+      var x$1$2 = $as_Llince_syntax_Lince$Cond$Not(x125);
       var this$8 = $n(x$1$2);
-      var x157 = this$8.Llince_syntax_Lince$Cond$Not__f_c;
-      return (!this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x157, v, rand));
+      var x163 = this$8.Llince_syntax_Lince$Cond$Not__f_c;
+      return (!this.apply__Llince_syntax_Lince$Cond__sci_Map__s_util_Random__Z(x163, v, rand));
     }
-    if ((x119 instanceof $c_Llince_syntax_Lince$Cond$Comp)) {
-      var x$1$3 = $as_Llince_syntax_Lince$Cond$Comp(x119);
+    if ((x125 instanceof $c_Llince_syntax_Lince$Cond$Comp)) {
+      var x$1$3 = $as_Llince_syntax_Lince$Cond$Comp(x125);
       var this$10 = $n(x$1$3);
-      var x152 = this$10.Llince_syntax_Lince$Cond$Comp__f_op;
+      var x158 = this$10.Llince_syntax_Lince$Cond$Comp__f_op;
       var this$11 = $n(x$1$3);
-      var x153 = this$11.Llince_syntax_Lince$Cond$Comp__f_e1;
+      var x159 = this$11.Llince_syntax_Lince$Cond$Comp__f_e1;
       var this$12 = $n(x$1$3);
-      var x154 = this$12.Llince_syntax_Lince$Cond$Comp__f_e2;
-      switch (x152) {
+      var x160 = this$12.Llince_syntax_Lince$Cond$Comp__f_e2;
+      switch (x158) {
         case "==": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) === this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) === this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         case "!=": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) !== this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) !== this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         case ">=": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) >= this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) >= this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         case "<=": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) <= this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) <= this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         case ">": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) > this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) > this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         case "<": {
-          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x153, v, rand) < this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x154, v, rand));
+          return (this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x159, v, rand) < this.apply__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__D(x160, v, rand));
           break;
         }
         default: {
@@ -12130,7 +12138,7 @@ $c_Llince_backend_Eval$.prototype.apply__Llince_syntax_Lince$Cond__sci_Map__s_ut
         }
       }
     }
-    throw new $c_s_MatchError(x119);
+    throw new $c_s_MatchError(x125);
   }
 });
 $c_Llince_backend_Eval$.prototype.rands__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__Llince_syntax_Lince$Expr = (function(e, v, rand) {
@@ -12147,30 +12155,30 @@ $c_Llince_backend_Eval$.prototype.rands__Llince_syntax_Lince$Expr__sc_Map__s_uti
   if ((e instanceof $c_Llince_syntax_Lince$Expr$Func)) {
     var x$1$2 = $as_Llince_syntax_Lince$Expr$Func(e);
     var this$6 = $n(x$1$2);
-    var x190 = this$6.Llince_syntax_Lince$Expr$Func__f_op;
+    var x196 = this$6.Llince_syntax_Lince$Expr$Func__f_op;
     var this$7 = $n(x$1$2);
-    var x191 = this$7.Llince_syntax_Lince$Expr$Func__f_es;
-    if ((x190 === "unif")) {
-      if ((x191 !== null)) {
-        if (($n(x191).lengthCompare__I__I(0) === 0)) {
+    var x197 = this$7.Llince_syntax_Lince$Expr$Func__f_es;
+    if ((x196 === "unif")) {
+      if ((x197 !== null)) {
+        if (($n(x197).lengthCompare__I__I(0) === 0)) {
           var this$10 = $n(rand);
           var n = $n(this$10.s_util_Random__f_self).nextDouble__D();
           return new $c_Llince_syntax_Lince$Expr$Num(n);
         }
-        if (($n(x191).lengthCompare__I__I(2) === 0)) {
-          var this$14 = $n(x191);
-          var x180 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$14, 0));
-          var this$16 = $n(x191);
-          var x181 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$16, 1));
-          if ((x180 instanceof $c_Llince_syntax_Lince$Expr$Num)) {
-            var x$1$3 = $as_Llince_syntax_Lince$Expr$Num(x180);
+        if (($n(x197).lengthCompare__I__I(2) === 0)) {
+          var this$14 = $n(x197);
+          var x186 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$14, 0));
+          var this$16 = $n(x197);
+          var x187 = $as_Llince_syntax_Lince$Expr($f_sc_LinearSeqOps__apply__I__O(this$16, 1));
+          if ((x186 instanceof $c_Llince_syntax_Lince$Expr$Num)) {
+            var x$1$3 = $as_Llince_syntax_Lince$Expr$Num(x186);
             var this$18 = $n(x$1$3);
-            var x187 = this$18.Llince_syntax_Lince$Expr$Num__f_n;
-            if ((x181 instanceof $c_Llince_syntax_Lince$Expr$Num)) {
-              var x$1$4 = $as_Llince_syntax_Lince$Expr$Num(x181);
+            var x193 = this$18.Llince_syntax_Lince$Expr$Num__f_n;
+            if ((x187 instanceof $c_Llince_syntax_Lince$Expr$Num)) {
+              var x$1$4 = $as_Llince_syntax_Lince$Expr$Num(x187);
               var this$20 = $n(x$1$4);
-              var x184 = this$20.Llince_syntax_Lince$Expr$Num__f_n;
-              var n$1 = $n(rand).between__D__D__D(x187, x184);
+              var x190 = this$20.Llince_syntax_Lince$Expr$Num__f_n;
+              var n$1 = $n(rand).between__D__D__D(x193, x190);
               return new $c_Llince_syntax_Lince$Expr$Num(n$1);
             }
           }
@@ -12178,7 +12186,7 @@ $c_Llince_backend_Eval$.prototype.rands__Llince_syntax_Lince$Expr__sc_Map__s_uti
       }
       $m_s_sys_package$().error__T__E((("Cannot evaluate a random function with variables here (" + $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Expr__T(e)) + ")"));
     }
-    var this$22 = $n(x191);
+    var this$22 = $n(x197);
     var f = ((e$2) => {
       var e$1 = $as_Llince_syntax_Lince$Expr(e$2);
       return $m_Llince_backend_Eval$().rands__Llince_syntax_Lince$Expr__sc_Map__s_util_Random__Llince_syntax_Lince$Expr(e$1, v, rand);
@@ -12199,7 +12207,7 @@ $c_Llince_backend_Eval$.prototype.rands__Llince_syntax_Lince$Expr__sc_Map__s_uti
       }
       var es = h;
     }
-    return new $c_Llince_syntax_Lince$Expr$Func(x190, es);
+    return new $c_Llince_syntax_Lince$Expr$Func(x196, es);
   }
   throw new $c_s_MatchError(e);
 });
@@ -12526,18 +12534,24 @@ function $p_Llince_syntax_Parser$__statement__Lcats_parse_Parser($thiz) {
     var that = $m_Llince_syntax_Parser$().ite__Lcats_parse_Parser__Lcats_parse_Parser(recSt$1);
     var this$2 = $n(this$1.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that));
     var that$1 = $m_Llince_syntax_Parser$().whileP__Lcats_parse_Parser__Lcats_parse_Parser(recSt$1);
-    var this$6 = $n(this$2.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$1));
-    var this$4 = $n($n($p_Llince_syntax_Parser$__varName__Lcats_parse_Parser($m_Llince_syntax_Parser$())).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps));
-    var this$3 = $n($m_Llince_syntax_Parser$().assign__Lcats_parse_Parser());
-    var that$2 = $m_Llince_syntax_Parser$().diffEq__Lcats_parse_Parser();
-    var that$3 = this$3.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$2);
-    var this$5 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$4, that$3));
+    var this$3 = $n(this$2.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$1));
+    var that$2 = $m_Llince_syntax_Parser$().bern__Lcats_parse_Parser__Lcats_parse_Parser(recSt$1);
+    var this$4 = $n(this$3.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$2));
+    var that$3 = $m_Llince_syntax_Parser$().waitP__Lcats_parse_Parser();
+    var this$9 = $n(this$4.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$3));
+    var this$7 = $n($n($p_Llince_syntax_Parser$__varName__Lcats_parse_Parser($m_Llince_syntax_Parser$())).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps));
+    var this$5 = $n($m_Llince_syntax_Parser$().assign__Lcats_parse_Parser());
+    var that$4 = $m_Llince_syntax_Parser$().diffEq__Lcats_parse_Parser();
+    var this$6 = $n(this$5.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$4));
+    var that$5 = $m_Llince_syntax_Parser$().suffix__Lcats_parse_Parser();
+    var that$6 = this$6.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$5);
+    var this$8 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$7, that$6));
     var fn = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x) => {
       var x$1 = $as_T2(x);
       return $as_Llince_syntax_Lince$Program($n($as_F1($n(x$1)._2__O())).apply__O__O($n(x$1)._1__O()));
     }));
-    var that$4 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$5, fn);
-    return this$6.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$4);
+    var that$7 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$8, fn);
+    return this$9.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$7);
   })));
 }
 function $p_Llince_syntax_Parser$__literal$1__Lcats_parse_Parser__Lcats_parse_Parser($thiz, recExpr$1) {
@@ -12563,14 +12577,27 @@ function $p_Llince_syntax_Parser$__literal$1__Lcats_parse_Parser__Lcats_parse_Pa
     }));
     var that$1 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$8, fn$1);
     var this$16 = $n(this$9.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$1));
-    var this$12 = $n($p_Llince_syntax_Parser$__varName__Lcats_parse_Parser($m_Llince_syntax_Parser$()));
-    var $x_2 = $n($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(40)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps);
-    var this$10 = $n(recExpr$1);
+    var this$15 = $n($n($n($n($n($n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("expn")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(40))).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(recExpr$1)).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($n($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser0($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(41))));
+    var fn$2 = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((lamb) => {
+      var lamb$1 = $as_Llince_syntax_Lince$Expr(lamb);
+      var $x_2 = new $c_Llince_syntax_Lince$Expr$Num((-1.0));
+      var es$1 = $m_sci_Nil$();
+      var es$2 = new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Func("unif", es$1), $m_sci_Nil$());
+      var es$3 = new $c_sci_$colon$colon($x_2, new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Func("ln", es$2), $m_sci_Nil$()));
+      var es$4 = new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Func("*", es$3), new $c_sci_$colon$colon(lamb$1, $m_sci_Nil$()));
+      return new $c_Llince_syntax_Lince$Expr$Func("/", es$4);
+    }));
+    var that$2 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$15, fn$2);
+    var this$23 = $n(this$16.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$2));
+    var this$19 = $n($p_Llince_syntax_Parser$__varName__Lcats_parse_Parser($m_Llince_syntax_Parser$()));
+    var $x_4 = $n($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps);
+    var $x_3 = $n($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(40)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps);
+    var this$17 = $n(recExpr$1);
     var sep = $n($n($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps).$tilde__Lcats_parse_Parser0__Lcats_parse_Parser0($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(44))).$tilde__Lcats_parse_Parser0__Lcats_parse_Parser0($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps);
-    var this$11 = $m_Lcats_parse_Parser$();
-    var that$2 = $n($n($n($x_2).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this$11.repSep0__Lcats_parse_Parser__I__Lcats_parse_Parser0__Lcats_parse_Parser0(this$10, 0, sep))).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($n($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser0($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(41)))).$qmark__Lcats_parse_Parser0();
-    var this$15 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$12, that$2));
-    var fn$2 = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1$1) => {
+    var this$18 = $m_Lcats_parse_Parser$();
+    var that$3 = $x_4.$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser0($n($n($n($x_3).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this$18.repSep0__Lcats_parse_Parser__I__Lcats_parse_Parser0__Lcats_parse_Parser0(this$17, 0, sep))).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($n($m_Llince_syntax_Parser$().Llince_syntax_Parser$__f_sps).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser0($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(41)))).$qmark__Lcats_parse_Parser0());
+    var this$22 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$19, that$3));
+    var fn$3 = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1$1) => {
       var x$1$2 = $as_T2(x$1$1);
       if ((x$1$2 !== null)) {
         var x38 = $as_T($n(x$1$2)._1__O());
@@ -12586,8 +12613,8 @@ function $p_Llince_syntax_Parser$__literal$1__Lcats_parse_Parser__Lcats_parse_Pa
       }
       throw new $c_s_MatchError(x$1$2);
     }));
-    var that$3 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$15, fn$2);
-    return this$16.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$3);
+    var that$4 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$22, fn$3);
+    return this$23.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$4);
   })));
 }
 function $p_Llince_syntax_Parser$__pow$1__Lcats_parse_Parser($thiz) {
@@ -12821,6 +12848,24 @@ $c_Llince_syntax_Parser$.prototype.ite__Lcats_parse_Parser__Lcats_parse_Parser =
   }));
   return $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$5, fn);
 });
+$c_Llince_syntax_Parser$.prototype.bern__Lcats_parse_Parser__Lcats_parse_Parser = (function(rec) {
+  var this$1 = $n($n($n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("bernoulli")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.expr__Lcats_parse_Parser()));
+  var that = $n($n(this.Llince_syntax_Parser$__f_sps).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser0($p_Llince_syntax_Parser$__block__Lcats_parse_Parser__Lcats_parse_Parser(this, rec))).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser0(this.Llince_syntax_Parser$__f_sps);
+  var this$2 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$1, that));
+  var that$1 = $p_Llince_syntax_Parser$__block__Lcats_parse_Parser__Lcats_parse_Parser(this, rec);
+  var this$6 = $n($m_Lcats_parse_Parser$().product10__Lcats_parse_Parser__Lcats_parse_Parser0__Lcats_parse_Parser(this$2, that$1));
+  var fn = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x) => {
+    var x$1 = $as_T2(x);
+    var es = $m_sci_Nil$();
+    var e1 = new $c_Llince_syntax_Lince$Expr$Func("unif", es);
+    var e2 = $as_Llince_syntax_Lince$Expr($n($as_T2($n(x$1)._1__O()))._1__O());
+    var b = new $c_Llince_syntax_Lince$Cond$Comp("<", e1, e2);
+    var pt = $as_Llince_syntax_Lince$Program($n($as_T2($n(x$1)._1__O()))._2__O());
+    var pf = $as_Llince_syntax_Lince$Program($n(x$1)._2__O());
+    return new $c_Llince_syntax_Lince$Program$ITE(b, pt, pf);
+  }));
+  return $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$6, fn);
+});
 $c_Llince_syntax_Parser$.prototype.whileP__Lcats_parse_Parser__Lcats_parse_Parser = (function(rec) {
   var $x_1 = $n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("while")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps);
   var this$1 = $n(this.cond__Lcats_parse_Parser());
@@ -12856,6 +12901,18 @@ $c_Llince_syntax_Parser$.prototype.whileP__Lcats_parse_Parser__Lcats_parse_Parse
   }));
   var that$2 = $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$18, fn$1);
   return this$19.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that$2);
+});
+$c_Llince_syntax_Parser$.prototype.waitP__Lcats_parse_Parser = (function() {
+  var $x_1 = $n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("wait")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps);
+  var this$3 = $n(this.expr__Lcats_parse_Parser());
+  var fn = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((e) => {
+    var e$1 = $as_Llince_syntax_Lince$Expr(e);
+    var this$1 = $m_sci_Map$();
+    var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
+    var eqs = this$1.from__sc_IterableOnce__sci_Map(elems);
+    return new $c_Llince_syntax_Lince$Program$EqDiff(eqs, e$1);
+  }));
+  return $n($n($n($x_1).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$3, fn))).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps)).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(59));
 });
 $c_Llince_syntax_Parser$.prototype.assign__Lcats_parse_Parser = (function() {
   var this$2 = $n($n($n($n($n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser(":=")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps)).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.expr__Lcats_parse_Parser())).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps)).$less$times__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(59)));
@@ -12900,6 +12957,27 @@ $c_Llince_syntax_Parser$.prototype.diffEq__Lcats_parse_Parser = (function() {
     throw new $c_s_MatchError(x$1$1);
   }));
   return $m_Lcats_parse_Parser$().map__Lcats_parse_Parser__F1__Lcats_parse_Parser(this$12, fn);
+});
+$c_Llince_syntax_Parser$.prototype.suffix__Lcats_parse_Parser = (function() {
+  var $x_1 = $n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("++")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps);
+  var this$5 = $n($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(59));
+  var b = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((v) => {
+    var v$1 = $as_T(v);
+    var es = new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Var(v$1), new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Num(1.0), $m_sci_Nil$()));
+    var e = new $c_Llince_syntax_Lince$Expr$Func("+", es);
+    return new $c_Llince_syntax_Lince$Program$Assign(v$1, e);
+  }));
+  var this$11 = $n($n($x_1).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().as__Lcats_parse_Parser__O__Lcats_parse_Parser(this$5, b)));
+  var $x_2 = $n($n($m_Lcats_parse_Parser$().string__T__Lcats_parse_Parser("--")).$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser(this.Llince_syntax_Parser$__f_sps));
+  var this$10 = $n($m_Lcats_parse_Parser$().char__C__Lcats_parse_Parser(59));
+  var b$1 = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((v$2) => {
+    var v$3 = $as_T(v$2);
+    var es$1 = new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Var(v$3), new $c_sci_$colon$colon(new $c_Llince_syntax_Lince$Expr$Num(1.0), $m_sci_Nil$()));
+    var e$1 = new $c_Llince_syntax_Lince$Expr$Func("-", es$1);
+    return new $c_Llince_syntax_Lince$Program$Assign(v$3, e$1);
+  }));
+  var that = $x_2.$times$greater__Lcats_parse_Parser0__Lcats_parse_Parser($m_Lcats_parse_Parser$().as__Lcats_parse_Parser__O__Lcats_parse_Parser(this$10, b$1));
+  return this$11.orElse__Lcats_parse_Parser__Lcats_parse_Parser(that);
 });
 $c_Llince_syntax_Parser$.prototype.expr__Lcats_parse_Parser = (function() {
   return $m_Lcats_parse_Parser$().recursive__F1__Lcats_parse_Parser(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((recExpr) => {
@@ -23898,33 +23976,45 @@ function $c_Llince_frontend_CaosConfig$() {
     var str$1 = $as_T(str);
     return $m_Llince_syntax_Parser$().parseSimulation__T__Llince_syntax_Lince$Simulation(str$1);
   }));
-  var $x_11 = $m_sr_ScalaRunTime$();
+  var $x_19 = $m_sr_ScalaRunTime$();
   var nameCode = new $c_T2("CC (broken)", "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n  if x>=10 then x:=10;\n}\n--\nuntil 5\nsamples 10");
   var example = $as_T(nameCode.T2__f__2);
   var name = $as_T(nameCode.T2__f__1);
-  var $x_10 = new $c_Lcaos_frontend_Configurator$Example(example, name, "");
+  var $x_18 = new $c_Lcaos_frontend_Configurator$Example(example, name, "");
   var nameCode$1 = new $c_T2("CC", "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5");
   var example$1 = $as_T(nameCode$1.T2__f__2);
   var name$1 = $as_T(nameCode$1.T2__f__1);
-  var $x_9 = new $c_Lcaos_frontend_Configurator$Example(example$1, name$1, "");
+  var $x_17 = new $c_Lcaos_frontend_Configurator$Example(example$1, name$1, "");
   var nameCode$2 = new $c_T2("x:=2", "x := 2;");
   var example$2 = $as_T(nameCode$2.T2__f__2);
   var name$2 = $as_T(nameCode$2.T2__f__1);
-  var $x_8 = new $c_Lcaos_frontend_Configurator$Example(example$2, name$2, "");
+  var $x_16 = new $c_Lcaos_frontend_Configurator$Example(example$2, name$2, "");
   var nameCode$3 = new $c_T2("x'=2,y'=3 for 4", "x'=2, y'=3 for 4;");
   var example$3 = $as_T(nameCode$3.T2__f__2);
   var name$3 = $as_T(nameCode$3.T2__f__1);
-  var $x_7 = new $c_Lcaos_frontend_Configurator$Example(example$3, name$3, "");
+  var $x_15 = new $c_Lcaos_frontend_Configurator$Example(example$3, name$3, "");
   var nameCode$4 = new $c_T2("skip", "skip");
   var example$4 = $as_T(nameCode$4.T2__f__2);
   var name$4 = $as_T(nameCode$4.T2__f__1);
-  var $x_6 = new $c_Lcaos_frontend_Configurator$Example(example$4, name$4, "");
+  var $x_14 = new $c_Lcaos_frontend_Configurator$Example(example$4, name$4, "");
+  var $x_13 = $m_Lcaos_frontend_Configurator$();
+  var self = new $c_T2("PPDP - Ex.2.2", "x := 0;\nwhile true {\n  bernoulli (1/2)\n    x++; x--;\n  wait unif(0,1);\n}");
+  var $x_12 = $x_13.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self, "Example 2.2 - An execution sample of a continuous-time random walk in which the waiting time is given by sampling from Custom Trajectories (symbolic) the uniform distribution on [0,1]."));
+  var $x_11 = $m_Lcaos_frontend_Configurator$();
+  var self$1 = new $c_T2("PPDP - Ex.2.3", "d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (0,1) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}");
+  var $x_10 = $x_11.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$1, "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units."));
+  var $x_9 = $m_Lcaos_frontend_Configurator$();
+  var self$2 = new $c_T2("PPDP - Ex.2.4", "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\n//seed 3\nuntil 5\nvars p,v,a");
+  var $x_8 = $x_9.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$2, "Example 2.4 - Multiple execution samples of the particle\u2019s position overlayed, in order to depict how the position\u2019s probability mass spreads over space w.r.t time."));
+  var $x_7 = $m_Lcaos_frontend_Configurator$();
+  var self$3 = new $c_T2("PPDP - Ex.2.5", "x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;");
+  var $x_6 = $x_7.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$3, "Example 2.5 - Execution sample of a particle's position (p) and velocity (v)."));
   var $x_5 = $m_Lcaos_frontend_Configurator$();
-  var self = new $c_T2("PPDP - Ex.2.6a", "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nvars p.*");
-  var $x_4 = $x_5.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self, "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty)."));
+  var self$4 = new $c_T2("PPDP - Ex.2.6a", "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nvars p.*");
+  var $x_4 = $x_5.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$4, "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty)."));
   var $x_3 = $m_Lcaos_frontend_Configurator$();
-  var self$1 = new $c_T2("PPDP - Ex.2.6b", "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n\ta := unif(-1,1) ;\n  // decide to speed up (acc=2) or brake (acc=-2), assuming a==-1\n  if (v - vl + 3)^2 + 4*(p - pl + v - vl + 3/2) < 0\n  // uncomment the \"if\" below to try version 2.6a (incorrect)\n  // if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nseed 10\nvars p.*");
-  var $x_2 = $x_3.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$1, "Example 2.6b Adaptive cruise control with a leader with an uncertain acceleration (bounded by fixed values)."));
+  var self$5 = new $c_T2("PPDP - Ex.2.6b", "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n\ta := unif(-1,1) ;\n  // decide to speed up (acc=2) or brake (acc=-2), assuming a==-1\n  if (v - vl + 3)^2 + 4*(p - pl + v - vl + 3/2) < 0\n  // uncomment the \"if\" below to try version 2.6a (incorrect)\n  // if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nseed 10\nvars p.*");
+  var $x_2 = $x_3.toExampleDesc__T2__Lcaos_frontend_Configurator$Example(new $c_T2(self$5, "Example 2.6b Adaptive cruise control with a leader with an uncertain acceleration (bounded by fixed values)."));
   var nameCode$5 = new $c_T2("Single tank (poll-variation)", "// Define initial values of the water tank\nlevel := 5;\ndrain := -1/2;\n\nwhile true do {\n  // keep level between 3..10\n  if      level<=3  then drain:= 1/2;\n  else if level>=10 then drain:=-1/2;\n  else    skip;\n\n\tlevel'= drain, drain'=0\n \t  for 0.1;\n}\n---\nuntil 100\niterations 1000");
   var example$5 = $as_T(nameCode$5.T2__f__2);
   var name$5 = $as_T(nameCode$5.T2__f__1);
@@ -23932,31 +24022,31 @@ function $c_Llince_frontend_CaosConfig$() {
   var nameCode$6 = new $c_T2("Water tank (slow)", "a1:=1; //Area of tank 1\na2:=1; // Area of tank 2\nr1:=1; //Resistance applied to the water flow at the water exit tap of tank 1.\nr2:=10; //Resistance applied to the water flow at the water exit tap of tank 2.\nh1_p:=10; // initial water level of tank 1 in the aligned  configuration\nh2_p:=0; // initial water level of tank 2 in the aligned  configuration.\nh1_v:=10; //initial water level of tank 1 in vertical configuration.\nh2_v:=0; //initial water level of tank 2 in vertical  configuration.\n\n// Open tap of the tank 1 and close the tap of the tank 2\nqe1:=1;\nqe2:=0;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n// Open tap of the tank 2 and close the tap of the tank 1\nqe1:=0;\nqe2:=1;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n//Open both\nqe1:=1;\nqe2:=1;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n//Close both\nqe1:=0;\nqe2:=0;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n---\nuntil\t100\nsamples 60\nvars h.*");
   var example$6 = $as_T(nameCode$6.T2__f__2);
   var name$6 = $as_T(nameCode$6.T2__f__1);
-  var elems = $x_11.wrapRefArray__AO__sci_ArraySeq(new ($d_Lcaos_frontend_Configurator$Example.getArrayOf().constr)([$x_10, $x_9, $x_8, $x_7, $x_6, $x_4, $x_2, $x_1, new $c_Lcaos_frontend_Configurator$Example(example$6, name$6, "")]));
+  var elems = $x_19.wrapRefArray__AO__sci_ArraySeq(new ($d_Lcaos_frontend_Configurator$Example.getArrayOf().constr)([$x_18, $x_17, $x_16, $x_15, $x_14, $x_12, $x_10, $x_8, $x_6, $x_4, $x_2, $x_1, new $c_Lcaos_frontend_Configurator$Example(example$6, name$6, "")]));
   this.Llince_frontend_CaosConfig$__f_examples = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems);
   var y = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => $dp_toString__T($n(_$1)))), $m_Lcaos_view_Text$())), 1);
-  var $x_20 = new $c_T2("View parsed", y);
+  var $x_28 = new $c_T2("View parsed", y);
   var y$1 = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((s) => {
     var s$1 = $as_Llince_syntax_Lince$Simulation(s);
-    var $x_18 = $m_Llince_syntax_Show$();
-    var this$42 = $n(s$1);
-    return $x_18.apply__Llince_syntax_Lince$Program__T(this$42.Llince_syntax_Lince$Simulation__f_prog);
+    var $x_26 = $m_Llince_syntax_Show$();
+    var this$58 = $n(s$1);
+    return $x_26.apply__Llince_syntax_Lince$Program__T(this$58.Llince_syntax_Lince$Simulation__f_prog);
   })), new $c_Lcaos_view_Code("clike"))), 1);
-  var $x_19 = new $c_T2("View pretty", y$1);
+  var $x_27 = new $c_T2("View pretty", y$1);
   var reload = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim) => {
     var sim$1 = $as_Llince_syntax_Lince$Simulation(sim);
-    var $x_16 = $m_Llince_backend_Plot$();
-    var this$47 = $m_Llince_backend_Plot$();
+    var $x_24 = $m_Llince_backend_Plot$();
+    var this$63 = $m_Llince_backend_Plot$();
     var st = this.mkSt__Llince_syntax_Lince$Simulation__Llince_backend_SmallStep$St(sim$1);
-    var this$46 = $n(sim$1);
-    var pinfo = this$46.Llince_syntax_Lince$Simulation__f_pi;
-    var js = $x_16.plotToJS__Llince_backend_Plot__T__T(this$47.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_maxTime, "sim-plotly", $n(pinfo).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_showVar), "sim-plotly");
+    var this$62 = $n(sim$1);
+    var pinfo = this$62.Llince_syntax_Lince$Simulation__f_pi;
+    var js = $x_24.plotToJS__Llince_backend_Plot__T__T(this$63.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_maxTime, "sim-plotly", $n(pinfo).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo).Llince_syntax_Lince$PlotInfo__f_showVar), "sim-plotly");
     (0, eval)(js);
   }));
   var buttons = $m_sci_Nil$();
-  var this$51 = new $c_Lcaos_frontend_widgets_WidgetInfo$Custom("sim-plotly", reload, buttons);
-  var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo(this$51);
-  var $x_17 = new $c_T2("Plot", y$2);
+  var this$67 = new $c_Lcaos_frontend_widgets_WidgetInfo$Custom("sim-plotly", reload, buttons);
+  var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo(this$67);
+  var $x_25 = new $c_T2("Plot", y$2);
   var y$3 = $m_Lcaos_frontend_Configurator$().steps__F1__Lcaos_sos_SOS__F1__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$2) => {
     var sim$3 = $as_Llince_syntax_Lince$Simulation(sim$2);
     return this.mkSt__Llince_syntax_Lince$Simulation__Llince_backend_SmallStep$St(sim$3);
@@ -23965,10 +24055,10 @@ function $c_Llince_frontend_CaosConfig$() {
     return $m_Llince_syntax_Show$().simpleSt__Llince_backend_SmallStep$St__T(st$2);
   })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$2) => {
     var _$2$1 = $as_Llince_syntax_Lince$Action(_$2);
-    var this$54 = $n(_$2$1);
-    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$54);
+    var this$70 = $n(_$2$1);
+    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$70);
   })), $m_Lcaos_view_Text$());
-  var $x_15 = new $c_T2("Run small-steps", y$3);
+  var $x_23 = new $c_T2("Run small-steps", y$3);
   var y$4 = $m_Lcaos_frontend_Configurator$().lts__F1__Lcaos_sos_SOS__F1__F1__I__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$3$1) => {
     var sim$4 = $as_Llince_syntax_Lince$Simulation(sim$3$1);
     return this.mkSt__Llince_syntax_Lince$Simulation__Llince_backend_SmallStep$St(sim$4);
@@ -23977,35 +24067,35 @@ function $c_Llince_frontend_CaosConfig$() {
     return $m_Llince_syntax_Show$().simpleSt__Llince_backend_SmallStep$St__T(st$3);
   })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$3) => {
     var _$3$1 = $as_Llince_syntax_Lince$Action(_$3);
-    var this$57 = $n(_$3$1);
-    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$57);
+    var this$73 = $n(_$3$1);
+    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$73);
   })), 80);
-  var $x_14 = new $c_T2("Run all steps", y$4);
+  var $x_22 = new $c_T2("Run all steps", y$4);
   var y$5 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$4$1) => {
     var sim$5 = $as_Llince_syntax_Lince$Simulation(sim$4$1);
-    var this$61 = $m_Llince_backend_Plot$();
+    var this$77 = $m_Llince_backend_Plot$();
     var st$4 = this.mkSt__Llince_syntax_Lince$Simulation__Llince_backend_SmallStep$St(sim$5);
-    var this$60 = $n(sim$5);
-    var pinfo$1 = this$60.Llince_syntax_Lince$Simulation__f_pi;
-    return $n(this$61.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st$4, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_maxTime, "divName", $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_showVar)).show__T();
+    var this$76 = $n(sim$5);
+    var pinfo$1 = this$76.Llince_syntax_Lince$Simulation__f_pi;
+    return $n(this$77.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st$4, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_maxTime, "divName", $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo$1).Llince_syntax_Lince$PlotInfo__f_showVar)).show__T();
   })), $m_Lcaos_view_Text$());
-  var $x_13 = new $c_T2("Plot debug", y$5);
+  var $x_21 = new $c_T2("Plot debug", y$5);
   var y$6 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$5$1) => {
     var sim$6 = $as_Llince_syntax_Lince$Simulation(sim$5$1);
-    var $x_12 = $m_Llince_backend_Plot$();
-    var this$65 = $m_Llince_backend_Plot$();
+    var $x_20 = $m_Llince_backend_Plot$();
+    var this$81 = $m_Llince_backend_Plot$();
     var st$5 = this.mkSt__Llince_syntax_Lince$Simulation__Llince_backend_SmallStep$St(sim$6);
-    var this$64 = $n(sim$6);
-    var pinfo$2 = this$64.Llince_syntax_Lince$Simulation__f_pi;
-    return $x_12.plotToJS__Llince_backend_Plot__T__T(this$65.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st$5, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_maxTime, "sim-plotly", $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_showVar), "sim-plotly");
+    var this$80 = $n(sim$6);
+    var pinfo$2 = this$80.Llince_syntax_Lince$Simulation__f_pi;
+    return $x_20.plotToJS__Llince_backend_Plot__T__T(this$81.apply__Llince_backend_SmallStep$St__D__D__T__I__Z__F1__Llince_backend_Plot(st$5, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_minTime, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_maxTime, "sim-plotly", $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_samples, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_showAll, $n(pinfo$2).Llince_syntax_Lince$PlotInfo__f_showVar), "sim-plotly");
   })), $m_Lcaos_view_Text$());
-  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_20, new $c_sci_$colon$colon($x_19, new $c_sci_$colon$colon($x_17, new $c_sci_$colon$colon($x_15, new $c_sci_$colon$colon($x_14, new $c_sci_$colon$colon($x_13, new $c_sci_$colon$colon(new $c_T2("Plot JS", y$6), $m_sci_Nil$())))))));
+  this.Llince_frontend_CaosConfig$__f_widgets = new $c_sci_$colon$colon($x_28, new $c_sci_$colon$colon($x_27, new $c_sci_$colon$colon($x_25, new $c_sci_$colon$colon($x_23, new $c_sci_$colon$colon($x_22, new $c_sci_$colon$colon($x_21, new $c_sci_$colon$colon(new $c_T2("Plot JS", y$6), $m_sci_Nil$())))))));
   this.Llince_frontend_CaosConfig$__f_footer = $m_sc_StringOps$().stripMargin$extension__T__C__T("Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.\n      | Source code available online:\n      | <a target=\"_blank\" href=\"https://github.com/arcalab/lince-2.0\">\n      | https://github.com/arcalab/lince-2.0</a>.", 124);
-  var $x_21 = $m_Lcaos_frontend_Configurator$();
-  var self$2 = this.Llince_frontend_CaosConfig$__f_languageName;
-  var self$3 = new $c_T2(self$2, "More information on the syntax of Lince 2.0");
+  var $x_29 = $m_Lcaos_frontend_Configurator$();
+  var self$6 = this.Llince_frontend_CaosConfig$__f_languageName;
+  var self$7 = new $c_T2(self$6, "More information on the syntax of Lince 2.0");
   var y$7 = $m_sc_StringOps$().stripMargin$extension__T__C__T("<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b then p else p  |  while b {p}\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre></p>\n        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>.</p>\n        |<p> You can customize your plot by appending to the end of your program, e.g.,\n        |<pre>\n        |---\n        |until 5 // maximum time (default 10)\n        |from 0 // starting time (default 0)\n        |iterations 10 // maximum times the while loops are unfolded (default 50)\n        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)\n        |seed 0 // seed for the random generator  (everytime a random one by default)\n        |vars x.*, y // list of regular expressions to select variables to be displayed (default all)\n        |verbose // shows a marker at every discrete step (does not show by default)\n        |</pre>\n        |</p>\n        |", 124);
-  this.Llince_frontend_CaosConfig$__f_documentation = $x_21.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon(new $c_T2(self$3, y$7), $m_sci_Nil$()));
+  this.Llince_frontend_CaosConfig$__f_documentation = $x_29.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon(new $c_T2(self$7, y$7), $m_sci_Nil$()));
 }
 $c_Llince_frontend_CaosConfig$.prototype = new $h_O();
 $c_Llince_frontend_CaosConfig$.prototype.constructor = $c_Llince_frontend_CaosConfig$;

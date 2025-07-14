@@ -27,6 +27,18 @@ object CaosConfig extends Configurator[Simulation]:
     "x:=2" -> "x := 2;",
     "x'=2,y'=3 for 4" -> "x'=2, y'=3 for 4;",
     "skip" -> "skip",
+    "PPDP - Ex.2.2"
+      -> "x := 0;\nwhile true {\n  bernoulli (1/2)\n    x++; x--;\n  wait unif(0,1);\n}"
+      -> "Example 2.2 - An execution sample of a continuous-time random walk in which the waiting time is given by sampling from Custom Trajectories (symbolic) the uniform distribution on [0,1].",
+    "PPDP - Ex.2.3"
+      -> "d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (0,1) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}"
+      -> "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units.",
+    "PPDP - Ex.2.4"
+      -> "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\n//seed 3\nuntil 5\nvars p,v,a"
+      -> "Example 2.4 - Multiple execution samples of the particle’s position overlayed, in order to depict how the position’s probability mass spreads over space w.r.t time.",
+    "PPDP - Ex.2.5"
+      -> "x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;"
+      -> "Example 2.5 - Execution sample of a particle's position (p) and velocity (v).",
     "PPDP - Ex.2.6a"
       -> "// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nvars p.*"
       -> "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty).",

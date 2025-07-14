@@ -94,7 +94,9 @@ object Parser :
     skip |
     ite(recSt) |
     whileP(recSt) |
-    ((varName <* sps) ~ (assign | diffEq) ).map (x => x._2 (x._1) )
+    bern(recSt) |
+    waitP |
+    ((varName <* sps) ~ (assign | diffEq | suffix) ).map (x => x._2 (x._1) )
   })
 
   def skip: P[Program] =
@@ -107,6 +109,13 @@ object Parser :
     (string("else") *> sps *> block(rec)).?)
       .map(x => ITE(x._1._1,x._1._2,x._2.getOrElse(Skip)))
 
+  def bern(rec: P[Program]): P[Program] =
+    ((string("bernoulli") *> sps *> expr) ~
+      (sps *> block(rec) <* sps) ~
+      block(rec))
+      .map(x => ITE(Cond.Comp("<",Expr.Func("unif",Nil),x._1._1),
+                    x._1._2, x._2))
+
   def whileP(rec:P[Program]): P[Program] =
     (string("while") *> sps *> cond ~
       (sps *> (string("do") *> sps).? *> // optional do
@@ -118,6 +127,9 @@ object Parser :
         While(Cond.Comp("<",Expr.Var("§c"),Expr.Num(x._1)),
           Seq(x._2,Assign("§c",Expr.Func("+",List(Expr.Var("§c"),Expr.Num(1))))))))
 
+  def waitP: P[Program] =
+    string("wait") *> sps *> expr.map(e => EqDiff(Map(),e)) <* sps <* char(';')
+
   def assign: P[String => Program] =
     (string(":=") *> sps *> expr <* sps <* char(';')).map(e => v => Assign(v,e))
 
@@ -128,13 +140,22 @@ object Parser :
       .map{
         case ((e1,x2e2s),dur) => x1 => EqDiff(Map(x1->e1)++x2e2s.toMap, dur)
       }
+  def suffix: P[String => Program] =
+    string("++") *> sps *> char(';')
+      .as(v => Assign(v,Expr.Func("+",List(Expr.Var(v),Expr.Num(1))))) |
+    string("--") *> sps *> char(';')
+      .as(v => Assign(v, Expr.Func("-", List(Expr.Var(v), Expr.Num(1)))))
 
   def expr: P[Expr] = P.recursive((recExpr: P[Expr]) => {
     def literal: P[Expr] = P.recursive((recLit: P[Expr]) =>
       (char('(') *> recExpr.surroundedBy(sps) <* char(')')) |
       (char('-') ~ recLit).map(x => Expr.Func("*",List(Expr.Num(-1),x._2))) |
       realP.map(Expr.Num.apply) |
-      (varName~(char('(') *> sps *> recExpr.repSep0(sps~char(',')~sps) <* (sps <* char(')'))).?)
+      (string("expn") *> sps *> char('(') *> sps *> recExpr <* (sps <* char(')')))
+        .map(lamb => Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
+                       Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))) |
+          // - ln ( unif ) / lambda
+      (varName~(sps *> (char('(') *> sps *> recExpr.repSep0(sps~char(',')~sps) <* (sps <* char(')'))).?))
         .map {
           case (v, None) => Expr.Var(v)
           case (v, Some(args)) => Expr.Func(v, args)

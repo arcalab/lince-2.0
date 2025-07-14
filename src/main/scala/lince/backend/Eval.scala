@@ -30,6 +30,7 @@ object Eval:
     case Expr.Func("cosh", List(e)) => math.cosh(apply(e))
     case Expr.Func("sinh", List(e)) => math.sinh(apply(e))
     case Expr.Func("tanh", List(e)) => math.tanh(apply(e))
+    case Expr.Func("ln", List(e)) => math.log(apply(e))
     case Expr.Func("pi", List()) => math.Pi
     case Expr.Func("unif",List()) => rand.nextDouble()
     case Expr.Func("unif",List(e1,e2)) => rand.between(apply(e1),apply(e2))
