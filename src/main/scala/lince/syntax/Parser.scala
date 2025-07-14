@@ -61,6 +61,9 @@ object Parser :
     // symbols starting with "--" are meant for syntactic sugar of arrows, and ignored as symbols of terms
     P.not(string("--")).with1 *>
     oneOf("+-><!%/*=|&".toList.map(char)).rep.string
+  private def regExp: P[List[String]] =
+    (alphaDigit | charIn("*. ()|+[]^!")).rep.string.map(_.trim).repSep(char(',')*>sps).map(_.toList)
+//      .map(x => List(x))
   /** real number, e.g., 12 or 34.2 */
   def realP: P[Double] =
     (digits ~ (charIn('.')*>digits.map("."+_)).?)
@@ -194,7 +197,9 @@ object Parser :
     (string("samples") *> sps *> intP).map(r =>
       (pi: PlotInfo) => pi.copy(samples = r)) |
     (string("seed") *> sps *> intP).map(r =>
-        (pi: PlotInfo) => pi.copy(seed = r)) |
+      (pi: PlotInfo) => pi.copy(seed = r)) |
+    (string("vars") *> sps *> regExp).map(r =>
+      (pi: PlotInfo) => pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 

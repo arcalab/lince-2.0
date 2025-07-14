@@ -1,6 +1,6 @@
 package lince.backend
 
-import lince.syntax.Lince.{Action, Expr, Program}
+import lince.syntax.Lince.{Action, Expr, PlotInfo, Program}
 import lince.syntax.{Lince, Show}
 import BigSteps.{bigStep, contSteps, discSteps, nextStatement}
 import lince.backend.Plot.{MarkedPoints, Points, Trace, Traces}
@@ -65,8 +65,11 @@ object Plot:
 
   private type St = SmallStep.St
 
+  def apply(st:St, divName:String, pinfo:PlotInfo): Plot =
+    apply(st, pinfo.minTime, pinfo.maxTime, divName, pinfo.samples, pinfo.showAll, pinfo.showVar)
+
   def apply(st: St, from: Double, to: Double, divName:String,
-            samples:Int=50, showCont:Boolean=false): Plot = {
+            samples:Int=50, showCont:Boolean=false,filter:String=>Boolean): Plot = {
 
     // need to traverse my trajectory
     // need a maxt
@@ -81,7 +84,7 @@ object Plot:
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, from, showCont, Plot.empty).endTraces
+    calcPlot(stInit, stepSize, from, showCont, Plot.empty, filter).endTraces
   }
 
   def valToAssign(st:St): St =
@@ -98,14 +101,14 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def calcPlot(st: St, stepSize: Double, timePassed: Double, showCont:Boolean, acc: Plot): Plot =
+  def calcPlot(st: St, stepSize: Double, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
     var res = acc
     val (as, st2) = discSteps(st)
     // update Plot
     val setVars = if showCont
       then st2.v.keySet
       else for (case Action.Assign(v,_) <- as.toSet) yield v
-    for (v <- setVars) do
+    for (v <- setVars if filter(v)) do
       res = res.startTrace(v,
         timePassed,
         st2.v.getOrElse(v,sys.error(s"No value for ${v} after ${as.mkString(",")}")),
@@ -114,11 +117,11 @@ object Plot:
 
     val (points, st3) = contSteps(st2, stepSize, timePassed)
     // update Plot
-    for ((time,valuation) <- points.reverse; (x,value) <- valuation) do
+    for ((time,valuation) <- points.reverse; (x,value) <- valuation if filter(x)) do
       res = res + (x -> time -> value)
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res)
+    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
 
   /** Converts a plot to JavaScript instructions for Plotly */
   def plotToJS(plot: Plot,divName:String): String =
