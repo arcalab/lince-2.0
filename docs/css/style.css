@@ -76,10 +76,10 @@
 }
 
 .navbar-lince {
-    background-image: -webkit-linear-gradient(top,#d97e00 0,#724300 100%);
-    background-image: -o-linear-gradient(top,#d97e00 0,#724300 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#d97e00),to(#724300));
-    background-image: linear-gradient(to bottom,#d97e00 0,#724300 100%);
+    background-image: -webkit-linear-gradient(top,#724300 0,#d97e00 100%);
+    background-image: -o-linear-gradient(top,#724300 0,#d97e00 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#724300),to(#d97e00));
+    background-image: linear-gradient(to bottom,#724300 0,#d97e00 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff36569c', endColorstr='#ff182b53', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
     border-radius: 0px; 
