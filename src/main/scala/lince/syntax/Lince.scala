@@ -1,5 +1,7 @@
 package lince.syntax
 
+import lince.backend.SmallStep
+
 import scala.util.Random
 
 /**
@@ -49,11 +51,11 @@ object Lince:
                        maxTime:Double,
                        maxLoops: Int,
                        samples: Int,
-                       rand: Random,
+                       seed: Long,
                        showAll: Boolean,
                        showVar: String=>Boolean
   )
   object PlotInfo:
-    val default = PlotInfo(0,10,50,20,new Random(),false,_=>true)
+    def default = PlotInfo(0,10,50,20,SmallStep.rand.nextLong(),false,_=>true)
 
 

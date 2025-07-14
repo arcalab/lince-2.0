@@ -194,7 +194,7 @@ object Parser :
     (string("samples") *> sps *> intP).map(r =>
       (pi: PlotInfo) => pi.copy(samples = r)) |
     (string("seed") *> sps *> intP).map(r =>
-        (pi: PlotInfo) => pi.copy(rand = new Random(r))) |
+        (pi: PlotInfo) => pi.copy(seed = r)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 

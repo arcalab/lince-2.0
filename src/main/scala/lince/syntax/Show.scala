@@ -60,5 +60,5 @@ object Show:
   }
 
   def simpleSt(st: lince.backend.SmallStep.St): String =
-    s"[${st.t}/${st.lp}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
+    s"[${st.t}/${st.lp}/${st.s}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
 

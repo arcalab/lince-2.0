@@ -15,10 +15,18 @@ object SmallStep extends SOS[Action,St]:
 
   case class St(p: Program   // input program
                ,v: Valuation // known variables
-               ,r: Random    // random generator
+//               ,r: Random    // random generator
+               ,s: Long      // seed for the random generator
                ,t: Double    // maximum time
-               ,lp:Int):      // maximum loops
-    def empty = St(Program.Skip, Map(), new Random, 0,0)
+               ,lp:Int):     // maximum loops
+    /** Creates a new state with an updated random seed */
+    def nextSeed: St =
+      resetSeed
+      this.copy(s = rand.nextLong())
+    def resetSeed: Unit =
+      rand.setSeed(s)
+
+  val rand: Random = new Random
 
   override def accepting(s: St): Boolean =
     s.t<=0 || s.lp<=0
@@ -31,31 +39,37 @@ object SmallStep extends SOS[Action,St]:
   def step(st: St): Option[(Action, St)] =
     if st.t<=0 || st.lp<=0 then
       return None
+    st.resetSeed // set seed and prepare to run
+    given r:Random = rand//st.r
     given v:Valuation = st.v
-    given r:Random = st.r
 
     st.p match {
       case Skip => None
       case Assign(n, e) =>
-        val res = Eval(e)
-        Some(Action.Assign(n,res) ->  st.copy(p = Skip, v = v+(n->res)))
+        val res = Eval(e) // after Eval always update the seed of the state
+        Some(Action.Assign(n,res) ->  st.nextSeed.copy(p = Skip, v = v+(n->res)))
       case Seq(Skip, q) => step(st.copy(p=q))
       case Seq(p, q) =>
         for (a,st2) <- step(st.copy(p=p))
           yield a -> st2.copy(p=Seq(st2.p,q))
       case ITE(b, pt, pf) =>
-        if Eval(b) then Some(Action.CheckIf(b,true)  -> st.copy(p=pt))
-                   else Some(Action.CheckIf(b,false) -> st.copy(p=pf))
+        if Eval(b) then Some(Action.CheckIf(b,true)  -> st.nextSeed.copy(p=pt))
+                   else Some(Action.CheckIf(b,false) -> st.nextSeed.copy(p=pf))
       case wh@While(b, p) =>
-        if Eval(b) then Some(Action.CheckWhile(b,true)  -> st.copy(p=Seq(p,wh), lp=st.lp-1))
-                   else Some(Action.CheckWhile(b,false) -> st.copy(p=Skip))
+        if Eval(b) then Some(Action.CheckWhile(b,true)  -> st.nextSeed.copy(p=Seq(p,wh), lp=st.lp-1))
+                   else Some(Action.CheckWhile(b,false) -> st.nextSeed.copy(p=Skip))
       case EqDiff(eqs, durExp) =>
         val dur = Eval(durExp)
         val eqs2 = eqs.map(kv => (kv._1,Eval.rands(kv._2)))
         if dur>st.t
-        then Some(Action.DiffStop(eqs2,st.t) ->
-                  st.copy(p=EqDiff(eqs2,Expr.Num(dur-st.t)), v=RungeKutta(v,eqs2,st.t), t=0))
-        else Some(Action.DiffSkip(eqs2,dur) ->
-                  st.copy(p=Skip, v=RungeKutta(v,eqs2,dur), t=st.t-dur))
+        then {
+          val v2 = RungeKutta(v,eqs2,st.t)
+          Some(Action.DiffStop(eqs2,st.t) ->
+                st.nextSeed.copy(p=EqDiff(eqs2,Expr.Num(dur-st.t)), v=v2, t=0))
+        } else {
+          val v2 = RungeKutta(v,eqs2,dur)
+          Some(Action.DiffSkip(eqs2,dur) ->
+                st.nextSeed.copy(p=Skip, v=v2, t=st.t-dur))
+        }
     }
 
