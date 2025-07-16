@@ -21,10 +21,14 @@ Before compiling import the CAOS submodule, e.g., using the command:
 
 > git submodule update --init
 
+You also need to add the following line to the file `lib/caos/tool/index.html`, at line 57 (since CAOS does not load Plotly by default):
+
+> <script type="text/javascript" src="js/static/plotly.min.js"></script>
+
 ## Compilation
 
 You need to compile this project using the ScalaJS plug-in, following the steps below.
 The result will be a JavaScript file that is already being imported by an existing HTML file. 
 
 1. `sbt fastLinkJS`
-2. open the file `lib/tool/index.html`
+2. open the file `lib/caos/tool/index.html`

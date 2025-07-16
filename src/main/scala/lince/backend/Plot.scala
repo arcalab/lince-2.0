@@ -123,6 +123,11 @@ object Plot:
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
     else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
 
+
+  ////////////////////////////////////
+  // Build JavaScript from the plot //
+  ////////////////////////////////////
+
   /** Converts a plot to JavaScript instructions for Plotly */
   def plotToJS(plot: Plot,divName:String): String =
     colours = (0,Map())
