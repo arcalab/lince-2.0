@@ -86,15 +86,15 @@ object Parser :
 //    (statement <* sps).rep.map(l => l.tail.fold(l.head)(Program.Seq.apply))
 
   private def block(rec: P[Program]): P[Program] =
-    (char('{') *> sps *> (rec<*sps).rep0  <* char('}')).map(l =>
-      if l.isEmpty then Skip else l.tail.fold(l.head)(Program.Seq.apply)) |
-    rec
+    (char('{') *> sps *> (rec <* sps).rep0 <* char('}')).map(l =>
+      if l.isEmpty then Skip else l.tail.fold(l.head)(Program.Seq.apply))
 
   private def statement: P[Program] = P.recursive((recSt: P[Program]) => {
     skip |
     ite(recSt) |
     whileP(recSt) |
     bern(recSt) |
+    block(recSt) |
     waitP |
     ((varName <* sps) ~ (assign | diffEq | suffix) ).map (x => x._2 (x._1) )
   })
@@ -105,23 +105,23 @@ object Parser :
   def ite(rec:P[Program]): P[Program] =
     ((string("if") *> sps *> cond ~
       (sps *> (string("then") *> sps).? *> // optional "then"
-      block(rec) <* sps)) ~
-    (string("else") *> sps *> block(rec)).?)
+      rec <* sps)) ~
+    (string("else") *> sps *> rec).?)
       .map(x => ITE(x._1._1,x._1._2,x._2.getOrElse(Skip)))
 
   def bern(rec: P[Program]): P[Program] =
     ((string("bernoulli") *> sps *> expr) ~
-      (sps *> block(rec) <* sps) ~
-      block(rec))
+      (sps *> rec <* sps) ~
+      rec)
       .map(x => ITE(Cond.Comp("<",Expr.Func("unif",Nil),x._1._1),
                     x._1._2, x._2))
 
   def whileP(rec:P[Program]): P[Program] =
     (string("while") *> sps *> cond ~
       (sps *> (string("do") *> sps).? *> // optional do
-      block(rec) <* sps))
+        rec <* sps))
       .map(x => While(x._1, x._2)) |
-    (string("repeat") *> sps *> intP ~ (sps *> block(rec) <* sps))
+    (string("repeat") *> sps *> intP ~ (sps *> rec <* sps))
       .map(x => Seq(
         Assign("§c",Expr.Num(0)),
         While(Cond.Comp("<",Expr.Var("§c"),Expr.Num(x._1)),

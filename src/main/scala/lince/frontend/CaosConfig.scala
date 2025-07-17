@@ -93,7 +93,7 @@ object CaosConfig extends Configurator[Simulation]:
     languageName -> "More information on the syntax of Lince 2.0" ->
       """<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:
         |<pre>
-        |  p ::= a  |  skip  |  p p  |  if b then p else p  |  while b {p}
+        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }
         |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
