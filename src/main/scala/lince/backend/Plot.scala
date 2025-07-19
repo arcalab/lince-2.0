@@ -129,8 +129,9 @@ object Plot:
   ////////////////////////////////////
 
   /** Converts a plot to JavaScript instructions for Plotly */
-  def plotToJS(plot: Plot,divName:String): String =
+  def plotToJS(plot: Plot, divName: String, pi: PlotInfo): String =
     colours = (0,Map())
+    val vars = plot.traces.keys.toList.sorted
     s"""var colors = Plotly.d3.scale.category10();
        |${traceToJS(plot.traces)}
        |
@@ -138,11 +139,16 @@ object Plot:
        |
        |${markBeginning(plot.beginnings)}
        |
-       |var data = [${(plot.traces.keys.map("t_"+_).toList ++
+       |var data = [${(//plot.traces.keys.map("t_"+_).toList ++
+                       vars.map("t_"+_) ++
                        plot.endings.keys.map("end_"+_).toList ++
                        plot.beginnings.keys.map("beg_"+_).toList
                       ).mkString(",")}];
-       |var layout = {hovermode:'closest'};
+       |var layout = {hovermode:'closest',
+       |   xaxis: {title: {text: 'time' } },
+       |   yaxis: {title: {text: '${vars.mkString("/")}' } },
+       |   height: ${pi.height}
+       |};
        |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
        |""".stripMargin
 

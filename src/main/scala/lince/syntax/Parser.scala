@@ -221,6 +221,8 @@ object Parser :
       (pi: PlotInfo) => pi.copy(seed = r)) |
     (string("vars") *> sps *> regExp).map(r =>
       (pi: PlotInfo) => pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
+    (string("height") *> sps *> intP).map(r =>
+      (pi: PlotInfo) => pi.copy(height = r)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 

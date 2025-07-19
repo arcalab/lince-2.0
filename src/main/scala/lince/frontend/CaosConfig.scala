@@ -58,8 +58,8 @@ object CaosConfig extends Configurator[Simulation]:
     "Plot"
       -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
       val js = Plot.plotToJS(
-        Plot(mkSt(sim),"sim-plotly", sim._2),
-        "sim-plotly")
+        Plot(mkSt(sim),"sim-plotly", sim.pi),
+        "sim-plotly",sim.pi)
       scala.scalajs.js.eval(js)
     }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
@@ -74,7 +74,7 @@ object CaosConfig extends Configurator[Simulation]:
       -> view[Simulation](sim=>
           Plot.plotToJS(
             Plot(mkSt(sim),"sim-plotly", sim._2),
-            "sim-plotly"),
+            "sim-plotly",sim.pi),
           Text),
   )
 
@@ -98,7 +98,7 @@ object CaosConfig extends Configurator[Simulation]:
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>.</p>
+        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---
@@ -108,6 +108,7 @@ object CaosConfig extends Configurator[Simulation]:
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
         |seed 0 // seed for the random generator  (everytime a random one by default)
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)
+        |height 450 // sets the height in px of the graph (default 450)
         |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
         |</p>

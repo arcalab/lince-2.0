@@ -53,9 +53,10 @@ object Lince:
                        samples: Int,
                        seed: Long,
                        showAll: Boolean,
-                       showVar: String=>Boolean
+                       showVar: String=>Boolean,
+                       height: Int, // height in px
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,50,20,SmallStep.rand.nextLong(),false,_=>true)
+    def default = PlotInfo(0,10,50,20,SmallStep.rand.nextLong(),false,_=>true,450)
 
 
