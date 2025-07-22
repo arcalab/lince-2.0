@@ -4,6 +4,7 @@ import caos.frontend.Configurator.*
 import caos.frontend.{Configurator, Documentation}
 import caos.view.*
 import lince.backend.*
+import lince.backend.plot.*
 import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation}
 import lince.syntax.{Lince, Show}
 import SmallStep.St
@@ -57,24 +58,20 @@ object CaosConfig extends Configurator[Simulation]:
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
     "Plot"
       -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
-      val js = Plot.plotToJS(
-        Plot(mkSt(sim),"sim-plotly", sim.pi),
-        "sim-plotly",sim.pi)
-      scala.scalajs.js.eval(js)
-    }, buttons = Nil).expand,
+          val js = PlotToJS(Plot(mkSt(sim), sim.pi), "sim-plotly", sim.pi)
+          scala.scalajs.js.eval(js)
+        }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
       (mkSt, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
       (mkSt, SmallStep, Show.simpleSt, _.toString),
     "Plot debug"
       -> view[Simulation](sim=>
-          Plot(mkSt(sim), "divName", sim._2).show,
+          Plot(mkSt(sim), sim._2).show,
           Text),
     "Plot JS"
       -> view[Simulation](sim=>
-          Plot.plotToJS(
-            Plot(mkSt(sim),"sim-plotly", sim._2),
-            "sim-plotly",sim.pi),
+          PlotToJS(Plot(mkSt(sim), sim._2), "sim-plotly", sim.pi),
           Text),
   )
 

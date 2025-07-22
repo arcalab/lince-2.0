@@ -1,9 +1,10 @@
-package lince.backend
+package lince.backend.plot
 
+import lince.backend.BigSteps.{contSteps, discSteps}
+import lince.backend.{BigSteps, SmallStep}
 import lince.syntax.Lince.{Action, Expr, PlotInfo, Program}
 import lince.syntax.{Lince, Show}
-import BigSteps.{bigStep, contSteps, discSteps, nextStatement}
-import lince.backend.Plot.{MarkedPoints, Points, Trace, Traces}
+import Plot.{MarkedPoints, Points, Trace, Traces}
 
 import scala.annotation.tailrec
 
@@ -65,10 +66,20 @@ object Plot:
 
   private type St = SmallStep.St
 
-  def apply(st:St, divName:String, pinfo:PlotInfo): Plot =
-    apply(st, pinfo.minTime, pinfo.maxTime, divName, pinfo.samples, pinfo.showAll, pinfo.showVar)
+  def apply(st:St, pinfo:PlotInfo): Plot =
+    apply(st, pinfo.minTime, pinfo.maxTime, pinfo.samples, pinfo.showAll, pinfo.showVar)
 
-  def apply(st: St, from: Double, to: Double, divName:String,
+  /**
+   *  Calculate a plot by traversing the state-space while collecting points and action names.
+   * @param st initial state
+   * @param from starting time
+   * @param to ending time
+   * @param samples number of time points to sample (other than the starting point),
+   * @param showCont true if the borders of all subtrajectories should be marked, instead of just when there is an assignment between subtrajectories
+   * @param filter given a variable name, returns true if the variable should be included in the plot
+   * @return the Plot containing the points and action names while traversing a hybrid program
+   */
+  def apply(st: St, from: Double, to: Double,
             samples:Int=50, showCont:Boolean=false,filter:String=>Boolean): Plot = {
 
     // need to traverse my trajectory
@@ -87,7 +98,8 @@ object Plot:
     calcPlot(stInit, stepSize, from, showCont, Plot.empty, filter).endTraces
   }
 
-  def valToAssign(st:St): St =
+  /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
+  private def valToAssign(st:St): St =
     val assign = for (x,value) <- st.v yield Program.Assign(x,Expr.Num(value))
     st.copy(p = assign.foldRight(st.p)(Program.Seq.apply), v = Map())
 
@@ -124,111 +136,6 @@ object Plot:
     else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
 
 
-  ////////////////////////////////////
-  // Build JavaScript from the plot //
-  ////////////////////////////////////
 
-  /** Converts a plot to JavaScript instructions for Plotly */
-  def plotToJS(plot: Plot, divName: String, pi: PlotInfo): String =
-    colours = (0,Map())
-    val vars = plot.traces.keys.toList.sorted
-    s"""var colors = Plotly.d3.scale.category10();
-       |${traceToJS(plot.traces)}
-       |
-       |${markEndings(plot.endings)}
-       |
-       |${markBeginning(plot.beginnings)}
-       |
-       |var data = [${(//plot.traces.keys.map("t_"+_).toList ++
-                       vars.map("t_"+_) ++
-                       plot.endings.keys.map("end_"+_).toList ++
-                       plot.beginnings.keys.map("beg_"+_).toList
-                      ).mkString(",")}];
-       |var layout = {hovermode:'closest',
-       |   xaxis: {title: {text: 'time' } },
-       |   yaxis: {title: {text: '${vars.mkString("/")}' } },
-       |   height: ${pi.height}
-       |};
-       |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
-       |""".stripMargin
-
-  /** Auxiliar function to use consistent colours for all elements to the same variable. */
-  private var colours: (Int,Map[String,Int]) = (0,Map())
-  def colour(x:String) = colours._2.get(x) match
-    case Some(i) => i
-    case None =>
-      val oldCol = colours._1
-      colours = (oldCol+1,colours._2+(x->oldCol))
-      oldCol
-
-  /** Converts the traces (lines) to JS for Plotly. */
-  def traceToJS(tr: Map[String,Traces]): String =
-    var js = ""
-    for (variable,traces) <- tr do
-      val tr = traces.map(tr =>tr.head.copy(_2 = "null")::tr).flatten.tail
-      val (xs,ys) = tr.unzip
-      js +=
-        s"""var t_$variable = {
-           |   x: ${xs.mkString("[",",","]")},
-           |   y: ${ys.mkString("[",",","]")},
-           |   mode: 'lines',
-           |   line: {color: colors(${colour(variable)})},
-           |   legendgroup: 'g_${variable}',
-           |   name: '${variable}'
-           |};
-           |""".stripMargin
-    js
-
-  /** Converts the beginning markers to JS for Plotly. */
-  def markBeginning(ps: Map[String,MarkedPoints]): String =
-    var js = ""
-    for (variable, points) <- ps do {
-      val (xs, ys, acts) = points.unzip3
-      js +=
-        s"""var beg_${variable} = {
-           |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
-           |    y: ${ys.mkString("[", ",null,", "]")},
-           |    text: [${acts.map(x=>s"'${x.reverse.mkString("<br>")}'").mkString(",null,")}],
-           |    mode: 'markers',
-           |    marker: {color: colors(${colour(variable)}),
-           |      size: 10,
-           |      line: {
-           |        color: colors(${colour(variable)}),
-           |        width: 2
-           |    }},
-           |    type: 'scatter',
-           |    legendgroup: 'g_${variable}',
-           |    name: 'beginning of ${variable}',
-           |    showlegend: false,
-           |};
-           |""".stripMargin
-    }
-    js
-
-  /** Converts the ending markers to JS for Plotly. */
-  def markEndings(ps: Map[String,Points]): String =
-    var js = ""
-    for (variable,points) <- ps do {
-      val (xs, ys) = points.unzip
-      js +=
-        s"""var end_${variable} = {
-           |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
-           |    y: ${ys.mkString("[", ",null,", "]")},
-           |    text: [],
-           |    mode: 'markers',
-           |    marker: {color: 'rgb(255, 255, 255)',
-           |      size: 10,
-           |      line: {
-           |        color: colors(${colour(variable)}),
-           |        width: 2
-           |    }},
-           |    type: 'scatter',
-           |    legendgroup: 'g_${variable}',
-           |    name: 'ending of ${variable}',
-           |    showlegend: false,
-           |};
-           |""".stripMargin
-    }
-    js
 
 
