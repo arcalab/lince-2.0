@@ -27,7 +27,13 @@ object CaosConfig extends Configurator[Simulation]:
     "CC" -> "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5",
     "x:=2" -> "x := 2;",
     "x'=2,y'=3 for 4" -> "x'=2, y'=3 for 4;",
-    "skip" -> "skip",
+    "skip" -> "skip;",
+    "Bouncing ball"
+      -> "// Bouncing ball example\nv:=5; p:=10; c:=0;\nwhile (c<4) do {\n  v'= -9.8, p'=v until_0.05 p<0 && v<0;\n  v:= -0.5*v; c:=c+1;\n}\n--\niterations 1000 "
+      -> "<strong>Bouncing Ball</strong><p>Event-Driven (ED) example, using steps of 0.01. A ball position and velocity as it bounces in the floor. It includes an experimental feature: using a condition (p<0 /\\ v<0) to end a trajectory using a naive search algorithm.</p>",
+    "Firefiles"
+      -> "f1 := 1; f2 := 4;\nwhile true {\n  f1'=1, f2'=1 until_0.1\n       f1>10 || f2>10;\n  if f1>=10 && f2<10\n    then { f1:=0; f2:=f2+2; }\n    else if f2>=10 && f1<10\n         then { f2:=0;f1 :=f1 +2; }\n         else { f1:=0; f2 :=0; }\n}\n--\nuntil 30\niterations 1000"
+      -> "<strong>Fireflies 2x</strong>\n\nEvent-Driven (ED) example. Every firefly has an internal clock that helps it to know when to flash: when the clock reaches a threshold the firefly flashes and the clock’s value is reset to zero. If other fireflies are nearby then they try to synchronise their flashes in a decentralised way.This version synchronises 2 fireflies.",
     "PPDP - Ex.2.2"
       -> "x := 0;\nwhile true {\n  bernoulli (1/2)\n    x++; x--;\n  wait unif(0,1);\n}"
       -> "Example 2.2 - An execution sample of a continuous-time random walk in which the waiting time is given by sampling from Custom Trajectories (symbolic) the uniform distribution on [0,1].",
@@ -65,6 +71,7 @@ object CaosConfig extends Configurator[Simulation]:
       (mkSt, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
       (mkSt, SmallStep, Show.simpleSt, _.toString),
+    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(mkSt(sim),Nil)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=>
           Plot(mkSt(sim), sim._2).show,

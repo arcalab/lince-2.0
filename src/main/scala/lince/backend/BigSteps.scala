@@ -81,6 +81,12 @@ object BigSteps:
 //    if !ok then return Nil -> st
     st.resetSeed
 
+    // Alternative (maybe preferred in the future):
+    //  1. extract the diff-eqs (stop if not found) and extract the rest
+    //  2. pre-process the diff-eqs (replace stream-/random-functions with their value)
+    //  3. use auxiliar function on the single program
+    //  4. re-attach the result or just keep the rest, and update the state
+
     // now apply the recursive steps after fixing the duration
     @tailrec
     def contStepsAux(counter:Int,

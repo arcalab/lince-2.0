@@ -1,10 +1,10 @@
 package lince.backend.plot
 
 import lince.backend.BigSteps.{contSteps, discSteps}
+import lince.backend.plot.Plot.{MarkedPoints, Points, Trace, Traces}
 import lince.backend.{BigSteps, SmallStep}
+import lince.syntax.Lince
 import lince.syntax.Lince.{Action, Expr, PlotInfo, Program}
-import lince.syntax.{Lince, Show}
-import Plot.{MarkedPoints, Points, Trace, Traces}
 
 import scala.annotation.tailrec
 
@@ -115,6 +115,7 @@ object Plot:
   @tailrec
   def calcPlot(st: St, stepSize: Double, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
     var res = acc
+    // run discrete steps
     val (as, st2) = discSteps(st)
     // update Plot
     val setVars = if showCont
@@ -127,6 +128,7 @@ object Plot:
         as
       )
 
+    // run continuous steps while sampling
     val (points, st3) = contSteps(st2, stepSize, timePassed)
     // update Plot
     for ((time,valuation) <- points.reverse; (x,value) <- valuation if filter(x)) do

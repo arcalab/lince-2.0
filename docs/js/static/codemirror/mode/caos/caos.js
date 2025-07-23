@@ -21,13 +21,13 @@ CodeMirror.defineMode("caos", function(_config, modeConfig) {
   // based on Haskell -- adapt as needed
 
   // These should all be Unicode extended, as per the Haskell 2010 report
-  var smallRE = /[a-z_]/;
+  var smallRE = /[a-z]/;
   var largeRE = /[A-Z]/;
   var digitRE = /\d/;
   var hexitRE = /[0-9A-Fa-f]/;
   var octitRE = /[0-7]/;
-  var idRE = /[a-z_A-Z0-9'\xa1-\uffff]/;
-  var symbolRE = /[-!#$%&*+.\/<=>?@\\^|~:]/;
+  var idRE = /[a-zA-Z0-9'\xa1-\uffff]/;
+  var symbolRE = /[-_!#$%&*+.\/<=>?@\\^|~:]/;
   var specialRE = /[(),;[\]`{}]/;
   var whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 
@@ -194,11 +194,12 @@ CodeMirror.defineMode("caos", function(_config, modeConfig) {
 //    setType("keyword")( // where, ...
 //      "def");
 
-    setType("keyword")("while","skip","if","then","else",":=");
+    setType("keyword")("while","skip","if","then","else",":=",'=');
 
 
     setType("builtin")( // types and constructors
-      "+","||","*","!","&&","<",">","=",true,false,"until","from","iterations","samples","verbose","vars");
+      "+","||","*","!","&&","<",">","==",
+      true,false,"until","from","iterations","samples","verbose","vars","seed","height");
 
 //    setType("builtin")(
 //      );

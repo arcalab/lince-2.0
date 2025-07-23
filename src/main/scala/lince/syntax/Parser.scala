@@ -136,10 +136,19 @@ object Parser :
   def diffEq: P[String => Program] =
     ((char('\'') *> sps *> char('=') *> sps *> expr <* sps) ~ // 1st expr
       ((char(',')*>sps*>varName) ~ (char('\'') *> sps *> char('=') *> sps *> expr <* sps)).rep0 ~ // (x2'=e2)*
-      (string("for") *> sps *> expr <* (sps <* char(';')))) // for dur;
+      duration)//(string("for") *> sps *> expr <* (sps <* char(';')))) // for dur;
       .map{
-        case ((e1,x2e2s),dur) => x1 => EqDiff(Map(x1->e1)++x2e2s.toMap, dur)
+        case ((e1,x2e2s),appDur) => x1 => appDur(Map(x1->e1)++x2e2s.toMap)
       }
+  // "for" or "until" (syntactic sugar)
+  def duration: P[Map[String,Expr] => Program] =
+    string("for") *> sps *>
+      expr.map(dur => eqs => EqDiff(eqs,dur)) <*
+      (sps <* char(';')) |
+    ((string("until_") *> expr) ~ (sps *> cond <* (sps <* char(';'))))
+      .map((dur,c) => (eqs:Map[String,Expr]) => While(Cond.Not(c), EqDiff(eqs, dur)))
+
+
   def suffix: P[String => Program] =
     string("++") *> sps *> char(';')
       .as(v => Assign(v,Expr.Func("+",List(Expr.Var(v),Expr.Num(1))))) |
