@@ -4,7 +4,7 @@ import lince.backend.BigSteps.{contSteps, discSteps}
 import lince.backend.plot.Plot.{MarkedPoints, Points, Trace, Traces}
 import lince.backend.{BigSteps, SmallStep}
 import lince.syntax.Lince
-import lince.syntax.Lince.{Action, Expr, PlotInfo, Program}
+import lince.syntax.Lince.{Action, Expr, PlotInfo, Program, Simulation}
 
 import scala.annotation.tailrec
 
@@ -65,6 +65,11 @@ object Plot:
   def empty = Plot(Map(),Map(),Map(),Map())
 
   private type St = SmallStep.St
+
+  def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
+    for run <- (1 to pinfo.runs).toList yield
+      val pi2 = pinfo.copy(runs = run)
+      (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
   def apply(st:St, pinfo:PlotInfo): Plot =
     apply(st, pinfo.minTime, pinfo.maxTime, pinfo.samples, pinfo.showAll, pinfo.showVar)

@@ -41,7 +41,7 @@ object CaosConfig extends Configurator[Simulation]:
       -> "d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (0,1) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}"
       -> "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units.",
     "PPDP - Ex.2.4"
-      -> "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\n//seed 3\nuntil 5\nvars p,v,a"
+      -> "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\nruns 40\nuntil 15\nvars p"
       -> "Example 2.4 - Multiple execution samples of the particle’s position overlayed, in order to depict how the position’s probability mass spreads over space w.r.t time.",
     "PPDP - Ex.2.5"
       -> "x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;"
@@ -62,28 +62,40 @@ object CaosConfig extends Configurator[Simulation]:
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
-    "Plot"
-      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
-          val js = PlotToJS(Plot(mkSt(sim), sim.pi), "sim-plotly", sim.pi)
+    "Plots"
+      -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
+          val plots = Plot.allPlots(sim.state, sim.pi)
+          val js = PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
+                   plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           scala.scalajs.js.eval(js)
         }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
-      (mkSt, SmallStep, Show.simpleSt, _.toString, Text),
+      (_.state, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
-      (mkSt, SmallStep, Show.simpleSt, _.toString),
-    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(mkSt(sim),Nil)._2),Text),
+      (_.state, SmallStep, Show.simpleSt, _.toString),
+    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=>
-          Plot(mkSt(sim), sim._2).show,
+          Plot(sim.state, sim._2).show,
           Text),
-    "Plot JS"
-      -> view[Simulation](sim=>
-          PlotToJS(Plot(mkSt(sim), sim._2), "sim-plotly", sim.pi),
-          Text),
+    "Plots JS"
+      -> view(sim => {
+            val plots = Plot.allPlots(sim.state, sim.pi)
+            PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
+              plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
+          }, Text),
+
+//    "Plot"
+//      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
+//          val js = PlotToJS(Plot(sim.state, sim.pi), "sim-plotly", sim.pi)
+//          scala.scalajs.js.eval(js)
+//        }, buttons = Nil).expand,
+//    "Plot JS"
+//      -> view[Simulation](sim=>
+//          PlotToJS(Plot(sim.state, sim._2), "sim-plotly", sim.pi),
+//          Text),
   )
 
-  def mkSt(sim:Simulation): St =
-    St(sim._1,Map(),sim._2.seed, sim._2.maxTime,sim._2.maxLoops)
 
   //// Documentation below
 
@@ -113,6 +125,7 @@ object CaosConfig extends Configurator[Simulation]:
         |seed 0 // seed for the random generator  (everytime a random one by default)
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)
         |height 450 // sets the height in px of the graph (default 450)
+        |runs 5 // number of plots to draw (default 1, useful for random plots)
         |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
         |</p>

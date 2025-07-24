@@ -13,7 +13,24 @@ object PlotToJS:
     colours = (0, Map())
     val vars = plot.traces.keys.toList.sorted
     s"""var colors = Plotly.d3.scale.category10();
-       |${traceToJS(plot.traces)}
+       |${setDataJS(plot,divName,pi,vars:List[String])}
+       |var layout = {hovermode:'closest',
+       |   xaxis: {title: {text: 'time' } },
+       |   yaxis: {title: {text: '${vars.mkString("/")}' } },
+       |   height: ${pi.height}
+       |};
+       |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
+       |""".stripMargin
+
+  /** Adds a plot as an overlay to an existing plot */
+  def addPlot(plot: Plot, divName: String, pi: PlotInfo): String =
+    val vars = plot.traces.keys.toList.sorted
+    s"""${setDataJS(plot, divName, pi, vars)}
+       |Plotly.addTraces('$divName', data);
+       |""".stripMargin
+
+  private def setDataJS(plot: Plot, divName: String, pi: PlotInfo, vars: List[String]): String =
+    s"""${traceToJS(plot.traces, if pi.runs > 1 then s"[${pi.runs}] " else "")}
        |
        |${markEndings(plot.endings)}
        |
@@ -25,17 +42,9 @@ object PlotToJS:
           plot.endings.keys.map("end_" + _).toList ++
           plot.beginnings.keys.map("beg_" + _).toList
         ).mkString(",")
-    }];
-       |var layout = {hovermode:'closest',
-       |   xaxis: {title: {text: 'time' } },
-       |   yaxis: {title: {text: '${vars.mkString("/")}' } },
-       |   height: ${pi.height}
-       |};
-       |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
-       |""".stripMargin
-
+    }];""".stripMargin
   /** Converts the traces (lines) to JS for Plotly. */
-  def traceToJS(tr: Map[String, Traces]): String =
+  def traceToJS(tr: Map[String, Traces],lbl: String): String =
     var js = ""
     for (variable, traces) <- tr do
       val tr = traces.map(tr => tr.head.copy(_2 = "null") :: tr).flatten.tail
@@ -47,7 +56,7 @@ object PlotToJS:
            |   mode: 'lines',
            |   line: {color: colors(${colour(variable)})},
            |   legendgroup: 'g_${variable}',
-           |   name: '${variable}'
+           |   name: '$lbl${variable}'
            |};
            |""".stripMargin
     js
