@@ -41,7 +41,7 @@ object CaosConfig extends Configurator[Simulation]:
       -> "d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (0,1) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}"
       -> "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units.",
     "PPDP - Ex.2.4"
-      -> "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\nruns 40\nuntil 15\nvars p"
+      -> "lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n  \ta--; a++;\n  p'= v, v'=a for d;\n}\n---\nruns 20\nuntil 15\nvars p"
       -> "Example 2.4 - Multiple execution samples of the particle’s position overlayed, in order to depict how the position’s probability mass spreads over space w.r.t time.",
     "PPDP - Ex.2.5"
       -> "x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;"
@@ -73,6 +73,8 @@ object CaosConfig extends Configurator[Simulation]:
       (_.state, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
       (_.state, SmallStep, Show.simpleSt, _.toString),
+    "Run all steps (inf)" -> lts[Simulation,Action,St]
+      (_.state, StillSmallStep, Show.simpleSt, _.toString),
     "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=>
@@ -130,4 +132,7 @@ object CaosConfig extends Configurator[Simulation]:
         |</pre>
         |</p>
         |""".stripMargin,
+    "Run small-steps" -> "Information on the semantics rules used by Lince" ->
+      "<p>The operational rules, borrowed from a PPDP'25 publication, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"
+//      "<object class=\"pdf\" data=\"img/lince-semantics.pdf\" width=\"800\" height=\"500\"></object>",
   )
