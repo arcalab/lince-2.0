@@ -59,6 +59,6 @@ object Lince:
                        runs: Int, // number of times to repeat the run
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,50,20,SmallStep.rand.nextLong(),false,_=>true,450,1)
+    def default = PlotInfo(0,10,50,40,SmallStep.rand.nextLong(),false,_=>true,450,1)
 
 
