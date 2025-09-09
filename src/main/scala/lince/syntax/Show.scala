@@ -11,7 +11,7 @@ object Show:
     case Program.Skip => "skip; "
     case Program.Assign(v, e) => s"$v:=${apply(e)}; "
     case Program.EqDiff(eqs, dur) if eqs.isEmpty =>
-       s"skip for ${apply(dur)}; "
+       s"{} for ${apply(dur)}; "
     case Program.EqDiff(eqs, dur) =>
       eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") + s" for ${apply(dur)}; "
     case Program.Seq(p, q) => apply(p)+"\n"+apply(q)

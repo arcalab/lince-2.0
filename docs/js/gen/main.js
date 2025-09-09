@@ -13713,7 +13713,7 @@ $c_Llince_syntax_Show$.prototype.apply__Llince_syntax_Lince$Program__T = (functi
     var this$6 = $n(x$1$1);
     var x27 = this$6.Llince_syntax_Lince$Program$EqDiff__f_dur;
     if ($n(x26).isEmpty__Z()) {
-      return (("skip for " + this.apply__Llince_syntax_Lince$Expr__T(x27)) + "; ");
+      return (("{} for " + this.apply__Llince_syntax_Lince$Expr__T(x27)) + "; ");
     }
     var this$7 = $n($as_sc_IterableOnceOps($n(x26).map__F1__O(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((kv) => {
       var kv$1 = $as_T2(kv);
