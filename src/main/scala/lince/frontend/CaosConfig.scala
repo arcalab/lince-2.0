@@ -113,7 +113,7 @@ object CaosConfig extends Configurator[Simulation]:
     """Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.
       | Source code available online:
       | <a target="_blank" href="https://github.com/arcalab/lince-2.0">
-      | https://github.com/arcalab/lince-2.0</a>.""".stripMargin
+      | https://github.com/arcalab/lince-2.0</a>. Used to illustrate a stochastic extension described in a <a href="https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/">PPDP'25 publication and presentation</a>.""".stripMargin
 
   override val documentation: Documentation = List(
     languageName -> "More information on the syntax of Lince 2.0" ->
@@ -150,6 +150,6 @@ object CaosConfig extends Configurator[Simulation]:
         |</p>
         |""".stripMargin,
     "Run small-steps" -> "Information on the semantics rules used by Lince" ->
-      "<p>The operational rules, borrowed from a PPDP'25 publication, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"
+      "<p>The operational rules, borrowed from a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication</a>, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"
 //      "<object class=\"pdf\" data=\"img/lince-semantics.pdf\" width=\"800\" height=\"500\"></object>",
-  )
+    )
