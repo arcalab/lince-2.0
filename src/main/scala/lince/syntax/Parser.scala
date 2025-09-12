@@ -160,14 +160,14 @@ object Parser :
       (char('(') *> recExpr.surroundedBy(sps) <* char(')')) |
       (char('-') ~ recLit).map(x => Expr.Func("*",List(Expr.Num(-1),x._2))) |
       realP.map(Expr.Num.apply) |
-      (string("expn") *> sps *> char('(') *> sps *> recExpr <* (sps <* char(')')))
-        .map(lamb => Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
-                       Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))) |
+//      (string("expn") *> sps *> char('(') *> sps *> recExpr <* (sps <* char(')')))
+//        .map(lamb => Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
+//                       Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))) |
           // - ln ( unif ) / lambda
       (varName~(sps *> (char('(') *> sps *> recExpr.repSep0(sps~char(',')~sps) <* (sps <* char(')'))).?))
         .map {
           case (v, None) => Expr.Var(v)
-          case (v, Some(args)) => Expr.Func(v, args)
+          case (v, Some(args)) => preProcess(Expr.Func(v, args))
       })
 
     def pow: P[(Expr, Expr) => Expr] =
@@ -183,6 +183,31 @@ object Parser :
 
     listSep(listSep(listSep(literal, pow), mult), sum)
   })
+
+  /** Replaces some functions with its pre-processed equivalent. */
+  def preProcess(f:Expr.Func): Expr = f match {
+    case Expr.Func("expn",List(lamb)) => // - ln ( unif ) / lambda
+      Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
+        Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))
+     // xmin ⋅ (1−unif)^{−1/(alpha−1)}, where alpha>1 and xmin>0
+     // (here using unif instead of 1-unif)
+     case Expr.Func("powerlaw",List(alpha,xmin)) =>
+      Expr.Func("*",List(
+        xmin,
+        Expr.Func("pow",List(
+          Expr.Func("unif",Nil),
+          Expr.Func("/",List(
+            Expr.Num(-1),
+            Expr.Func("-",List(
+              alpha,
+              Expr.Num(1)
+            ))
+          ))
+        ))
+      ))
+    case _ => f
+  }
+
 
   /** Parse a boolean condition */
   def cond: P[Cond] = P.recursive((recCond:P[Cond]) => {

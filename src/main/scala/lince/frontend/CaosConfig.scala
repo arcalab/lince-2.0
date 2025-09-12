@@ -81,8 +81,8 @@ object CaosConfig extends Configurator[Simulation]:
       (_.state, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
       (_.state, SmallStep, Show.simpleSt, _.toString),
-    "Run all steps (inf)" -> lts[Simulation,Action,St]
-      (_.state, StillSmallStep, Show.simpleSt, _.toString),
+    // "Run all steps (inf)" -> lts[Simulation,Action,St]
+    //   (_.state, StillSmallStep, Show.simpleSt, _.toString),
     "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=>
@@ -124,7 +124,7 @@ object CaosConfig extends Configurator[Simulation]:
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>.</p>
+        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>powerlaw</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---
@@ -132,12 +132,21 @@ object CaosConfig extends Configurator[Simulation]:
         |from 0 // starting time (default 0)
         |iterations 10 // maximum times the while loops are unfolded (default 50)
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
-        |seed 0 // seed for the random generator  (everytime a random one by default)
+        |seed 0 // seed for the random generator  (every time a random one by default)
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)
         |height 450 // sets the height in px of the graph (default 450)
         |runs 5 // number of plots to draw (default 1, useful for random plots)
         |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
+        |</p>
+        |<h3>Note on stochastic functions</h3>
+        |<p> The functions below are stochastic, and will yield a different value every time they are called. For reproducibility, you can set the "seed" value to fix the internal pseudo-random generator.
+          <ul>
+            <li><code>unif(a,b)</code> - random value from a uniform distribution between <code>a</code> and <code>b</code>;</li>
+            <li><code>unif()</code> - equivalent to <code>unif(0,1)</code></li>
+            <li><code>expn(lambda)</code> - random variable from a negative exponential distribution, using an average frequence of <code>lambda</code> (equivalent to <code>-ln(unif()) / lambda</code>);</li>
+            <li><code>powerlaw(alpha,xmin)</code> - random variable from a power law distribution, using a normalisation value <code>alpha > 1</code> and a lower bound <code>xmin</code> for the returned values (equivalent to <code>xmin * unif()^(−1/(alpha−1))</code>).</li>
+          </ul>
         |</p>
         |""".stripMargin,
     "Run small-steps" -> "Information on the semantics rules used by Lince" ->
