@@ -136,7 +136,7 @@ object CaosConfig extends Configurator[Simulation]:
         |---
         |until 5 // maximum time (default 10)
         |from 0 // starting time (default 0)
-        |iterations 10 // maximum times the while loops are unfolded (default 50)
+        |iterations 10 // maximum times the while loops are unfolded (default 500)
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
         |seed 0 // seed for the random generator  (every time a random one by default)
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)

@@ -15,8 +15,9 @@ object PlotToJS:
     s"""var colors = Plotly.d3.scale.category10();
        |${setDataJS(plot,divName,pi,vars:List[String])}
        |var layout = {hovermode:'closest',
-       |   xaxis: {title: {text: 'time' } },
-       |   yaxis: {title: {text: '${vars.mkString("/")}' } },
+       |   xaxis: {title: {text: '${plot.xlabels.toList.sorted.mkString("/")}' } },
+       |   yaxis: {title: {text: '${ plot.ylabels.toList.sorted.mkString("/")
+                                     /*vars.mkString("/")*/}' } },
        |   height: ${pi.height}
        |};
        |Plotly.newPlot('$divName', data, layout, {showSendToCloud: true});
@@ -29,12 +30,13 @@ object PlotToJS:
        |Plotly.addTraces('$divName', data);
        |""".stripMargin
 
-  private def setDataJS(plot: Plot, divName: String, pi: PlotInfo, vars: List[String]): String =
-    s"""${traceToJS(plot.traces, if pi.runs > 1 then s"[${pi.runs}] " else "")}
+  private def setDataJS(plot: Plot, divName: String, pi: PlotInfo, vars: List[String]): String = {
+    val lbl = if pi.runs > 1 then s"[${pi.runs}] " else ""
+    s"""${traceToJS(plot.traces, lbl)}
        |
-       |${markEndings(plot.endings)}
+       |${markEndings(plot.endings,lbl)}
        |
-       |${markBeginning(plot.beginnings)}
+       |${markBeginning(plot.beginnings,lbl)}
        |
        |var data = [${
       (//plot.traces.keys.map("t_"+_).toList ++
@@ -43,6 +45,8 @@ object PlotToJS:
           plot.beginnings.keys.map("beg_" + _).toList
         ).mkString(",")
     }];""".stripMargin
+  }
+
   /** Converts the traces (lines) to JS for Plotly. */
   def traceToJS(tr: Map[String, Traces],lbl: String): String =
     var js = ""
@@ -55,14 +59,14 @@ object PlotToJS:
            |   y: ${ys.mkString("[", ",", "]")},
            |   mode: 'lines',
            |   line: {color: colors(${colour(variable)})},
-           |   legendgroup: 'g_${variable}',
+           |   legendgroup: 'g_${variable}_${lbl}',
            |   name: '$lbl${variable}'
            |};
            |""".stripMargin
     js
 
   /** Converts the beginning markers to JS for Plotly. */
-  def markBeginning(ps: Map[String, MarkedPoints]): String =
+  def markBeginning(ps: Map[String, MarkedPoints], lbl: String): String =
     var js = ""
     for (variable, points) <- ps do {
       val (xs, ys, acts) = points.unzip3
@@ -79,8 +83,8 @@ object PlotToJS:
            |        width: 2
            |    }},
            |    type: 'scatter',
-           |    legendgroup: 'g_${variable}',
-           |    name: 'beginning of ${variable}',
+           |    legendgroup: 'g_${variable}_$lbl',
+           |    name: 'beginning of $lbl${variable}',
            |    showlegend: false,
            |};
            |""".stripMargin
@@ -88,7 +92,7 @@ object PlotToJS:
     js
 
   /** Converts the ending markers to JS for Plotly. */
-  def markEndings(ps: Map[String, Points]): String =
+  def markEndings(ps: Map[String, Points], lbl: String): String =
     var js = ""
     for (variable, points) <- ps do {
       val (xs, ys) = points.unzip
@@ -105,8 +109,8 @@ object PlotToJS:
            |        width: 2
            |    }},
            |    type: 'scatter',
-           |    legendgroup: 'g_${variable}',
-           |    name: 'ending of ${variable}',
+           |    legendgroup: 'g_${variable}_$lbl',
+           |    name: 'ending of $lbl${variable}',
            |    showlegend: false,
            |};
            |""".stripMargin

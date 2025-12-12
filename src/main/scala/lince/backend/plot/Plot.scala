@@ -17,7 +17,8 @@ import scala.annotation.tailrec
  * @param beginnings maps the beginning of traces to each variable
  */
 case class Plot(current: Map[String,Trace], traces: Map[String,Traces],
-                endings: Map[String,Points], beginnings: Map[String,MarkedPoints]):
+                endings: Map[String,Points], beginnings: Map[String,MarkedPoints],
+                xlabels: Set[String], ylabels:Set[String]):
   /** Adds a new point to the current plot. Usage: `plot + ("x" -> now -> value)` */
   def +(varTimeValue:((String,Double),Double)): Plot =
     val ((x,time),value) = varTimeValue
@@ -52,7 +53,8 @@ case class Plot(current: Map[String,Trace], traces: Map[String,Traces],
         current.getOrElse(x,Nil).mkString(",")}\n    trc: ${
         traces.getOrElse(x,Nil).map(x => x.mkString(",")).mkString("\n         ")}\n    end: ${
         endings.getOrElse(x,Nil).mkString(",")}\n    begin: ${
-        beginnings.getOrElse(x,Nil).mkString(",")}")
+        beginnings.getOrElse(x,Nil).mkString(",")}\nlabels (x|y): ${
+        xlabels.mkString("/")}|${ylabels.mkString("/")}")
       .mkString("\n")
 
 
@@ -62,7 +64,7 @@ object Plot:
   type Trace  = List[(Double,Double)]
   type Points = List[(Double,Double)]
   type MarkedPoints = List[(Double,Double,List[Action])]
-  def empty = Plot(Map(),Map(),Map(),Map())
+  def empty = Plot(Map(),Map(),Map(),Map(),Set("time"),Set())
 
   private type St = SmallStep.St
 
@@ -131,7 +133,7 @@ object Plot:
         timePassed,
         st2.v.getOrElse(v,sys.error(s"No value for ${v} after ${as.mkString(",")}")),
         as
-      )
+      ).copy(ylabels = res.ylabels+v)
 
     // run continuous steps while sampling
     val (points, st3) = contSteps(st2, stepSize, timePassed)

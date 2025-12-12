@@ -12369,9 +12369,10 @@ function $m_Llince_backend_RungeKutta$() {
   return $n_Llince_backend_RungeKutta$;
 }
 function $p_Llince_backend_plot_PlotToJS$__setDataJS__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__sci_List__T($thiz, plot, divName, pi, vars) {
-  var $x_3 = $thiz.traceToJS__sci_Map__T__T($n(plot).Llince_backend_plot_Plot__f_traces, (($n(pi).Llince_syntax_Lince$PlotInfo__f_runs > 1) ? (("[" + $n(pi).Llince_syntax_Lince$PlotInfo__f_runs) + "] ") : ""));
-  var $x_2 = $thiz.markEndings__sci_Map__T($n(plot).Llince_backend_plot_Plot__f_endings);
-  var $x_1 = $thiz.markBeginning__sci_Map__T($n(plot).Llince_backend_plot_Plot__f_beginnings);
+  var lbl = (($n(pi).Llince_syntax_Lince$PlotInfo__f_runs > 1) ? (("[" + $n(pi).Llince_syntax_Lince$PlotInfo__f_runs) + "] ") : "");
+  var $x_3 = $thiz.traceToJS__sci_Map__T__T($n(plot).Llince_backend_plot_Plot__f_traces, lbl);
+  var $x_2 = $thiz.markEndings__sci_Map__T__T($n(plot).Llince_backend_plot_Plot__f_endings, lbl);
+  var $x_1 = $thiz.markBeginning__sci_Map__T__T($n(plot).Llince_backend_plot_Plot__f_beginnings, lbl);
   var this$1 = $n(vars);
   var f = ((_$1) => {
     var _$1$1 = $as_T(_$1);
@@ -12449,9 +12450,17 @@ $c_Llince_backend_plot_PlotToJS$.prototype.apply__Llince_backend_plot_Plot__T__L
   var this$6 = $n($m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$4));
   var ord = $m_s_math_Ordering$String$();
   var vars = $as_sci_List($f_sc_SeqOps__sorted__s_math_Ordering__O(this$6, ord));
-  var $x_1 = $p_Llince_backend_plot_PlotToJS$__setDataJS__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__sci_List__T(this, plot, divName, pi, vars);
-  var this$7 = $n(vars);
-  var x = (((((((("var colors = Plotly.d3.scale.category10();\n       |" + $x_1) + "\n       |var layout = {hovermode:'closest',\n       |   xaxis: {title: {text: 'time' } },\n       |   yaxis: {title: {text: '") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$7, "", "/", "")) + "' } },\n       |   height: ") + $n(pi).Llince_syntax_Lince$PlotInfo__f_height) + "\n       |};\n       |Plotly.newPlot('") + divName) + "', data, layout, {showSendToCloud: true});\n       |");
+  var $x_2 = $p_Llince_backend_plot_PlotToJS$__setDataJS__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__sci_List__T(this, plot, divName, pi, vars);
+  var this$7 = $n($n(plot).Llince_backend_plot_Plot__f_xlabels);
+  var this$9 = $n($m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$7));
+  var ord$1 = $m_s_math_Ordering$String$();
+  var this$10 = $n($as_sc_IterableOnceOps($f_sc_SeqOps__sorted__s_math_Ordering__O(this$9, ord$1)));
+  var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$10, "", "/", "");
+  var this$11 = $n($n(plot).Llince_backend_plot_Plot__f_ylabels);
+  var this$13 = $n($m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(this$11));
+  var ord$2 = $m_s_math_Ordering$String$();
+  var this$14 = $n($as_sc_IterableOnceOps($f_sc_SeqOps__sorted__s_math_Ordering__O(this$13, ord$2)));
+  var x = (((((((((("var colors = Plotly.d3.scale.category10();\n       |" + $x_2) + "\n       |var layout = {hovermode:'closest',\n       |   xaxis: {title: {text: '") + $x_1) + "' } },\n       |   yaxis: {title: {text: '") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$14, "", "/", "")) + "' } },\n       |   height: ") + $n(pi).Llince_syntax_Lince$PlotInfo__f_height) + "\n       |};\n       |Plotly.newPlot('") + divName) + "', data, layout, {showSendToCloud: true});\n       |");
   return $m_sc_StringOps$().stripMargin$extension__T__C__T(x, 124);
 });
 $c_Llince_backend_plot_PlotToJS$.prototype.addPlot__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__T = (function(plot, divName, pi) {
@@ -12521,7 +12530,7 @@ $c_Llince_backend_plot_PlotToJS$.prototype.traceToJS__sci_Map__T__T = (function(
         var this$11 = $n(xs$2);
         var $x_2 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$11, "[", ",", "]");
         var this$12 = $n(ys$2);
-        var x = ((((((((((((("var t_" + variable) + " = {\n           |   x: ") + $x_2) + ",\n           |   y: ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$12, "[", ",", "]")) + ",\n           |   mode: 'lines',\n           |   line: {color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + ")},\n           |   legendgroup: 'g_") + variable) + "',\n           |   name: '") + lbl) + variable) + "'\n           |};\n           |");
+        var x = ((((((((((((((("var t_" + variable) + " = {\n           |   x: ") + $x_2) + ",\n           |   y: ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$12, "[", ",", "]")) + ",\n           |   mode: 'lines',\n           |   line: {color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + ")},\n           |   legendgroup: 'g_") + variable) + "_") + lbl) + "',\n           |   name: '") + lbl) + variable) + "'\n           |};\n           |");
         js.sr_ObjectRef__f_elem = (("" + $x_3) + $m_sc_StringOps$().stripMargin$extension__T__C__T(x, 124));
         break matchResult2;
       }
@@ -12530,7 +12539,7 @@ $c_Llince_backend_plot_PlotToJS$.prototype.traceToJS__sci_Map__T__T = (function(
   })));
   return $as_T(js.sr_ObjectRef__f_elem);
 });
-$c_Llince_backend_plot_PlotToJS$.prototype.markBeginning__sci_Map__T = (function(ps) {
+$c_Llince_backend_plot_PlotToJS$.prototype.markBeginning__sci_Map__T__T = (function(ps, lbl) {
   var js = new $c_sr_ObjectRef("");
   $n(ps).foreach__F1__V(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1) => {
     var x$1$1 = $as_T2(x$1);
@@ -12607,7 +12616,7 @@ $c_Llince_backend_plot_PlotToJS$.prototype.markBeginning__sci_Map__T = (function
           }
           var this$11 = h$1;
         }
-        var x$4 = (((((((((((((((("var beg_" + variable) + " = {\n           |    x: ") + $x_2) + ",\n           |    y: ") + $x_1) + ",\n           |    text: [") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$11, "", ",null,", "")) + "],\n           |    mode: 'markers',\n           |    marker: {color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |      size: 10,\n           |      line: {\n           |        color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |        width: 2\n           |    }},\n           |    type: 'scatter',\n           |    legendgroup: 'g_") + variable) + "',\n           |    name: 'beginning of ") + variable) + "',\n           |    showlegend: false,\n           |};\n           |");
+        var x$4 = ((((((((((((((((((("var beg_" + variable) + " = {\n           |    x: ") + $x_2) + ",\n           |    y: ") + $x_1) + ",\n           |    text: [") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$11, "", ",null,", "")) + "],\n           |    mode: 'markers',\n           |    marker: {color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |      size: 10,\n           |      line: {\n           |        color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |        width: 2\n           |    }},\n           |    type: 'scatter',\n           |    legendgroup: 'g_") + variable) + "_") + lbl) + "',\n           |    name: 'beginning of ") + lbl) + variable) + "',\n           |    showlegend: false,\n           |};\n           |");
         js.sr_ObjectRef__f_elem = (("" + $x_3) + $m_sc_StringOps$().stripMargin$extension__T__C__T(x$4, 124));
         break matchResult4;
       }
@@ -12616,7 +12625,7 @@ $c_Llince_backend_plot_PlotToJS$.prototype.markBeginning__sci_Map__T = (function
   })));
   return $as_T(js.sr_ObjectRef__f_elem);
 });
-$c_Llince_backend_plot_PlotToJS$.prototype.markEndings__sci_Map__T = (function(ps) {
+$c_Llince_backend_plot_PlotToJS$.prototype.markEndings__sci_Map__T__T = (function(ps, lbl) {
   var js = new $c_sr_ObjectRef("");
   $n(ps).foreach__F1__V(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1) => {
     var x$1$1 = $as_T2(x$1);
@@ -12665,7 +12674,7 @@ $c_Llince_backend_plot_PlotToJS$.prototype.markEndings__sci_Map__T = (function(p
         }
         var $x_2 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$6, "[", ",", "]");
         var this$7 = $n(ys$2);
-        var x$3 = (((((((((((("var end_" + variable) + " = {\n           |    x: ") + $x_2) + ",\n           |    y: ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$7, "[", ",null,", "]")) + ",\n           |    text: [],\n           |    mode: 'markers',\n           |    marker: {color: 'rgb(255, 255, 255)',\n           |      size: 10,\n           |      line: {\n           |        color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |        width: 2\n           |    }},\n           |    type: 'scatter',\n           |    legendgroup: 'g_") + variable) + "',\n           |    name: 'ending of ") + variable) + "',\n           |    showlegend: false,\n           |};\n           |");
+        var x$3 = ((((((((((((((("var end_" + variable) + " = {\n           |    x: ") + $x_2) + ",\n           |    y: ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$7, "[", ",null,", "]")) + ",\n           |    text: [],\n           |    mode: 'markers',\n           |    marker: {color: 'rgb(255, 255, 255)',\n           |      size: 10,\n           |      line: {\n           |        color: colors(") + $p_Llince_backend_plot_PlotToJS$__colour__T__I($m_Llince_backend_plot_PlotToJS$(), variable)) + "),\n           |        width: 2\n           |    }},\n           |    type: 'scatter',\n           |    legendgroup: 'g_") + variable) + "_") + lbl) + "',\n           |    name: 'ending of ") + lbl) + variable) + "',\n           |    showlegend: false,\n           |};\n           |");
         js.sr_ObjectRef__f_elem = (("" + $x_3) + $m_sc_StringOps$().stripMargin$extension__T__C__T(x$3, 124));
         break matchResult6;
       }
@@ -24554,7 +24563,7 @@ function $c_Llince_frontend_CaosConfig$() {
   var $x_13 = $m_Lcaos_frontend_Configurator$();
   var self = this.Llince_frontend_CaosConfig$__f_languageName;
   var self$1 = new $c_T2(self, "More information on the syntax of Lince 2.0");
-  var y$8 = $m_sc_StringOps$().stripMargin$extension__T__C__T("<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre></p>\n        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>powerlaw</code>.</p>\n        |<p> You can customize your plot by appending to the end of your program, e.g.,\n        |<pre>\n        |---\n        |until 5 // maximum time (default 10)\n        |from 0 // starting time (default 0)\n        |iterations 10 // maximum times the while loops are unfolded (default 50)\n        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)\n        |seed 0 // seed for the random generator  (every time a random one by default)\n        |vars x.*, y // list of regular expressions to select variables to be displayed (default all)\n        |height 450 // sets the height in px of the graph (default 450)\n        |runs 5 // number of plots to draw (default 1, useful for random plots)\n        |verbose // shows a marker at every discrete step (does not show by default)\n        |</pre>\n        |</p>\n        |<h3>Note on stochastic functions</h3>\n        |<p> The functions below are stochastic, and will yield a different value every time they are called. For reproducibility, you can set the \"seed\" value to fix the internal pseudo-random generator.\n          <ul>\n            <li><code>unif(a,b)</code> - random value from a uniform distribution between <code>a</code> and <code>b</code>;</li>\n            <li><code>unif()</code> - equivalent to <code>unif(0,1)</code></li>\n            <li><code>expn(lambda)</code> - random variable from a negative exponential distribution, using an average frequence of <code>lambda</code> (equivalent to <code>-ln(unif()) / lambda</code>);</li>\n            <li><code>powerlaw(alpha,xmin)</code> - random variable from a power law distribution, using a normalisation value <code>alpha > 1</code> and a lower bound <code>xmin</code> for the returned values (equivalent to <code>xmin * unif()^(\u22121/(alpha\u22121))</code>).</li>\n          </ul>\n        |</p>\n        |", 124);
+  var y$8 = $m_sc_StringOps$().stripMargin$extension__T__C__T("<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre></p>\n        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>powerlaw</code>.</p>\n        |<p> You can customize your plot by appending to the end of your program, e.g.,\n        |<pre>\n        |---\n        |until 5 // maximum time (default 10)\n        |from 0 // starting time (default 0)\n        |iterations 10 // maximum times the while loops are unfolded (default 500)\n        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)\n        |seed 0 // seed for the random generator  (every time a random one by default)\n        |vars x.*, y // list of regular expressions to select variables to be displayed (default all)\n        |height 450 // sets the height in px of the graph (default 450)\n        |runs 5 // number of plots to draw (default 1, useful for random plots)\n        |verbose // shows a marker at every discrete step (does not show by default)\n        |</pre>\n        |</p>\n        |<h3>Note on stochastic functions</h3>\n        |<p> The functions below are stochastic, and will yield a different value every time they are called. For reproducibility, you can set the \"seed\" value to fix the internal pseudo-random generator.\n          <ul>\n            <li><code>unif(a,b)</code> - random value from a uniform distribution between <code>a</code> and <code>b</code>;</li>\n            <li><code>unif()</code> - equivalent to <code>unif(0,1)</code></li>\n            <li><code>expn(lambda)</code> - random variable from a negative exponential distribution, using an average frequence of <code>lambda</code> (equivalent to <code>-ln(unif()) / lambda</code>);</li>\n            <li><code>powerlaw(alpha,xmin)</code> - random variable from a power law distribution, using a normalisation value <code>alpha > 1</code> and a lower bound <code>xmin</code> for the returned values (equivalent to <code>xmin * unif()^(\u22121/(alpha\u22121))</code>).</li>\n          </ul>\n        |</p>\n        |", 124);
   var $x_12 = new $c_T2(self$1, y$8);
   var self$2 = new $c_T2("Run small-steps", "Information on the semantics rules used by Lince");
   this.Llince_frontend_CaosConfig$__f_documentation = $x_13.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon($x_12, new $c_sci_$colon$colon(new $c_T2(self$2, "<p>The operational rules, borrowed from a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication</a>, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"), $m_sci_Nil$())));
@@ -27827,7 +27836,13 @@ $c_Llince_backend_plot_Plot$.prototype.empty__Llince_backend_plot_Plot = (functi
   var this$4 = $m_sci_Map$();
   var elems$3 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([]));
   var beginnings = this$4.from__sc_IterableOnce__sci_Map(elems$3);
-  return new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings);
+  var this$5 = $m_sci_Set$();
+  var elems$4 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T.getArrayOf().constr)(["time"]));
+  var xlabels = this$5.from__sc_IterableOnce__sci_Set(elems$4);
+  var this$6 = $m_sci_Set$();
+  var elems$5 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T.getArrayOf().constr)([]));
+  var ylabels = this$6.from__sc_IterableOnce__sci_Set(elems$5);
+  return new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings, xlabels, ylabels);
 });
 $c_Llince_backend_plot_Plot$.prototype.allPlots__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List = (function(st, pinfo) {
   var end = $n(pinfo).Llince_syntax_Lince$PlotInfo__f_runs;
@@ -28007,11 +28022,25 @@ $c_Llince_backend_plot_Plot$.prototype.calcPlot__Llince_backend_SmallStep$St__D_
     var timePassed$tailLocal1$2$1 = timePassed$tailLocal1;
     $x_1.foreach__F1__V(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((res, timePassed$tailLocal1$2, st2$2, as$2) => ((v) => {
       var v$1 = $as_T(v);
-      res.sr_ObjectRef__f_elem = $n($as_Llince_backend_plot_Plot(res.sr_ObjectRef__f_elem)).lince$backend$plot$Plot$$startTrace__T__D__D__sci_List__Llince_backend_plot_Plot(v$1, timePassed$tailLocal1$2, $uD($n($n(st2$2).Llince_backend_SmallStep$St__f_v).getOrElse__O__F0__O(v$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => {
+      var \u03b46$ = $n($as_Llince_backend_plot_Plot(res.sr_ObjectRef__f_elem)).lince$backend$plot$Plot$$startTrace__T__D__D__sci_List__Llince_backend_plot_Plot(v$1, timePassed$tailLocal1$2, $uD($n($n(st2$2).Llince_backend_SmallStep$St__f_v).getOrElse__O__F0__O(v$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => {
         var $x_2 = $m_s_sys_package$();
         var this$11 = $n(as$2);
         $x_2.error__T__E(((("No value for " + v$1) + " after ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$11, "", ",", "")));
       })))), as$2);
+      var this$12 = $n($n($as_Llince_backend_plot_Plot(res.sr_ObjectRef__f_elem)).Llince_backend_plot_Plot__f_ylabels);
+      var ylabels$2 = $as_sci_Set(this$12.incl__O__sci_SetOps(v$1));
+      var this$13 = $n(\u03b46$);
+      var current$2 = this$13.Llince_backend_plot_Plot__f_current;
+      var this$14 = $n(\u03b46$);
+      var traces$2 = this$14.Llince_backend_plot_Plot__f_traces;
+      var this$15 = $n(\u03b46$);
+      var endings$2 = this$15.Llince_backend_plot_Plot__f_endings;
+      var this$16 = $n(\u03b46$);
+      var beginnings$2 = this$16.Llince_backend_plot_Plot__f_beginnings;
+      var this$17 = $n(\u03b46$);
+      var xlabels$2 = this$17.Llince_backend_plot_Plot__f_xlabels;
+      $n(\u03b46$);
+      res.sr_ObjectRef__f_elem = new $c_Llince_backend_plot_Plot(current$2, traces$2, endings$2, beginnings$2, xlabels$2, ylabels$2);
     }))(res, timePassed$tailLocal1$2$1, st2$2, as$2)));
     matchResult11: {
       var \u03b45$___1;
@@ -28028,8 +28057,8 @@ $c_Llince_backend_plot_Plot$.prototype.calcPlot__Llince_backend_SmallStep$St__D_
     }
     var points$2 = $as_sci_List(\u03b45$___1);
     var st3$2 = $as_Llince_backend_SmallStep$St(\u03b45$___2);
-    var this$13 = $n($n(points$2).reverse__sci_List());
-    var these = this$13;
+    var this$20 = $n($n(points$2).reverse__sci_List());
+    var these = this$20;
     while ((!$n(these).isEmpty__Z())) {
       var x0 = $n(these).head__O();
       var x$1$5 = $as_T2(x0);
@@ -28037,7 +28066,7 @@ $c_Llince_backend_plot_Plot$.prototype.calcPlot__Llince_backend_SmallStep$St__D_
         if ((x$1$5 !== null)) {
           var time = $uD($n(x$1$5)._1__O());
           var valuation = $as_sci_Map($n(x$1$5)._2__O());
-          var this$25 = $n($n(valuation).withFilter__F1__sc_MapOps$WithFilter(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((filter) => ((x$1$2$2) => {
+          var this$32 = $n($n(valuation).withFilter__F1__sc_MapOps$WithFilter(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((filter) => ((x$1$2$2) => {
             var x$1$6 = $as_T2(x$1$2$2);
             if ((x$1$6 !== null)) {
               var x = $as_T($n(x$1$6)._1__O());
@@ -28052,7 +28081,7 @@ $c_Llince_backend_plot_Plot$.prototype.calcPlot__Llince_backend_SmallStep$St__D_
               if ((x$1$7 !== null)) {
                 var x$2 = $as_T($n(x$1$7)._1__O());
                 var value$1 = $uD($n(x$1$7)._2__O());
-                var this$18 = $n($as_Llince_backend_plot_Plot(res.sr_ObjectRef__f_elem));
+                var this$25 = $n($as_Llince_backend_plot_Plot(res.sr_ObjectRef__f_elem));
                 var \u03b41$___1;
                 var \u03b41$___2;
                 var \u03b41$___3;
@@ -28062,22 +28091,24 @@ $c_Llince_backend_plot_Plot$.prototype.calcPlot__Llince_backend_SmallStep$St__D_
                 var x$2$1 = $as_T(\u03b41$___1);
                 var time$2 = $uD(\u03b41$___2);
                 var value$2 = $uD(\u03b41$___3);
-                var oldTr = $as_sci_List($n(this$18.Llince_backend_plot_Plot__f_current).getOrElse__O__F0__O(x$2$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$()))));
-                var $x_3 = this$18.Llince_backend_plot_Plot__f_current;
+                var oldTr = $as_sci_List($n(this$25.Llince_backend_plot_Plot__f_current).getOrElse__O__F0__O(x$2$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$()))));
+                var $x_3 = this$25.Llince_backend_plot_Plot__f_current;
                 var elem$1 = new $c_T2(time$2, value$2);
-                var this$23 = $n(oldTr);
-                var y = new $c_sci_$colon$colon(elem$1, this$23);
+                var this$30 = $n(oldTr);
+                var y = new $c_sci_$colon$colon(elem$1, this$30);
                 var current = $as_sci_Map($n($x_3).$plus__T2__sci_MapOps(new $c_T2(x$2$1, y)));
-                var traces = this$18.Llince_backend_plot_Plot__f_traces;
-                var endings = this$18.Llince_backend_plot_Plot__f_endings;
-                var beginnings = this$18.Llince_backend_plot_Plot__f_beginnings;
-                res.sr_ObjectRef__f_elem = new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings);
+                var traces = this$25.Llince_backend_plot_Plot__f_traces;
+                var endings = this$25.Llince_backend_plot_Plot__f_endings;
+                var beginnings = this$25.Llince_backend_plot_Plot__f_beginnings;
+                var xlabels = this$25.Llince_backend_plot_Plot__f_xlabels;
+                var ylabels = this$25.Llince_backend_plot_Plot__f_ylabels;
+                res.sr_ObjectRef__f_elem = new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings, xlabels, ylabels);
                 break matchResult13;
               }
               throw new $c_s_MatchError(x$1$7);
             }
           }))(res, time));
-          $n(this$25.filtered__sc_Iterable()).foreach__F1__V(f);
+          $n(this$32.filtered__sc_Iterable()).foreach__F1__V(f);
           break matchResult14;
         }
         throw new $c_s_MatchError(x$1$5);
@@ -35318,7 +35349,9 @@ function $p_Llince_backend_plot_Plot__endTrace__T__Llince_backend_plot_Plot($thi
     var y$1 = new $c_sci_$colon$colon(lastValue, this$6);
     var endings = $as_sci_Map($n($x_2).$plus__T2__sci_MapOps(new $c_T2(x, y$1)));
     var beginnings = $thiz.Llince_backend_plot_Plot__f_beginnings;
-    return new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings);
+    var xlabels = $thiz.Llince_backend_plot_Plot__f_xlabels;
+    var ylabels = $thiz.Llince_backend_plot_Plot__f_ylabels;
+    return new $c_Llince_backend_plot_Plot(current, traces, endings, beginnings, xlabels, ylabels);
   }
   var x$2 = $m_s_None$();
   if ((x$2 === x10)) {
@@ -35327,15 +35360,19 @@ function $p_Llince_backend_plot_Plot__endTrace__T__Llince_backend_plot_Plot($thi
   throw new $c_s_MatchError(x10);
 }
 /** @constructor */
-function $c_Llince_backend_plot_Plot(current, traces, endings, beginnings) {
+function $c_Llince_backend_plot_Plot(current, traces, endings, beginnings, xlabels, ylabels) {
   this.Llince_backend_plot_Plot__f_current = null;
   this.Llince_backend_plot_Plot__f_traces = null;
   this.Llince_backend_plot_Plot__f_endings = null;
   this.Llince_backend_plot_Plot__f_beginnings = null;
+  this.Llince_backend_plot_Plot__f_xlabels = null;
+  this.Llince_backend_plot_Plot__f_ylabels = null;
   this.Llince_backend_plot_Plot__f_current = current;
   this.Llince_backend_plot_Plot__f_traces = traces;
   this.Llince_backend_plot_Plot__f_endings = endings;
   this.Llince_backend_plot_Plot__f_beginnings = beginnings;
+  this.Llince_backend_plot_Plot__f_xlabels = xlabels;
+  this.Llince_backend_plot_Plot__f_ylabels = ylabels;
 }
 $c_Llince_backend_plot_Plot.prototype = new $h_O();
 $c_Llince_backend_plot_Plot.prototype.constructor = $c_Llince_backend_plot_Plot;
@@ -35359,21 +35396,35 @@ $c_Llince_backend_plot_Plot.prototype.equals__O__Z = (function(x$0) {
     if (((x === null) ? (x$2 === null) : $n(x).equals__O__Z(x$2))) {
       var x$3 = this.Llince_backend_plot_Plot__f_traces;
       var x$4 = $n(x$0$2).Llince_backend_plot_Plot__f_traces;
-      var $x_3 = ((x$3 === null) ? (x$4 === null) : $n(x$3).equals__O__Z(x$4));
+      var $x_5 = ((x$3 === null) ? (x$4 === null) : $n(x$3).equals__O__Z(x$4));
+    } else {
+      var $x_5 = false;
+    }
+    if ($x_5) {
+      var x$5 = this.Llince_backend_plot_Plot__f_endings;
+      var x$6 = $n(x$0$2).Llince_backend_plot_Plot__f_endings;
+      var $x_4 = ((x$5 === null) ? (x$6 === null) : $n(x$5).equals__O__Z(x$6));
+    } else {
+      var $x_4 = false;
+    }
+    if ($x_4) {
+      var x$7 = this.Llince_backend_plot_Plot__f_beginnings;
+      var x$8 = $n(x$0$2).Llince_backend_plot_Plot__f_beginnings;
+      var $x_3 = ((x$7 === null) ? (x$8 === null) : $n(x$7).equals__O__Z(x$8));
     } else {
       var $x_3 = false;
     }
     if ($x_3) {
-      var x$5 = this.Llince_backend_plot_Plot__f_endings;
-      var x$6 = $n(x$0$2).Llince_backend_plot_Plot__f_endings;
-      var $x_2 = ((x$5 === null) ? (x$6 === null) : $n(x$5).equals__O__Z(x$6));
+      var x$9 = this.Llince_backend_plot_Plot__f_xlabels;
+      var x$10 = $n(x$0$2).Llince_backend_plot_Plot__f_xlabels;
+      var $x_2 = ((x$9 === null) ? (x$10 === null) : $n(x$9).equals__O__Z(x$10));
     } else {
       var $x_2 = false;
     }
     if ($x_2) {
-      var x$7 = this.Llince_backend_plot_Plot__f_beginnings;
-      var x$8 = $n(x$0$2).Llince_backend_plot_Plot__f_beginnings;
-      var $x_1 = ((x$7 === null) ? (x$8 === null) : $n(x$7).equals__O__Z(x$8));
+      var x$11 = this.Llince_backend_plot_Plot__f_ylabels;
+      var x$12 = $n(x$0$2).Llince_backend_plot_Plot__f_ylabels;
+      var $x_1 = ((x$11 === null) ? (x$12 === null) : $n(x$11).equals__O__Z(x$12));
     } else {
       var $x_1 = false;
     }
@@ -35391,7 +35442,7 @@ $c_Llince_backend_plot_Plot.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$()._toString__s_Product__T(this);
 });
 $c_Llince_backend_plot_Plot.prototype.productArity__I = (function() {
-  return 4;
+  return 6;
 });
 $c_Llince_backend_plot_Plot.prototype.productPrefix__T = (function() {
   return "Plot";
@@ -35412,6 +35463,14 @@ $c_Llince_backend_plot_Plot.prototype.productElement__I__O = (function(n) {
     }
     case 3: {
       return this.Llince_backend_plot_Plot__f_beginnings;
+      break;
+    }
+    case 4: {
+      return this.Llince_backend_plot_Plot__f_xlabels;
+      break;
+    }
+    case 5: {
+      return this.Llince_backend_plot_Plot__f_ylabels;
       break;
     }
     default: {
@@ -35453,8 +35512,12 @@ $c_Llince_backend_plot_Plot.prototype.lince$backend$plot$Plot$$startTrace__T__D_
   var traces$1 = this$9.Llince_backend_plot_Plot__f_traces;
   var this$10 = $n(\u03b42$);
   var endings$1 = this$10.Llince_backend_plot_Plot__f_endings;
+  var this$11 = $n(\u03b42$);
+  var xlabels$1 = this$11.Llince_backend_plot_Plot__f_xlabels;
+  var this$12 = $n(\u03b42$);
+  var ylabels$1 = this$12.Llince_backend_plot_Plot__f_ylabels;
   $n(\u03b42$);
-  return new $c_Llince_backend_plot_Plot(current$1, traces$1, endings$1, beginnings$1);
+  return new $c_Llince_backend_plot_Plot(current$1, traces$1, endings$1, beginnings$1, xlabels$1, ylabels$1);
 });
 $c_Llince_backend_plot_Plot.prototype.show__T = (function() {
   var this$1 = $n(this.Llince_backend_plot_Plot__f_current);
@@ -35467,10 +35530,10 @@ $c_Llince_backend_plot_Plot.prototype.show__T = (function() {
   var this$7 = $n($as_sc_IterableOps(this$5.concat__sc_IterableOnce__O(suffix$1)));
   var this$6 = $n(this.Llince_backend_plot_Plot__f_beginnings);
   var suffix$2 = this$6.keySet__sc_Set();
-  var this$15 = $n($as_sc_IterableOnceOps($n($as_sc_IterableOps(this$7.concat__sc_IterableOnce__O(suffix$2))).map__F1__O(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x) => {
+  var this$17 = $n($as_sc_IterableOnceOps($n($as_sc_IterableOps(this$7.concat__sc_IterableOnce__O(suffix$2))).map__F1__O(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x) => {
     var x$1 = $as_T(x);
     var this$9 = $n($as_sc_IterableOnceOps($n(this.Llince_backend_plot_Plot__f_current).getOrElse__O__F0__O(x$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$())))));
-    var $x_3 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$9, "", ",", "");
+    var $x_5 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$9, "", ",", "");
     var this$11 = $n($as_sci_List($n(this.Llince_backend_plot_Plot__f_traces).getOrElse__O__F0__O(x$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$())))));
     var f = ((x$2) => {
       var x$3 = $as_sci_List(x$2);
@@ -35493,13 +35556,17 @@ $c_Llince_backend_plot_Plot.prototype.show__T = (function() {
       }
       var this$12 = h;
     }
-    var $x_2 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$12, "", "\n         ", "");
+    var $x_4 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$12, "", "\n         ", "");
     var this$13 = $n($as_sc_IterableOnceOps($n(this.Llince_backend_plot_Plot__f_endings).getOrElse__O__F0__O(x$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$())))));
-    var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$13, "", ",", "");
+    var $x_3 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$13, "", ",", "");
     var this$14 = $n($as_sc_IterableOnceOps($n(this.Llince_backend_plot_Plot__f_beginnings).getOrElse__O__F0__O(x$1, new $c_sr_AbstractFunction0_$$Lambda$a02b774b97db8234e08c6a02dd06557c99779855((() => $m_sci_Nil$())))));
-    return ((((((((x$1 + ":\n    cur: ") + $x_3) + "\n    trc: ") + $x_2) + "\n    end: ") + $x_1) + "\n    begin: ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$14, "", ",", ""));
+    var $x_2 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$14, "", ",", "");
+    var this$15 = $n(this.Llince_backend_plot_Plot__f_xlabels);
+    var $x_1 = $f_sc_IterableOnceOps__mkString__T__T__T__T(this$15, "", "/", "");
+    var this$16 = $n(this.Llince_backend_plot_Plot__f_ylabels);
+    return ((((((((((((x$1 + ":\n    cur: ") + $x_5) + "\n    trc: ") + $x_4) + "\n    end: ") + $x_3) + "\n    begin: ") + $x_2) + "\nlabels (x|y): ") + $x_1) + "|") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$16, "", "/", ""));
   })))));
-  return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$15, "", "\n", "");
+  return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$17, "", "\n", "");
 });
 function $as_Llince_backend_plot_Plot(obj) {
   return (((obj instanceof $c_Llince_backend_plot_Plot) || (obj === null)) ? obj : $throwClassCastException(obj, "lince.backend.plot.Plot"));
