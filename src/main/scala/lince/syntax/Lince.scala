@@ -57,8 +57,9 @@ object Lince:
                        showVar: String=>Boolean,
                        height: Int, // height in px
                        runs: Int, // number of times to repeat the run
+                       portrait: Option[(String,String)], // to change the variables in the x and y axis
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,SmallStep.rand.nextLong(),false,_=>true,450,1)
+    def default = PlotInfo(0,10,500,40,SmallStep.rand.nextLong(),false,_=>true,450,1,None)
 
 

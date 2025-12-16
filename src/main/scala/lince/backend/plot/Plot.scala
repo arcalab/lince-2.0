@@ -74,7 +74,12 @@ object Plot:
       (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
   def apply(st:St, pinfo:PlotInfo): Plot =
-    apply(st, pinfo.minTime, pinfo.maxTime, pinfo.samples, pinfo.showAll, pinfo.showVar)
+    val plot = apply(st, pinfo.minTime, pinfo.maxTime,
+                         pinfo.samples, pinfo.showAll, pinfo.showVar)
+    // transform it into a portrait plot if needed
+    if pinfo.portrait.isDefined
+    then rearrange(plot,pinfo.portrait.get)
+    else plot
 
   /**
    *  Calculate a plot by traversing the state-space while collecting points and action names.
@@ -144,6 +149,65 @@ object Plot:
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
     else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
 
+  /**
+   * Change the values being plotted in the x and y axis
+   * @param p original plot
+   * @param axis pair of variable names to be used
+   * @return updated plot
+   */
+  def rearrange(p:Plot, axis:(String,String)): Plot =
+    val (x,y) = axis
+    val trX = p.traces.getOrElse(x,Nil)
+    val trY = p.traces.getOrElse(y,Nil)
+    val newTr   = mergeTr(trX,trY)
+    val newBgs  = mergeBgs(p.beginnings.getOrElse(x,Nil),
+                           p.beginnings.getOrElse(y,Nil))
+    val newEnds = mergeEnds(p.endings.getOrElse(x,Nil),
+                            p.endings.getOrElse(y,Nil))
+    val nv = s"${x}_${y}"
+    Plot(Map(),Map(nv->newTr),Map(nv->newEnds),Map(nv->newBgs),Set(x),Set(y))
+
+    //IDEA:
+    //  - generate the plot with "verbose", to have matching traces (all sub-trajectories will have a trace)
+    //  - pair these traces, and "merge" each of them
+    //  - merging means, for each (t,v1) from x, and (t,v2) from y, add (v1,v2)
+
+  def mergeTr(trX:Traces,trY:Traces): Traces =
+   //println(s"merging...\n- $trX\n- $trY")
+   (trX,trY) match
+    case (Nil,_) => Nil
+    case (_,Nil) => Nil
+    case (Nil::r,a) => Nil::mergeTr(r,a)
+    case (a, Nil :: r) => Nil::mergeTr(a, r)
+    case ((x::xs)::rx, (y::ys)::ry) if x._1==y._1 =>
+      //println("case a")
+      def mbAgain[A](a:A,as:List[A],bs:List[A]) =
+        if as.nonEmpty && bs.isEmpty then  a::as else as
+      mergeTr(mbAgain(x,xs,ys)::rx,mbAgain(y,ys,xs)::ry)  match
+        case hd::tl => ((x._2,y._2)::hd)::tl
+        case Nil => List(List((x._2,y._2)))
+    case ((x::xs)::rx, (y::ys)::ry) if (x._1) > (y._1) =>
+      //println("case b")
+      mergeTr(xs::rx,trY)
+    case ((x::xs)::rx, (y::ys)::ry) =>
+      //println(s"case c - ${x._1} > ${y._1}")
+      mergeTr(trX,ys::ry)
+
+
+  def mergeBgs(mx:MarkedPoints,my:MarkedPoints): MarkedPoints = (mx,my) match
+    case (Nil,_) => Nil
+    case (_,Nil) => Nil
+    case (x::xs,y::ys) if x._1==y._1 => (x._2,y._2,if x._3.size>y._3.size then x._3 else y._3) :: mergeBgs(xs,ys)
+    case (x::xs,y::ys) if x._1 >y._1 => mergeBgs(xs,my)
+    case (x::xs,y::ys)               => mergeBgs(mx,ys)
+
+
+  def mergeEnds(px:Points,py:Points): Points = (px,py) match
+    case (Nil,_) => Nil
+    case (_,Nil) => Nil
+    case (x::xs,y::ys) if x._1==y._1 => (x._2,y._2) :: mergeEnds(xs,ys)
+    case (x::xs,y::ys) if x._1 >y._1 => mergeEnds(xs,py)
+    case (x::xs,y::ys)               => mergeEnds(px,ys)
 
 
 

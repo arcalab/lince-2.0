@@ -25,6 +25,7 @@ object PlotToJS:
 
   /** Adds a plot as an overlay to an existing plot */
   def addPlot(plot: Plot, divName: String, pi: PlotInfo): String =
+    println("ADDING PLOT")
     val vars = plot.traces.keys.toList.sorted
     s"""${setDataJS(plot, divName, pi, vars)}
        |Plotly.addTraces('$divName', data);
@@ -51,7 +52,9 @@ object PlotToJS:
   def traceToJS(tr: Map[String, Traces],lbl: String): String =
     var js = ""
     for (variable, traces) <- tr do
-      val tr = traces.map(tr => tr.head.copy(_2 = "null") :: tr).flatten.tail
+      val tr = traces
+        .filter(_.nonEmpty)
+        .map(tr => tr.head.copy(_2 = "null") :: tr).flatten.drop(1)
       val (xs, ys) = tr.unzip
       js +=
         s"""var t_$variable = {

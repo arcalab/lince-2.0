@@ -33,6 +33,8 @@ object Eval:
     case Expr.Func("cosh", List(e)) => math.cosh(apply(e))
     case Expr.Func("sinh", List(e)) => math.sinh(apply(e))
     case Expr.Func("tanh", List(e)) => math.tanh(apply(e))
+    case Expr.Func("arccos", List(e)) => math.acos(apply(e))
+    case Expr.Func("arcsin", List(e)) => math.asin(apply(e))
     case Expr.Func("ln", List(e)) => math.log(apply(e))
     case Expr.Func("pi", List()) => math.Pi
     case Expr.Func(op, es) =>
