@@ -69,17 +69,19 @@ object Plot:
   private type St = SmallStep.St
 
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
-    for run <- (1 to pinfo.runs).toList yield
+    val ps = for run <- (1 to pinfo.runs).toList yield
       val pi2 = pinfo.copy(runs = run)
-      (apply(Simulation(st.p,pi2).state, pi2),pi2)
+      apply(Simulation(st.p,pi2).state, pi2).map(p => (p,pi2))
+    ps.flatten
+//      (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
-  def apply(st:St, pinfo:PlotInfo): Plot =
+  def apply(st:St, pinfo:PlotInfo): List[Plot] =
     val plot = apply(st, pinfo.minTime, pinfo.maxTime,
                          pinfo.samples, pinfo.showAll, pinfo.showVar)
     // transform it into a portrait plot if needed
-    if pinfo.portrait.isDefined
-    then rearrange(plot,pinfo.portrait.get)
-    else plot
+    if pinfo.portrait.nonEmpty
+    then rearrange(plot,pinfo.portrait)
+    else List(plot)
 
   /**
    *  Calculate a plot by traversing the state-space while collecting points and action names.
@@ -148,6 +150,10 @@ object Plot:
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
     else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
+
+
+  def rearrange(p:Plot, axis:List[(String,String)]): List[Plot] =
+    axis.map(ax => rearrange(p,ax))
 
   /**
    * Change the values being plotted in the x and y axis

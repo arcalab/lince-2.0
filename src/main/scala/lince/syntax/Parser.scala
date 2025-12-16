@@ -258,9 +258,10 @@ object Parser :
       (pi: PlotInfo) => pi.copy(height = r)) |
     (string("runs") *> sps *> intP).map(r =>
         (pi: PlotInfo) => pi.copy(runs = r)) |
-    (string("portrait") *> sps *> varName ~
-      (sps *> char(',') *> sps *>varName)).map((v1,v2) =>
-        (pi: PlotInfo) => pi.copy(portrait = Some((v1,v2)))) |
+    (string("portrait") *> sps *>
+      (varName ~ (sps *> char(',') *> sps *>(varName <* sps)))
+        .repSep(char(';')*>sps)).map(lst =>
+        (pi: PlotInfo) => pi.copy(portrait = lst.toList ::: pi.portrait)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 
