@@ -153,6 +153,7 @@ object CaosConfig extends Configurator[Simulation]:
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)
         |height 450 // sets the height in px of the graph (default 450)
         |runs 5 // number of plots to draw (default 1, useful for random plots)
+        |portrait x,y; z,w // creates a portrait plot, relating x with y and z with w (deactivated by default)
         |verbose // shows a marker at every discrete step (does not show by default)
         |</pre>
         |</p>
