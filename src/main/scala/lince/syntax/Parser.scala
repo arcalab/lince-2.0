@@ -7,7 +7,7 @@ import lince.syntax.Lince.{Cond, Expr, PlotInfo, Program, Simulation}
 import Program.*
 import caos.frontend.widgets.WidgetInfo.Simulate
 
-import scala.sys.error
+import scala.sys.{env, error}
 import scala.util.Random
 
 object Parser :
@@ -188,7 +188,38 @@ object Parser :
     case Expr.Func("expn",List(lamb)) => // - ln ( unif ) / lambda
       Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
         Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))
-     // xmin ⋅ (1−unif)^{−1/(alpha−1)}, where alpha>1 and xmin>0
+    /* x1 := unif (0 ,1) ;
+       x2 := unif (0 ,1) ;
+       x := sqrt ( -2 * ( ln x1 ) ) * cos (2 * pi * x2 )
+       x := m + s * x
+     */
+    case Expr.Func("normal",List(m,s)) => // - ln ( unif ) / lambda
+      Expr.Func("+", List(
+        m,
+        Expr.Func("*",List(
+          s,
+          Expr.Func("*",List(
+            Expr.Func("sqrt",List(
+              Expr.Func("*",List(
+                Expr.Num(-2.0),
+                Expr.Func("ln",List(
+                  Expr.Func("unif",Nil)
+                ))
+              ))
+            )),
+            Expr.Func("cos",List(
+              Expr.Func("*",List(
+                Expr.Func("*",List(
+                  Expr.Num(2.0),
+                  Expr.Func("pi",Nil)
+                )),
+                Expr.Func("unif",Nil)
+              ))
+            ))
+          ))
+        ))
+      ))
+           // xmin ⋅ (1−unif)^{−1/(alpha−1)}, where alpha>1 and xmin>0
      // (here using unif instead of 1-unif)
      case Expr.Func("powerlaw",List(alpha,xmin)) =>
       Expr.Func("*",List(
