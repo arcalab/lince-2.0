@@ -75,7 +75,58 @@ object CaosConfig extends Configurator[Simulation]:
       -> "Missile pursuing a target (2D)\n\nMissile trajectory that follows a given target.",
     "FMAS CC"
       -> "// Adaptive Cruise Control (ACC) \nfwd:=3; bwd:=-3; // constants\npl :=50; vl := 0; al:=1; // [-3..3]; //leader \npf := 0 ; vf := 0; af := fwd;  //follower\ndiscr := 0; bt:=0; at:=0; ct:=0;\nst := 2; //sample time\nwhile true do {\n bt:= (al-fwd)*st+vl-vf; \n at:= (al-bwd)/2; \n ct:= (((al-fwd)/2)*st^2+(vl-vf)*st+pl-pf);\n discr:= bt^2 - 4*at*ct;\n if ct<=0 || \n   (at==0 && bt!=0 && -ct/bt > 0) || \n    (discr >= 0 && at!=0 &&\n     ((-bt - sqrt(discr))/(2*at) > 0  ||\n      (-bt + sqrt(discr))/(2*at) > 0 ))  \n then af :=bwd;  //brake \n else af :=fwd; //accelerate   \n//update states\n  pf'=vf, vf'=af,\n  pl'=vl, vl'=al for st;}\n---\nvars pl,pf\nuntil 15\n"
-      -> "Adaptive Cruise Control example, used in FMAS'25"
+      -> "Adaptive Cruise Control example, used in FMAS'25",
+    "Car"
+      -> """a:=0; v:=0; p:=0;
+
+while true do{
+v'= a, p'= v for 10;
+a:= 2;
+v'= a, p'= v for 10;
+a:= 0;
+v'= a, p'= v for 10;
+a:= -2;
+v'= a, p'= v for 10;
+a:= 2;
+v'= a, p'= v for 10;
+a:= 0;
+v'= a, p'= v for 10;
+}
+
+---
+until 60
+vars v, p, a"""
+      -> "Exemplo de um carro acelerando, desacelerando e parando.",
+          "4 tanks - 1ª versão"
+      -> """h0 := 4; h1 := 5; h2 := 6; h3 := 7;
+f0 := 0.5; f1 := 0.5; f2 := 0.5; f3 := 0.5;
+
+while (true) do {
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h3>10;
+f0 := -0.5; f1 := -0.5; f2 := -0.5; f3 := -0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h0<3;
+f0:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h1<3;
+f1:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h2<3;
+f2:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h3<3;
+f3:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h0>10;
+f0 := -0.5; f1 := -0.5; f2 := -0.5; f3 := -0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h3<3;
+f3:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h2<3;
+f2:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h1<3;
+f1:= 0.5;
+h0'= f0, h1'= f1, h2'= f2, h3'= f3 until_1 h0<3;
+f0:= 0.5;
+}
+---
+until 100
+iterations 100"""
+      -> "4 tanks system, first version."
   )
 
   /** Description of the widgets that appear in the dashboard. */
