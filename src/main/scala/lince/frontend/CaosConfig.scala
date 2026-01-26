@@ -14,7 +14,7 @@ import scala.util.Random
 
 /** Object used to configure which analysis appear in the browser */
 object CaosConfig extends Configurator[Simulation]:
-  val name = "Animator of Lince 2.0"
+  val name = "Lince 2.0: Simulator of Cyber-Physical Systems as Hybrid Programs"
   override val languageName: String = "Input program"
 
   /** Parser, converting a string into a System in Lince 2.0 */
@@ -23,11 +23,16 @@ object CaosConfig extends Configurator[Simulation]:
 
   /** Examples of programs that the user can choose from. The first is the default one. */
   val examples = List(
+    // "sin-bug"
+    //   -> "theta := 0.01;\na := 0;\ntheta' = a, a' = sin(theta) for 40;\n--\nuntil 40\nsamples 150"
+    //   -> "Buggy experiment with ODEs with sin.",
+    "CC" -> "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5"
+      -> "Simple cruise control system, used to illustrate basic functionality of Lince.",
+    "CC (broken)" -> "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n  if x>=10 then x:=10;\n}\n--\nuntil 5\nsamples 10"
+      -> "Variation of the cruise control example, breaking the continuity of the trajectories.",
     "Simple composition"
       -> "p:=0; v:=0;\np'=v,v'= 2  for 5;\np'=v,v'=-2  for 5;"
       -> "Composing two trajectories: the 1st accelerates (2) and the 2nd brakes (-2).",
-    "CC (broken)" -> "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n  if x>=10 then x:=10;\n}\n--\nuntil 5\nsamples 10",
-    "CC" -> "// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5",
     "x:=2" -> "x := 2;",
     "skip" -> "skip;",
     "Bouncing ball"
@@ -78,7 +83,10 @@ object CaosConfig extends Configurator[Simulation]:
       -> "Missile pursuing a target (2D)\n\nMissile trajectory that follows a given target.",
     "FMAS CC"
       -> "// Adaptive Cruise Control (ACC) \nfwd:=3; bwd:=-3; // constants\npl :=50; vl := 0; al:=1; // [-3..3]; //leader \npf := 0 ; vf := 0; af := fwd;  //follower\ndiscr := 0; bt:=0; at:=0; ct:=0;\nst := 2; //sample time\nwhile true do {\n bt:= (al-fwd)*st+vl-vf; \n at:= (al-bwd)/2; \n ct:= (((al-fwd)/2)*st^2+(vl-vf)*st+pl-pf);\n discr:= bt^2 - 4*at*ct;\n if ct<=0 || \n   (at==0 && bt!=0 && -ct/bt > 0) || \n    (discr >= 0 && at!=0 &&\n     ((-bt - sqrt(discr))/(2*at) > 0  ||\n      (-bt + sqrt(discr))/(2*at) > 0 ))  \n then af :=bwd;  //brake \n else af :=fwd; //accelerate   \n//update states\n  pf'=vf, vf'=af,\n  pl'=vl, vl'=al for st;}\n---\nvars pl,pf\nuntil 15\n"
-      -> "Adaptive Cruise Control example, used in FMAS'25"
+      -> "Adaptive Cruise Control example, used in FMAS'25",
+    // "sin-sim"
+    //   -> "x:=0;\n// Trying to simulate sin(x) using ODEs\nwhile x<=10 do {\n  y:=sin(x);\n  x'=1, y'=cos(x) for 0.1;\n}\n---\nuntil 10\nvars x,y"
+    //   -> "Trying to simulate sin(x) using ODEs. Example suggested by LLM (probably by Pedro R. D'Argenio).",
   )
 
   /** Description of the widgets that appear in the dashboard. */
@@ -114,6 +122,15 @@ object CaosConfig extends Configurator[Simulation]:
             PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
               plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           }, Text),
+    // "Plot2trace debug"
+    //   -> view(sim => {
+    //         val ps = Plot(sim.state, sim._2)
+    //         if sim.pi.portrait.nonEmpty then
+    //           "No portrait supported"
+    //         else
+    //           PlotToTrace(ps.head).mkString("\n")
+    //       },
+    //       Text),
 
 //    "Plot"
 //      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
@@ -133,7 +150,8 @@ object CaosConfig extends Configurator[Simulation]:
     """Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.
       | Source code available online:
       | <a target="_blank" href="https://github.com/arcalab/lince-2.0">
-      | https://github.com/arcalab/lince-2.0</a>. Used to illustrate a stochastic extension described in a <a href="https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/">PPDP'25 publication and presentation</a>.""".stripMargin
+      | https://github.com/arcalab/lince-2.0</a>. Used to illustrate a stochastic extension described in a <a href="https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/">PPDP'25 publication and presentation</a>.
+      | This updated version still includes less features than its predecessor at <a href="http://arcatools.org/lince">http://arcatools.org/lince</a>.""".stripMargin
 
   override val documentation: Documentation = List(
     languageName -> "More information on the syntax of Lince 2.0" ->
@@ -144,7 +162,7 @@ object CaosConfig extends Configurator[Simulation]:
         |  e ::= x  |  f(e,...,e)
         |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>powerlaw</code>.</p>
+        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---

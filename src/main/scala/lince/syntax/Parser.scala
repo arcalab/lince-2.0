@@ -37,7 +37,7 @@ object Parser :
     val loc = LocationMap(str)
     val pos = loc.toLineCol(err.failedAtOffset) match
       case Some((x,y)) =>
-        s"""at ($x,$y):
+        s"""at (${x+1},$y):
            |<pre>${loc.getLine(x).getOrElse("-")}</br>${("-" * y)+"^\n"}</pre>""".stripMargin
       case _ => ""
     s"${pos}expected: ${err.expected.toList.mkString(", ")}\noffsets: ${
