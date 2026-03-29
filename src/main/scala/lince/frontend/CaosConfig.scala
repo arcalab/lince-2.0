@@ -122,15 +122,17 @@ object CaosConfig extends Configurator[Simulation]:
             PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
               plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           }, Text),
-    // "Plot2trace debug"
-    //   -> view(sim => {
-    //         val ps = Plot(sim.state, sim._2)
-    //         if sim.pi.portrait.nonEmpty then
-    //           "No portrait supported"
-    //         else
-    //           PlotToTrace(ps.head).mkString("\n")
-    //       },
-    //       Text),
+    "Plot2trace debug"
+      -> view(sim => {
+            val sim2 = if sim.pi.portrait.nonEmpty then
+              sim.copy(pi=sim.pi.copy(portrait=Nil,
+                         showVar=sim.pi.portrait.flatMap(x=>List(x._1,x._2)).contains))
+              else sim
+            val ps = Plot(sim2.state, sim2._2)
+            PlotToTrace(ps.head).map(kv => roundf(kv._1).toString + ": " +
+                kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n")
+          },
+          Text),
 
 //    "Plot"
 //      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
@@ -142,6 +144,10 @@ object CaosConfig extends Configurator[Simulation]:
 //          PlotToJS(Plot(sim.state, sim._2), "sim-plotly", sim.pi),
 //          Text),
   )
+  def round(x:Double):Double =
+    BigDecimal(x).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble
+  def roundf(x:Double) =
+    BigDecimal(x).setScale(3, BigDecimal.RoundingMode.HALF_UP)
 
 
   //// Documentation below
