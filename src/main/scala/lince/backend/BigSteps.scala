@@ -16,8 +16,8 @@ import scala.annotation.tailrec
 object BigSteps:
 
   /** Performs all steps until no more step can be taken. */
-  def bigStep(st: St, hist: List[Action] = Nil): (List[Action], St) =
-    step(st) match
+  def bigStep(st: St, hist: List[Action] = Nil)(using rkSamples: Int): (List[Action], St) =
+    step(st)(using rkSamples) match
       case Some((act, st2)) => bigStep(st2, act :: hist)
       case None => hist -> st
 
@@ -49,7 +49,7 @@ object BigSteps:
    * @return Pair with the list of actions taken and the reached state
    */
   @tailrec
-  def discSteps(st: St, hist: List[Action] = Nil): (List[Action], St) =
+  def discSteps(st: St, hist: List[Action] = Nil)(using rkSamples: Int): (List[Action], St) =
     nextStatement(st.p) match
       case _:EqDiff => hist -> st
       case _ => step(st) match
@@ -69,7 +69,7 @@ object BigSteps:
    * @param hist accumulator to compile the valuations of points already sampled
    * @return list of valuations at the points sampled while traversing the continuous step
    */
-  def contSteps(st: St, timeStep: Double, baseTime:Double): (List[(Double,Valuation)], St) =
+  def contSteps(st: St, timeStep: Double, baseTime:Double)(using rkSamples: Int): (List[(Double,Valuation)], St) =
     // need to evaluate the duration upfront, in case there are random functions.
 //    var ok = true
 //    val newP: Program = nextStatementRest(st.p) match
@@ -90,7 +90,7 @@ object BigSteps:
     // now apply the recursive steps after fixing the duration
     @tailrec
     def contStepsAux(counter:Int,
-                     hist: List[(Double,Valuation)]): (List[(Double,Valuation)], St) =
+                     hist: List[(Double,Valuation)])(using rkSamples: Int): (List[(Double,Valuation)], St) =
       val goalTime = st.t min (timeStep*counter)
   //    println(s"-- contSteps ${st} with goal $goalTime and next ${nextStatement(st.p)}")
       nextStatement(st.p) match

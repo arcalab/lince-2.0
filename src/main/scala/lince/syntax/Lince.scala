@@ -52,6 +52,7 @@ object Lince:
                        maxTime:Double,
                        maxLoops: Int,
                        samples: Int,
+                       rkSamples: Int,
                        seed: Long,
                        showAll: Boolean,
                        showVar: String=>Boolean,
@@ -60,6 +61,6 @@ object Lince:
                        portrait: List[(String,String)], // to change the variables in the x and y axis
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil)
+    def default = PlotInfo(0,10,500,40,100,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil)
 
 

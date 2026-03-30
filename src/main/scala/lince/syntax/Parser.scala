@@ -281,6 +281,10 @@ object Parser :
       (pi:PlotInfo) => pi.copy(maxLoops = r)) |
     (string("samples") *> sps *> intP).map(r =>
       (pi: PlotInfo) => pi.copy(samples = r)) |
+    (string("samples") *> sps *> intP).map(r =>
+      (pi: PlotInfo) => pi.copy(samples = r)) |
+    (string("rk-samples") *> sps *> intP).map(r =>
+      (pi: PlotInfo) => pi.copy(rkSamples = r)) |
     (string("seed") *> sps *> intP).map(r =>
       (pi: PlotInfo) => pi.copy(seed = r)) |
     (string("vars") *> sps *> regExp).map(r =>

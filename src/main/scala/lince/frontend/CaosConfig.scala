@@ -84,9 +84,15 @@ object CaosConfig extends Configurator[Simulation]:
     "FMAS CC"
       -> "// Adaptive Cruise Control (ACC) \nfwd:=3; bwd:=-3; // constants\npl :=50; vl := 0; al:=1; // [-3..3]; //leader \npf := 0 ; vf := 0; af := fwd;  //follower\ndiscr := 0; bt:=0; at:=0; ct:=0;\nst := 2; //sample time\nwhile true do {\n bt:= (al-fwd)*st+vl-vf; \n at:= (al-bwd)/2; \n ct:= (((al-fwd)/2)*st^2+(vl-vf)*st+pl-pf);\n discr:= bt^2 - 4*at*ct;\n if ct<=0 || \n   (at==0 && bt!=0 && -ct/bt > 0) || \n    (discr >= 0 && at!=0 &&\n     ((-bt - sqrt(discr))/(2*at) > 0  ||\n      (-bt + sqrt(discr))/(2*at) > 0 ))  \n then af :=bwd;  //brake \n else af :=fwd; //accelerate   \n//update states\n  pf'=vf, vf'=af,\n  pl'=vl, vl'=al for st;}\n---\nvars pl,pf\nuntil 15\n"
       -> "Adaptive Cruise Control example, used in FMAS'25",
-    // "sin-sim"
-    //   -> "x:=0;\n// Trying to simulate sin(x) using ODEs\nwhile x<=10 do {\n  y:=sin(x);\n  x'=1, y'=cos(x) for 0.1;\n}\n---\nuntil 10\nvars x,y"
-    //   -> "Trying to simulate sin(x) using ODEs. Example suggested by LLM (probably by Pedro R. D'Argenio).",
+    // "Sin(x)"
+    //   -> "x:=0;\n// Trying to simulate sin(x) using ODEs\nwhile x<=10 do {\n  y:=sin(x);\n  x'=1, y'=cos(x) for 0.1;\n}\n---\nuntil 10\nvars y"
+    //   -> "Trying to simulate sin(x) using ODEs.", //" Example suggested by LLM (probably by Pedro R. D'Argenio).",
+    "Sin(x)"
+      -> "x:=0; y:=0;\n// Simulating sin(x) using ODEs\nwhile true\n  x'=1, y'=cos(x) for 5;\n---\nuntil 20\nrk-samples 2 // change to 1 to drop precision\nsamples 100  // change to 20 to view less points\nverbose\nvars y\n"
+      -> "Simulating sin(x) using ODEs. Change the <code>rk-samples</code> and the (plot) <code>samples</code> to experiment with configurations of the simulation.",
+    "Precision test"
+      -> "theta := 0.1;\na := 0;\ntheta' = a,\n    a' = sin(theta) for 120;\n\n---\nuntil 30\nsamples 80\nrk-samples 18 // increase (100) to fix example\n"
+      -> "Example with a solution that requires enough precision to be computed correctly. Increase the number of <code>rk-samples</code> (used in the Runge Kutta), e.g., to <code>100</code>, to improve precision.",
   )
 
   /** Description of the widgets that appear in the dashboard. */
@@ -106,7 +112,7 @@ object CaosConfig extends Configurator[Simulation]:
       (_.state, SmallStep, Show.simpleSt, _.toString),
     // "Run all steps (inf)" -> lts[Simulation,Action,St]
     //   (_.state, StillSmallStep, Show.simpleSt, _.toString),
-    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)._2),Text),
+    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)(using sim.pi.rkSamples)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=> {
             val ps = Plot(sim.state, sim._2)
@@ -176,6 +182,7 @@ object CaosConfig extends Configurator[Simulation]:
         |from 0 // starting time (default 0)
         |iterations 10 // maximum times the while loops are unfolded (default 500)
         |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)
+        |rk-samples 20 // number of samples for the Runge-Kutta method (default 100)
         |seed 0 // seed for the random generator  (every time a random one by default)
         |vars x.*, y // list of regular expressions to select variables to be displayed (default all)
         |height 450 // sets the height in px of the graph (default 450)

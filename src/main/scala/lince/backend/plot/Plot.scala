@@ -77,7 +77,7 @@ object Plot:
 
   def apply(st:St, pinfo:PlotInfo): List[Plot] =
     val plot = apply(st, pinfo.minTime, pinfo.maxTime,
-                         pinfo.samples, pinfo.showAll, pinfo.showVar)
+                         pinfo.samples, pinfo.rkSamples, pinfo.showAll, pinfo.showVar)
     // transform it into a portrait plot if needed
     if pinfo.portrait.nonEmpty
     then rearrange(plot,pinfo.portrait)
@@ -94,7 +94,8 @@ object Plot:
    * @return the Plot containing the points and action names while traversing a hybrid program
    */
   def apply(st: St, from: Double, to: Double,
-            samples:Int=50, showCont:Boolean=false,filter:String=>Boolean): Plot = {
+            samples:Int=50, rkSamples: Int=100,
+            showCont:Boolean=false,filter:String=>Boolean): Plot = {
 
     // need to traverse my trajectory
     // need a maxt
@@ -103,13 +104,13 @@ object Plot:
     val stepSize: Double = (maxt - from) / samples
 
     val stInit = if from!=0
-      then valToAssign(BigSteps.bigStep(st.copy(t=from))._2.copy(t=maxt-from))
+      then valToAssign(BigSteps.bigStep(st.copy(t=from))(using rkSamples)._2.copy(t=maxt-from))
       else st.copy(t = maxt)
 
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, from, showCont, Plot.empty, filter).endTraces
+    calcPlot(stInit, stepSize, rkSamples, from, showCont, Plot.empty, filter).endTraces
   }
 
   /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
@@ -127,10 +128,10 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def calcPlot(st: St, stepSize: Double, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
+  def calcPlot(st: St, stepSize: Double, rkSamples: Int, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
     var res = acc
     // run discrete steps
-    val (as, st2) = discSteps(st)
+    val (as, st2) = discSteps(st)(using rkSamples)
     // update Plot
     val setVars = if showCont
       then st2.v.keySet
@@ -143,13 +144,13 @@ object Plot:
       ).copy(ylabels = res.ylabels+v)
 
     // run continuous steps while sampling
-    val (points, st3) = contSteps(st2, stepSize, timePassed)
+    val (points, st3) = contSteps(st2, stepSize, timePassed)(using rkSamples)
     // update Plot
     for ((time,valuation) <- points.reverse; (x,value) <- valuation if filter(x)) do
       res = res + (x -> time -> value)
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)
+    else calcPlot(st3, stepSize, rkSamples, timePassed + (st2.t - st3.t), showCont, res, filter)
 
 
   def rearrange(p:Plot, axis:List[(String,String)]): List[Plot] =

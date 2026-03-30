@@ -27,16 +27,17 @@ object SmallStep extends SOS[Action,St]:
       rand.setSeed(s)
 
   val rand: Random = new Random
+  val defaultRKSamples = 100
 
   override def accepting(s: St): Boolean =
     s.t<=0 || s.lp<=0
 
   /** What are the set of possible evolutions (label and new state) */
   def next[A>:Action](st: St): Set[(A, St)] =
-    step(st).toSet
+    step(st)(using defaultRKSamples).toSet
 
   /** Performs a single (deterministic) small step */
-  def step(st: St): Option[(Action, St)] =
+  def step(st: St)(using rkSamples: Int): Option[(Action, St)] =
     if st.t<=0 || st.lp<=0 then
       return None
     st.resetSeed // set seed and prepare to run
@@ -63,11 +64,11 @@ object SmallStep extends SOS[Action,St]:
         val eqs2 = eqs.map(kv => (kv._1,Eval.rands(kv._2)))
         if dur>st.t
         then {
-          val v2 = RungeKutta(v,eqs2,st.t)
+          val v2 = RungeKutta(v,eqs2,st.t,rkSamples)
           Some(Action.DiffStop(eqs2,st.t) ->
                 st.nextSeed.copy(p=EqDiff(eqs2,Expr.Num(dur-st.t)), v=v2, t=0))
         } else {
-          val v2 = RungeKutta(v,eqs2,dur)
+          val v2 = RungeKutta(v,eqs2,dur,rkSamples)
           Some(Action.DiffSkip(eqs2,dur) ->
                 st.nextSeed.copy(p=Skip, v=v2, t=st.t-dur))
         }
