@@ -167,6 +167,57 @@ p,h1,h2,h3,h4 {
 .dropdown>a:focus {
     border-color: black;
 }
+/* optional: hidden state */
+.hidden {
+  display: none;
+}
+.togglesPanel {
+    /* display: flex; */
+    align-items: center;
+    text-align: center;
+    /* padding: 3px; */
+    /* background-color: #f9f9f9; */
+    /* border-bottom: 1px solid #ddd; */
+    /* border-right: 1px solid #ddd; */
+    /* margin-right: 5px; */
+}
+.offBtOLF {
+    background-color: #ff000040 !important;
+}
+.tgBtnOLD {
+    background-color: #00ff0040;
+    margin-left: 5px;
+}
+.tgBtn {
+    --bg-off: #f3e3e3;
+    --bg-on: #794600;
+    --text-off: #313a49;
+    --text-on: #ffffff;
+    padding: 5px 8px;
+    border-radius: 12px;
+    border: black;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    background: var(--bg-off);
+    color: var(--text-off);
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 3px;
+}
+
+.tgBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.onBt {
+  background: var(--bg-on);
+  color: var(--text-on);
+}
 .overlay { 
     position: fixed;
     display: none;

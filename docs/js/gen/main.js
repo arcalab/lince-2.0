@@ -1084,10 +1084,12 @@ var $d_J = new $TypeData().initPrim(null, "J", "long", $ac_J, (void 0));
 var $d_F = new $TypeData().initPrim(0.0, "F", "float", $ac_F, Float32Array);
 var $d_D = new $TypeData().initPrim(0.0, "D", "double", $ac_D, Float64Array);
 function $f_Lcaos_frontend_Configurator__$init$__V($thiz) {
+  $thiz.caos$frontend$Configurator$_setter_$shortName_$eq__s_Option__V($m_s_None$());
   $thiz.caos$frontend$Configurator$_setter_$smallWidgets_$eq__sc_Iterable__V($m_sci_Nil$());
   var docs = $m_Lcaos_frontend_Documentation$().$lessinit$greater$default$1__sci_Map();
   $thiz.caos$frontend$Configurator$_setter_$documentation_$eq__Lcaos_frontend_Documentation__V(new $c_Lcaos_frontend_Documentation(docs));
   $thiz.caos$frontend$Configurator$_setter_$footer_$eq__T__V("");
+  $thiz.caos$frontend$Configurator$_setter_$toggles_$eq__sci_List__V($m_sci_Nil$());
 }
 function $is_Lcaos_frontend_Configurator(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lcaos_frontend_Configurator)));
@@ -1173,7 +1175,7 @@ $c_Lcaos_frontend_Site$.prototype.initSite__Lcaos_frontend_Configurator__V = (fu
   var x = $as_T($m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().URL);
   var xs = $x_1.split$extension__T__C__AT(x, 63);
   var this$4 = $n($x_2.wrapRefArray__AO__scm_ArraySeq$ofRef($asArrayOf_O($m_sc_ArrayOps$().drop$extension__O__I__O(xs, 1), 1)));
-  var urlQuery = $f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_sc_IterableOnceOps__mkString__T__T__T__T(this$4, "", "?", "")), "%2F", "/")), "%3C", "<")), "%26", "&")), "%3E", ">")), "%20", " ")), "%23", "#")), "%24", "$")), "%7B", "{")), "%2B", "+")), "%7D", "}")), "%2C", ",")), "%7C", "|")), "%3A", ":")), "%5E", "^")), "%3B", ";")), "%7E", "~")), "%3F", "?")), "%5B", "[")), "%40", "@")), "%5D", "]")), "%22", "\"")), "%60", "`")), "%28", "(")), "%29", ")");
+  var urlQuery = $f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_T__replaceAll__T__T__T($n($f_sc_IterableOnceOps__mkString__T__T__T__T(this$4, "", "?", "")), "%2F", "/")), "%3C", "<")), "%26", "&")), "%3E", ">")), "%20", " ")), "%23", "#")), "%24", "$")), "%7B", "{")), "%2B", "+")), "%7D", "}")), "%2C", ",")), "%7C", "|")), "%3A", ":")), "%5E", "^")), "%3B", ";")), "%7E", "~")), "%3F", "?")), "%5B", "[")), "%40", "@")), "%5D", "]")), "%22", "\"")), "%60", "`")), "%28", "(")), "%29", ")")), "%27", "'")), "%0A", "\n");
   matchResult1: {
     var mainExample;
     var x1 = $n($n(config).examples__sc_Iterable()).find__F1__s_Option(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((_$6) => {
@@ -1197,20 +1199,24 @@ $c_Lcaos_frontend_Site$.prototype.initSite__Lcaos_frontend_Configurator__V = (fu
   this.Lcaos_frontend_Site$__f_errorArea = new $c_Lcaos_frontend_widgets_OutputArea();
   this.Lcaos_frontend_Site$__f_descriptionArea = new $c_Lcaos_frontend_widgets_OutputArea();
   var code = new $c_Lcaos_frontend_Site$$anon$1(config, mainExample);
-  code.init__Lcaos_frontend_widgets_DomElem__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, true);
-  $n(this.Lcaos_frontend_Site$__f_errorArea).init__Lcaos_frontend_widgets_DomElem__V(this.Lcaos_frontend_Site$__f_leftColumn);
+  this.initToggles__Lcaos_frontend_widgets_DomElem__Lcaos_frontend_Configurator__V(this.Lcaos_frontend_Site$__f_leftColumn, config);
+  code.init__Lcaos_frontend_widgets_DomElem__Z__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, true, false);
+  var \u03b41$ = this.Lcaos_frontend_Site$__f_errorArea;
+  $n(\u03b41$).init__Lcaos_frontend_widgets_DomElem__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, ($n(\u03b41$), false));
   var title = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById("title");
   var toolTitle = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById("tool-title");
-  title.innerHTML = $n(config).name__T();
+  var this$10 = $n($n(config).shortName__s_Option());
+  title.innerHTML = $as_T((this$10.isEmpty__Z() ? $n(config).name__T() : this$10.get__O()));
   toolTitle.innerHTML = $n(config).name__T();
   var $x_3 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     $m_Lcaos_frontend_Site$().globalReload__V();
   }));
   var value$1 = this.Lcaos_frontend_Site$__f_descriptionArea;
   var examples = new $c_Lcaos_frontend_widgets_ExampleWidget("Examples", config, $x_3, code, new $c_s_Some(value$1));
-  $n(this.Lcaos_frontend_Site$__f_descriptionArea).init__Lcaos_frontend_widgets_DomElem__V(this.Lcaos_frontend_Site$__f_leftColumn);
-  examples.init__Lcaos_frontend_widgets_DomElem__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, true);
-  var this$12 = $n($as_sc_IterableOps($n($n($n(config).smallWidgets__sc_Iterable()).withFilter__F1__sc_WithFilter(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x$1$1) => {
+  var \u03b42$ = this.Lcaos_frontend_Site$__f_descriptionArea;
+  $n(\u03b42$).init__Lcaos_frontend_widgets_DomElem__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, ($n(\u03b42$), false));
+  examples.init__Lcaos_frontend_widgets_DomElem__Z__Z__V(this.Lcaos_frontend_Site$__f_leftColumn, true, false);
+  var this$13 = $n($as_sc_IterableOps($n($n($n(config).smallWidgets__sc_Iterable()).withFilter__F1__sc_WithFilter(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x$1$1) => {
     var x$1$2 = $as_T2(x$1$1);
     return ((x$1$2 !== null) && ($as_T($n(x$1$2)._1__O()), $as_Lcaos_frontend_widgets_WidgetInfo($n(x$1$2)._2__O()), true));
   })))).map__F1__O(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((x$1$2$1) => {
@@ -1224,7 +1230,7 @@ $c_Lcaos_frontend_Site$.prototype.initSite__Lcaos_frontend_Configurator__V = (fu
     throw new $c_s_MatchError(x$1$3);
   })))));
   var suffix = $n(config).widgets__sc_Iterable();
-  var widgets = $as_sc_Iterable(this$12.concat__sc_IterableOnce__O(suffix));
+  var widgets = $as_sc_Iterable(this$13.concat__sc_IterableOnce__O(suffix));
   var boxes = $as_sc_Iterable($n(widgets).map__F1__O(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((wc) => {
     var wc$1 = $as_T2(wc);
     var w = $m_Lcaos_frontend_Site$().mkWidget__T2__F0__F0__Lcaos_frontend_widgets_OutputArea__Lcaos_frontend_Documentation__Lcaos_frontend_widgets_Widget(wc$1, new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => code.get__O())), new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => $as_sci_Seq($n(examples.get__sci_Seq()).map__F1__O(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((kv) => {
@@ -1234,32 +1240,32 @@ $c_Lcaos_frontend_Site$.prototype.initSite__Lcaos_frontend_Configurator__V = (fu
       var y = $n($n(config).parser__F1()).apply__O__O($n(kv$1)._2__O());
       return new $c_T2(ev$2, y);
     })))))), $m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_errorArea, $n(config).documentation__Lcaos_frontend_Documentation());
-    $n(w).init__Lcaos_frontend_widgets_DomElem__Z__V((($n($as_Lcaos_frontend_widgets_WidgetInfo($n(wc$1)._2__O())).location__I() === 0) ? $m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_rightColumn : $m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_leftColumn), $n($as_Lcaos_frontend_widgets_WidgetInfo($n(wc$1)._2__O())).expanded__Z());
+    $n(w).init__Lcaos_frontend_widgets_DomElem__Z__Z__V((($n($as_Lcaos_frontend_widgets_WidgetInfo($n(wc$1)._2__O())).location__I() === 0) ? $m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_rightColumn : $m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_leftColumn), $n($as_Lcaos_frontend_widgets_WidgetInfo($n(wc$1)._2__O())).expanded__Z(), $n($as_Lcaos_frontend_widgets_WidgetInfo($n(wc$1)._2__O())).hidden__Z());
     return w;
   }))));
   if ((mainExample instanceof $c_s_Some)) {
     var ex$2 = $as_Lcaos_frontend_Configurator$Example($n($as_s_Some(mainExample)).s_Some__f_value);
     var x$2 = $n(ex$2).Lcaos_frontend_Configurator$Example__f_description;
-    var this$17 = $n(x$2);
-    if ((!(this$17 === ""))) {
+    var this$18 = $n(x$2);
+    if ((!(this$18 === ""))) {
       $n(this.Lcaos_frontend_Site$__f_descriptionArea).setValue__T__V($n(ex$2).Lcaos_frontend_Configurator$Example__f_description);
     }
   }
-  var this$18 = new $c_sci_$colon$colon(code, $m_sci_Nil$());
-  var this$19 = $n(this$18.appendedAll__sc_IterableOnce__sci_List(boxes));
+  var this$19 = new $c_sci_$colon$colon(code, $m_sci_Nil$());
+  var this$20 = $n(this$19.appendedAll__sc_IterableOnce__sci_List(boxes));
   var f = ((b) => {
     var b$1 = $as_Lcaos_frontend_widgets_Widget(b);
     return new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
       $n(b$1).update__V();
     }));
   });
-  if ((this$19 === $m_sci_Nil$())) {
+  if ((this$20 === $m_sci_Nil$())) {
     var $x_4 = $m_sci_Nil$();
   } else {
-    var x0 = this$19.head__O();
+    var x0 = this$20.head__O();
     var h = new $c_sci_$colon$colon(f(x0), $m_sci_Nil$());
     var t = h;
-    var rest = $as_sci_List(this$19.tail__O());
+    var rest = $as_sci_List(this$20.tail__O());
     while ((rest !== $m_sci_Nil$())) {
       var x0$1 = $n(rest).head__O();
       var nx = new $c_sci_$colon$colon(f(x0$1), $m_sci_Nil$());
@@ -1270,6 +1276,7 @@ $c_Lcaos_frontend_Site$.prototype.initSite__Lcaos_frontend_Configurator__V = (fu
     var $x_4 = h;
   }
   this.Lcaos_frontend_Site$__f_toReload = $x_4;
+  this.mkToggleActions__Lcaos_frontend_Configurator__V(config);
   this.globalReload__V();
 });
 $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_OutputArea__Lcaos_frontend_Documentation__Lcaos_frontend_widgets_Widget = (function(w, get, getAll, out, doc) {
@@ -1501,6 +1508,175 @@ $c_Lcaos_frontend_Site$.prototype.mkWidget__T2__F0__F0__Lcaos_frontend_widgets_O
     throw ((e$2 instanceof $c_sjs_js_JavaScriptException) ? e$2.sjs_js_JavaScriptException__f_exception : e$2);
   }
 });
+$c_Lcaos_frontend_Site$.prototype.initToggles__Lcaos_frontend_widgets_DomElem__Lcaos_frontend_Configurator__V = (function(el, config) {
+  var togglesPanel = $n($n(el).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "togglesPanel");
+  var this$1 = $n($n(config).toggles__sci_List());
+  var these = this$1;
+  while ((!$n(these).isEmpty__Z())) {
+    var x0 = $n(these).head__O();
+    var t = $as_Lcaos_frontend_Configurator$Toggle(x0);
+    var classStr = "tgBtn";
+    if ($n(t).Lcaos_frontend_Configurator$Toggle__f_on) {
+      classStr = (classStr + " onBt");
+    }
+    if ($n(t).Lcaos_frontend_Configurator$Toggle__f_hidden) {
+      classStr = (classStr + " hidden");
+    }
+    $n($n($n($n(togglesPanel).append__T__Lcaos_frontend_widgets_DomElem("button")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", ("id" + $f_T__hashCode__I($n($n(t).Lcaos_frontend_Configurator$Toggle__f_name))))).attr__T__T__Lcaos_frontend_widgets_DomElem("class", classStr)).html__T__Lcaos_frontend_widgets_DomElem($n(t).Lcaos_frontend_Configurator$Toggle__f_name);
+    these = $as_sci_List($n(these).tail__O());
+  }
+});
+$c_Lcaos_frontend_Site$.prototype.mkToggleActions__Lcaos_frontend_Configurator__V = (function(config) {
+  var this$1 = $n($n(config).toggles__sci_List());
+  var these = this$1;
+  while ((!$n(these).isEmpty__Z())) {
+    var x0 = $n(these).head__O();
+    var x$1 = $as_Lcaos_frontend_Configurator$Toggle(x0);
+    var this$2 = $n(x$1);
+    var bt = this$2.Lcaos_frontend_Configurator$Toggle__f_name;
+    var this$3 = $n(x$1);
+    var tgs = this$3.Lcaos_frontend_Configurator$Toggle__f_trgs;
+    var button = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(("id" + $f_T__hashCode__I($n(bt))));
+    if ((button === null)) {
+      var x = (("Warning: toggle button '" + bt) + "' not found in the document.");
+      var this$5 = $m_s_Console$();
+      var this$6 = $n(this$5.out__Ljava_io_PrintStream());
+      this$6.java$lang$JSConsoleBasedPrintStream$$printString__T__V((x + "\n"));
+    } else {
+      button.addEventListener("click", ((button, tgs) => ((e) => {
+        var on = $uZ(button.classList.contains("onBt"));
+        $n(tgs).foreach__F1__V(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((tg) => {
+          var tg$1 = $as_T(tg);
+          $m_Lcaos_frontend_Site$().toggleTarget__T__Z__V(tg$1, on);
+        })));
+        return $uZ(button.classList.toggle("onBt"));
+      }))(button, tgs));
+      if ($uZ(button.classList.contains("onBt"))) {
+        $n(tgs).foreach__F1__V(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((tg$2) => {
+          var tg$3 = $as_T(tg$2);
+          var this$7 = $n($m_Lcaos_frontend_Site$().getRootTarget__T__s_Option(tg$3));
+          if ((!this$7.isEmpty__Z())) {
+            var x0$1 = this$7.get__O();
+            if (($as_T(x0$1.getAttribute("oncounter")) === null)) {
+              x0$1.setAttribute("oncounter", "1");
+            } else {
+              var x$2 = $as_T(x0$1.getAttribute("oncounter"));
+              var this$10 = $m_jl_Integer$();
+              var this$11 = ((1 + this$10.parseInt__T__I__I(x$2, 10)) | 0);
+              x0$1.setAttribute("oncounter", ("" + this$11));
+            }
+          }
+        })));
+      }
+    }
+    these = $as_sci_List($n(these).tail__O());
+  }
+  var this$13 = $n($n(config).toggles__sci_List());
+  var these$1 = this$13;
+  while ((!$n(these$1).isEmpty__Z())) {
+    var x0$2 = $n(these$1).head__O();
+    var x$1$1 = $as_Lcaos_frontend_Configurator$Toggle(x0$2);
+    var this$14 = $n(x$1$1);
+    var bt$1 = this$14.Lcaos_frontend_Configurator$Toggle__f_name;
+    var this$15 = $n(x$1$1);
+    var tgs$1 = this$15.Lcaos_frontend_Configurator$Toggle__f_trgs;
+    var button$1 = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(("id" + $f_T__hashCode__I($n(bt$1))));
+    if ((button$1 === null)) {
+      var x$3 = (("Warning: toggle button '" + bt$1) + "' not found in the document.");
+      var this$17 = $m_s_Console$();
+      var this$18 = $n(this$17.out__Ljava_io_PrintStream());
+      this$18.java$lang$JSConsoleBasedPrintStream$$printString__T__V((x$3 + "\n"));
+    } else if ((!$uZ(button$1.classList.contains("onBt")))) {
+      $n(tgs$1).foreach__F1__V(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((tg$4) => {
+        var tg$5 = $as_T(tg$4);
+        var this$19 = $n($m_Lcaos_frontend_Site$().getRootTarget__T__s_Option(tg$5));
+        if ((!this$19.isEmpty__Z())) {
+          var x0$3 = this$19.get__O();
+          if (($as_T(x0$3.getAttribute("oncounter")) === null)) {
+            x0$3.classList.add("hidden");
+          }
+        }
+      })));
+    }
+    these$1 = $as_sci_List($n(these$1).tail__O());
+  }
+});
+$c_Lcaos_frontend_Site$.prototype.toggleTarget__T__Z__V = (function(tg, on) {
+  var x98 = this.getRootTarget__T__s_Option(tg);
+  var x = $m_s_None$();
+  if ((x === x98)) {
+    var x$1 = (((("Warning: toggle target '" + tg) + "'(id: id") + $f_T__hashCode__I($n(tg))) + ") not found in the document.");
+    var this$2 = $m_s_Console$();
+    var this$3 = $n(this$2.out__Ljava_io_PrintStream());
+    this$3.java$lang$JSConsoleBasedPrintStream$$printString__T__V((x$1 + "\n"));
+    return (void 0);
+  }
+  if ((x98 instanceof $c_s_Some)) {
+    var target = $n($as_s_Some(x98)).s_Some__f_value;
+    var hide = false;
+    if ((on && ($as_T(target.getAttribute("oncounter")) !== null))) {
+      var x$2 = $as_T(target.getAttribute("oncounter"));
+      var this$6 = $m_jl_Integer$();
+      var $x_1 = (this$6.parseInt__T__I__I(x$2, 10) > 1);
+    } else {
+      var $x_1 = false;
+    }
+    if ($x_1) {
+      var x$3 = $as_T(target.getAttribute("oncounter"));
+      var this$9 = $m_jl_Integer$();
+      var newCount = (((-1) + this$9.parseInt__T__I__I(x$3, 10)) | 0);
+      target.setAttribute("oncounter", ("" + newCount));
+    } else if ((on && ($as_T(target.getAttribute("oncounter")) !== null))) {
+      target.removeAttribute("oncounter");
+      hide = true;
+    } else if ((!on)) {
+      if (($as_T(target.getAttribute("oncounter")) === null)) {
+        var newCount$2 = 1;
+      } else {
+        var x$4 = $as_T(target.getAttribute("oncounter"));
+        var this$13 = $m_jl_Integer$();
+        var newCount$2 = ((1 + this$13.parseInt__T__I__I(x$4, 10)) | 0);
+      }
+      target.setAttribute("oncounter", ("" + newCount$2));
+    }
+    if ((!hide)) {
+      target.classList.remove("hidden");
+      return (void 0);
+    } else {
+      target.classList.add("hidden");
+      if ($uZ(target.classList.contains("panel-group"))) {
+        var widgetCont = target.firstChild.firstChild.firstChild.firstChild;
+        if ((widgetCont !== null)) {
+          widgetCont.classList.add("collapsed");
+          widgetCont.setAttribute("aria-expanded", "false");
+        }
+        var widgetBody = target.firstChild.lastChild;
+        if ((widgetBody !== null)) {
+          widgetBody.classList.remove("in");
+          widgetBody.style = "height: 0px";
+          widgetBody.setAttribute("aria-expanded", "false");
+          return (void 0);
+        } else {
+          return (void 0);
+        }
+      } else {
+        return (void 0);
+      }
+    }
+  }
+  throw new $c_s_MatchError(x98);
+});
+$c_Lcaos_frontend_Site$.prototype.getRootTarget__T__s_Option = (function(tg) {
+  var div = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(("id" + $f_T__hashCode__I($n(tg))));
+  if ((div === null)) {
+    return $m_s_None$();
+  } else if ($uZ(div.classList.contains("panel-default"))) {
+    var value = div.parentNode;
+    return new $c_s_Some(value);
+  } else {
+    return new $c_s_Some(div);
+  }
+});
 $c_Lcaos_frontend_Site$.prototype.cleanContainers__V = (function() {
   var d = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById("contentWrap");
   var d_nested = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById("content");
@@ -1550,15 +1726,15 @@ $c_Lcaos_frontend_Site$.prototype.getFileAsText__Lorg_scalajs_dom_raw_File__V = 
   reader.onload = ((_$7) => {
     var str = $dp_toString__T($n(reader.result));
     var resultAsString = $f_T__replaceAll__T__T__T($n(str), "'", "'");
-    matchResult9: {
-      var x99 = this.Lcaos_frontend_Site$__f_lastConfig;
-      if ((x99 instanceof $c_s_Some)) {
-        var x101 = $as_Lcaos_frontend_Configurator($n($as_s_Some(x99)).s_Some__f_value);
-        if ((x101 !== null)) {
-          var c2 = new $c_Lcaos_frontend_Site$$anon$2(x101, resultAsString);
+    matchResult12: {
+      var x104 = this.Lcaos_frontend_Site$__f_lastConfig;
+      if ((x104 instanceof $c_s_Some)) {
+        var x106 = $as_Lcaos_frontend_Configurator($n($as_s_Some(x104)).s_Some__f_value);
+        if ((x106 !== null)) {
+          var c2 = new $c_Lcaos_frontend_Site$$anon$2(x106, resultAsString);
           this.cleanContainers__V();
           this.initSite__Lcaos_frontend_Configurator__V(c2);
-          break matchResult9;
+          break matchResult12;
         }
       }
     }
@@ -1963,8 +2139,9 @@ $c_Lcaos_frontend_widgets_Widget.prototype.constructor = $c_Lcaos_frontend_widge
 function $h_Lcaos_frontend_widgets_Widget() {
 }
 $h_Lcaos_frontend_widgets_Widget.prototype = $c_Lcaos_frontend_widgets_Widget.prototype;
-$c_Lcaos_frontend_widgets_Widget.prototype.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem = (function(parent, visible, headerStyle, buttons) {
-  this.Lcaos_frontend_widgets_Widget__f_wrap = $n($n($n($n($n(parent).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-group")).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel panel-default")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Widget__f_titleId);
+$c_Lcaos_frontend_widgets_Widget.prototype.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem = (function(parent, visible, hidden, headerStyle, buttons) {
+  var panel = $n($n(parent).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-group");
+  this.Lcaos_frontend_widgets_Widget__f_wrap = $n($n($n(panel).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel panel-default")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Widget__f_titleId);
   var $x_1 = $n($n($n($n($n(this.Lcaos_frontend_widgets_Widget__f_wrap).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-heading my-panel-heading")).append__T__Lcaos_frontend_widgets_DomElem("h4")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-title"));
   var this$1 = $n(buttons);
   var elem = $x_1.attr__T__T__Lcaos_frontend_widgets_DomElem("style", (("padding-right: " + Math.imul(28, this$1.length__I())) + "pt;"));
@@ -1991,6 +2168,9 @@ $c_Lcaos_frontend_widgets_Widget.prototype.panelBox__Lcaos_frontend_widgets_DomE
   }
   $n($as_Lcaos_frontend_widgets_DomElem(expander.sr_ObjectRef__f_elem)).text__T__Lcaos_frontend_widgets_DomNode(this.Lcaos_frontend_widgets_Widget__f_title);
   var res = $n($n($n($n($n($n($n(this.Lcaos_frontend_widgets_Widget__f_wrap).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", ("collapse-1" + this.Lcaos_frontend_widgets_Widget__f_titleId))).attr__T__T__Lcaos_frontend_widgets_DomElem("class", (visible ? "panel-collapse collapse in" : "panel-collapse collapse"))).attr__T__T__Lcaos_frontend_widgets_DomElem("style", (visible ? "" : "height: 0px;"))).attr__T__T__Lcaos_frontend_widgets_DomElem("aria-expanded", ("" + visible))).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-body my-panel-body");
+  if (hidden) {
+    $n(panel).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "panel-group hidden");
+  }
   var prefix$1 = $n($m_Lcaos_frontend_widgets_Widget$().mkHelper__T__Lcaos_frontend_Documentation__s_Option(this.Lcaos_frontend_widgets_Widget__f_title, this.Lcaos_frontend_widgets_Widget__f_doc)).toList__sci_List();
   var allButtons = $n($n(buttons).reverse__sci_List()).$colon$colon$colon__sci_List__sci_List(prefix$1);
   var this$7 = $n(allButtons);
@@ -2137,6 +2317,7 @@ function $m_Lcaos_frontend_widgets_Widget$() {
 function $f_Lcaos_frontend_widgets_WidgetInfo__$init$__V($thiz) {
   $thiz.expanded_$eq__Z__V(false);
   $thiz.location_$eq__I__V(0);
+  $thiz.hidden_$eq__Z__V(false);
 }
 function $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo($thiz) {
   $thiz.expanded_$eq__Z__V(true);
@@ -13055,6 +13236,36 @@ function $m_Llince_backend_plot_PlotToTrace$() {
 function $s_Llince_frontend_Main__main__AT__V(args) {
   $m_Lcaos_frontend_Site$().initSite__Lcaos_frontend_Configurator__V($m_Llince_frontend_CaosConfig$());
 }
+/** @constructor */
+function $c_Llince_frontend_examples_Basic$() {
+  this.Llince_frontend_examples_Basic$__f_toy = null;
+  this.Llince_frontend_examples_Basic$__f_scenarios = null;
+  this.Llince_frontend_examples_Basic$__f_configs = null;
+  this.Llince_frontend_examples_Basic$__f_prob = null;
+  $n_Llince_frontend_examples_Basic$ = this;
+  this.Llince_frontend_examples_Basic$__f_toy = new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("p:=0; v:=0;\np'=v,v'= 2  for 5;", "Accelerate", "A simple system that accelerates for 5 seconds."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("x:=1; y:=0;\nx'=y,y'=-x for 10;", "Wave", "A simple system that produces a wave trajectory."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("theta := 0.1;\na := 0;\ntheta' = a,\n    a' = -sin(theta) for 10;", "Pendulum", "A simple system that simulates the trajectory of a pendulum."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("p:=0; v:=0;\np'=v,v'= 2  for 5;\np'=v,v'=-2  for 5;", "Contiguous composition", "Composing two trajectories: the 1st accelerates (2) and the 2nd brakes (-2)."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("p:=0; v:=0;\np'=v,v'= 2  for 5;\np:=5;\np'=v,v'=-2  for 5;\np:=0;", "Broken composition", "Variation of the previous example, breaking the continuity of the trajectories."), $m_sci_Nil$())))));
+  var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_Lcaos_frontend_Configurator$Example.getArrayOf().constr)([new $c_Lcaos_frontend_Configurator$Example("// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5", "Cruise control", "Simple cruise control system, used to illustrate basic functionality of Lince."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC) \nfwd:=3; bwd:=-3; // constants\npl :=50; vl := 0; al:=1; // [-3..3]; //leader \npf := 0 ; vf := 0; af := fwd;  //follower\ndiscr := 0; bt:=0; at:=0; ct:=0;\nst := 2; //sample time\nwhile true do {\n bt:= (al-fwd)*st+vl-vf; \n at:= (al-bwd)/2; \n ct:= (((al-fwd)/2)*st^2+(vl-vf)*st+pl-pf);\n discr:= bt^2 - 4*at*ct;\n if ct<=0 || \n   (at==0 && bt!=0 && -ct/bt > 0) || \n    (discr >= 0 && at!=0 &&\n     ((-bt - sqrt(discr))/(2*at) > 0  ||\n      (-bt + sqrt(discr))/(2*at) > 0 ))  \n then af :=bwd;  //brake \n else af :=fwd; //accelerate   \n//update states\n  pf'=vf, vf'=af,\n  pl'=vl, vl'=al for st;}\n---\nvars pl,pf\nuntil 15\n", "Adaptive CC (FMAS'25)", "Adaptive Cruise Control example, used in FMAS'25"), new $c_Lcaos_frontend_Configurator$Example("// Bouncing ball example\nv:=5; p:=10; c:=0;\nwhile (c<4) do {\n  v'= -9.8, p'=v until_0.05 p<0 && v<0;\n  v:= -0.5*v; c:=c+1;\n}\n--\niterations 1000 ", "Bouncing ball", "<strong>Bouncing Ball</strong><p>Event-Driven (ED) example, using steps of 0.01. A ball position and velocity as it bounces in the floor. It includes an experimental feature: using a condition (p<0 /\\ v<0) to end a trajectory using a naive search algorithm.</p>"), new $c_Lcaos_frontend_Configurator$Example("f1 := 1; f2 := 4;\nwhile true {\n  f1'=1, f2'=1 until_0.1\n       f1>10 || f2>10;\n  if f1>=10 && f2<10\n    then { f1:=0; f2:=f2+2; }\n    else if f2>=10 && f1<10\n         then { f2:=0;f1 :=f1 +2; }\n         else { f1:=0; f2 :=0; }\n}\n--\nuntil 30\niterations 1000", "Fireflies 2x", "<strong>Fireflies 2x</strong>\n\nEvent-Driven (ED) example. Every firefly has an internal clock that helps it to know when to flash: when the clock reaches a threshold the firefly flashes and the clock\u2019s value is reset to zero. If other fireflies are nearby then they try to synchronise their flashes in a decentralised way. This version synchronises 2 fireflies."), new $c_Lcaos_frontend_Configurator$Example("f1 := 1; f2 := 4; f3 := 7;\nwhile true {\n  f1'=1, f2'=1, f3'=1 until_0.1\n       f1>10 || f2>10 || f3>10;\n  if f1>=10 && f2<10 && f3<10\n    then { f1:=0; f2:=f2+2; f3:=f3+2; }\n    else if f2>=10 && f1<10 && f3<10\n         then { f2:=0;f1 :=f1 +2; f3:=f3+2; }\n         else if f3>=10 && f1<10 && f2<10\n              then {f3:=0;f1 :=f1 +2;f2:=f2+2;}\n              else {f1:=0;f2:=0;f3:=0;}\n}\n--\nuntil 30\niterations 1000", "Fireflies 3x", "<strong>Fireflies 3x</strong>\n\nEvent-Driven (ED) example. Variation of the previous example, synchronising 3 fireflies."), new $c_Lcaos_frontend_Configurator$Example("x:=10; y:=5;\nx' = 2*x - x*y,\ny' = -y + x*y for 15;\n---\nuntil 15\nsamples 200", "Lotka-Volterra", "Lotka-Volterra predator-prey model. The prey (x) grows exponentially when there are no predators (y), but its growth is limited by the presence of predators. The predators (y) die out when there are no prey (x), but they can grow by consuming prey."), new $c_Lcaos_frontend_Configurator$Example("volt:=0; d:=0; v:=0;\nc:=0.047; l:=0.047;\nres:=0.5;\n\nwhile true do {\n  if (volt<10) then v:=18;\n               else v:=0;\n  volt'=d,\n  d'=-(d*res/l)\n      -volt/(l*c)+v/(l*c)\n  for 0.01;\n}\n---\nuntil 0.6\nvars volt", "RLC circuit", "<p><strong>RLC circuits and harmonic oscillation</strong></p> This simulation models an electric system composed of a resistor, a capacitor, an inductor, and a power source connected in series. The power source strategically switches on and off, as a way to stabilise voltage across the capacitor at a target value (say, 10V ). Such systems are known to yield interesting results that are practically relevant for energy storage voltage control systems, which help to mitigate voltage imbalances that could otherwise damage electronic equipment.  We simulate one RLC circuit with the capacitor voltage <code>volt</code>, with resistance <code>res</code> of 0.5\u03a9, a capacitance <code>c</code> of 0.047 F, and an inductance <code>l</code> of 0.047H.  The general idea of our program is that the controller will read the voltage across the capacitor (variable <code>volt</code>) every 0.01 seconds, and set the voltage at the source either to 0 (off) or 18V (on) depending on the value read."), new $c_Lcaos_frontend_Configurator$Example("// Define initial values of the water tank\nlevel := 5;\ndrain := -1/2;\n\nwhile true do {\n  // keep level between 3..10\n  if      level<=3  then drain:= 1/2;\n  else if level>=10 then drain:=-1/2;\n  else    skip;\n\n  level'= drain, drain'=0\n    for 0.1;\n}\n---\nuntil 100\niterations 1000", "Water tank", ""), new $c_Lcaos_frontend_Configurator$Example("a1 := 0.01; b1 := 0.005;\na2 := 0.01; b2 := 0.005;\n\nk11_l1 := 0.30760137; k12_l1 := 0.07706312;\nk21_l2 := 0.07706312; k22_l2 := 0.30760137;\n\nw1 := 80; w2 := 100; // set-point\nd := 0.5;   // tolerance\n\nx1:=0; x2:=50; // initial state\ni := 0;  // counter\nn := 10;  // max jumps\np := 0.5; // max evolution period (affects precision)\n\nwhile i<n {\n   // L1\n   x1'=-a1*x1+b1*x2-(k11_l1*x1+k12_l1*x2) + (k11_l1*w1+k12_l1*w2),\n   x2'=b2*x1-a2*x2\n   until_p x1>=w1-d;\n   // L0\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2\n   until_p x1<=80+d && x2<=80+d;\n   // L2\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2-(k21_l2*x1+k22_l2*x2) + (k21_l2*w1+k22_l2*w2)\n   until_p x2>=w2-d;\n   // L0\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2\n   until_p x1<=80+d && x2<=80+d;\n   i++;\n}\n---\nvars x1, x2, i\nuntil 1000\niterations 500", "Two heated tanks", "Variation of a system of two heated tanks from the literature.")]));
+  this.Llince_frontend_examples_Basic$__f_scenarios = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems);
+  this.Llince_frontend_examples_Basic$__f_configs = new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("// Solution not naively computed (precise solution involves sin/cos)\n// Use the online version to use the precise solution.\np:=1;v:=1;\np'=v, v'=-p for 4;\n--\nportrait p,v\nuntil 4", "Simple portrait", "Simple portait of two waves."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("// Cruise control (2D)\nx:=0; y:=0;\nvx:=0; vy:=20;\nax:=5; ay:=-2;\nwhile true do {\n  if vx<=10 then ax:=5; else ax:=-2;\n  if vy<=0 then ay:=5; else ay:=-2;\n  x'=vx,vx'=ax,\n  y'=vy,vy'=ay for 1;\n}\n--\nportrait vx,vy; x,y\nuntil 15", "CC portrait", "Portrait of the cruise control example, targetting a x-velocity of 10 and a y-velocity of 0."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("x:=0; y:=0;\n// Simulating sin(x) using ODEs\nwhile true\n  x'=1, y'=cos(x) for 5;\n---\nuntil 20\nrk-samples 2 // change to 1 to drop precision\nsamples 100  // change to 20 to view less points\nverbose\nvars y\n", "Sin(x)", "Simulating sin(x) using ODEs. Change the <code>rk-samples</code> and the (plot) <code>samples</code> to experiment with configurations of the simulation."), new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Example("theta := 0.1;\na := 0;\ntheta' = a,\n    a' = sin(theta) for 120;\n\n---\nuntil 30\nsamples 80\nrk-samples 18 // increase (100) to fix example\n", "Precision test", "Example with a solution that requires enough precision to be computed correctly. Increase the number of <code>rk-samples</code> (used in the Runge Kutta), e.g., to <code>100</code>, to improve precision."), $m_sci_Nil$()))));
+  var elems$1 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_Lcaos_frontend_Configurator$Example.getArrayOf().constr)([new $c_Lcaos_frontend_Configurator$Example("x := 0 ; c := 0 ;\nwhile c <= 5 do {\n  bernoulli (1/2)\n    x++; x--;\n  c++;\n} \nx := x/sqrt(5);", "PPDP - Ex.2.1", "Example 2.1 - An execution sample of a random walk with 50% chances of increasing or decreasing a variable x."), new $c_Lcaos_frontend_Configurator$Example("x := 0;\nwhile true {\n  bernoulli (1/2)\n    x++; x--;\n  wait unif(0,1);\n}", "PPDP - Ex.2.2", "Example 2.2 - An execution sample of a continuous-time random walk in which the waiting time is given by sampling from the uniform distribution on [0,1]."), new $c_Lcaos_frontend_Configurator$Example("d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (2,4) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}", "PPDP - Ex.2.3", "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units."), new $c_Lcaos_frontend_Configurator$Example("lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n    a--; a++;\n  p'= v, v'=a for d;\n}\n---\nruns 20\nuntil 15\nvars p", "PPDP - Ex.2.4", "Example 2.4 - Multiple execution samples of the particle\u2019s position overlayed, in order to depict how the position\u2019s probability mass spreads over space w.r.t time."), new $c_Lcaos_frontend_Configurator$Example("x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;", "PPDP - Ex.2.5", "Example 2.5 - Execution sample of a particle's position (p) and velocity (v)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nvars p.*", "PPDP - Ex.2.6a", "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  a := unif(-1,1) ;\n  // decide to speed up (acc=2) or brake (acc=-2), assuming a==-1\n  if (v - vl + 3)^2 + 4*(p - pl + v - vl + 3/2) < 0\n  // uncomment the \"if\" below to try version 2.6a (incorrect)\n  // if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nseed 10\nvars p.*", "PPDP - Ex.2.6b", "Example 2.6b Adaptive cruise control with a leader with an uncertain acceleration (bounded by fixed values)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\n// (unexpected delay)\np := 0; v := 0; // follower  \npl:=50; vl:=10; // leader\nlambda:=2;\nwhile true {\n  x := expn(lambda) ; x++ ;\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=0 for x;\n  else p'=v, v'=-2, pl'=vl, vl'=0 for x;\n}\n----\nuntil 20\nvars p.*", "PPDP - Ex.2.6c", "Example 2.6c: Adaptive cruise control with a leader with an uncertain delay during rounds (unbounded, given by a exponential distribution)."), new $c_Lcaos_frontend_Configurator$Example("volt:=0; d:=0; v:=0;\nc:=0.047; l:=0.047;\nres:=0.5+unif(-0.2,0.2);\n\nwhile true do {\n  if (volt<10) then v:=18;\n               else v:=0;\n  volt'=d,\n  d'=-(d*res/l)\n      -volt/(l*c)+v/(l*c)\n  for 0.01;\n}\n--\nuntil 0.6\nvars volt\nruns 10", "RLC (probabilistic)", "Variation of the RLC circuit example with a probabilistic resistance, simulated 10x."), new $c_Lcaos_frontend_Configurator$Example("while true {\n  // normal dist. mean 5, s-dev 1:\n  d:=normal(5,1);\n\n\t// try also others:\n  // negative dist. mean 2:\n  // d:=expn(1/2);\n\t// powerlaw distribution with exponent 2 and min 1\n  //d:=powerlaw(2,1);\n\twait 1;\n}\n---\nruns 50", "Normal-dist", "Sampling from a normal distribution (or other).")]));
+  this.Llince_frontend_examples_Basic$__f_prob = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems$1);
+}
+$c_Llince_frontend_examples_Basic$.prototype = new $h_O();
+$c_Llince_frontend_examples_Basic$.prototype.constructor = $c_Llince_frontend_examples_Basic$;
+/** @constructor */
+function $h_Llince_frontend_examples_Basic$() {
+}
+$h_Llince_frontend_examples_Basic$.prototype = $c_Llince_frontend_examples_Basic$.prototype;
+var $d_Llince_frontend_examples_Basic$ = new $TypeData().initClass($c_Llince_frontend_examples_Basic$, "lince.frontend.examples.Basic$", ({
+  Llince_frontend_examples_Basic$: 1
+}));
+var $n_Llince_frontend_examples_Basic$;
+function $m_Llince_frontend_examples_Basic$() {
+  if ((!$n_Llince_frontend_examples_Basic$)) {
+    $n_Llince_frontend_examples_Basic$ = new $c_Llince_frontend_examples_Basic$();
+  }
+  return $n_Llince_frontend_examples_Basic$;
+}
 function $p_Llince_syntax_Parser$__pp__Lcats_parse_Parser__T__s_util_Either($thiz, parser, str) {
   var x11 = $n(parser).parseAll__T__s_util_Either(str);
   if ((x11 instanceof $c_s_util_Left)) {
@@ -20495,14 +20706,17 @@ function $c_Lcaos_frontend_Site$$anon$2(c$1, resultAsString$1) {
   this.Lcaos_frontend_Site$$anon$2__f_smallWidgets = null;
   this.Lcaos_frontend_Site$$anon$2__f_documentation = null;
   this.Lcaos_frontend_Site$$anon$2__f_footer = null;
+  this.Lcaos_frontend_Site$$anon$2__f_toggles = null;
   this.Lcaos_frontend_Site$$anon$2__f_parser = null;
   this.Lcaos_frontend_Site$$anon$2__f_name = null;
+  this.Lcaos_frontend_Site$$anon$2__f_shortName = null;
   this.Lcaos_frontend_Site$$anon$2__f_languageName = null;
   this.Lcaos_frontend_Site$$anon$2__f_widgets = null;
   this.Lcaos_frontend_Site$$anon$2__f_examples = null;
   $f_Lcaos_frontend_Configurator__$init$__V(this);
   this.Lcaos_frontend_Site$$anon$2__f_parser = $n(c$1).parser__F1();
   this.Lcaos_frontend_Site$$anon$2__f_name = $n(c$1).name__T();
+  this.Lcaos_frontend_Site$$anon$2__f_shortName = $n(c$1).shortName__s_Option();
   this.Lcaos_frontend_Site$$anon$2__f_languageName = $n(c$1).languageName__T();
   this.Lcaos_frontend_Site$$anon$2__f_widgets = $n(c$1).widgets__sc_Iterable();
   this.Lcaos_frontend_Site$$anon$2__f_examples = $m_Lcaos_frontend_widgets_ExampleWidget$().txtToExamples__T__sc_Iterable(resultAsString$1);
@@ -20522,6 +20736,12 @@ $c_Lcaos_frontend_Site$$anon$2.prototype.documentation__Lcaos_frontend_Documenta
 $c_Lcaos_frontend_Site$$anon$2.prototype.footer__T = (function() {
   return this.Lcaos_frontend_Site$$anon$2__f_footer;
 });
+$c_Lcaos_frontend_Site$$anon$2.prototype.toggles__sci_List = (function() {
+  return this.Lcaos_frontend_Site$$anon$2__f_toggles;
+});
+$c_Lcaos_frontend_Site$$anon$2.prototype.caos$frontend$Configurator$_setter_$shortName_$eq__s_Option__V = (function(x$0) {
+  this.Lcaos_frontend_Site$$anon$2__f_shortName = x$0;
+});
 $c_Lcaos_frontend_Site$$anon$2.prototype.caos$frontend$Configurator$_setter_$smallWidgets_$eq__sc_Iterable__V = (function(x$0) {
   this.Lcaos_frontend_Site$$anon$2__f_smallWidgets = x$0;
 });
@@ -20531,11 +20751,17 @@ $c_Lcaos_frontend_Site$$anon$2.prototype.caos$frontend$Configurator$_setter_$doc
 $c_Lcaos_frontend_Site$$anon$2.prototype.caos$frontend$Configurator$_setter_$footer_$eq__T__V = (function(x$0) {
   this.Lcaos_frontend_Site$$anon$2__f_footer = x$0;
 });
+$c_Lcaos_frontend_Site$$anon$2.prototype.caos$frontend$Configurator$_setter_$toggles_$eq__sci_List__V = (function(x$0) {
+  this.Lcaos_frontend_Site$$anon$2__f_toggles = x$0;
+});
 $c_Lcaos_frontend_Site$$anon$2.prototype.parser__F1 = (function() {
   return this.Lcaos_frontend_Site$$anon$2__f_parser;
 });
 $c_Lcaos_frontend_Site$$anon$2.prototype.name__T = (function() {
   return this.Lcaos_frontend_Site$$anon$2__f_name;
+});
+$c_Lcaos_frontend_Site$$anon$2.prototype.shortName__s_Option = (function() {
+  return this.Lcaos_frontend_Site$$anon$2__f_shortName;
 });
 $c_Lcaos_frontend_Site$$anon$2.prototype.languageName__T = (function() {
   return this.Lcaos_frontend_Site$$anon$2__f_languageName;
@@ -20587,7 +20813,7 @@ $c_Lcaos_frontend_widgets_CustomWidget.prototype.constructor = $c_Lcaos_frontend
 function $h_Lcaos_frontend_widgets_CustomWidget() {
 }
 $h_Lcaos_frontend_widgets_CustomWidget.prototype = $c_Lcaos_frontend_widgets_CustomWidget.prototype;
-$c_Lcaos_frontend_widgets_CustomWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_CustomWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var this$4 = $n(this.Lcaos_frontend_widgets_CustomWidget__f_moreButtons);
   var f = ((kv) => {
     var kv$1 = $as_T2(kv);
@@ -20613,7 +20839,7 @@ $c_Lcaos_frontend_widgets_CustomWidget.prototype.init__Lcaos_frontend_widgets_Do
     var buttons$1 = h;
   }
   var headerStyle$1 = $m_sci_Nil$();
-  $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_CustomWidget__f_divName);
+  $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_CustomWidget__f_divName);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((e) => ((!this.isVisible__Z()) ? ($p_Lcaos_frontend_widgets_CustomWidget__runWidget__V(this), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_CustomWidget.prototype.update__V = (function() {
@@ -20740,10 +20966,10 @@ $c_Lcaos_frontend_widgets_ExampleWidget.prototype.get__sci_Seq = (function() {
     return new $c_T2(self, y);
   }))))).toSeq__sci_Seq();
 });
-$c_Lcaos_frontend_widgets_ExampleWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_ExampleWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var buttons$1 = $p_Lcaos_frontend_widgets_ExampleWidget__buttons__sci_List(this);
   var headerStyle$1 = $m_sci_Nil$();
-  var buttonsDiv = $n($n($n($c_Lcaos_frontend_widgets_Widget.prototype.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem.call(this, div, visible, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", "buttons")).attr__T__T__Lcaos_frontend_widgets_DomElem("style", "padding: 2pt;");
+  var buttonsDiv = $n($n($n($c_Lcaos_frontend_widgets_Widget.prototype.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem.call(this, div, visible, hidden, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", "buttons")).attr__T__T__Lcaos_frontend_widgets_DomElem("style", "padding: 2pt;");
   $n(buttonsDiv).style__T__Lcaos_frontend_widgets_DomElem("display:block; padding:2pt");
   $n(this.Lcaos_frontend_widgets_ExampleWidget__f_examples).map__F1__O(new $c_sjsr_AnonFunction1_$$Lambda$3aa60c34ef08a878abffbf4628007cc68fa3c7ab(((ex) => {
     var ex$1 = $as_Lcaos_frontend_Configurator$Example(ex);
@@ -20754,6 +20980,7 @@ $c_Lcaos_frontend_widgets_ExampleWidget.prototype.update__V = (function() {
 });
 $c_Lcaos_frontend_widgets_ExampleWidget.prototype.genButton__Lcaos_frontend_Configurator$Example__Lcaos_frontend_widgets_DomElem__V = (function(ex, buttonsDiv) {
   var button = $n($n(buttonsDiv).append__T__Lcaos_frontend_widgets_DomElem("button")).textEl__T__Lcaos_frontend_widgets_DomElem($n(ex).Lcaos_frontend_Configurator$Example__f_name);
+  $n(button).attr__T__T__Lcaos_frontend_widgets_DomElem("id", ("id" + $f_T__hashCode__I($n($n(ex).Lcaos_frontend_Configurator$Example__f_name))));
   $n(button).on__T__F0__V("click", new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     var this$2 = $n(this.Lcaos_frontend_widgets_ExampleWidget__f_setableExample);
     var x0 = $n(ex).Lcaos_frontend_Configurator$Example__f_example;
@@ -20928,7 +21155,7 @@ $c_Lcaos_frontend_widgets_Explore.prototype.constructor = $c_Lcaos_frontend_widg
 function $h_Lcaos_frontend_widgets_Explore() {
 }
 $h_Lcaos_frontend_widgets_Explore.prototype = $c_Lcaos_frontend_widgets_Explore.prototype;
-$c_Lcaos_frontend_widgets_Explore.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_Explore.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var self = new $c_s_util_Right("refresh");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     this.update__V();
@@ -20936,7 +21163,7 @@ $c_Lcaos_frontend_widgets_Explore.prototype.init__Lcaos_frontend_widgets_DomElem
   var y = new $c_T2(_1, "Explore next actions of the current program");
   var buttons$1 = new $c_sci_$colon$colon(new $c_T2(self, y), $m_sci_Nil$());
   var headerStyle$1 = $m_sci_Nil$();
-  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1);
+  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((_$3) => ((!this.isVisible__Z()) ? (this.initialise__V(), (void 0)) : (void 0)));
   this.Lcaos_frontend_widgets_Explore__f_container = $n($n(box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__Lcaos_frontend_widgets_DomElem("display:inline; width:100%;");
   $n($n($n($n($n($n(this.Lcaos_frontend_widgets_Explore__f_container).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "mermaid")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Explore__f_divBox)).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Explore__f_svgBox);
@@ -21098,8 +21325,11 @@ $c_Lcaos_frontend_widgets_HtmlBlock.prototype.constructor = $c_Lcaos_frontend_wi
 function $h_Lcaos_frontend_widgets_HtmlBlock() {
 }
 $h_Lcaos_frontend_widgets_HtmlBlock.prototype = $c_Lcaos_frontend_widgets_HtmlBlock.prototype;
-$c_Lcaos_frontend_widgets_HtmlBlock.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
-  $n($n(div).append__T__Lcaos_frontend_widgets_DomElem("div")).html__T__Lcaos_frontend_widgets_DomElem(this.Lcaos_frontend_widgets_HtmlBlock__f_block);
+$c_Lcaos_frontend_widgets_HtmlBlock.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
+  var content = $n($n(div).append__T__Lcaos_frontend_widgets_DomElem("div")).html__T__Lcaos_frontend_widgets_DomElem(this.Lcaos_frontend_widgets_HtmlBlock__f_block);
+  if (hidden) {
+    $n(content).style__T__T__Lcaos_frontend_widgets_DomElem("display", "none");
+  }
 });
 $c_Lcaos_frontend_widgets_HtmlBlock.prototype.update__V = (function() {
 });
@@ -21128,8 +21358,8 @@ $c_Lcaos_frontend_widgets_Invisible.prototype.constructor = $c_Lcaos_frontend_wi
 function $h_Lcaos_frontend_widgets_Invisible() {
 }
 $h_Lcaos_frontend_widgets_Invisible.prototype = $c_Lcaos_frontend_widgets_Invisible.prototype;
-$c_Lcaos_frontend_widgets_Invisible.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
-  $n(this.Lcaos_frontend_widgets_Invisible__f_content).init__Lcaos_frontend_widgets_DomElem__V(div);
+$c_Lcaos_frontend_widgets_Invisible.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
+  $n(this.Lcaos_frontend_widgets_Invisible__f_content).init__Lcaos_frontend_widgets_DomElem__Z__V(div, hidden);
   $n($n(this.Lcaos_frontend_widgets_Invisible__f_content).Lcaos_frontend_widgets_OutputArea__f_outputs).style__T__Lcaos_frontend_widgets_DomElem("padding: 0px 5px 0px 5px;");
   this.update__V();
 });
@@ -21275,8 +21505,8 @@ $c_Lcaos_frontend_widgets_OutputArea.prototype.constructor = $c_Lcaos_frontend_w
 function $h_Lcaos_frontend_widgets_OutputArea() {
 }
 $h_Lcaos_frontend_widgets_OutputArea.prototype = $c_Lcaos_frontend_widgets_OutputArea.prototype;
-$c_Lcaos_frontend_widgets_OutputArea.prototype.init__Lcaos_frontend_widgets_DomElem__V = (function(div) {
-  this.Lcaos_frontend_widgets_OutputArea__f_outputs = $n($n(div).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "alertContainer");
+$c_Lcaos_frontend_widgets_OutputArea.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, hidden) {
+  this.Lcaos_frontend_widgets_OutputArea__f_outputs = ((!hidden) ? $n($n(div).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "alertContainer") : $n($n($n(div).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "alertContainer")).style__T__T__Lcaos_frontend_widgets_DomElem("display", "none"));
 });
 $c_Lcaos_frontend_widgets_OutputArea.prototype.setValue__T__V = (function(msg) {
   $n(this.Lcaos_frontend_widgets_OutputArea__f_outputs).text__T__Lcaos_frontend_widgets_DomNode("");
@@ -21402,7 +21632,7 @@ $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.constructor = $c_Lcaos_front
 function $h_Lcaos_frontend_widgets_SimulateMermaid() {
 }
 $h_Lcaos_frontend_widgets_SimulateMermaid.prototype = $c_Lcaos_frontend_widgets_SimulateMermaid.prototype;
-$c_Lcaos_frontend_widgets_SimulateMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_SimulateMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var self = new $c_s_util_Right("refresh");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     this.update__V();
@@ -21410,7 +21640,7 @@ $c_Lcaos_frontend_widgets_SimulateMermaid.prototype.init__Lcaos_frontend_widgets
   var y = new $c_T2(_1, "Simulate next actions of current program");
   var buttons$1 = new $c_sci_$colon$colon(new $c_T2(self, y), $m_sci_Nil$());
   var headerStyle$1 = $m_sci_Nil$();
-  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1);
+  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((_$6) => ((!this.isVisible__Z()) ? (this.initialise__V(), (void 0)) : (void 0)));
   this.Lcaos_frontend_widgets_SimulateMermaid__f_top = $n($n(box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__Lcaos_frontend_widgets_DomElem("width:100%;margin-bottom:10px;margin:5px 1px 5px 15px");
   $n($n($n($n($n(box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("padding", "5px 1px 5px 15px")).append__T__Lcaos_frontend_widgets_DomElem("button")).textEl__T__Lcaos_frontend_widgets_DomElem("undo")).on__T__F0__V("click", new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
@@ -21648,7 +21878,7 @@ $c_Lcaos_frontend_widgets_SimulateText.prototype.constructor = $c_Lcaos_frontend
 function $h_Lcaos_frontend_widgets_SimulateText() {
 }
 $h_Lcaos_frontend_widgets_SimulateText.prototype = $c_Lcaos_frontend_widgets_SimulateText.prototype;
-$c_Lcaos_frontend_widgets_SimulateText.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_SimulateText.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var self = new $c_s_util_Right("refresh");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     this.update__V();
@@ -21656,7 +21886,7 @@ $c_Lcaos_frontend_widgets_SimulateText.prototype.init__Lcaos_frontend_widgets_Do
   var y = new $c_T2(_1, "Simulate next actions of current program");
   var buttons$1 = new $c_sci_$colon$colon(new $c_T2(self, y), $m_sci_Nil$());
   var headerStyle$1 = $m_sci_Nil$();
-  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1);
+  var box = this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((_$6) => ((!this.isVisible__Z()) ? (this.initialise__V(), (void 0)) : (void 0)));
   this.Lcaos_frontend_widgets_SimulateText__f_top = $n($n(box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__Lcaos_frontend_widgets_DomElem("width:100%;margin-bottom:10px;margin:5px 1px 5px 15px");
   $n($n($n($n($n(box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("padding", "5px 1px 5px 15px")).append__T__Lcaos_frontend_widgets_DomElem("button")).textEl__T__Lcaos_frontend_widgets_DomElem("undo")).on__T__F0__V("click", new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
@@ -21901,8 +22131,8 @@ $c_Lcaos_frontend_widgets_VisualiseCode.prototype.constructor = $c_Lcaos_fronten
 function $h_Lcaos_frontend_widgets_VisualiseCode() {
 }
 $h_Lcaos_frontend_widgets_VisualiseCode.prototype = $c_Lcaos_frontend_widgets_VisualiseCode.prototype;
-$c_Lcaos_frontend_widgets_VisualiseCode.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
-  this.Lcaos_frontend_widgets_VisualiseCode__f_box = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseCode__f_divBox);
+$c_Lcaos_frontend_widgets_VisualiseCode.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
+  this.Lcaos_frontend_widgets_VisualiseCode__f_box = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseCode__f_divBox);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((e) => ((!this.isVisible__Z()) ? (this.showCode__V(), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_VisualiseCode.prototype.update__V = (function() {
@@ -21957,7 +22187,7 @@ $c_Lcaos_frontend_widgets_VisualiseMermaid.prototype.constructor = $c_Lcaos_fron
 function $h_Lcaos_frontend_widgets_VisualiseMermaid() {
 }
 $h_Lcaos_frontend_widgets_VisualiseMermaid.prototype = $c_Lcaos_frontend_widgets_VisualiseMermaid.prototype;
-$c_Lcaos_frontend_widgets_VisualiseMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_VisualiseMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var self = new $c_s_util_Right("download");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     $m_Lcaos_frontend_widgets_Utils$().downloadSvg__T__V(this.Lcaos_frontend_widgets_VisualiseMermaid__f_svgBox);
@@ -21965,7 +22195,7 @@ $c_Lcaos_frontend_widgets_VisualiseMermaid.prototype.init__Lcaos_frontend_widget
   var y = new $c_T2(_1, "Download SVG");
   var buttons$1 = new $c_sci_$colon$colon(new $c_T2(self, y), $m_sci_Nil$());
   var headerStyle$1 = $m_sci_Nil$();
-  this.Lcaos_frontend_widgets_VisualiseMermaid__f_box = $n($n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "mermaid")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseMermaid__f_divBox)).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseMermaid__f_svgBox);
+  this.Lcaos_frontend_widgets_VisualiseMermaid__f_box = $n($n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "mermaid")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseMermaid__f_divBox)).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseMermaid__f_svgBox);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((e) => ((!this.isVisible__Z()) ? (this.showMermaid__V(), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_VisualiseMermaid.prototype.update__V = (function() {
@@ -22035,17 +22265,10 @@ $c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.constructor = $c_Lcaos_f
 function $h_Lcaos_frontend_widgets_VisualiseOptMermaid() {
 }
 $h_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype = $c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype;
-$c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.fix__T__T = (function(s) {
-  var this$1 = $n(s);
-  var this$4 = $n($as_T(this$1.split(" ").join("_")));
-  var this$7 = $n($as_T(this$4.split("(").join("_")));
-  var this$10 = $n($as_T(this$7.split(")").join("_")));
-  return $as_T(this$10.split(":").join("_"));
-});
-$c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var buttons$1 = $m_sci_Nil$();
   var headerStyle$1 = $m_sci_Nil$();
-  this.Lcaos_frontend_widgets_VisualiseOptMermaid__f_box = $n($n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("padding", "5px 0px 5px 0px")).style__T__T__Lcaos_frontend_widgets_DomElem("display", "inline-flex")).style__T__T__Lcaos_frontend_widgets_DomElem("flex-wrap", "wrap");
+  this.Lcaos_frontend_widgets_VisualiseOptMermaid__f_box = $n($n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, false, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("padding", "5px 0px 5px 0px")).style__T__T__Lcaos_frontend_widgets_DomElem("display", "inline-flex")).style__T__T__Lcaos_frontend_widgets_DomElem("flex-wrap", "wrap");
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((_$2) => ((!this.isVisible__Z()) ? (this.showOptions__V(), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.update__V = (function() {
@@ -22085,7 +22308,7 @@ $c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.showOptions__V = (functi
 });
 $c_Lcaos_frontend_widgets_VisualiseOptMermaid.prototype.showOption__T__T__V = (function(name, code) {
   try {
-    var namefix = this.fix__T__T(name);
+    var namefix = $f_T__hashCode__I($n(name));
     var mbox = $n($n(this.Lcaos_frontend_widgets_VisualiseOptMermaid__f_box).append__T__Lcaos_frontend_widgets_DomElem("div")).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center");
     $n($n(mbox).append__T__Lcaos_frontend_widgets_DomElem("h4")).text__T__Lcaos_frontend_widgets_DomNode(("" + name));
     $n($n($n($n($n($n(mbox).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "mermaid")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", (("" + this.Lcaos_frontend_widgets_VisualiseOptMermaid__f_divBox) + namefix))).style__T__T__Lcaos_frontend_widgets_DomElem("text-align", "center")).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", (("" + this.Lcaos_frontend_widgets_VisualiseOptMermaid__f_svgBox) + namefix));
@@ -22129,8 +22352,8 @@ $c_Lcaos_frontend_widgets_VisualiseText.prototype.constructor = $c_Lcaos_fronten
 function $h_Lcaos_frontend_widgets_VisualiseText() {
 }
 $h_Lcaos_frontend_widgets_VisualiseText.prototype = $c_Lcaos_frontend_widgets_VisualiseText.prototype;
-$c_Lcaos_frontend_widgets_VisualiseText.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
-  this.Lcaos_frontend_widgets_VisualiseText__f_box = $n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "text")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseText__f_divBox)).append__T__Lcaos_frontend_widgets_DomElem("pre")).attr__T__T__Lcaos_frontend_widgets_DomElem("style", "text-align: left;margin: 0;font-size: 1.2rem;");
+$c_Lcaos_frontend_widgets_VisualiseText.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
+  this.Lcaos_frontend_widgets_VisualiseText__f_box = $n($n($n($n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "text")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_VisualiseText__f_divBox)).append__T__Lcaos_frontend_widgets_DomElem("pre")).attr__T__T__Lcaos_frontend_widgets_DomElem("style", "text-align: left;margin: 0;font-size: 1.2rem;");
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((e) => ((!this.isVisible__Z()) ? (this.showText__V(), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_VisualiseText.prototype.update__V = (function() {
@@ -25073,12 +25296,14 @@ function $m_Llince_backend_SmallStep$() {
 }
 /** @constructor */
 function $c_Llince_frontend_CaosConfig$() {
+  this.Llince_frontend_CaosConfig$__f_shortName = null;
   this.Llince_frontend_CaosConfig$__f_smallWidgets = null;
   this.Llince_frontend_CaosConfig$__f_name = null;
   this.Llince_frontend_CaosConfig$__f_languageName = null;
   this.Llince_frontend_CaosConfig$__f_parser = null;
   this.Llince_frontend_CaosConfig$__f_examples = null;
   this.Llince_frontend_CaosConfig$__f_widgets = null;
+  this.Llince_frontend_CaosConfig$__f_toggles = null;
   this.Llince_frontend_CaosConfig$__f_footer = null;
   this.Llince_frontend_CaosConfig$__f_documentation = null;
   $n_Llince_frontend_CaosConfig$ = this;
@@ -25089,34 +25314,39 @@ function $c_Llince_frontend_CaosConfig$() {
     var str$1 = $as_T(str);
     return $m_Llince_syntax_Parser$().parseSimulation__T__Llince_syntax_Lince$Simulation(str$1);
   }));
-  var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_Lcaos_frontend_Configurator$Example.getArrayOf().constr)([new $c_Lcaos_frontend_Configurator$Example("// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n}\n--\nuntil 5", "CC", "Simple cruise control system, used to illustrate basic functionality of Lince."), new $c_Lcaos_frontend_Configurator$Example("// Cruise control\nx:=0; v:=2;\nwhile true do {\n  if v<=10\n  then x'=v,v'=5  for 1;\n  else x'=v,v'=-2 for 1;\n  if x>=10 then x:=10;\n}\n--\nuntil 5\nsamples 10", "CC (broken)", "Variation of the cruise control example, breaking the continuity of the trajectories."), new $c_Lcaos_frontend_Configurator$Example("p:=0; v:=0;\np'=v,v'= 2  for 5;\np'=v,v'=-2  for 5;", "Simple composition", "Composing two trajectories: the 1st accelerates (2) and the 2nd brakes (-2)."), new $c_Lcaos_frontend_Configurator$Example("x := 2;", "x:=2", ""), new $c_Lcaos_frontend_Configurator$Example("skip;", "skip", ""), new $c_Lcaos_frontend_Configurator$Example("// Bouncing ball example\nv:=5; p:=10; c:=0;\nwhile (c<4) do {\n  v'= -9.8, p'=v until_0.05 p<0 && v<0;\n  v:= -0.5*v; c:=c+1;\n}\n--\niterations 1000 ", "Bouncing ball", "<strong>Bouncing Ball</strong><p>Event-Driven (ED) example, using steps of 0.01. A ball position and velocity as it bounces in the floor. It includes an experimental feature: using a condition (p<0 /\\ v<0) to end a trajectory using a naive search algorithm.</p>"), new $c_Lcaos_frontend_Configurator$Example("f1 := 1; f2 := 4;\nwhile true {\n  f1'=1, f2'=1 until_0.1\n       f1>10 || f2>10;\n  if f1>=10 && f2<10\n    then { f1:=0; f2:=f2+2; }\n    else if f2>=10 && f1<10\n         then { f2:=0;f1 :=f1 +2; }\n         else { f1:=0; f2 :=0; }\n}\n--\nuntil 30\niterations 1000", "Firefiles", "<strong>Fireflies 2x</strong>\n\nEvent-Driven (ED) example. Every firefly has an internal clock that helps it to know when to flash: when the clock reaches a threshold the firefly flashes and the clock\u2019s value is reset to zero. If other fireflies are nearby then they try to synchronise their flashes in a decentralised way.This version synchronises 2 fireflies."), new $c_Lcaos_frontend_Configurator$Example("x := 0 ; c := 0 ;\nwhile c <= 5 do {\n  bernoulli (1/2)\n    x++; x--;\n  c++;\n} \nx := x/sqrt(5);", "PPDP - Ex.2.1", "Example 2.1 - An execution sample of a random walk with 50% chances of increasing or decreasing a variable x."), new $c_Lcaos_frontend_Configurator$Example("x := 0;\nwhile true {\n  bernoulli (1/2)\n    x++; x--;\n  wait unif(0,1);\n}", "PPDP - Ex.2.2", "Example 2.2 - An execution sample of a continuous-time random walk in which the waiting time is given by sampling from the uniform distribution on [0,1]."), new $c_Lcaos_frontend_Configurator$Example("d:=0;\np := 10 ; v := 0 ;\nwhile true {\n  d := unif (2,4) ;\n  p'=v,v'= -9.8 for d ;\n  v := -v;\n}", "PPDP - Ex.2.3", "Example 2.3 - An execution sample of the ball's position (p) and velocity (v) during the first 5 time units."), new $c_Lcaos_frontend_Configurator$Example("lambda:=2; d:=0;\n// the \"seed\" variable fixes\n// the pseudo-random generator\np:=0; v:=0; a:=0;\nwhile true {\n  d:=expn(lambda);\n  bernoulli (1/2)\n    a--; a++;\n  p'= v, v'=a for d;\n}\n---\nruns 20\nuntil 15\nvars p", "PPDP - Ex.2.4", "Example 2.4 - Multiple execution samples of the particle\u2019s position overlayed, in order to depict how the position\u2019s probability mass spreads over space w.r.t time."), new $c_Lcaos_frontend_Configurator$Example("x:=expn(2); y:=expn(2);\np:=0; v:=0;\np'=v, v'=1  for sqrt (3) + x;\np'=v, v'=-1 for sqrt (3) + y;", "PPDP - Ex.2.5", "Example 2.5 - Execution sample of a particle's position (p) and velocity (v)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nvars p.*", "PPDP - Ex.2.6a", "Example 2.6a - Adaptive cruise control with a leader with constant acceleration (no uncertainty)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\np:=0; v:=0;  // follower  \npl:=50; vl:=10; // leader\na:=0;\nwhile true {\n  a := unif(-1,1) ;\n  // decide to speed up (acc=2) or brake (acc=-2), assuming a==-1\n  if (v - vl + 3)^2 + 4*(p - pl + v - vl + 3/2) < 0\n  // uncomment the \"if\" below to try version 2.6a (incorrect)\n  // if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=a for 1;\n  else p'=v, v'=-2, pl'=vl, vl'=a for 1;\n}\n----\nuntil 20\nseed 10\nvars p.*", "PPDP - Ex.2.6b", "Example 2.6b Adaptive cruise control with a leader with an uncertain acceleration (bounded by fixed values)."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC)\n// (unexpected delay)\np := 0; v := 0; // follower  \npl:=50; vl:=10; // leader\nlambda:=2;\nwhile true {\n  x := expn(lambda) ; x++ ;\n  // decide to speed up (acc=2) or brake (acc=-2)\n  if (v-8)^2 + 4*(p-pl+v-9) < 0\n  then p'=v, v'= 2, pl'=vl, vl'=0 for x;\n  else p'=v, v'=-2, pl'=vl, vl'=0 for x;\n}\n----\nuntil 20\nvars p.*", "PPDP - Ex.2.6c", "Example 2.6c: Adaptive cruise control with a leader with an uncertain delay during rounds (unbounded, given by a exponential distribution)."), new $c_Lcaos_frontend_Configurator$Example("while true {\n\t// normal distribution with mean 5 and std. deviation 2\n  d:=normal(5,2);\n  // try also a negative dist. mean 2:\n  //d:=expn(1/2);\n\twait 1;\n}\n---\nruns 50\nuntil 1\nvars d", "normal-dist", "Sampling from a normal distribution (or other)."), new $c_Lcaos_frontend_Configurator$Example("// Define initial values of the water tank\nlevel := 5;\ndrain := -1/2;\n\nwhile true do {\n  // keep level between 3..10\n  if      level<=3  then drain:= 1/2;\n  else if level>=10 then drain:=-1/2;\n  else    skip;\n\n  level'= drain, drain'=0\n    for 0.1;\n}\n---\nuntil 100\niterations 1000", "Single tank (poll-variation)", ""), new $c_Lcaos_frontend_Configurator$Example("a1:=1; //Area of tank 1\na2:=1; // Area of tank 2\nr1:=1; //Resistance applied to the water flow at the water exit tap of tank 1.\nr2:=10; //Resistance applied to the water flow at the water exit tap of tank 2.\nh1_p:=10; // initial water level of tank 1 in the aligned  configuration\nh2_p:=0; // initial water level of tank 2 in the aligned  configuration.\nh1_v:=10; //initial water level of tank 1 in vertical configuration.\nh2_v:=0; //initial water level of tank 2 in vertical  configuration.\n\n// Open tap of the tank 1 and close the tap of the tank 2\nqe1:=1;\nqe2:=0;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n// Open tap of the tank 2 and close the tap of the tank 1\nqe1:=0;\nqe2:=1;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n//Open both\nqe1:=1;\nqe2:=1;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n\n//Close both\nqe1:=0;\nqe2:=0;\n\n// Differential equations simulating the variation of the water level in the two tanks, in each configuration, after 50 seconds.\nh1_p'=-pow(a1*r1,-1)*h1_p+pow(a1*r1,-1)*h2_p+pow(a1,-1)*qe1,\nh2_p'=pow(a2*r1,-1)*h1_p-pow(a2*r1,-1)*h2_p+pow(a2,-1)*qe2-pow(a2*r2,-1)*h2_p,\nh1_v'=-pow(a1*r1,-1)*h1_v+pow(a1,-1)*qe1,\nh2_v'=pow(a2*r1,-1)*h1_v-pow(r2*a2,-1)*h2_v + pow(a2,-1)*qe2 for 40;\n---\nuntil 100\nsamples 60\nvars h.*", "Water tank", ""), new $c_Lcaos_frontend_Configurator$Example("a1 := 0.01; b1 := 0.005;\na2 := 0.01; b2 := 0.005;\n\nk11_l1 := 0.30760137; k12_l1 := 0.07706312;\nk21_l2 := 0.07706312; k22_l2 := 0.30760137;\n\nw1 := 80; w2 := 100; // set-point\nd := 0.5;   // tolerance\n\nx1:=0; x2:=50; // initial state\ni := 0;  // counter\nn := 10;  // max jumps\np := 0.5; // max evolution period (affects precision)\n\nwhile i<n {\n   // L1\n   x1'=-a1*x1+b1*x2-(k11_l1*x1+k12_l1*x2) + (k11_l1*w1+k12_l1*w2),\n   x2'=b2*x1-a2*x2\n   until_p x1>=w1-d;\n   // L0\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2\n   until_p x1<=80+d && x2<=80+d;\n   // L2\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2-(k21_l2*x1+k22_l2*x2) + (k21_l2*w1+k22_l2*w2)\n   until_p x2>=w2-d;\n   // L0\n   x1'=-a1*x1+b1*x2,\n   x2'=b2*x1-a2*x2\n   until_p x1<=80+d && x2<=80+d;\n   i++;\n}\n---\nvars x1, x2, i\nuntil 1000\niterations 500", "Two heated tanks", "Variation of a system of two heated tanks from the literature."), new $c_Lcaos_frontend_Configurator$Example("// Solution not naively computed (precise solution involves sin/cos)\n// Use the online version to use the precise solution.\np:=1;v:=1;\np'=v, v'=-p for 4;\n--\nportrait p,v\nuntil 4", "Simple portrait", "Simple portait of two waves."), new $c_Lcaos_frontend_Configurator$Example("// Initial position and velocity of the missile\nx:=300; vx:=20; y:=300; vy:=0;\n// Initial position and velocity of the target\nxl:=500; vxl:=15; yl:=500; vyl:=0;\n\n// Angular velocity of the missile and target (leader)\naw:=(1/20)*2*pi();\nawl:=(1/40)*2*pi();\n\n// Counter\ncont:=0;\n// Decision time\nsampling_time:=1;\n// Minimum collision distance\ndist_min_col:=1; \n// variable that stores the alpha angle\nalpha:=0;\n//Variable that stores the vectorial product to decide which way to turn\nvect_P:=0;\n// Variables that stores the angular velocity decision to the missile and the target\nw:=0; wl:=0;\n//Variables that stores the relative positions and velocities\ndx:=0; dy:=0; vrelx:=0; vrely:=0;\n\n// Run the following programme whilst the distance between the missile and the target is greater than \n//the collision distance\nwhile (sqrt((x-xl)^2+(y-yl)^2)>dist_min_col) do {\n    //Conditional structures to establish the target path\n    if (cont<=10)\n    then wl:=0;\n    else {\n          if (cont<=20)\n          then wl:=-awl;\n          else {\n              if (cont<=30)\n              then wl:=awl;\n              else wl:=0;\n              }\n        }\n    // The counter is incremented\n    cont:=cont+1;\n    //Update distances and relative velocities\n    dx:=xl-x;\n    dy:=yl-y;\n    vrelx:=vxl-vx;\n    vrely:=vyl-vy;\n    // Determine the value of the angle alpha\n    alpha:=arccos((vrelx*dx + vrely*dy)/(sqrt(vrelx^2 + vrely^2)*sqrt(dx^2 + dy^2))); \n    // Conditional structures to determine whether the missile needs to move forward or make a curve\n    if (alpha>=179.5*pi()/180 && alpha<=180.5*pi()/180)\n    then // If the theta is  between 179.5 and 180.5 degrees, the missile follows a straight line at a constant velocity \n         w:=0;\n    else {\n        // Determine the value of the vetorial product between the relative velocity vector and the relative position vector\n        vect_P:=vrelx*dy-vrely*dx;\n        // If the theta is not between 179.5 and 180.5 degrees, the missile needs to curve to the left or right\n        // To decide which way to turn, simply check the sign of the vectorial product. \n        if (vect_P>=0)\n        then // If the vectorial product is positive or zero,  it curves to the right\n             w:=aw;\n          else // If the vectorial product is negative,  it curves to the left\n               w:=-aw;\n        }\n    // Differential equations\n    x'=vx,y'=vy,vx'=w*vy,vy'=-w*vx,\n    xl'=vxl,yl'=vyl,vxl'=wl*vyl,vyl'=-wl*vxl for sampling_time;\n}\n--\nuntil 50\nportrait x,y; xl,yl\nsamples 80", "Pursuit portrait", "Missile pursuing a target (2D)\n\nMissile trajectory that follows a given target."), new $c_Lcaos_frontend_Configurator$Example("// Adaptive Cruise Control (ACC) \nfwd:=3; bwd:=-3; // constants\npl :=50; vl := 0; al:=1; // [-3..3]; //leader \npf := 0 ; vf := 0; af := fwd;  //follower\ndiscr := 0; bt:=0; at:=0; ct:=0;\nst := 2; //sample time\nwhile true do {\n bt:= (al-fwd)*st+vl-vf; \n at:= (al-bwd)/2; \n ct:= (((al-fwd)/2)*st^2+(vl-vf)*st+pl-pf);\n discr:= bt^2 - 4*at*ct;\n if ct<=0 || \n   (at==0 && bt!=0 && -ct/bt > 0) || \n    (discr >= 0 && at!=0 &&\n     ((-bt - sqrt(discr))/(2*at) > 0  ||\n      (-bt + sqrt(discr))/(2*at) > 0 ))  \n then af :=bwd;  //brake \n else af :=fwd; //accelerate   \n//update states\n  pf'=vf, vf'=af,\n  pl'=vl, vl'=al for st;}\n---\nvars pl,pf\nuntil 15\n", "FMAS CC", "Adaptive Cruise Control example, used in FMAS'25"), new $c_Lcaos_frontend_Configurator$Example("x:=0; y:=0;\n// Simulating sin(x) using ODEs\nwhile true\n  x'=1, y'=cos(x) for 5;\n---\nuntil 20\nrk-samples 2 // change to 1 to drop precision\nsamples 100  // change to 20 to view less points\nverbose\nvars y\n", "Sin(x)", "Simulating sin(x) using ODEs. Change the <code>rk-samples</code> and the (plot) <code>samples</code> to experiment with configurations of the simulation."), new $c_Lcaos_frontend_Configurator$Example("theta := 0.1;\na := 0;\ntheta' = a,\n    a' = sin(theta) for 120;\n\n---\nuntil 30\nsamples 80\nrk-samples 18 // increase (100) to fix example\n", "Precision test", "Example with a solution that requires enough precision to be computed correctly. Increase the number of <code>rk-samples</code> (used in the Runge Kutta), e.g., to <code>100</code>, to improve precision.")]));
-  this.Llince_frontend_CaosConfig$__f_examples = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems);
+  var this$2 = $n($m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_toy);
+  var suffix = $m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_scenarios;
+  var this$3 = $n(this$2.appendedAll__sc_IterableOnce__sci_List(suffix));
+  var suffix$1 = $m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_prob;
+  var this$4 = $n(this$3.appendedAll__sc_IterableOnce__sci_List(suffix$1));
+  var suffix$2 = $m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_configs;
+  this.Llince_frontend_CaosConfig$__f_examples = this$4.appendedAll__sc_IterableOnce__sci_List(suffix$2);
   var $x_20 = $m_sr_ScalaRunTime$();
   var y = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$1) => $dp_toString__T($n(_$1)))), $m_Lcaos_view_Text$())), 1);
   var $x_19 = new $c_T2("View parsed", y);
   var y$1 = $f_Lcaos_frontend_widgets_WidgetInfo__moveTo__I__Lcaos_frontend_widgets_WidgetInfo($n($m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((s) => {
     var s$1 = $as_Llince_syntax_Lince$Simulation(s);
     var $x_17 = $m_Llince_syntax_Show$();
-    var this$142 = $n(s$1);
-    return $x_17.apply__Llince_syntax_Lince$Program__T(this$142.Llince_syntax_Lince$Simulation__f_prog);
+    var this$8 = $n(s$1);
+    return $x_17.apply__Llince_syntax_Lince$Program__T(this$8.Llince_syntax_Lince$Simulation__f_prog);
   })), new $c_Lcaos_view_Code("clike"))), 1);
   var $x_18 = new $c_T2("View pretty", y$1);
   var reload = new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim) => {
     var sim$1 = $as_Llince_syntax_Lince$Simulation(sim);
     var plots = $m_Llince_backend_plot_Plot$().allPlots__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($n(sim$1).state__Llince_backend_SmallStep$St(), $n(sim$1).Llince_syntax_Lince$Simulation__f_pi);
     var $x_15 = $m_Llince_backend_plot_PlotToJS$().apply__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__T($as_Llince_backend_plot_Plot($n($as_T2($n(plots).head__O()))._1__O()), "sim-plotlys", $as_Llince_syntax_Lince$PlotInfo($n($as_T2($n(plots).head__O()))._2__O()));
-    var this$146 = $n($as_sci_List($n(plots).tail__O()));
+    var this$12 = $n($as_sci_List($n(plots).tail__O()));
     var f = ((p) => {
       var p$1 = $as_T2(p);
       return $m_Llince_backend_plot_PlotToJS$().addPlot__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__T($as_Llince_backend_plot_Plot($n(p$1)._1__O()), "sim-plotlys", $as_Llince_syntax_Lince$PlotInfo($n(p$1)._2__O()));
     });
-    if ((this$146 === $m_sci_Nil$())) {
-      var this$147 = $m_sci_Nil$();
+    if ((this$12 === $m_sci_Nil$())) {
+      var this$13 = $m_sci_Nil$();
     } else {
-      var x0 = this$146.head__O();
+      var x0 = this$12.head__O();
       var h = new $c_sci_$colon$colon(f(x0), $m_sci_Nil$());
       var t = h;
-      var rest = $as_sci_List(this$146.tail__O());
+      var rest = $as_sci_List(this$12.tail__O());
       while ((rest !== $m_sci_Nil$())) {
         var x0$1 = $n(rest).head__O();
         var nx = new $c_sci_$colon$colon(f(x0$1), $m_sci_Nil$());
@@ -25124,14 +25354,14 @@ function $c_Llince_frontend_CaosConfig$() {
         t = nx;
         rest = $as_sci_List($n(rest).tail__O());
       }
-      var this$147 = h;
+      var this$13 = h;
     }
-    var js = (($x_15 + "\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$147, "", "\n", ""));
+    var js = (($x_15 + "\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$13, "", "\n", ""));
     (0, eval)(js);
   }));
   var buttons = $m_sci_Nil$();
-  var this$151 = new $c_Lcaos_frontend_widgets_WidgetInfo$Custom("sim-plotlys", reload, buttons);
-  var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo(this$151);
+  var this$17 = new $c_Lcaos_frontend_widgets_WidgetInfo$Custom("sim-plotlys", reload, buttons);
+  var y$2 = $f_Lcaos_frontend_widgets_WidgetInfo__expand__Lcaos_frontend_widgets_WidgetInfo(this$17);
   var $x_16 = new $c_T2("Plots", y$2);
   var y$3 = $m_Lcaos_frontend_Configurator$().steps__F1__Lcaos_sos_SOS__F1__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$2) => {
     var _$2$1 = $as_Llince_syntax_Lince$Simulation(_$2);
@@ -25141,8 +25371,8 @@ function $c_Llince_frontend_CaosConfig$() {
     return $m_Llince_syntax_Show$().simpleSt__Llince_backend_SmallStep$St__T(st$1);
   })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$3) => {
     var _$3$1 = $as_Llince_syntax_Lince$Action(_$3);
-    var this$154 = $n(_$3$1);
-    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$154);
+    var this$20 = $n(_$3$1);
+    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$20);
   })), $m_Lcaos_view_Text$());
   var $x_14 = new $c_T2("Run small-steps", y$3);
   var y$4 = $m_Lcaos_frontend_Configurator$().lts__F1__Lcaos_sos_SOS__F1__F1__I__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$4) => {
@@ -25153,8 +25383,8 @@ function $c_Llince_frontend_CaosConfig$() {
     return $m_Llince_syntax_Show$().simpleSt__Llince_backend_SmallStep$St__T(st$3);
   })), new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((_$5) => {
     var _$5$1 = $as_Llince_syntax_Lince$Action(_$5);
-    var this$157 = $n(_$5$1);
-    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$157);
+    var this$23 = $n(_$5$1);
+    return $m_Llince_syntax_Show$().apply__Llince_syntax_Lince$Action__T(this$23);
   })), 80);
   var $x_13 = new $c_T2("Run all steps", y$4);
   var y$5 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$2) => {
@@ -25166,51 +25396,51 @@ function $c_Llince_frontend_CaosConfig$() {
     var sim$4 = $as_Llince_syntax_Lince$Simulation(sim$3$1);
     var $x_7 = $m_Llince_backend_plot_Plot$();
     var $x_6 = $n(sim$4).state__Llince_backend_SmallStep$St();
-    var this$162 = $n(sim$4);
-    var ps = $x_7.apply__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($x_6, this$162.Llince_syntax_Lince$Simulation__f_pi);
-    var this$163 = $n($n($n(sim$4).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
-    if ((!this$163.isEmpty__Z())) {
+    var this$28 = $n(sim$4);
+    var ps = $x_7.apply__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($x_6, this$28.Llince_syntax_Lince$Simulation__f_pi);
+    var this$29 = $n($n($n(sim$4).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
+    if ((!this$29.isEmpty__Z())) {
       var $x_10 = $m_Llince_backend_plot_Plot$();
       var $x_9 = $n(sim$4).state__Llince_backend_SmallStep$St();
-      var this$164 = $n(sim$4);
-      var \u03b41$ = this$164.Llince_syntax_Lince$Simulation__f_pi;
+      var this$30 = $n(sim$4);
+      var \u03b41$ = this$30.Llince_syntax_Lince$Simulation__f_pi;
       $n(\u03b41$);
-      var this$165 = $n(\u03b41$);
-      var minTime = this$165.Llince_syntax_Lince$PlotInfo__f_minTime;
-      var this$166 = $n(\u03b41$);
-      var maxTime = this$166.Llince_syntax_Lince$PlotInfo__f_maxTime;
-      var this$167 = $n(\u03b41$);
-      var maxLoops = this$167.Llince_syntax_Lince$PlotInfo__f_maxLoops;
-      var this$168 = $n(\u03b41$);
-      var samples = this$168.Llince_syntax_Lince$PlotInfo__f_samples;
-      var this$169 = $n(\u03b41$);
-      var rkSamples = this$169.Llince_syntax_Lince$PlotInfo__f_rkSamples;
-      var this$170 = $n(\u03b41$);
-      var t$1 = this$170.Llince_syntax_Lince$PlotInfo__f_seed;
+      var this$31 = $n(\u03b41$);
+      var minTime = this$31.Llince_syntax_Lince$PlotInfo__f_minTime;
+      var this$32 = $n(\u03b41$);
+      var maxTime = this$32.Llince_syntax_Lince$PlotInfo__f_maxTime;
+      var this$33 = $n(\u03b41$);
+      var maxLoops = this$33.Llince_syntax_Lince$PlotInfo__f_maxLoops;
+      var this$34 = $n(\u03b41$);
+      var samples = this$34.Llince_syntax_Lince$PlotInfo__f_samples;
+      var this$35 = $n(\u03b41$);
+      var rkSamples = this$35.Llince_syntax_Lince$PlotInfo__f_rkSamples;
+      var this$36 = $n(\u03b41$);
+      var t$1 = this$36.Llince_syntax_Lince$PlotInfo__f_seed;
       var lo = t$1.RTLong__f_lo;
       var hi = t$1.RTLong__f_hi;
-      var this$171 = $n(\u03b41$);
-      var showAll = this$171.Llince_syntax_Lince$PlotInfo__f_showAll;
-      var this$172 = $n(\u03b41$);
-      var showVar = this$172.Llince_syntax_Lince$PlotInfo__f_showVar;
-      var this$173 = $n(\u03b41$);
-      var height = this$173.Llince_syntax_Lince$PlotInfo__f_height;
-      var this$174 = $n(\u03b41$);
-      var runs = this$174.Llince_syntax_Lince$PlotInfo__f_runs;
+      var this$37 = $n(\u03b41$);
+      var showAll = this$37.Llince_syntax_Lince$PlotInfo__f_showAll;
+      var this$38 = $n(\u03b41$);
+      var showVar = this$38.Llince_syntax_Lince$PlotInfo__f_showVar;
+      var this$39 = $n(\u03b41$);
+      var height = this$39.Llince_syntax_Lince$PlotInfo__f_height;
+      var this$40 = $n(\u03b41$);
+      var runs = this$40.Llince_syntax_Lince$PlotInfo__f_runs;
       var portrait = $m_sci_Nil$();
       var $x_8 = $n($as_Llince_backend_plot_Plot($n($x_10.apply__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($x_9, new $c_Llince_syntax_Lince$PlotInfo(minTime, maxTime, maxLoops, samples, rkSamples, new $c_RTLong(lo, hi), showAll, showVar, height, runs, portrait))).head__O())).show__T();
-      var this$176 = $n(ps);
+      var this$42 = $n(ps);
       var f$1 = ((_$6) => {
         var _$6$1 = $as_Llince_backend_plot_Plot(_$6);
         return $n(_$6$1).show__T();
       });
-      if ((this$176 === $m_sci_Nil$())) {
-        var this$177 = $m_sci_Nil$();
+      if ((this$42 === $m_sci_Nil$())) {
+        var this$43 = $m_sci_Nil$();
       } else {
-        var x0$2 = this$176.head__O();
+        var x0$2 = this$42.head__O();
         var h$1 = new $c_sci_$colon$colon(f$1(x0$2), $m_sci_Nil$());
         var t$2 = h$1;
-        var rest$1 = $as_sci_List(this$176.tail__O());
+        var rest$1 = $as_sci_List(this$42.tail__O());
         while ((rest$1 !== $m_sci_Nil$())) {
           var x0$3 = $n(rest$1).head__O();
           var nx$1 = new $c_sci_$colon$colon(f$1(x0$3), $m_sci_Nil$());
@@ -25218,22 +25448,22 @@ function $c_Llince_frontend_CaosConfig$() {
           t$2 = nx$1;
           rest$1 = $as_sci_List($n(rest$1).tail__O());
         }
-        var this$177 = h$1;
+        var this$43 = h$1;
       }
-      return (($x_8 + "\n---\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$177, "", "\n\n", ""));
+      return (($x_8 + "\n---\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$43, "", "\n\n", ""));
     } else {
-      var this$178 = $n(ps);
+      var this$44 = $n(ps);
       var f$2 = ((_$7) => {
         var _$7$1 = $as_Llince_backend_plot_Plot(_$7);
         return $n(_$7$1).show__T();
       });
-      if ((this$178 === $m_sci_Nil$())) {
-        var this$179 = $m_sci_Nil$();
+      if ((this$44 === $m_sci_Nil$())) {
+        var this$45 = $m_sci_Nil$();
       } else {
-        var x0$4 = this$178.head__O();
+        var x0$4 = this$44.head__O();
         var h$2 = new $c_sci_$colon$colon(f$2(x0$4), $m_sci_Nil$());
         var t$3 = h$2;
-        var rest$2 = $as_sci_List(this$178.tail__O());
+        var rest$2 = $as_sci_List(this$44.tail__O());
         while ((rest$2 !== $m_sci_Nil$())) {
           var x0$5 = $n(rest$2).head__O();
           var nx$2 = new $c_sci_$colon$colon(f$2(x0$5), $m_sci_Nil$());
@@ -25241,9 +25471,9 @@ function $c_Llince_frontend_CaosConfig$() {
           t$3 = nx$2;
           rest$2 = $as_sci_List($n(rest$2).tail__O());
         }
-        var this$179 = h$2;
+        var this$45 = h$2;
       }
-      return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$179, "", "\n\n", "");
+      return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$45, "", "\n\n", "");
     }
   })), $m_Lcaos_view_Text$());
   var $x_11 = new $c_T2("Plot debug", y$6);
@@ -25251,18 +25481,18 @@ function $c_Llince_frontend_CaosConfig$() {
     var sim$5 = $as_Llince_syntax_Lince$Simulation(sim$4$1);
     var plots$1 = $m_Llince_backend_plot_Plot$().allPlots__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($n(sim$5).state__Llince_backend_SmallStep$St(), $n(sim$5).Llince_syntax_Lince$Simulation__f_pi);
     var $x_4 = $m_Llince_backend_plot_PlotToJS$().apply__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__T($as_Llince_backend_plot_Plot($n($as_T2($n(plots$1).head__O()))._1__O()), "sim-plotlys", $as_Llince_syntax_Lince$PlotInfo($n($as_T2($n(plots$1).head__O()))._2__O()));
-    var this$182 = $n($as_sci_List($n(plots$1).tail__O()));
+    var this$48 = $n($as_sci_List($n(plots$1).tail__O()));
     var f$3 = ((p$2) => {
       var p$3 = $as_T2(p$2);
       return $m_Llince_backend_plot_PlotToJS$().addPlot__Llince_backend_plot_Plot__T__Llince_syntax_Lince$PlotInfo__T($as_Llince_backend_plot_Plot($n(p$3)._1__O()), "sim-plotlys", $as_Llince_syntax_Lince$PlotInfo($n(p$3)._2__O()));
     });
-    if ((this$182 === $m_sci_Nil$())) {
-      var this$183 = $m_sci_Nil$();
+    if ((this$48 === $m_sci_Nil$())) {
+      var this$49 = $m_sci_Nil$();
     } else {
-      var x0$6 = this$182.head__O();
+      var x0$6 = this$48.head__O();
       var h$3 = new $c_sci_$colon$colon(f$3(x0$6), $m_sci_Nil$());
       var t$4 = h$3;
-      var rest$3 = $as_sci_List(this$182.tail__O());
+      var rest$3 = $as_sci_List(this$48.tail__O());
       while ((rest$3 !== $m_sci_Nil$())) {
         var x0$7 = $n(rest$3).head__O();
         var nx$3 = new $c_sci_$colon$colon(f$3(x0$7), $m_sci_Nil$());
@@ -25270,24 +25500,24 @@ function $c_Llince_frontend_CaosConfig$() {
         t$4 = nx$3;
         rest$3 = $as_sci_List($n(rest$3).tail__O());
       }
-      var this$183 = h$3;
+      var this$49 = h$3;
     }
-    return (($x_4 + "\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$183, "", "\n", ""));
+    return (($x_4 + "\n") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$49, "", "\n", ""));
   })), $m_Lcaos_view_Text$());
   var $x_5 = new $c_T2("Plots JS", y$7);
   var y$8 = $m_Lcaos_frontend_Configurator$().view__F1__Lcaos_view_ViewType__Lcaos_frontend_widgets_WidgetInfo(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((sim$5$1) => {
     var sim$6 = $as_Llince_syntax_Lince$Simulation(sim$5$1);
-    var this$186 = $n($n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
-    if ((!this$186.isEmpty__Z())) {
-      var this$187 = $n($n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
-      var rest$4 = this$187;
+    var this$52 = $n($n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
+    if ((!this$52.isEmpty__Z())) {
+      var this$53 = $n($n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi).Llince_syntax_Lince$PlotInfo__f_portrait);
+      var rest$4 = this$53;
       var h$4 = null;
       var t$5 = null;
       while ((rest$4 !== $m_sci_Nil$())) {
         var x0$8 = $n(rest$4).head__O();
         var x = $as_T2(x0$8);
-        var elems$1 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T.getArrayOf().constr)([$as_T($n(x)._1__O()), $as_T($n(x)._2__O())]));
-        var it = $n($m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems$1)).iterator__sc_Iterator();
+        var elems = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T.getArrayOf().constr)([$as_T($n(x)._1__O()), $as_T($n(x)._2__O())]));
+        var it = $n($m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems)).iterator__sc_Iterator();
         while ($n(it).hasNext__Z()) {
           var nx$4 = new $c_sci_$colon$colon($n(it).next__O(), $m_sci_Nil$());
           if ((t$5 === null)) {
@@ -25304,31 +25534,31 @@ function $c_Llince_frontend_CaosConfig$() {
         var elem$1 = $as_T(elem);
         return $n(\u03b42$).contains__O__Z(elem$1);
       }));
-      var this$189 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var minTime$1 = this$189.Llince_syntax_Lince$PlotInfo__f_minTime;
-      var this$190 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var maxTime$1 = this$190.Llince_syntax_Lince$PlotInfo__f_maxTime;
-      var this$191 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var maxLoops$1 = this$191.Llince_syntax_Lince$PlotInfo__f_maxLoops;
-      var this$192 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var samples$1 = this$192.Llince_syntax_Lince$PlotInfo__f_samples;
-      var this$193 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var rkSamples$1 = this$193.Llince_syntax_Lince$PlotInfo__f_rkSamples;
-      var this$194 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var t$6 = this$194.Llince_syntax_Lince$PlotInfo__f_seed;
+      var this$55 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var minTime$1 = this$55.Llince_syntax_Lince$PlotInfo__f_minTime;
+      var this$56 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var maxTime$1 = this$56.Llince_syntax_Lince$PlotInfo__f_maxTime;
+      var this$57 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var maxLoops$1 = this$57.Llince_syntax_Lince$PlotInfo__f_maxLoops;
+      var this$58 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var samples$1 = this$58.Llince_syntax_Lince$PlotInfo__f_samples;
+      var this$59 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var rkSamples$1 = this$59.Llince_syntax_Lince$PlotInfo__f_rkSamples;
+      var this$60 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var t$6 = this$60.Llince_syntax_Lince$PlotInfo__f_seed;
       var lo$1 = t$6.RTLong__f_lo;
       var hi$1 = t$6.RTLong__f_hi;
-      var this$195 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var showAll$1 = this$195.Llince_syntax_Lince$PlotInfo__f_showAll;
-      var this$196 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var height$1 = this$196.Llince_syntax_Lince$PlotInfo__f_height;
-      var this$197 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
-      var runs$1 = this$197.Llince_syntax_Lince$PlotInfo__f_runs;
+      var this$61 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var showAll$1 = this$61.Llince_syntax_Lince$PlotInfo__f_showAll;
+      var this$62 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var height$1 = this$62.Llince_syntax_Lince$PlotInfo__f_height;
+      var this$63 = $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
+      var runs$1 = this$63.Llince_syntax_Lince$PlotInfo__f_runs;
       $n($n(sim$6).Llince_syntax_Lince$Simulation__f_pi);
       var portrait$1 = $m_sci_Nil$();
       var pi$1 = new $c_Llince_syntax_Lince$PlotInfo(minTime$1, maxTime$1, maxLoops$1, samples$1, rkSamples$1, new $c_RTLong(lo$1, hi$1), showAll$1, showVar$1, height$1, runs$1, portrait$1);
-      var this$199 = $n(sim$6);
-      var prog$1 = this$199.Llince_syntax_Lince$Simulation__f_prog;
+      var this$65 = $n(sim$6);
+      var prog$1 = this$65.Llince_syntax_Lince$Simulation__f_prog;
       $n(sim$6);
       var sim2 = new $c_Llince_syntax_Lince$Simulation(prog$1, pi$1);
     } else {
@@ -25336,26 +25566,26 @@ function $c_Llince_frontend_CaosConfig$() {
     }
     var $x_2 = $m_Llince_backend_plot_Plot$();
     var $x_1 = $n(sim2).state__Llince_backend_SmallStep$St();
-    var this$201 = $n(sim2);
-    var ps$1 = $x_2.apply__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($x_1, this$201.Llince_syntax_Lince$Simulation__f_pi);
-    var this$204 = $n($m_Llince_backend_plot_PlotToTrace$().apply__Llince_backend_plot_Plot__sci_List($as_Llince_backend_plot_Plot($n(ps$1).head__O())));
+    var this$67 = $n(sim2);
+    var ps$1 = $x_2.apply__Llince_backend_SmallStep$St__Llince_syntax_Lince$PlotInfo__sci_List($x_1, this$67.Llince_syntax_Lince$Simulation__f_pi);
+    var this$70 = $n($m_Llince_backend_plot_PlotToTrace$().apply__Llince_backend_plot_Plot__sci_List($as_Llince_backend_plot_Plot($n(ps$1).head__O())));
     var f$4 = ((kv) => {
       var kv$1 = $as_T2(kv);
-      var this$202 = $n(this.roundf__D__s_math_BigDecimal($uD($n(kv$1)._1__O())));
-      var $x_3 = $n(this$202.s_math_BigDecimal__f_bigDecimal).toString__T();
-      var this$203 = $n($as_sc_IterableOnceOps($n($as_sc_IterableOps($n(kv$1)._2__O())).map__F1__O(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1) => {
+      var this$68 = $n(this.roundf__D__s_math_BigDecimal($uD($n(kv$1)._1__O())));
+      var $x_3 = $n(this$68.s_math_BigDecimal__f_bigDecimal).toString__T();
+      var this$69 = $n($as_sc_IterableOnceOps($n($as_sc_IterableOps($n(kv$1)._2__O())).map__F1__O(new $c_sr_AbstractFunction1_$$Lambda$70e1780b84463d18653aacefee3ab989ac625f28(((x$1) => {
         var x$2 = $as_T2(x$1);
         return (($n(x$2)._1__O() + " -> ") + this.roundf__D__s_math_BigDecimal($uD($n(x$2)._2__O())));
       })))));
-      return (($x_3 + ": ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$203, "", ", ", ""));
+      return (($x_3 + ": ") + $f_sc_IterableOnceOps__mkString__T__T__T__T(this$69, "", ", ", ""));
     });
-    if ((this$204 === $m_sci_Nil$())) {
-      var this$205 = $m_sci_Nil$();
+    if ((this$70 === $m_sci_Nil$())) {
+      var this$71 = $m_sci_Nil$();
     } else {
-      var x0$9 = this$204.head__O();
+      var x0$9 = this$70.head__O();
       var h$5 = new $c_sci_$colon$colon(f$4(x0$9), $m_sci_Nil$());
       var t$7 = h$5;
-      var rest$5 = $as_sci_List(this$204.tail__O());
+      var rest$5 = $as_sci_List(this$70.tail__O());
       while ((rest$5 !== $m_sci_Nil$())) {
         var x0$10 = $n(rest$5).head__O();
         var nx$5 = new $c_sci_$colon$colon(f$4(x0$10), $m_sci_Nil$());
@@ -25363,20 +25593,116 @@ function $c_Llince_frontend_CaosConfig$() {
         t$7 = nx$5;
         rest$5 = $as_sci_List($n(rest$5).tail__O());
       }
-      var this$205 = h$5;
+      var this$71 = h$5;
     }
-    return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$205, "", "\n", "");
+    return $f_sc_IterableOnceOps__mkString__T__T__T__T(this$71, "", "\n", "");
   })), $m_Lcaos_view_Text$());
-  var elems$2 = $x_20.wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([$x_19, $x_18, $x_16, $x_14, $x_13, $x_12, $x_11, $x_5, new $c_T2("Plot2trace debug", y$8)]));
-  this.Llince_frontend_CaosConfig$__f_widgets = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems$2);
+  var elems$1 = $x_20.wrapRefArray__AO__sci_ArraySeq(new ($d_T2.getArrayOf().constr)([$x_19, $x_18, $x_16, $x_14, $x_13, $x_12, $x_11, $x_5, new $c_T2("Plot2trace debug", y$8)]));
+  this.Llince_frontend_CaosConfig$__f_widgets = $m_sci_Nil$().prependedAll__sc_IterableOnce__sci_List(elems$1);
+  var this$75 = $n($m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_toy);
+  var f$5 = ((_$8) => {
+    var _$8$1 = $as_Lcaos_frontend_Configurator$Example(_$8);
+    return $n(_$8$1).Lcaos_frontend_Configurator$Example__f_name;
+  });
+  if ((this$75 === $m_sci_Nil$())) {
+    var this$76 = $m_sci_Nil$();
+  } else {
+    var x0$11 = this$75.head__O();
+    var h$6 = new $c_sci_$colon$colon(f$5(x0$11), $m_sci_Nil$());
+    var t$8 = h$6;
+    var rest$6 = $as_sci_List(this$75.tail__O());
+    while ((rest$6 !== $m_sci_Nil$())) {
+      var x0$12 = $n(rest$6).head__O();
+      var nx$6 = new $c_sci_$colon$colon(f$5(x0$12), $m_sci_Nil$());
+      $n(t$8).sci_$colon$colon__f_next = nx$6;
+      t$8 = nx$6;
+      rest$6 = $as_sci_List($n(rest$6).tail__O());
+    }
+    var this$76 = h$6;
+  }
+  var y$9 = $m_sci_Set$().from__sc_IterableOnce__sci_Set(this$76);
+  var $x_24 = new $c_Lcaos_frontend_Configurator$Toggle("Basic", y$9, false, false, "");
+  var this$83 = $n($m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_scenarios);
+  var f$6 = ((_$9) => {
+    var _$9$1 = $as_Lcaos_frontend_Configurator$Example(_$9);
+    return $n(_$9$1).Lcaos_frontend_Configurator$Example__f_name;
+  });
+  if ((this$83 === $m_sci_Nil$())) {
+    var this$84 = $m_sci_Nil$();
+  } else {
+    var x0$13 = this$83.head__O();
+    var h$7 = new $c_sci_$colon$colon(f$6(x0$13), $m_sci_Nil$());
+    var t$9 = h$7;
+    var rest$7 = $as_sci_List(this$83.tail__O());
+    while ((rest$7 !== $m_sci_Nil$())) {
+      var x0$14 = $n(rest$7).head__O();
+      var nx$7 = new $c_sci_$colon$colon(f$6(x0$14), $m_sci_Nil$());
+      $n(t$9).sci_$colon$colon__f_next = nx$7;
+      t$9 = nx$7;
+      rest$7 = $as_sci_List($n(rest$7).tail__O());
+    }
+    var this$84 = h$7;
+  }
+  var y$10 = $m_sci_Set$().from__sc_IterableOnce__sci_Set(this$84);
+  var $x_23 = new $c_Lcaos_frontend_Configurator$Toggle("Scenarios", y$10, true, false, "");
+  var this$89 = $n($m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_prob);
+  var f$7 = ((_$10) => {
+    var _$10$1 = $as_Lcaos_frontend_Configurator$Example(_$10);
+    return $n(_$10$1).Lcaos_frontend_Configurator$Example__f_name;
+  });
+  if ((this$89 === $m_sci_Nil$())) {
+    var this$90 = $m_sci_Nil$();
+  } else {
+    var x0$15 = this$89.head__O();
+    var h$8 = new $c_sci_$colon$colon(f$7(x0$15), $m_sci_Nil$());
+    var t$10 = h$8;
+    var rest$8 = $as_sci_List(this$89.tail__O());
+    while ((rest$8 !== $m_sci_Nil$())) {
+      var x0$16 = $n(rest$8).head__O();
+      var nx$8 = new $c_sci_$colon$colon(f$7(x0$16), $m_sci_Nil$());
+      $n(t$10).sci_$colon$colon__f_next = nx$8;
+      t$10 = nx$8;
+      rest$8 = $as_sci_List($n(rest$8).tail__O());
+    }
+    var this$90 = h$8;
+  }
+  var y$11 = $m_sci_Set$().from__sc_IterableOnce__sci_Set(this$90);
+  var $x_22 = new $c_Lcaos_frontend_Configurator$Toggle("Probab.", y$11, true, false, "");
+  var this$95 = $n($m_Llince_frontend_examples_Basic$().Llince_frontend_examples_Basic$__f_configs);
+  var f$8 = ((_$11) => {
+    var _$11$1 = $as_Lcaos_frontend_Configurator$Example(_$11);
+    return $n(_$11$1).Lcaos_frontend_Configurator$Example__f_name;
+  });
+  if ((this$95 === $m_sci_Nil$())) {
+    var this$96 = $m_sci_Nil$();
+  } else {
+    var x0$17 = this$95.head__O();
+    var h$9 = new $c_sci_$colon$colon(f$8(x0$17), $m_sci_Nil$());
+    var t$11 = h$9;
+    var rest$9 = $as_sci_List(this$95.tail__O());
+    while ((rest$9 !== $m_sci_Nil$())) {
+      var x0$18 = $n(rest$9).head__O();
+      var nx$9 = new $c_sci_$colon$colon(f$8(x0$18), $m_sci_Nil$());
+      $n(t$11).sci_$colon$colon__f_next = nx$9;
+      t$11 = nx$9;
+      rest$9 = $as_sci_List($n(rest$9).tail__O());
+    }
+    var this$96 = h$9;
+  }
+  var y$12 = $m_sci_Set$().from__sc_IterableOnce__sci_Set(this$96);
+  var $x_21 = new $c_Lcaos_frontend_Configurator$Toggle("Config.", y$12, false, false, "");
+  var this$103 = $m_sci_Set$();
+  var elems$2 = $m_sr_ScalaRunTime$().wrapRefArray__AO__sci_ArraySeq(new ($d_T.getArrayOf().constr)(["Plot debug", "Plot2trace debug", "Plots JS", "View parsed", "View pretty"]));
+  var y$13 = this$103.from__sc_IterableOnce__sci_Set(elems$2);
+  this.Llince_frontend_CaosConfig$__f_toggles = new $c_sci_$colon$colon($x_24, new $c_sci_$colon$colon($x_23, new $c_sci_$colon$colon($x_22, new $c_sci_$colon$colon($x_21, new $c_sci_$colon$colon(new $c_Lcaos_frontend_Configurator$Toggle("Debug", y$13, false, false, ""), $m_sci_Nil$())))));
   this.Llince_frontend_CaosConfig$__f_footer = $m_sc_StringOps$().stripMargin$extension__T__C__T("Simple animator of Lince 2.0, meant for cyber physical systems, describing programs with discrete and continuous evolution.\n      | Source code available online:\n      | <a target=\"_blank\" href=\"https://github.com/arcalab/lince-2.0\">\n      | https://github.com/arcalab/lince-2.0</a>. Used to illustrate a stochastic extension described in a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication and presentation</a>.\n      | This updated version still includes less features than its predecessor at <a href=\"http://arcatools.org/lince\">http://arcatools.org/lince</a>.", 124);
-  var $x_22 = $m_Lcaos_frontend_Configurator$();
+  var $x_26 = $m_Lcaos_frontend_Configurator$();
   var self = this.Llince_frontend_CaosConfig$__f_languageName;
   var self$1 = new $c_T2(self, "More information on the syntax of Lince 2.0");
-  var y$9 = $m_sc_StringOps$().stripMargin$extension__T__C__T("<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre></p>\n        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>\n        |<p> You can customize your plot by appending to the end of your program, e.g.,\n        |<pre>\n        |---\n        |until 5 // maximum time (default 10)\n        |from 0 // starting time (default 0)\n        |iterations 10 // maximum times the while loops are unfolded (default 500)\n        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)\n        |rk-samples 20 // number of samples for the Runge-Kutta method (default 100)\n        |seed 0 // seed for the random generator  (every time a random one by default)\n        |vars x.*, y // list of regular expressions to select variables to be displayed (default all)\n        |height 450 // sets the height in px of the graph (default 450)\n        |runs 5 // number of plots to draw (default 1, useful for random plots)\n        |portrait x,y; z,w // creates a portrait plot, relating x with y and z with w (deactivated by default)\n        |verbose // shows a marker at every discrete step (does not show by default)\n        |</pre>\n        |</p>\n        |<h3>Note on stochastic functions</h3>\n        |<p> The functions below are stochastic, and will yield a different value every time they are called. For reproducibility, you can set the \"seed\" value to fix the internal pseudo-random generator.\n          <ul>\n            <li><code>unif(a,b)</code> - random value from a uniform distribution between <code>a</code> and <code>b</code>;</li>\n            <li><code>unif()</code> - equivalent to <code>unif(0,1)</code></li>\n            <li><code>expn(lambda)</code> - random variable from a negative exponential distribution, using an average frequence of <code>lambda</code> (equivalent to <code>-ln(unif()) / lambda</code>);</li>\n            <li><code>normal(m,s)</code> - random variable from a normal distribution with mean <code>m</code> and standard deviation <code>s, using the Box-Muller method.</code></li>\n            <li><code>powerlaw(alpha,xmin)</code> - random variable from a power law distribution, using a normalisation value <code>alpha > 1</code> and a lower bound <code>xmin</code> for the returned values (equivalent to <code>xmin * unif()^(\u22121/(alpha\u22121))</code>).</li>\n          </ul>\n        |</p>\n        |", 124);
-  var $x_21 = new $c_T2(self$1, y$9);
+  var y$14 = $m_sc_StringOps$().stripMargin$extension__T__C__T("<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:\n        |<pre>\n        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }\n        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;\n        |  e ::= x  |  f(e,...,e)\n        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false\n        |</pre></p>\n        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>\n        |<p> You can customize your plot by appending to the end of your program, e.g.,\n        |<pre>\n        |---\n        |until 5 // maximum time (default 10)\n        |from 0 // starting time (default 0)\n        |iterations 10 // maximum times the while loops are unfolded (default 500)\n        |samples 40 // minumum number of points to be sampled when drawing the plot (default 20)\n        |rk-samples 20 // number of samples for the Runge-Kutta method (default 100)\n        |seed 0 // seed for the random generator  (every time a random one by default)\n        |vars x.*, y // list of regular expressions to select variables to be displayed (default all)\n        |height 450 // sets the height in px of the graph (default 450)\n        |runs 5 // number of plots to draw (default 1, useful for random plots)\n        |portrait x,y; z,w // creates a portrait plot, relating x with y and z with w (deactivated by default)\n        |verbose // shows a marker at every discrete step (does not show by default)\n        |</pre>\n        |</p>\n        |<h3>Note on stochastic functions</h3>\n        |<p> The functions below are stochastic, and will yield a different value every time they are called. For reproducibility, you can set the \"seed\" value to fix the internal pseudo-random generator.\n          <ul>\n            <li><code>unif(a,b)</code> - random value from a uniform distribution between <code>a</code> and <code>b</code>;</li>\n            <li><code>unif()</code> - equivalent to <code>unif(0,1)</code></li>\n            <li><code>expn(lambda)</code> - random variable from a negative exponential distribution, using an average frequence of <code>lambda</code> (equivalent to <code>-ln(unif()) / lambda</code>);</li>\n            <li><code>normal(m,s)</code> - random variable from a normal distribution with mean <code>m</code> and standard deviation <code>s, using the Box-Muller method.</code></li>\n            <li><code>powerlaw(alpha,xmin)</code> - random variable from a power law distribution, using a normalisation value <code>alpha > 1</code> and a lower bound <code>xmin</code> for the returned values (equivalent to <code>xmin * unif()^(\u22121/(alpha\u22121))</code>).</li>\n          </ul>\n        |</p>\n        |", 124);
+  var $x_25 = new $c_T2(self$1, y$14);
   var self$2 = new $c_T2("Run small-steps", "Information on the semantics rules used by Lince");
-  this.Llince_frontend_CaosConfig$__f_documentation = $x_22.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon($x_21, new $c_sci_$colon$colon(new $c_T2(self$2, "<p>The operational rules, borrowed from a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication</a>, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"), $m_sci_Nil$())));
+  this.Llince_frontend_CaosConfig$__f_documentation = $x_26.toDocumentation__sci_List__Lcaos_frontend_Documentation(new $c_sci_$colon$colon($x_25, new $c_sci_$colon$colon(new $c_T2(self$2, "<p>The operational rules, borrowed from a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication</a>, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"), $m_sci_Nil$())));
 }
 $c_Llince_frontend_CaosConfig$.prototype = new $h_O();
 $c_Llince_frontend_CaosConfig$.prototype.constructor = $c_Llince_frontend_CaosConfig$;
@@ -25384,8 +25710,14 @@ $c_Llince_frontend_CaosConfig$.prototype.constructor = $c_Llince_frontend_CaosCo
 function $h_Llince_frontend_CaosConfig$() {
 }
 $h_Llince_frontend_CaosConfig$.prototype = $c_Llince_frontend_CaosConfig$.prototype;
+$c_Llince_frontend_CaosConfig$.prototype.shortName__s_Option = (function() {
+  return this.Llince_frontend_CaosConfig$__f_shortName;
+});
 $c_Llince_frontend_CaosConfig$.prototype.smallWidgets__sc_Iterable = (function() {
   return this.Llince_frontend_CaosConfig$__f_smallWidgets;
+});
+$c_Llince_frontend_CaosConfig$.prototype.caos$frontend$Configurator$_setter_$shortName_$eq__s_Option__V = (function(x$0) {
+  this.Llince_frontend_CaosConfig$__f_shortName = x$0;
 });
 $c_Llince_frontend_CaosConfig$.prototype.caos$frontend$Configurator$_setter_$smallWidgets_$eq__sc_Iterable__V = (function(x$0) {
   this.Llince_frontend_CaosConfig$__f_smallWidgets = x$0;
@@ -25395,6 +25727,9 @@ $c_Llince_frontend_CaosConfig$.prototype.caos$frontend$Configurator$_setter_$doc
 });
 $c_Llince_frontend_CaosConfig$.prototype.caos$frontend$Configurator$_setter_$footer_$eq__T__V = (function(x$0) {
   this.Llince_frontend_CaosConfig$__f_footer = x$0;
+});
+$c_Llince_frontend_CaosConfig$.prototype.caos$frontend$Configurator$_setter_$toggles_$eq__sci_List__V = (function(x$0) {
+  this.Llince_frontend_CaosConfig$__f_toggles = x$0;
 });
 $c_Llince_frontend_CaosConfig$.prototype.name__T = (function() {
   return this.Llince_frontend_CaosConfig$__f_name;
@@ -25414,6 +25749,9 @@ $c_Llince_frontend_CaosConfig$.prototype.widgets__sc_Iterable = (function() {
 $c_Llince_frontend_CaosConfig$.prototype.roundf__D__s_math_BigDecimal = (function(x) {
   var this$1 = $n($m_s_package$().BigDecimal__s_math_BigDecimal$());
   return $n(this$1.decimal__D__Ljava_math_MathContext__s_math_BigDecimal(x, this$1.s_math_BigDecimal$__f_defaultMathContext)).setScale__I__s_Enumeration$Value__s_math_BigDecimal(3, ($m_s_package$().BigDecimal__s_math_BigDecimal$(), $m_s_math_BigDecimal$RoundingMode$().s_math_BigDecimal$RoundingMode$__f_HALF_UP));
+});
+$c_Llince_frontend_CaosConfig$.prototype.toggles__sci_List = (function() {
+  return this.Llince_frontend_CaosConfig$__f_toggles;
 });
 $c_Llince_frontend_CaosConfig$.prototype.footer__T = (function() {
   return this.Llince_frontend_CaosConfig$__f_footer;
@@ -26815,7 +27153,7 @@ $c_Lcaos_frontend_widgets_CodeWidget.prototype.constructor = $c_Lcaos_frontend_w
 function $h_Lcaos_frontend_widgets_CodeWidget() {
 }
 $h_Lcaos_frontend_widgets_CodeWidget.prototype = $c_Lcaos_frontend_widgets_CodeWidget.prototype;
-$c_Lcaos_frontend_widgets_CodeWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
+$c_Lcaos_frontend_widgets_CodeWidget.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
   var textId = (this.Lcaos_frontend_Site$$anon$1__f_boxId + "Text");
   var self = new $c_s_util_Right("download");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
@@ -26826,7 +27164,7 @@ $c_Lcaos_frontend_widgets_CodeWidget.prototype.init__Lcaos_frontend_widgets_DomE
   var this$6 = $n(this.Lcaos_frontend_Site$$anon$1__f_buttons);
   var buttons$1 = new $c_sci_$colon$colon(down, this$6);
   var headerStyle$1 = $m_sci_Nil$();
-  var inputDiv = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", textId);
+  var inputDiv = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, headerStyle$1, buttons$1)).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", textId);
   $n($n($n($n($n(inputDiv).append__T__Lcaos_frontend_widgets_DomElem("textarea")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_Site$$anon$1__f_boxId)).attr__T__T__Lcaos_frontend_widgets_DomElem("name", this.Lcaos_frontend_Site$$anon$1__f_boxId)).attr__T__T__Lcaos_frontend_widgets_DomElem("class", "my-textarea prettyprint lang-java")).attr__T__T__Lcaos_frontend_widgets_DomElem("style", "width: 100%; max-width: 100%; min-width: 100%;");
   $p_Lcaos_frontend_widgets_CodeWidget__buildCodeArea__T__sjs_js_Dynamic(this, this.Lcaos_frontend_Site$$anon$1__f_input);
   var realTxt = $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(textId).childNodes[1].childNodes[0].childNodes[0];
@@ -32522,6 +32860,126 @@ var $d_Lcaos_frontend_Configurator$Example = new $TypeData().initClass($c_Lcaos_
   Ljava_io_Serializable: 1
 }));
 /** @constructor */
+function $c_Lcaos_frontend_Configurator$Toggle(name, trgs, on, hidden, desc) {
+  this.Lcaos_frontend_Configurator$Toggle__f_name = null;
+  this.Lcaos_frontend_Configurator$Toggle__f_trgs = null;
+  this.Lcaos_frontend_Configurator$Toggle__f_on = false;
+  this.Lcaos_frontend_Configurator$Toggle__f_hidden = false;
+  this.Lcaos_frontend_Configurator$Toggle__f_desc = null;
+  this.Lcaos_frontend_Configurator$Toggle__f_name = name;
+  this.Lcaos_frontend_Configurator$Toggle__f_trgs = trgs;
+  this.Lcaos_frontend_Configurator$Toggle__f_on = on;
+  this.Lcaos_frontend_Configurator$Toggle__f_hidden = hidden;
+  this.Lcaos_frontend_Configurator$Toggle__f_desc = desc;
+}
+$c_Lcaos_frontend_Configurator$Toggle.prototype = new $h_O();
+$c_Lcaos_frontend_Configurator$Toggle.prototype.constructor = $c_Lcaos_frontend_Configurator$Toggle;
+/** @constructor */
+function $h_Lcaos_frontend_Configurator$Toggle() {
+}
+$h_Lcaos_frontend_Configurator$Toggle.prototype = $c_Lcaos_frontend_Configurator$Toggle.prototype;
+$c_Lcaos_frontend_Configurator$Toggle.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_s_Product$$anon$1(this);
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.hashCode__I = (function() {
+  var acc = (-889275714);
+  var hash = acc;
+  acc = $m_sr_Statics$().mix__I__I__I(hash, (-1784436876));
+  var hash$1 = acc;
+  var x = this.Lcaos_frontend_Configurator$Toggle__f_name;
+  var data = $m_sr_Statics$().anyHash__O__I(x);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$1, data);
+  var hash$2 = acc;
+  var x$1 = this.Lcaos_frontend_Configurator$Toggle__f_trgs;
+  var data$1 = $m_sr_Statics$().anyHash__O__I(x$1);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$2, data$1);
+  var hash$3 = acc;
+  var data$2 = (this.Lcaos_frontend_Configurator$Toggle__f_on ? 1231 : 1237);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$3, data$2);
+  var hash$4 = acc;
+  var data$3 = (this.Lcaos_frontend_Configurator$Toggle__f_hidden ? 1231 : 1237);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$4, data$3);
+  var hash$5 = acc;
+  var x$2 = this.Lcaos_frontend_Configurator$Toggle__f_desc;
+  var data$4 = $m_sr_Statics$().anyHash__O__I(x$2);
+  acc = $m_sr_Statics$().mix__I__I__I(hash$5, data$4);
+  var hash$6 = acc;
+  return $m_sr_Statics$().finalizeHash__I__I__I(hash$6, 5);
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.equals__O__Z = (function(x$0) {
+  if ((this === x$0)) {
+    return true;
+  } else if ((x$0 instanceof $c_Lcaos_frontend_Configurator$Toggle)) {
+    var x$0$2 = $as_Lcaos_frontend_Configurator$Toggle(x$0);
+    if ((((this.Lcaos_frontend_Configurator$Toggle__f_on === $n(x$0$2).Lcaos_frontend_Configurator$Toggle__f_on) && (this.Lcaos_frontend_Configurator$Toggle__f_hidden === $n(x$0$2).Lcaos_frontend_Configurator$Toggle__f_hidden)) && (this.Lcaos_frontend_Configurator$Toggle__f_name === $n(x$0$2).Lcaos_frontend_Configurator$Toggle__f_name))) {
+      var x = this.Lcaos_frontend_Configurator$Toggle__f_trgs;
+      var x$2 = $n(x$0$2).Lcaos_frontend_Configurator$Toggle__f_trgs;
+      var $x_1 = ((x === null) ? (x$2 === null) : $n(x).equals__O__Z(x$2));
+    } else {
+      var $x_1 = false;
+    }
+    if (($x_1 && (this.Lcaos_frontend_Configurator$Toggle__f_desc === $n(x$0$2).Lcaos_frontend_Configurator$Toggle__f_desc))) {
+      $n(x$0$2);
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return false;
+  }
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$()._toString__s_Product__T(this);
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.productArity__I = (function() {
+  return 5;
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.productPrefix__T = (function() {
+  return "Toggle";
+});
+$c_Lcaos_frontend_Configurator$Toggle.prototype.productElement__I__O = (function(n) {
+  switch (n) {
+    case 0: {
+      return this.Lcaos_frontend_Configurator$Toggle__f_name;
+      break;
+    }
+    case 1: {
+      return this.Lcaos_frontend_Configurator$Toggle__f_trgs;
+      break;
+    }
+    case 2: {
+      return this.Lcaos_frontend_Configurator$Toggle__f_on;
+      break;
+    }
+    case 3: {
+      return this.Lcaos_frontend_Configurator$Toggle__f_hidden;
+      break;
+    }
+    case 4: {
+      return this.Lcaos_frontend_Configurator$Toggle__f_desc;
+      break;
+    }
+    default: {
+      throw $ct_jl_IndexOutOfBoundsException__T__(new $c_jl_IndexOutOfBoundsException(), ("" + n));
+    }
+  }
+});
+function $as_Lcaos_frontend_Configurator$Toggle(obj) {
+  return (((obj instanceof $c_Lcaos_frontend_Configurator$Toggle) || (obj === null)) ? obj : $throwClassCastException(obj, "caos.frontend.Configurator$Toggle"));
+}
+function $isArrayOf_Lcaos_frontend_Configurator$Toggle(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lcaos_frontend_Configurator$Toggle)));
+}
+function $asArrayOf_Lcaos_frontend_Configurator$Toggle(obj, depth) {
+  return (($isArrayOf_Lcaos_frontend_Configurator$Toggle(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lcaos.frontend.Configurator$Toggle;", depth));
+}
+var $d_Lcaos_frontend_Configurator$Toggle = new $TypeData().initClass($c_Lcaos_frontend_Configurator$Toggle, "caos.frontend.Configurator$Toggle", ({
+  Lcaos_frontend_Configurator$Toggle: 1,
+  s_Equals: 1,
+  s_Product: 1,
+  Ljava_io_Serializable: 1
+}));
+/** @constructor */
 function $c_Lcaos_frontend_Documentation(docs) {
   this.Lcaos_frontend_Documentation__f_docs = null;
   this.Lcaos_frontend_Documentation__f_docs = docs;
@@ -32600,20 +33058,20 @@ var $d_Lcaos_frontend_Documentation = new $TypeData().initClass($c_Lcaos_fronten
   Ljava_io_Serializable: 1
 }));
 /** @constructor */
-function $c_Lcaos_frontend_Site$$anon$1(config$4, ex$1) {
+function $c_Lcaos_frontend_Site$$anon$1(config$5, ex$1) {
   this.Lcaos_frontend_widgets_Widget__f_title = null;
   this.Lcaos_frontend_widgets_Widget__f_doc = null;
   this.Lcaos_frontend_widgets_Widget__f_titleId = null;
   this.Lcaos_frontend_widgets_Widget__f_wrap = null;
   this.Lcaos_frontend_widgets_CodeWidget__f_theme = null;
   this.Lcaos_frontend_widgets_CodeWidget__f_code = null;
-  this.Lcaos_frontend_Site$$anon$1__f_config$5 = null;
+  this.Lcaos_frontend_Site$$anon$1__f_config$6 = null;
   this.Lcaos_frontend_Site$$anon$1__f_input = null;
   this.Lcaos_frontend_Site$$anon$1__f_boxId = null;
   this.Lcaos_frontend_Site$$anon$1__f_buttons = null;
   this.Lcaos_frontend_Site$$anon$1__f_codemirror = null;
-  this.Lcaos_frontend_Site$$anon$1__f_config$5 = config$4;
-  $ct_Lcaos_frontend_widgets_CodeWidget__T__sci_List__(this, $n(config$4).languageName__T(), $m_sci_Nil$());
+  this.Lcaos_frontend_Site$$anon$1__f_config$6 = config$5;
+  $ct_Lcaos_frontend_widgets_CodeWidget__T__sci_List__(this, $n(config$5).languageName__T(), $m_sci_Nil$());
   if ((ex$1 instanceof $c_s_Some)) {
     var e = $as_Lcaos_frontend_Configurator$Example($n($as_s_Some(ex$1)).s_Some__f_value);
     var $x_1 = $n(e).Lcaos_frontend_Configurator$Example__f_example;
@@ -32621,15 +33079,15 @@ function $c_Lcaos_frontend_Site$$anon$1(config$4, ex$1) {
     var $x_1 = "";
   }
   this.Lcaos_frontend_Site$$anon$1__f_input = $x_1;
-  this.Lcaos_frontend_Site$$anon$1__f_boxId = ($n(config$4).name__T() + "Box");
+  this.Lcaos_frontend_Site$$anon$1__f_boxId = ($n(config$5).name__T() + "Box");
   var self = new $c_s_util_Right("refresh");
   var _1 = new $c_sjsr_AnonFunction0_$$Lambda$92a2e254bbb9c06a0a02fc31abab59c51c18ecc1((() => {
     this.reload__V();
   }));
-  var _2 = (("Load the " + $n(config$4).languageName__T()) + " program (shift-enter)");
+  var _2 = (("Load the " + $n(config$5).languageName__T()) + " program (shift-enter)");
   var y = new $c_T2(_1, _2);
   var prefix$1 = new $c_sci_$colon$colon(new $c_T2(self, y), $m_sci_Nil$());
-  this.Lcaos_frontend_Site$$anon$1__f_buttons = $n($n($m_Lcaos_frontend_widgets_Widget$().mkHelper__T__Lcaos_frontend_Documentation__s_Option($n(config$4).languageName__T(), $n(config$4).documentation__Lcaos_frontend_Documentation())).toList__sci_List()).$colon$colon$colon__sci_List__sci_List(prefix$1);
+  this.Lcaos_frontend_Site$$anon$1__f_buttons = $n($n($m_Lcaos_frontend_widgets_Widget$().mkHelper__T__Lcaos_frontend_Documentation__s_Option($n(config$5).languageName__T(), $n(config$5).documentation__Lcaos_frontend_Documentation())).toList__sci_List()).$colon$colon$colon__sci_List__sci_List(prefix$1);
   this.Lcaos_frontend_Site$$anon$1__f_codemirror = "caos";
 }
 $c_Lcaos_frontend_Site$$anon$1.prototype = new $h_Lcaos_frontend_widgets_CodeWidget();
@@ -32639,7 +33097,7 @@ function $h_Lcaos_frontend_Site$$anon$1() {
 }
 $h_Lcaos_frontend_Site$$anon$1.prototype = $c_Lcaos_frontend_Site$$anon$1.prototype;
 $c_Lcaos_frontend_Site$$anon$1.prototype.get__O = (function() {
-  return $n($n(this.Lcaos_frontend_Site$$anon$1__f_config$5).parser__F1()).apply__O__O(this.Lcaos_frontend_Site$$anon$1__f_input);
+  return $n($n(this.Lcaos_frontend_Site$$anon$1__f_config$6).parser__F1()).apply__O__O(this.Lcaos_frontend_Site$$anon$1__f_input);
 });
 $c_Lcaos_frontend_Site$$anon$1.prototype.reload__V = (function() {
   var this$1 = $n($m_Lcaos_frontend_Site$().Lcaos_frontend_Site$__f_descriptionArea);
@@ -38570,8 +39028,8 @@ $c_Lcaos_frontend_widgets_Tabs.prototype.productElement__I__O = (function(n) {
     }
   }
 });
-$c_Lcaos_frontend_widgets_Tabs.prototype.init__Lcaos_frontend_widgets_DomElem__Z__V = (function(div, visible) {
-  this.Lcaos_frontend_widgets_Tabs__f_box = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Tabs__f_divBox);
+$c_Lcaos_frontend_widgets_Tabs.prototype.init__Lcaos_frontend_widgets_DomElem__Z__Z__V = (function(div, visible, hidden) {
+  this.Lcaos_frontend_widgets_Tabs__f_box = $n($n(this.panelBox__Lcaos_frontend_widgets_DomElem__Z__Z__sci_List__sci_List__Lcaos_frontend_widgets_DomElem(div, visible, hidden, $m_sci_Nil$(), $m_sci_Nil$())).append__T__Lcaos_frontend_widgets_DomElem("div")).attr__T__T__Lcaos_frontend_widgets_DomElem("id", this.Lcaos_frontend_widgets_Tabs__f_divBox);
   $m_Lorg_scalajs_dom_package$().document__Lorg_scalajs_dom_raw_HTMLDocument().getElementById(this.Lcaos_frontend_widgets_Widget__f_titleId).firstChild.firstChild.firstChild.onclick = ((e) => ((!this.isVisible__Z()) ? (this.showTabs__V(), (void 0)) : (void 0)));
 });
 $c_Lcaos_frontend_widgets_Tabs.prototype.update__V = (function() {
@@ -38741,6 +39199,7 @@ function $asArrayOf_Lcaos_frontend_widgets_WidgetInfo$Analyse(obj, depth) {
 function $c_Lcaos_frontend_widgets_WidgetInfo$Custom(divName, reload, buttons) {
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_expanded = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_location = 0;
+  this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_hidden = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_divName = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_reload = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_buttons = null;
@@ -38761,11 +39220,17 @@ $c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.expanded__Z = (function() 
 $c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.location__I = (function() {
   return this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_location;
 });
+$c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.hidden__Z = (function() {
+  return this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_hidden;
+});
 $c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.expanded_$eq__Z__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_expanded = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.location_$eq__I__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_location = x$1;
+});
+$c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.hidden_$eq__Z__V = (function(x$1) {
+  this.Lcaos_frontend_widgets_WidgetInfo$Custom__f_hidden = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Custom.prototype.productIterator__sc_Iterator = (function() {
   return new $c_s_Product$$anon$1(this);
@@ -38859,6 +39324,7 @@ function $asArrayOf_Lcaos_frontend_widgets_WidgetInfo$Explore(obj, depth) {
 function $c_Lcaos_frontend_widgets_WidgetInfo$Simulate(sos, v, lb, typ, pre) {
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_expanded = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_location = 0;
+  this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_hidden = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_sos = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_v = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_lb = null;
@@ -38883,11 +39349,17 @@ $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.expanded__Z = (function(
 $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.location__I = (function() {
   return this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_location;
 });
+$c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.hidden__Z = (function() {
+  return this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_hidden;
+});
 $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.expanded_$eq__Z__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_expanded = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.location_$eq__I__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_location = x$1;
+});
+$c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.hidden_$eq__Z__V = (function(x$1) {
+  this.Lcaos_frontend_widgets_WidgetInfo$Simulate__f_hidden = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Simulate.prototype.productIterator__sc_Iterator = (function() {
   return new $c_s_Product$$anon$1(this);
@@ -39002,6 +39474,7 @@ var $d_Lcaos_frontend_widgets_WidgetInfo$Simulate = new $TypeData().initClass($c
 function $c_Lcaos_frontend_widgets_WidgetInfo$Visualize(v, typ, pre) {
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_expanded = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_location = 0;
+  this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_hidden = false;
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_v = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_typ = null;
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_pre = null;
@@ -39022,11 +39495,17 @@ $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.expanded__Z = (function
 $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.location__I = (function() {
   return this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_location;
 });
+$c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.hidden__Z = (function() {
+  return this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_hidden;
+});
 $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.expanded_$eq__Z__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_expanded = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.location_$eq__I__V = (function(x$1) {
   this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_location = x$1;
+});
+$c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.hidden_$eq__Z__V = (function(x$1) {
+  this.Lcaos_frontend_widgets_WidgetInfo$Visualize__f_hidden = x$1;
 });
 $c_Lcaos_frontend_widgets_WidgetInfo$Visualize.prototype.productIterator__sc_Iterator = (function() {
   return new $c_s_Product$$anon$1(this);
