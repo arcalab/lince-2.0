@@ -1,7 +1,7 @@
 package lince.backend
 
 import lince.backend.Eval.Valuation
-import lince.syntax.Lince.Expr
+import lince.syntax.Lince.{Expr, Location}
 import scala.collection.mutable.{Map => MMap}
 
 object RungeKutta:
@@ -13,9 +13,9 @@ object RungeKutta:
     * @param time time to perform the Diff.eqs
     * @return Assignment of each variable to a value at the given time
     */
-  def apply(input:Valuation, eqs:Map[String,Expr], time:Double, numSteps:Int=100): Valuation  = {
+  def apply(input:Valuation, eqs:Map[Location,Expr], time:Double, numSteps:Int=100): Valuation  = {
 
-    val stepValuation = MMap[String, Double]()
+    val stepValuation = MMap[Location, Double]()
     stepValuation ++= input //.map(kv=>(kv._1->Eval(kv._2)(using Map())))
 
 //    val h:Double=0.001 //step size
@@ -24,11 +24,11 @@ object RungeKutta:
     // count how many ODEs were already evaluated, and give less and less precision (discount factor).
     // val numSteps:Int=500 //number of steps until the 'time'
     val h:Double=time/numSteps //step size
-    val accum:MMap[String,Double]=stepValuation.clone() //Map to perform the formulation of runge-kutta
-    val k1 = MMap.empty[String,Double].withDefaultValue(0)
-    val k2 = MMap.empty[String,Double].withDefaultValue(0)
-    val k3 = MMap.empty[String,Double].withDefaultValue(0)
-    val k4 = MMap.empty[String,Double].withDefaultValue(0)
+    val accum:MMap[Location,Double]=stepValuation.clone() //Map to perform the formulation of runge-kutta
+    val k1 = MMap.empty[Location,Double].withDefaultValue(0)
+    val k2 = MMap.empty[Location,Double].withDefaultValue(0)
+    val k3 = MMap.empty[Location,Double].withDefaultValue(0)
+    val k4 = MMap.empty[Location,Double].withDefaultValue(0)
 
     for (i <- 0 until numSteps){
 

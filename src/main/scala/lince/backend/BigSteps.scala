@@ -50,7 +50,7 @@ object BigSteps:
    */
   @tailrec
   def discSteps(st: St, hist: List[Action] = Nil): (List[Action], St) =
-    nextStatement(st.p) match
+    nextStatement(st.progs.head._2) match
       case _:EqDiff => hist -> st
       case _ => step(st) match
         case None => hist -> st // reached the end
@@ -93,7 +93,7 @@ object BigSteps:
                      hist: List[(Double,Valuation)]): (List[(Double,Valuation)], St) =
       val goalTime = st.t min (timeStep*counter)
   //    println(s"-- contSteps ${st} with goal $goalTime and next ${nextStatement(st.p)}")
-      nextStatement(st.p) match
+      nextStatement(st.progs.head._2) match
         case EqDiff(eqs,dur) => step(st.copy(t = goalTime)) match
           case Some((Action.DiffStop(_,_),st2)) => // reached goalTime
             //            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")

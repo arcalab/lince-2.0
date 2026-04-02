@@ -4,7 +4,7 @@ import lince.backend.BigSteps.{contSteps, discSteps}
 import lince.backend.plot.Plot.{MarkedPoints, Points, Trace, Traces}
 import lince.backend.{BigSteps, SmallStep}
 import lince.syntax.Lince
-import lince.syntax.Lince.{Action, Expr, PlotInfo, Program, Simulation}
+import lince.syntax.Lince.{Action, Expr, PlotInfo, Program, Simulation, Location}
 
 import scala.annotation.tailrec
 
@@ -69,10 +69,11 @@ object Plot:
   private type St = SmallStep.St
 
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
-    val ps = for run <- (1 to pinfo.runs).toList yield
-      val pi2 = pinfo.copy(runs = run)
-      apply(Simulation(st.p,pi2).state, pi2).map(p => (p,pi2))
-    ps.flatten
+    (1 to pinfo.runs).toList.flatMap { run =>
+    val pi2 = pinfo.copy(runs = run)
+    val st2 = st.copy(s = pinfo.seed + (run - 1))
+    apply(st2, pi2).map(p => (p, pi2))
+  }
 //      (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
   def apply(st:St, pinfo:PlotInfo): List[Plot] =
@@ -115,7 +116,7 @@ object Plot:
   /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
   private def valToAssign(st:St): St =
     val assign = for (x,value) <- st.v yield Program.Assign(x,Expr.Num(value))
-    st.copy(p = assign.foldRight(st.p)(Program.Seq.apply), v = Map())
+    st.copy(v = Map())
 
   /**
    * Main function that produces the plot: at each run performs a collection of
@@ -132,21 +133,27 @@ object Plot:
     // run discrete steps
     val (as, st2) = discSteps(st)
     // update Plot
-    val setVars = if showCont
-      then st2.v.keySet
-      else for (case Action.Assign(v,_) <- as.toSet) yield v
+    val setVars: Set[String]= if showCont
+      then st2.v.keySet.map(_.toString)
+      else for (case Action.Assign(v,_) <- as.toSet) yield v.toString
     for (v <- setVars if filter(v)) do
+      val loc = st2.v.keys.find(_.toString == v).get
       res = res.startTrace(v,
         timePassed,
-        st2.v.getOrElse(v,sys.error(s"No value for ${v} after ${as.mkString(",")}")),
+        st2.v(loc),
         as
       ).copy(ylabels = res.ylabels+v)
 
     // run continuous steps while sampling
     val (points, st3) = contSteps(st2, stepSize, timePassed)
     // update Plot
-    for ((time,valuation) <- points.reverse; (x,value) <- valuation if filter(x)) do
-      res = res + (x -> time -> value)
+    for
+      (time, valuation) <- points.reverse
+      (x, value) <- valuation
+      xStr = x.toString
+      if filter(xStr)
+    do
+      res = res + ((xStr, time) -> value)
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
     else calcPlot(st3, stepSize, timePassed + (st2.t - st3.t), showCont, res, filter)

@@ -3,7 +3,7 @@ package lince.syntax
 import cats.parse.Numbers.digits
 import cats.parse.Parser.*
 import cats.parse.{LocationMap, Parser as P, Parser0 as P0}
-import lince.syntax.Lince.{Cond, Expr, PlotInfo, Program, Simulation}
+import lince.syntax.Lince.{Cond, Expr, PlotInfo, Program, Simulation, Location}
 import Program.*
 import caos.frontend.widgets.WidgetInfo.Simulate
 
@@ -20,7 +20,7 @@ object Parser :
     }
 
   def parseSimulation(str: String): Simulation =
-    pp(simulation, str) match {
+    pp(sps.with1 *> simulation, str) match {
       case Left(e) => error(e)
       case Right(c) => c
     }
@@ -56,6 +56,14 @@ object Parser :
     (charIn('a' to 'z') ~ alphaDigit.rep0).string
   private def procName: P[String] =
     (charIn('A' to 'Z') ~ alphaDigit.rep0).string
+  private def location: P[Location] =
+    ((procName <* char('.')).?.with1 ~ varName).map {
+      case (None, v) => Location(None, v)
+      case (Some(p), v) => Location(Some(p), v)
+    }
+  private def namedProgram: P[(String, Program)] =
+  (procName <* sps) ~ block(program)
+
   private def symbols: P[String] =
     // symbols starting with "--" are meant for syntactic sugar of arrows, and ignored as symbols of terms
     P.not(string("--")).with1 *>
@@ -73,10 +81,11 @@ object Parser :
   //import scala.language.postfixOps
 
   private def simulation: P[Simulation] =
-//    (sps.with1 *> program ~ plotInfo.? <* sps).map{
-    (program ~ plotInfo.? <* sps).map {
-        case (p,Some(pi)) => Simulation(p,pi)
-        case (p,None) => Simulation(p, PlotInfo.default)
+    (program ~ plotInfo.?).map {
+      case (prog, Some(pi)) =>
+        Simulation(Map("" -> prog), pi)
+      case (prog, None) =>
+        Simulation(Map("" -> prog), PlotInfo.default)
     }
 
   /** A program is a command with possible spaces or comments around. */
@@ -95,7 +104,7 @@ object Parser :
     bern(recSt) |
     block(recSt) |
     waitP |
-    ((varName <* sps) ~ (assign | diffEq | suffix) ).map (x => x._2 (x._1) )
+    ((location <* sps) ~ (assign | diffEq | suffix) ).map (x => x._2 (x._1) )
   })
 
   def skip: P[Program] =
@@ -122,33 +131,35 @@ object Parser :
       .map(x => While(x._1, x._2)) |
     (string("repeat") *> sps *> intP ~ (sps *> rec <* sps))
       .map(x => Seq(
-        Assign("§c",Expr.Num(0)),
-        While(Cond.Comp("<",Expr.Var("§c"),Expr.Num(x._1)),
-          Seq(x._2,Assign("§c",Expr.Func("+",List(Expr.Var("§c"),Expr.Num(1))))))))
+        Assign(Location(None, "§c"),Expr.Num(0)),
+        While(
+          Cond.Comp("<",Expr.Var(Location(None, "§c")),Expr.Num(x._1)),
+          Seq(x._2,Assign(Location(None, "§c"),Expr.Func("+",List(Expr.Var(Location(None, "§c")),Expr.Num(1))))))))
 
   def waitP: P[Program] =
     string("wait") *> sps *> expr.map(e => EqDiff(Map(),e)) <* sps <* char(';')
 
-  def assign: P[String => Program] =
+  def assign: P[Location => Program] =
     (string(":=") *> sps *> expr <* sps <* char(';')).map(e => v => Assign(v,e))
 
-  def diffEq: P[String => Program] =
+  def diffEq: P[Location => Program] =
     ((char('\'') *> sps *> char('=') *> sps *> expr <* sps) ~ // 1st expr
       ((char(',')*>sps*>varName) ~ (char('\'') *> sps *> char('=') *> sps *> expr <* sps)).rep0 ~ // (x2'=e2)*
       duration)//(string("for") *> sps *> expr <* (sps <* char(';')))) // for dur;
       .map{
-        case ((e1,x2e2s),appDur) => x1 => appDur(Map(x1->e1)++x2e2s.toMap)
+        case ((e1,x2e2s),appDur) => x1 => appDur(Map(x1->e1)++
+        x2e2s.map{ case (k,v) => Location(None,k) -> v })
       }
   // "for" or "until" (syntactic sugar)
-  def duration: P[Map[String,Expr] => Program] =
+  def duration: P[Map[Location,Expr] => Program] =
     string("for") *> sps *>
       expr.map(dur => eqs => EqDiff(eqs,dur)) <*
       (sps <* char(';')) |
     ((string("until_") *> expr) ~ (sps *> cond <* (sps <* char(';'))))
-      .map((dur,c) => (eqs:Map[String,Expr]) => While(Cond.Not(c), EqDiff(eqs, dur)))
+      .map((dur,c) => (eqs:Map[Location,Expr]) => While(Cond.Not(c), EqDiff(eqs, dur)))
 
 
-  def suffix: P[String => Program] =
+  def suffix: P[Location => Program] =
     string("++") *> sps *> char(';')
       .as(v => Assign(v,Expr.Func("+",List(Expr.Var(v),Expr.Num(1))))) |
     string("--") *> sps *> char(';')
@@ -163,11 +174,14 @@ object Parser :
 //        .map(lamb => Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
 //                       Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))) |
           // - ln ( unif ) / lambda
-      (varName~(sps *> (char('(') *> sps *> recExpr.repSep0(sps~char(',')~sps) <* (sps <* char(')'))).?))
-        .map {
-          case (v, None) => Expr.Var(v)
-          case (v, Some(args)) => preProcess(Expr.Func(v, args))
-      })
+      (location ~ (sps *> (char('(') *> sps *> recExpr.repSep0(sps ~ char(',') ~ sps) <* (sps <* char(')'))).?))
+      .map {
+        case (loc, None) => Expr.Var(loc)
+        case (loc, Some(args)) =>
+          loc.prog match
+            case None => preProcess(Expr.Func(loc.name, args))
+            case Some(_) => sys.error(s"Functions cannot be qualified: $loc")
+            })
 
     def pow: P[(Expr, Expr) => Expr] =
       string("^").as((x: Expr, y: Expr) => Expr.Func("^",List(x,y)))

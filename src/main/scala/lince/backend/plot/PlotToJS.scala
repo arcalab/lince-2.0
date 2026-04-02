@@ -41,9 +41,9 @@ object PlotToJS:
        |
        |var data = [${
       (//plot.traces.keys.map("t_"+_).toList ++
-        vars.map("t_" + _) ++
-          plot.endings.keys.map("end_" + _).toList ++
-          plot.beginnings.keys.map("beg_" + _).toList
+        vars.map(v => "t_" + jsId(v)) ++
+          plot.endings.keys.map(v => "end_" + jsId(v)).toList ++
+          plot.beginnings.keys.map(v => "beg_" + jsId(v)).toList
         ).mkString(",")
     }];""".stripMargin
   }
@@ -52,17 +52,18 @@ object PlotToJS:
   def traceToJS(tr: Map[String, Traces],lbl: String): String =
     var js = ""
     for (variable, traces) <- tr do
+      val id = jsId(variable)
       val tr = traces
         .filter(_.nonEmpty)
         .map(tr => tr.head.copy(_2 = "null") :: tr).flatten.drop(1)
       val (xs, ys) = tr.unzip
       js +=
-        s"""var t_$variable = {
+        s"""var t_$id = {
            |   x: ${xs.mkString("[", ",", "]")},
            |   y: ${ys.mkString("[", ",", "]")},
            |   mode: 'lines',
            |   line: {color: colors(${colour(variable)})},
-           |   legendgroup: 'g_${variable}_${lbl}',
+           |   legendgroup: 'g_${id}_${lbl}',
            |   name: '$lbl${variable}'
            |};
            |""".stripMargin
@@ -72,9 +73,10 @@ object PlotToJS:
   def markBeginning(ps: Map[String, MarkedPoints], lbl: String): String =
     var js = ""
     for (variable, points) <- ps do {
+      val id = jsId(variable)
       val (xs, ys, acts) = points.unzip3
       js +=
-        s"""var beg_${variable} = {
+        s"""var beg_${id} = {
            |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
            |    y: ${ys.mkString("[", ",null,", "]")},
            |    text: [${acts.map(x => s"'${x.reverse.mkString("<br>")}'").mkString(",null,")}],
@@ -86,7 +88,7 @@ object PlotToJS:
            |        width: 2
            |    }},
            |    type: 'scatter',
-           |    legendgroup: 'g_${variable}_$lbl',
+           |    legendgroup: 'g_${id}_${lbl}',
            |    name: 'beginning of $lbl${variable}',
            |    showlegend: false,
            |};
@@ -98,9 +100,10 @@ object PlotToJS:
   def markEndings(ps: Map[String, Points], lbl: String): String =
     var js = ""
     for (variable, points) <- ps do {
+      val id = jsId(variable)
       val (xs, ys) = points.unzip
       js +=
-        s"""var end_${variable} = {
+        s"""var end_${id} = {
            |    x: ${xs.map(x => s"$x,$x").mkString("[", ",", "]")},
            |    y: ${ys.mkString("[", ",null,", "]")},
            |    text: [],
@@ -112,7 +115,7 @@ object PlotToJS:
            |        width: 2
            |    }},
            |    type: 'scatter',
-           |    legendgroup: 'g_${variable}_$lbl',
+           |    legendgroup: 'g_${id}_${lbl}',
            |    name: 'ending of $lbl${variable}',
            |    showlegend: false,
            |};
@@ -130,5 +133,13 @@ object PlotToJS:
       val oldCol = colours._1
       colours = (oldCol + 1, colours._2 + (x -> oldCol))
       oldCol
+
+  private def jsId(x: String): String =
+    x.replace(".", "_")
+      .replace("[", "_")
+      .replace("]", "_")
+      .replace(" ", "_")
+      .replace("-", "_")
+
 
 

@@ -23,7 +23,7 @@ object Show:
 
   def apply(e: Expr): String = e match
     case Expr.Num(n) => n.toString
-    case Expr.Var(x) => x
+    case Expr.Var(x) => x.toString
     case Expr.Func(op, es) if "+-/*^".contains(op.headOption.getOrElse(' ')) =>
       es.map(applyP).mkString(s"$op")
     case Expr.Func(op, es) =>
@@ -62,6 +62,11 @@ object Show:
   }
 
   def simpleSt(st: lince.backend.SmallStep.St): String =
-    s"[${st.t}/${st.lp}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
-    //s"[${st.t}/${st.lp}/${st.s}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
+    val progStr =
+      st.progs.map { case (name, p) =>
+        val prefix = if name == "" then "" else s"$name: "
+        prefix + simpleStatm(p)
+      }.mkString(" | ")
+
+    s"[${st.t}/${st.lp}] {${st.v.mkString(",")}} $progStr"
 

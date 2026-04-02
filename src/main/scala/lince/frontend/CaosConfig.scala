@@ -140,7 +140,7 @@ iterations 100"""
   /** Description of the widgets that appear in the dashboard. */
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
-    "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
+    "View pretty" -> view[Simulation](s => s._1.map((k,v) => s"$k -> ${Show(v)}").mkString("\n"), Code("clicke")).moveTo(1),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
           val plots = Plot.allPlots(sim.state, sim.pi)

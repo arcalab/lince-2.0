@@ -13,7 +13,7 @@ import scala.util.Random
 /** Small-step semantics for both commands and boolean+integer expressions.  */
 object SmallStep extends SOS[Action,St]:
 
-  case class St(p: Program   // input program
+  case class St(progs: Map[String, Program]   // input program
                ,v: Valuation // known variables
 //               ,r: Random    // random generator
                ,s: Long      // seed for the random generator
@@ -35,41 +35,132 @@ object SmallStep extends SOS[Action,St]:
   def next[A>:Action](st: St): Set[(A, St)] =
     step(st).toSet
 
+  // Collect all differential equations if ALL programs are EqDiff
+  def collectFlows(progs: Map[String, Program])(using Valuation, Random): Option[(Map[Location, Expr], Double)] =
+    val diffs = progs.collect {
+      case (_, EqDiff(eqs, dur)) => (eqs, dur)
+    }
+    if diffs.size != progs.size then None
+    else
+      val duration = Eval(diffs.head._2)
+      val merged: Map[Location, Expr] =
+        diffs.flatMap { case (eqs, _) => eqs }.toMap
+      Some((merged, duration))
+   
+
   /** Performs a single (deterministic) small step */
   def step(st: St): Option[(Action, St)] =
-    if st.t<=0 || st.lp<=0 then
+    if st.t <= 0 || st.lp <= 0 then
       return None
-    st.resetSeed // set seed and prepare to run
-    given r:Random = rand//st.r
-    given v:Valuation = st.v
+    st.resetSeed
+    given r: Random = rand
+    given v: Valuation = st.v
+    // Try PARALLEL continuous evolution first
+    collectFlows(st.progs) match
+      case Some((eqs, dur)) =>
+        val eqs2 = eqs.map((k, e) => (k, Eval.rands(e)))
+        if dur > st.t then
+          val v2 = RungeKutta(st.v, eqs2, st.t)
+          val newProgs = st.progs.map {
+            case (name, EqDiff(eqsP, _)) =>
+              name -> EqDiff(eqsP, Expr.Num(dur - st.t))
+            case other => other
+          }
+          Some(
+            Action.DiffStop(eqs2, st.t) ->
+              st.nextSeed.copy(
+                progs = newProgs,
+                v = v2,
+                t = 0
+              )
+          )
+        else
+          val v2 = RungeKutta(st.v, eqs2, dur)
+          val newProgs = st.progs.map {
+            case (name, EqDiff(_, _)) => name -> Skip
+            case other                => other
+          }
+          Some(
+            Action.DiffSkip(eqs2, dur) ->
+              st.nextSeed.copy(
+                progs = newProgs,
+                v = v2,
+                t = st.t - dur
+              )
+          )
+      // Otherwise fallback to sequential execution
+      case None =>
+        stepOne(st)
 
-    st.p match {
-      case Skip => None
-      case Assign(n, e) =>
-        val res = Eval(e) // after Eval always update the seed of the state
-        Some(Action.Assign(n,res) ->  st.nextSeed.copy(p = Skip, v = v+(n->res)))
-      case Seq(Skip, q) => step(st.copy(p=q))
-      case Seq(p, q) =>
-        for (a,st2) <- step(st.copy(p=p))
-          yield a -> st2.copy(p=Seq(st2.p,q))
-      case ITE(b, pt, pf) =>
-        if Eval(b) then Some(Action.CheckIf(b,true)  -> st.nextSeed.copy(p=pt))
-                   else Some(Action.CheckIf(b,false) -> st.nextSeed.copy(p=pf))
-      case wh@While(b, p) =>
-        if Eval(b) then Some(Action.CheckWhile(b,true)  -> st.nextSeed.copy(p=Seq(p,wh), lp=st.lp-1))
-                   else Some(Action.CheckWhile(b,false) -> st.nextSeed.copy(p=Skip))
-      case EqDiff(eqs, durExp) =>
+  def stepOne(st: St): Option[(Action, St)] =
+    val (name, prog) = st.progs.head
+    stepProgram(name, prog, st)(using rand, st.v)
+
+  def stepProgram(name: String, prog: Program, st: St)
+  (using Random, Valuation): Option[(Action, St)] =
+
+  prog match {
+
+    case Skip => None
+
+    case Assign(loc, e) =>
+      val res = Eval(e)
+      Some(Action.Assign(loc, res) ->
+        st.nextSeed.copy(
+          progs = st.progs.updated(name, Skip),
+          v = st.v + (loc -> res)
+        ))
+
+    case Seq(Skip, q) =>
+      stepProgram(name, q, st.copy(progs = st.progs.updated(name, q)))
+
+    case Seq(p, q) =>
+      for (a, st2) <- stepProgram(name, p, st.copy(progs = st.progs.updated(name, p)))
+      yield a -> st2.copy(
+        progs = st2.progs.updated(name, Seq(st2.progs(name), q))
+      )
+
+    case ITE(b, pt, pf) =>
+      if Eval(b) then
+        Some(Action.CheckIf(b,true) ->
+          st.nextSeed.copy(progs = st.progs.updated(name, pt)))
+      else
+        Some(Action.CheckIf(b,false) ->
+          st.nextSeed.copy(progs = st.progs.updated(name, pf)))
+
+    case wh @ While(b, p) =>
+      if Eval(b) then
+        Some(Action.CheckWhile(b,true) ->
+          st.nextSeed.copy(
+            progs = st.progs.updated(name, Seq(p, wh)),
+            lp = st.lp - 1
+          ))
+      else
+        Some(Action.CheckWhile(b,false) ->
+          st.nextSeed.copy(progs = st.progs.updated(name, Skip)))
+
+    case EqDiff(eqs, durExp) =>
         val dur = Eval(durExp)
-        val eqs2 = eqs.map(kv => (kv._1,Eval.rands(kv._2)))
-        if dur>st.t
-        then {
-          val v2 = RungeKutta(v,eqs2,st.t)
-          Some(Action.DiffStop(eqs2,st.t) ->
-                st.nextSeed.copy(p=EqDiff(eqs2,Expr.Num(dur-st.t)), v=v2, t=0))
-        } else {
-          val v2 = RungeKutta(v,eqs2,dur)
-          Some(Action.DiffSkip(eqs2,dur) ->
-                st.nextSeed.copy(p=Skip, v=v2, t=st.t-dur))
-        }
-    }
+        val eqs2 = eqs.map(kv => (kv._1, Eval.rands(kv._2)))
+        if dur > st.t then
+          val v2 = RungeKutta(st.v, eqs2, st.t)
+          Some(
+            Action.DiffStop(eqs2, st.t) ->
+              st.nextSeed.copy(
+                progs = st.progs.updated(name, EqDiff(eqs2, Expr.Num(dur - st.t))),
+                v = v2,
+                t = 0
+              )
+          )
+        else
+          val v2 = RungeKutta(st.v, eqs2, dur)
+          Some(
+            Action.DiffSkip(eqs2, dur) ->
+              st.nextSeed.copy(
+                progs = st.progs.updated(name, Skip),
+                v = v2,
+                t = st.t - dur
+              )
+          )
+  }
 

@@ -10,12 +10,18 @@ import scala.util.Random
 
 object Lince:
 
+  case class Location(prog: Option[String], name: String):
+    override def toString: String =
+      prog match
+        case None => name
+        case Some(p) => s"$p.$name"
+
   ///// Program ////
 
   enum Program:
     case Skip
-    case Assign(v:String, e:Expr)
-    case EqDiff(eqs:Map[String,Expr], dur:Expr)
+    case Assign(v:Location, e:Expr)
+    case EqDiff(eqs:Map[Location,Expr], dur:Expr)
     case Seq(p:Program, q:Program)
     case ITE(b:Cond, pt:Program, pf:Program)
     case While(b:Cond, p:Program)
@@ -30,23 +36,27 @@ object Lince:
 
   enum Expr:
     case Num(n:Double)
-    case Var(x:String)
+    case Var(x:Location)
     case Func(op:String, es:List[Expr])
 
   ///// Actions ////
 
   enum Action:
-    case Assign(v: String, n:Double)
-    case DiffStop(eqs: Map[String, Expr], time: Double)
-    case DiffSkip(eqs: Map[String, Expr], time: Double)
+    case Assign(v: Location, n:Double)
+    case DiffStop(eqs: Map[Location, Expr], time: Double)
+    case DiffSkip(eqs: Map[Location, Expr], time: Double)
     case CheckIf(b: Cond, res:Boolean)
     case CheckWhile(b: Cond, res:Boolean)
     override def toString: String = Show(this)
 
   ///// Plot configuration ////
 
-  case class Simulation(prog:Program, pi:PlotInfo):
-    def state = SmallStep.St(prog,Map(),pi.seed+(pi.runs-1), pi.maxTime,pi.maxLoops)
+  case class Simulation(progs:Map[String, Program], pi:PlotInfo):
+    def state = SmallStep.St(progs, Map(), pi.seed+(pi.runs-1), pi.maxTime,pi.maxLoops)
+
+  object Simulation:
+    def apply(prog:Program, pi:PlotInfo): Simulation =
+      Simulation(Map(""->prog), pi)
 
   case class PlotInfo( minTime:Double,
                        maxTime:Double,

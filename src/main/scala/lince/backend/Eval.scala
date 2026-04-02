@@ -1,5 +1,6 @@
 package lince.backend
 
+import lince.syntax.Lince.Location
 import lince.syntax.Lince.{Cond, Expr}
 import lince.syntax.{Lince, Show}
 
@@ -8,8 +9,8 @@ import scala.util.Random
 object Eval:
 
   //  type Valuation = Map[String,Expr]
-  type Valuation = Map[String,Double]
-  private type MValuation = scala.collection.Map[String,Double]
+  type Valuation = Map[Location,Double]
+  private type MValuation = scala.collection.Map[Location,Double]
 
   def apply(e:Expr)(using v:MValuation, rand:Random = new Random): Double = e match
     case Expr.Num(n) => n

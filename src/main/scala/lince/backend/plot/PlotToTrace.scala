@@ -2,7 +2,7 @@ package lince.backend.plot
 
 import lince.backend.plot.Plot.{MarkedPoints, Points, Traces, Trace}
 import lince.backend.Eval.Valuation
-import lince.syntax.Lince.PlotInfo
+import lince.syntax.Lince.{PlotInfo, Location}
 
 /**
  * Builds JavaScript code to generate Plotly graphs from a given plot
@@ -22,19 +22,19 @@ object PlotToTrace:
     for (v,trs) <- traces
         tr <- trs
         (t,value) <- tr do 
-      res = res + (t -> (res.getOrElse(t,Map()) + (v->value)))
+      res = res + (t -> (res.getOrElse(t,Map()) + (Location(None,v)->value)))
     res
 
   private def loadEndings(endings: Map[String,Points], acc: Map[Double,Valuation]): Map[Double,Valuation] =
     var res = acc
     for (v,pts) <- endings
         (t,value) <- pts do
-      res = res + (t -> (res.getOrElse(t,Map()) + (v->value)))
+      res = res + (t -> (res.getOrElse(t,Map()) + (Location(None,v)->value)))
     res
 
   private def loadBeginnings(beginnings: Map[String,MarkedPoints], acc: Map[Double,Valuation]): Map[Double,Valuation] =
     var res = acc
     for (v,mpts) <- beginnings
         (t,value,_) <- mpts do
-      res = res + (t -> (res.getOrElse(t,Map()) + (v->value)))
+      res = res + (t -> (res.getOrElse(t,Map()) + (Location(None,v)->value)))
     res
