@@ -107,7 +107,6 @@ object CaosConfig extends Configurator[Simulation]:
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
-    "TESTE" -> view(sim => "Função TESTE: " + sim.toString, Text),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
           val plots = Plot.allPlots(sim.state, sim.pi)
