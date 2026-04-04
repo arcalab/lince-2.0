@@ -26,8 +26,8 @@ CodeMirror.defineMode("caos", function(_config, modeConfig) {
   var digitRE = /\d/;
   var hexitRE = /[0-9A-Fa-f]/;
   var octitRE = /[0-7]/;
-  var idRE = /[a-zA-Z0-9'\xa1-\uffff]/;
-  var symbolRE = /[-_!#$%&*+.\/<=>?@\\^|~:]/;
+  var idRE = /[-a-zA-Z0-9'\xa1-\uffff]/;  // added "-" to ids
+  var symbolRE = /[-_!#$%&*+.\/<=>?@\\^|~:]/; 
   var specialRE = /[(),;[\]`{}]/;
   var whiteCharRE = /[ \t\v\f]/; // newlines are handled in tokenizer
 
@@ -198,8 +198,8 @@ CodeMirror.defineMode("caos", function(_config, modeConfig) {
 
 
     setType("builtin")( // types and constructors
-      "+","||","*","!","&&","<",">","==",
-      true,false,"until","from","iterations","samples","verbose","vars","seed","height","runs","expn","unif","normal","bernoulli");
+      "-","+","||","*","!","&&","<",">","==",
+      true,false,"until","from","iterations","samples","rk-samples","trace-samples","verbose","vars","seed","height","runs","monitor","expn","unif","normal","bernoulli");
 
 //    setType("builtin")(
 //      );

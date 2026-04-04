@@ -27,40 +27,40 @@ object SmallStep extends SOS[Action,St]:
       rand.setSeed(s)
 
   val rand: Random = new Random
+  val defaultRKSamples = 100
 
   override def accepting(s: St): Boolean =
     s.t<=0 || s.lp<=0
 
   /** What are the set of possible evolutions (label and new state) */
   def next[A>:Action](st: St): Set[(A, St)] =
-    step(st).toSet
+    step(st)(using defaultRKSamples).toSet
 
   // Collect all differential equations if ALL programs are EqDiff
-  def collectFlows(progs: Map[String, Program])(using Valuation, Random): Option[(Map[Location, Expr], Double)] =
+  def collectFlows(progs: Map[String, Program])(using v0: Valuation, r0: Random): Option[(Map[Location, Expr], Double)] =
     val diffs = progs.collect {
       case (_, EqDiff(eqs, dur)) => (eqs, dur)
     }
     if diffs.size != progs.size then None
     else
-      val duration = Eval(diffs.head._2)
+      val duration = Eval(diffs.head._2)(using v0, r0)
       val merged: Map[Location, Expr] =
         diffs.flatMap { case (eqs, _) => eqs }.toMap
       Some((merged, duration))
-   
 
   /** Performs a single (deterministic) small step */
-  def step(st: St): Option[(Action, St)] =
+  def step(st: St)(using rkSamples: Int): Option[(Action, St)] =
     if st.t <= 0 || st.lp <= 0 then
       return None
     st.resetSeed
-    given r: Random = rand
-    given v: Valuation = st.v
+    given r0: Random = rand
+    given v0: Valuation = st.v
     // Try PARALLEL continuous evolution first
     collectFlows(st.progs) match
       case Some((eqs, dur)) =>
-        val eqs2 = eqs.map((k, e) => (k, Eval.rands(e)))
+        val eqs2 = eqs.map((k, e) => (k, Eval.rands(e)(using v0, r0)))
         if dur > st.t then
-          val v2 = RungeKutta(st.v, eqs2, st.t)
+          val v2 = RungeKutta(st.v, eqs2, st.t, rkSamples)
           val newProgs = st.progs.map {
             case (name, EqDiff(eqsP, _)) =>
               name -> EqDiff(eqsP, Expr.Num(dur - st.t))
@@ -75,7 +75,7 @@ object SmallStep extends SOS[Action,St]:
               )
           )
         else
-          val v2 = RungeKutta(st.v, eqs2, dur)
+          val v2 = RungeKutta(st.v, eqs2, dur, rkSamples)
           val newProgs = st.progs.map {
             case (name, EqDiff(_, _)) => name -> Skip
             case other                => other
@@ -90,21 +90,21 @@ object SmallStep extends SOS[Action,St]:
           )
       // Otherwise fallback to sequential execution
       case None =>
-        stepOne(st)
+        stepOne(st)(using rkSamples)
 
-  def stepOne(st: St): Option[(Action, St)] =
+  def stepOne(st: St)(using rkSamples: Int): Option[(Action, St)] =
     val (name, prog) = st.progs.head
-    stepProgram(name, prog, st)(using rand, st.v)
+    stepProgram(name, prog, st)(using rand, st.v, rkSamples)
 
   def stepProgram(name: String, prog: Program, st: St)
-  (using Random, Valuation): Option[(Action, St)] =
+  (using r0: Random, v0: Valuation, rkSamples: Int): Option[(Action, St)] =
 
   prog match {
 
     case Skip => None
 
     case Assign(loc, e) =>
-      val res = Eval(e)
+      val res = Eval(e)(using v0, r0)
       Some(Action.Assign(loc, res) ->
         st.nextSeed.copy(
           progs = st.progs.updated(name, Skip),
@@ -112,16 +112,16 @@ object SmallStep extends SOS[Action,St]:
         ))
 
     case Seq(Skip, q) =>
-      stepProgram(name, q, st.copy(progs = st.progs.updated(name, q)))
+      stepProgram(name, q, st.copy(progs = st.progs.updated(name, q)))(using r0, v0, rkSamples)
 
     case Seq(p, q) =>
-      for (a, st2) <- stepProgram(name, p, st.copy(progs = st.progs.updated(name, p)))
+      for (a, st2) <- stepProgram(name, p, st.copy(progs = st.progs.updated(name, p)))(using r0, v0, rkSamples)
       yield a -> st2.copy(
         progs = st2.progs.updated(name, Seq(st2.progs(name), q))
       )
 
     case ITE(b, pt, pf) =>
-      if Eval(b) then
+      if Eval(b)(using v0, r0) then
         Some(Action.CheckIf(b,true) ->
           st.nextSeed.copy(progs = st.progs.updated(name, pt)))
       else
@@ -129,7 +129,7 @@ object SmallStep extends SOS[Action,St]:
           st.nextSeed.copy(progs = st.progs.updated(name, pf)))
 
     case wh @ While(b, p) =>
-      if Eval(b) then
+      if Eval(b)(using v0, r0) then
         Some(Action.CheckWhile(b,true) ->
           st.nextSeed.copy(
             progs = st.progs.updated(name, Seq(p, wh)),
@@ -140,10 +140,10 @@ object SmallStep extends SOS[Action,St]:
           st.nextSeed.copy(progs = st.progs.updated(name, Skip)))
 
     case EqDiff(eqs, durExp) =>
-        val dur = Eval(durExp)
-        val eqs2 = eqs.map(kv => (kv._1, Eval.rands(kv._2)))
+        val dur = Eval(durExp)(using v0, r0)
+        val eqs2 = eqs.map(kv => (kv._1, Eval.rands(kv._2)(using v0, r0)))
         if dur > st.t then
-          val v2 = RungeKutta(st.v, eqs2, st.t)
+          val v2 = RungeKutta(st.v, eqs2, st.t,rkSamples)
           Some(
             Action.DiffStop(eqs2, st.t) ->
               st.nextSeed.copy(
@@ -153,7 +153,7 @@ object SmallStep extends SOS[Action,St]:
               )
           )
         else
-          val v2 = RungeKutta(st.v, eqs2, dur)
+          val v2 = RungeKutta(st.v, eqs2, dur,rkSamples)
           Some(
             Action.DiffSkip(eqs2, dur) ->
               st.nextSeed.copy(
