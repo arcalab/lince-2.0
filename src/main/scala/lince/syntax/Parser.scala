@@ -144,11 +144,11 @@ object Parser :
 
   def diffEq: P[Location => Program] =
     ((char('\'') *> sps *> char('=') *> sps *> expr <* sps) ~ // 1st expr
-      ((char(',')*>sps*>varName) ~ (char('\'') *> sps *> char('=') *> sps *> expr <* sps)).rep0 ~ // (x2'=e2)*
+      ((char(',') *> sps *> location) ~ (char('\'') *> sps *> char('=') *> sps *> expr <* sps)).rep0 ~ // (x2'=e2)*
       duration)//(string("for") *> sps *> expr <* (sps <* char(';')))) // for dur;
       .map{
-        case ((e1,x2e2s),appDur) => x1 => appDur(Map(x1->e1)++
-        x2e2s.map{ case (k,v) => Location(None,k) -> v })
+        case ((e1, rest), appDur) => x1 =>
+          appDur( Map(x1 -> e1) ++ rest.map { case (loc, e) => loc -> e })
       }
   // "for" or "until" (syntactic sugar)
   def duration: P[Map[Location,Expr] => Program] =
@@ -307,10 +307,8 @@ object Parser :
       (pi: PlotInfo) => pi.copy(height = r)) |
     (string("runs") *> sps *> intP).map(r =>
         (pi: PlotInfo) => pi.copy(runs = r)) |
-    (string("portrait") *> sps *>
-      (varName ~ (sps *> char(',') *> sps *>(varName <* sps)))
-        .repSep(char(';')*>sps)).map(lst =>
-        (pi: PlotInfo) => pi.copy(portrait = lst.toList ::: pi.portrait)) |
+    (string("portrait") *> sps *> (location ~ (sps *> char(',') *> sps *> (location <* sps))) .repSep(char(';') *> sps)).map(lst =>
+      (pi: PlotInfo) => pi.copy( portrait = lst.toList.map { case (x, y) => (x.toString, y.toString) } ::: pi.portrait)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 
