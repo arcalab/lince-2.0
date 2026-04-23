@@ -57,10 +57,10 @@ object Parser :
   private def procName: P[String] =
     (charIn('A' to 'Z') ~ alphaDigit.rep0).string
   private def location: P[Location] =
-    ((procName <* char('.')).?.with1 ~ varName).map {
-      case (None, v) => Location(None, v)
-      case (Some(p), v) => Location(Some(p), v)
-    }
+    (((procName <* char('.')) ~ varName).map {
+      case (p, v) => Location(Some(p), v)
+    }) |
+    (varName.map(v => Location(None, v)))
   private def namedProgram: P[(String, Program)] =
   (procName <* sps) ~ block(program)
 
@@ -81,12 +81,20 @@ object Parser :
   //import scala.language.postfixOps
 
   private def simulation: P[Simulation] =
-    (program ~ plotInfo.?).map {
-      case (prog, Some(pi)) =>
-        Simulation(Map("" -> prog), pi)
-      case (prog, None) =>
-        Simulation(Map("" -> prog), PlotInfo.default)
-    }
+    ((((namedProgram <* sps).rep ~ program.?) ~ (sps *> plotInfo).?).map {
+      case ((named, mainOpt), piOpt) =>
+        val progs0: Map[String, Program] = named.toList.toMap
+        val progs: Map[String, Program] =
+          mainOpt match
+            case Some(p) => progs0 + ("" -> p)
+            case None    => progs0
+
+        Simulation(progs, piOpt.getOrElse(PlotInfo.default))
+    }).backtrack |
+    (((program <* sps) ~ (sps *> plotInfo).?).map {
+      case (prog, piOpt) =>
+        Simulation(Map("" -> prog), piOpt.getOrElse(PlotInfo.default))
+    })
 
   /** A program is a command with possible spaces or comments around. */
   private def program: P[Program] =
@@ -104,7 +112,7 @@ object Parser :
     bern(recSt) |
     block(recSt) |
     waitP |
-    ((location <* sps) ~ (assign | diffEq | suffix) ).map (x => x._2 (x._1) )
+    ((location <* sps) ~ (assign | diffEq | suffix)).map(x => x._2(x._1)).backtrack
   })
 
   def skip: P[Program] =
