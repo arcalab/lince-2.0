@@ -78,23 +78,40 @@ object Parser :
   /** Positive integer */
   def intP: P[Int] = digits.map(_.toInt)
 
-  //import scala.language.postfixOps
+  private def checkDuplicatePrograms(named: List[(String, Program)]): Unit =
+    val names = named.map(_._1)
+    val duplicates = names.groupBy(identity).collect {
+      case (name, xs) if xs.size > 1 => name
+    }
+    if duplicates.nonEmpty then
+      sys.error(s"Duplicate program name(s): ${duplicates.mkString(", ")}")
 
+  //import scala.language.postfixOps
   private def simulation: P[Simulation] =
-    ((((namedProgram <* sps).rep ~ program.?) ~ (sps *> plotInfo).?).map {
-      case ((named, mainOpt), piOpt) =>
-        val progs0: Map[String, Program] = named.toList.toMap
+    val namedBlock: P[(String, Program)] =
+      namedProgram.backtrack <* sps
+
+    ((((namedBlock.rep ~ (program <* sps).? ~ namedBlock.rep0) ~ (sps *> plotInfo).?).map {
+      case (((namedBefore, mainOpt), namedAfter), piOpt) =>
+        val namedList = namedBefore.toList ++ namedAfter.toList
+        checkDuplicatePrograms(namedList)
+        val namedMap: Map[String, Program] = namedList.toMap
+
         val progs: Map[String, Program] =
           mainOpt match
-            case Some(p) => progs0 + ("" -> p)
-            case None    => progs0
+            case Some(mainProg) => namedMap + ("" -> mainProg)
+            case None           => namedMap
 
         Simulation(progs, piOpt.getOrElse(PlotInfo.default))
     }).backtrack |
-    (((program <* sps) ~ (sps *> plotInfo).?).map {
-      case (prog, piOpt) =>
-        Simulation(Map("" -> prog), piOpt.getOrElse(PlotInfo.default))
-    })
+    ((((program <* sps) ~ namedBlock.rep0) ~ (sps *> plotInfo).?).map {
+      case ((mainProg, namedAfter), piOpt) =>
+        val namedList = namedAfter.toList
+        checkDuplicatePrograms(namedList)
+        val namedMap: Map[String, Program] = namedList.toMap
+
+        Simulation(namedMap + ("" -> mainProg), piOpt.getOrElse(PlotInfo.default))
+    }))
 
   /** A program is a command with possible spaces or comments around. */
   private def program: P[Program] =

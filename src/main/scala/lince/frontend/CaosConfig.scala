@@ -5,7 +5,7 @@ import caos.frontend.{Configurator, Documentation}
 import caos.view.*
 import lince.backend.*
 import lince.backend.plot.*
-import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation}
+import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation, Location, Expr, Cond}
 import lince.syntax.{Lince, Show}
 import SmallStep.St
 import caos.frontend.widgets.WidgetInfo.Custom
@@ -28,6 +28,77 @@ object CaosConfig extends Configurator[Simulation]:
       Basic.scenarios ++
       Basic.prob ++
       Basic.configs
+
+
+  def qualifyLoc(owner: String, loc: Location): Location =
+    loc.prog match
+      case Some(_) => loc
+      case None =>
+        if owner == "" then loc
+        else Location(Some(owner), loc.name)
+
+  def qualifyExpr(owner: String, e: Expr): Expr =
+    e match
+      case Expr.Num(_) => e
+      case Expr.Var(x) => Expr.Var(qualifyLoc(owner, x))
+      case Expr.Func(op, es) =>
+        Expr.Func(op, es.map(qualifyExpr(owner, _)))
+
+  def qualifyCond(owner: String, c: Cond): Cond =
+    c match
+      case Cond.True => Cond.True
+      case Cond.False => Cond.False
+      case Cond.Comp(op, e1, e2) =>
+        Cond.Comp(op, qualifyExpr(owner, e1), qualifyExpr(owner, e2))
+      case Cond.And(c1, c2) =>
+        Cond.And(qualifyCond(owner, c1), qualifyCond(owner, c2))
+      case Cond.Or(c1, c2) =>
+        Cond.Or(qualifyCond(owner, c1), qualifyCond(owner, c2))
+      case Cond.Not(c1) =>
+        Cond.Not(qualifyCond(owner, c1))
+
+  def qualifyProgram(owner: String, p: Program): Program =
+    p match
+      case Program.Skip =>
+        Program.Skip
+
+      case Program.Assign(v, e) =>
+        Program.Assign(
+          qualifyLoc(owner, v),
+          qualifyExpr(owner, e)
+        )
+
+      case Program.EqDiff(eqs, dur) =>
+        Program.EqDiff(
+          eqs.map { case (v, e) =>
+            qualifyLoc(owner, v) -> qualifyExpr(owner, e)
+          },
+          qualifyExpr(owner, dur)
+        )
+
+      case Program.Seq(p, q) =>
+        Program.Seq(
+          qualifyProgram(owner, p),
+          qualifyProgram(owner, q)
+        )
+
+      case Program.ITE(b, pt, pf) =>
+        Program.ITE(
+          qualifyCond(owner, b),
+          qualifyProgram(owner, pt),
+          qualifyProgram(owner, pf)
+        )
+
+      case Program.While(b, body) =>
+        Program.While(
+          qualifyCond(owner, b),
+          qualifyProgram(owner, body)
+        )
+
+  def showPreProcessed(sim: Simulation): String =
+    sim.progs.toList.map { case (name, prog) =>
+      Show(qualifyProgram(name, prog))
+    }.mkString("\n")
                  
 
   // val examples = List(
@@ -107,6 +178,7 @@ object CaosConfig extends Configurator[Simulation]:
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
     "View pretty" -> view[Simulation](s => s._1.map((k,v) => s"$k -> ${Show(v)}").mkString("\n"), Code("clicke")).moveTo(1),
+    "View pre-processed" -> view[Simulation](sim => showPreProcessed(sim), Code("clike")).moveTo(1),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
           val plots = Plot.allPlots(sim.state, sim.pi)
@@ -169,7 +241,7 @@ object CaosConfig extends Configurator[Simulation]:
     "Scenarios" -> Basic.scenarios.map(_.name).toSet,
     "Probab." -> Basic.prob.map(_.name).toSet,
     "Config." -> Basic.configs.map(_.name).toSet -> false,
-    "Debug" -> Set("Plot debug", "Plot2trace debug", "Plots JS", "View parsed", "View pretty") -> false
+    "Debug" -> Set("Plot debug", "Plot2trace debug", "Plots JS", "View parsed", "View pretty", "View pre-processed") -> false
   )
 
   //// Documentation below
