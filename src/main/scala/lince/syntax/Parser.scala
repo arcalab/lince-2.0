@@ -61,8 +61,45 @@ object Parser :
       case (p, v) => Location(Some(p), v)
     }) |
     (varName.map(v => Location(None, v)))
+
+  private def qualifyLocation(prog: String, loc: Location): Location =
+    loc.prog match
+      case Some(_) => loc
+      case None    => Location(Some(prog), loc.name)
+
+  private def qualifyExpr(prog: String, e: Expr): Expr = e match
+    case Expr.Num(_) => e
+    case Expr.Var(x) => Expr.Var(qualifyLocation(prog, x))
+    case Expr.Func(op, es) => Expr.Func(op, es.map(qualifyExpr(prog, _)))
+
+  private def qualifyCond(prog: String, c: Cond): Cond = c match
+    case Cond.True => c
+    case Cond.False => c
+    case Cond.Comp(op, e1, e2) => Cond.Comp(op, qualifyExpr(prog, e1), qualifyExpr(prog, e2))
+    case Cond.And(c1, c2) => Cond.And(qualifyCond(prog, c1), qualifyCond(prog, c2))
+    case Cond.Or(c1, c2) => Cond.Or(qualifyCond(prog, c1), qualifyCond(prog, c2))
+    case Cond.Not(c1) => Cond.Not(qualifyCond(prog, c1))
+
+  private def qualifyProgram(progName: String, p: Program): Program = p match
+    case Skip => Skip
+    case Assign(v, e) =>
+      Assign(qualifyLocation(progName, v), qualifyExpr(progName, e))
+    case EqDiff(eqs, dur) =>
+      EqDiff(
+        eqs.map { case (v, e) => qualifyLocation(progName, v) -> qualifyExpr(progName, e) },
+        qualifyExpr(progName, dur)
+      )
+    case Seq(p, q) =>
+      Seq(qualifyProgram(progName, p), qualifyProgram(progName, q))
+    case ITE(b, pt, pf) =>
+      ITE(qualifyCond(progName, b), qualifyProgram(progName, pt), qualifyProgram(progName, pf))
+    case While(b, p) =>
+      While(qualifyCond(progName, b), qualifyProgram(progName, p))
+
   private def namedProgram: P[(String, Program)] =
-  (procName <* sps) ~ block(program)
+  (procName <* sps).flatMap { name =>
+    block(program).map(p => name -> qualifyProgram(name, p))
+  }
 
   private def symbols: P[String] =
     // symbols starting with "--" are meant for syntactic sugar of arrows, and ignored as symbols of terms

@@ -71,7 +71,7 @@ object Plot:
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
     (1 to pinfo.runs).toList.flatMap { run =>
     val pi2 = pinfo.copy(runs = run)
-    val st2 = st.copy(s = pinfo.seed + (run - 1))
+    val st2 = SmallStep.withSeed(st, pinfo.seed + (run - 1))
     apply(st2, pi2).map(p => (p, pi2))
   }
 //      (apply(Simulation(st.p,pi2).state, pi2),pi2)
@@ -100,13 +100,13 @@ object Plot:
 
     // need to traverse my trajectory
     // need a maxt
-    val maxt: Double = to min st.t
+    val maxt: Double = to min SmallStep.time(st)
     // need a step size
     val stepSize: Double = (maxt - from) / samples
 
     val stInit = if from!=0
-      then valToAssign(BigSteps.bigStep(st.copy(t=from))(using rkSamples)._2.copy(t=maxt-from))
-      else st.copy(t = maxt)
+      then valToAssign(SmallStep.withTime(BigSteps.bigStep(SmallStep.withTime(st, from))(using rkSamples)._2, maxt - from))
+      else SmallStep.withTime(st, maxt)
 
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
@@ -115,9 +115,8 @@ object Plot:
   }
 
   /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
-  private def valToAssign(st:St): St =
-    val assign = for (x,value) <- st.v yield Program.Assign(x,Expr.Num(value))
-    st.copy(v = Map())
+  private def valToAssign(st: St): St =
+    SmallStep.withValuation(st, Map())
 
   /**
    * Main function that produces the plot: at each run performs a collection of
@@ -135,13 +134,13 @@ object Plot:
     val (as, st2) = discSteps(st)(using rkSamples)
     // update Plot
     val setVars: Set[String]= if showCont
-      then st2.v.keySet.map(_.toString)
+      then SmallStep.valuation(st2).keySet.map(_.toString)
       else for (case Action.Assign(v,_) <- as.toSet) yield v.toString
     for (v <- setVars if filter(v)) do
-      val loc = st2.v.keys.find(_.toString == v).get
+      val loc = SmallStep.valuation(st2).keys.find(_.toString == v).get
       res = res.startTrace(v,
         timePassed,
-        st2.v(loc),
+        SmallStep.valuation(st2)(loc),
         as
       ).copy(ylabels = res.ylabels+v)
 
@@ -157,7 +156,7 @@ object Plot:
       res = res + ((xStr, time) -> value)
 
     if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else calcPlot(st3, stepSize, rkSamples, timePassed + (st2.t - st3.t), showCont, res, filter)
+    else calcPlot(st3, stepSize, rkSamples, timePassed + (SmallStep.time(st2) - SmallStep.time(st3)), showCont, res, filter)
 
 
   def rearrange(p:Plot, axis:List[(String,String)]): List[Plot] =

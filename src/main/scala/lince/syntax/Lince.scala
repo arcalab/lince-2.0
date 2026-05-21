@@ -1,6 +1,6 @@
 package lince.syntax
 
-import lince.backend.SmallStep
+import lince.backend.{SmallStep, BasicSmallStep, ConcurrentSmallStep}
 
 import scala.util.Random
 
@@ -52,7 +52,28 @@ object Lince:
   ///// Plot configuration ////
 
   case class Simulation(progs:Map[String, Program], pi:PlotInfo):
-    def state = SmallStep.St(progs, Map(), pi.seed+(pi.runs-1), pi.maxTime,pi.maxLoops)
+    def state =
+      if progs.size == 1 && progs.contains("")
+      then
+        SmallStep.St.Basic(
+          BasicSmallStep.BasicState(
+            progs(""),
+            Map(),
+            pi.seed + (pi.runs - 1),
+            pi.maxTime,
+            pi.maxLoops
+          )
+        )
+      else
+        SmallStep.St.Concurrent(
+          ConcurrentSmallStep.ConcurrentState(
+            progs,
+            Map(),
+            pi.seed + (pi.runs - 1),
+            pi.maxTime,
+            pi.maxLoops
+          )
+        )
 
   object Simulation:
     def apply(prog:Program, pi:PlotInfo): Simulation =
@@ -71,6 +92,6 @@ object Lince:
                        portrait: List[(String,String)], // to change the variables in the x and y axis
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,100,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil)
+    def default = PlotInfo(0,10,500,40,100,scala.util.Random.nextLong(),false,_=>true,450,1,Nil)
 
 

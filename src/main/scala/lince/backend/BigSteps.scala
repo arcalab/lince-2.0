@@ -27,20 +27,24 @@ object BigSteps:
    * @return the next statement of the program `p`
    */
   def nextStatement(p: Program): Program = p match {
-    case Seq(Seq(p1, p2), q) =>
-      nextStatement(Seq(p1, Seq(p2, q)))
+    case Seq(Seq(p1, p2), q) => nextStatement(Seq(p1, Seq(p2, q)))
     case Seq(Skip, q) => nextStatement(q)
     case Seq(p, q) => nextStatement(p)
     case _ => p
   }
 
   def nextStatementRest(p: Program, rest:Program = Skip): (Program,Program) = p match {
-    case Seq(Seq(p1, p2), q) =>
-      nextStatementRest(Seq(p1, Seq(p2, q)), rest)
+    case Seq(Seq(p1, p2), q) => nextStatementRest(Seq(p1, Seq(p2, q)), rest)
     case Seq(Skip, q) => nextStatementRest(q,rest)
     case Seq(p, q) => nextStatementRest(p,Seq(q,rest))
     case _ => (p,rest)
   }
+
+  def currentProgram(st: St): Program =
+    SmallStep.currentProgram(st)
+
+  def contProgram(st: St): Program =
+    currentProgram(st)
   
   /**
    * Performs discrete steps until no more step can be taken
@@ -50,11 +54,14 @@ object BigSteps:
    */
   @tailrec
   def discSteps(st: St, hist: List[Action] = Nil)(using rkSamples: Int): (List[Action], St) =
-    nextStatement(st.progs.head._2) match
-      case _:EqDiff => hist -> st
-      case _ => step(st) match
-        case None => hist -> st // reached the end
-        case Some((a, st2)) => discSteps(st2, a :: hist)
+    if !SmallStep.hasInstantaneousStep(st) then
+      hist -> st
+    else
+      step(st)(using rkSamples) match
+        case None =>
+          hist -> st
+        case Some((a, st2)) =>
+          discSteps(st2, a :: hist)
 
 
   /**
@@ -69,48 +76,39 @@ object BigSteps:
    * @param hist accumulator to compile the valuations of points already sampled
    * @return list of valuations at the points sampled while traversing the continuous step
    */
-  def contSteps(st: St, timeStep: Double, baseTime:Double)(using rkSamples: Int): (List[(Double,Valuation)], St) =
-    // need to evaluate the duration upfront, in case there are random functions.
-//    var ok = true
-//    val newP: Program = nextStatementRest(st.p) match
-//      case (EqDiff(eqs,dur),rest) =>
-//        Program.Seq(EqDiff(eqs,Expr.Num(Eval(dur)(using st.v, st.r))),rest)
-//      case p2 =>
-//        ok = false
-//        st.p
-//    if !ok then return Nil -> st
-    st.resetSeed
+  def contSteps(st: St, timeStep: Double, baseTime: Double)(using rkSamples: Int): (List[(Double, Valuation)], St) =
+    SmallStep.resetSeed(st)
 
-    // Alternative (maybe preferred in the future):
-    //  1. extract the diff-eqs (stop if not found) and extract the rest
-    //  2. pre-process the diff-eqs (replace stream-/random-functions with their value)
-    //  3. use auxiliar function on the single program
-    //  4. re-attach the result or just keep the rest, and update the state
-
-    // now apply the recursive steps after fixing the duration
     @tailrec
-    def contStepsAux(counter:Int,
-                     hist: List[(Double,Valuation)])(using rkSamples: Int): (List[(Double,Valuation)], St) =
-      val goalTime = st.t min (timeStep*counter)
-  //    println(s"-- contSteps ${st} with goal $goalTime and next ${nextStatement(st.p)}")
-      nextStatement(st.progs.head._2) match
-        case EqDiff(eqs,dur) => step(st.copy(t = goalTime)) match
-          case Some((Action.DiffStop(_,_),st2)) => // reached goalTime
-            //            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
-            if goalTime == st.t // if it stopped because of the boundaries, then stop, otherwise keep on going
-            then
-              val st3 = st2.nextSeed // update seed only at the end
-              (((baseTime+goalTime)->st3.v)::hist) -> st3
-            else contStepsAux(counter+1, ((baseTime+goalTime) -> st2.v)::hist)
-          case Some((Action.DiffSkip(_,timePassed),st2)) => // "diff-skip // reached duration
-            //            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
-            val st3 = st2.nextSeed // update seed only at the end
-            (((baseTime+timePassed)->st3.v)::hist) -> st3.copy(t = st.t-timePassed)
-          case Some((stp,_)) => sys.error(s"Expected continuous step but found ${Show(stp)}")
-          case None => hist -> st
-        //            println(s"[CS] no step possible using time ${st.t} MIN ${timeStep*counter}");
+    def contStepsAux(
+        counter: Int,
+        hist: List[(Double, Valuation)]
+    ): (List[(Double, Valuation)], St) =
 
-        case _ => Nil -> st
-    //
+      val goalTime = SmallStep.time(st).min(timeStep * counter)
+
+      step(SmallStep.withTime(st, goalTime))(using rkSamples) match
+
+        case Some((Action.DiffStop(_, _), st2)) =>
+          if goalTime == SmallStep.time(st) then
+            val st3 = SmallStep.nextSeed(st2)
+            (((baseTime + goalTime) -> SmallStep.valuation(st3)) :: hist) -> st3
+          else
+            contStepsAux(
+              counter + 1,
+              ((baseTime + goalTime) -> SmallStep.valuation(st2)) :: hist
+            )
+
+        case Some((Action.DiffSkip(_, timePassed), st2)) =>
+          val st3 = SmallStep.nextSeed(st2)
+          (((baseTime + timePassed) -> SmallStep.valuation(st3)) :: hist) ->
+            SmallStep.withTime(st3, SmallStep.time(st) - timePassed)
+
+        case Some((act, _)) =>
+          sys.error(s"Expected continuous step but found ${Show(act)}")
+
+        case None =>
+          hist -> st
+
     contStepsAux(1, Nil)
 

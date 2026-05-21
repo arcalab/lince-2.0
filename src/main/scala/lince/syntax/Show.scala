@@ -63,10 +63,15 @@ object Show:
 
   def simpleSt(st: lince.backend.SmallStep.St): String =
     val progStr =
-      st.progs.map { case (name, p) =>
-        val prefix = if name == "" then "" else s"$name: "
-        prefix + simpleStatm(p)
-      }.mkString(" | ")
+      st match
+        case lince.backend.SmallStep.St.Basic(bst) =>
+          simpleStatm(bst.p)
 
-    s"[${st.t}/${st.lp}] {${st.v.mkString(",")}} $progStr"
+        case lince.backend.SmallStep.St.Concurrent(cst) =>
+          cst.progs.map { case (name, p) =>
+            val prefix = if name == "" then "" else s"$name: "
+            prefix + simpleStatm(p)
+          }.mkString(" | ")
+
+    s"[${lince.backend.SmallStep.time(st)}/${lince.backend.SmallStep.loops(st)}] {${lince.backend.SmallStep.valuation(st).mkString(",")}} $progStr"
 
