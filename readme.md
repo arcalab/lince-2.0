@@ -7,15 +7,6 @@ A snapshot of Lince 2.0 can be executed at https://lmf.di.uminho.pt/lince-2.0/
 The previous version of Lince (not maintained) can be found at http://http://arcatools.org/lince
 
 
-## Caos
-
-This project uses and the Caos's framework as a submodule. More information on it can be found online:
-
- - Caos' GitHub page: https://github.com/arcalab/CAOS
- - Caos' tutorial: https://arxiv.org/abs/2304.14901
- - Caos' demo video: https://youtu.be/Xcfn3zqpubw 
-
-
 ## Videos
 
 - [Hands-on tutorial on Lince 2.0](https://youtu.be/JFVPHVxvMjo?si=WmGAc7NDQzX5uofz), presented at the Shif2SDV European project consortium, April 2026 (11min)
@@ -29,6 +20,13 @@ This project uses and the Caos's framework as a submodule. More information on i
  - [Implementing Hybrid Semantics: From Functional to Imperative](https://jose.proenca.org/publication/goncharov-implementing-ictac-20/), _Sergey Goncharov, Renato Neves, José Proença_, ICTAC 2020, October 2020
  - [An Adequate While-Language for Hybrid Computation](https://repositorio.inesctec.pt/items/6377f0aa-bea0-4d5a-b996-26ffab9e4703), _Sergey Goncharov, Renato Neves_, PPDP 2019, October 2019
 
+## Caos
+
+This project uses and the Caos's framework as a submodule. More information on it can be found online:
+
+ - Caos' GitHub page: https://github.com/arcalab/CAOS
+ - Caos' tutorial: https://arxiv.org/abs/2304.14901
+ - Caos' demo video: https://youtu.be/Xcfn3zqpubw 
 
 ## Requirements
 
