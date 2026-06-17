@@ -82,6 +82,10 @@ object Basic:
     "Precision test"
       -> "theta := 0.1;\na := 0;\ntheta' = a,\n    a' = sin(theta) for 120;\n\n---\nuntil 30\nsamples 80\nrk-samples 18 // increase (100) to fix example\n"
       -> "Example with a solution that requires enough precision to be computed correctly. Increase the number of <code>rk-samples</code> (used in the Runge Kutta), e.g., to <code>100</code>, to improve precision.",
+    // "Simple cruise control 3d"
+    //   -> "// Cruise control (3D)\nx:=0; y:=0; z:=0;\nvx:=0; vy:=20; vz:=10;\nax:=5; ay:=-2; az:=-1;\nwhile true do {\n  if vx<=10 then ax:=5; else ax:=-2;\n  if vy<=0 then ay:=5; else ay:=-2;\n  if vz<=0 then az:=1; else az:=-1;\n  x'=vx,vx'=ax,\n  y'=vy,vy'=ay,\n  z'=vz,vz'=az for 1;\n}\n--\nportrait vx,vy,vz; x,y,z\nuntil 15"
+    //   -> "Variation of the cruise control example, with an additional dimension (z) and a target z-velocity of 0.",
+
   )
 
   val prob: List[Example] = List(
