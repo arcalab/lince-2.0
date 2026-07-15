@@ -147,6 +147,14 @@ object CaosConfig extends Configurator[Simulation]:
                 kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n")
           },
           Text),
+    // "Periodic samples"
+    //   -> view(sim => {
+    //         val ps = Plot(sim.state, sim._2)
+    //         val samples = sim.pi.monSampleFreq
+    //         ps.map(p => p.sample(samples).map(kv => roundf(kv._1).toString + ": " +
+    //             kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n\n")).mkString("\n\n")
+    //       },
+    //       Text),
 
 //    "Plot"
 //      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {

@@ -273,32 +273,39 @@ object Parser :
     )
 
   def plotMod: P[PlotInfo => PlotInfo] =
-    (string("until") *> sps *> realP).map(r =>
-      (pi:PlotInfo) => pi.copy(maxTime = r)) |
-    (string("from") *> sps *> realP).map(r =>
-      (pi:PlotInfo) => pi.copy(minTime = r)) |
-    (string("iterations") *> sps *> intP).map(r =>
-      (pi:PlotInfo) => pi.copy(maxLoops = r)) |
-    (string("samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(samples = r)) |
-    (string("samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(samples = r)) |
-    (string("rk-samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(rkSamples = r)) |
-    (string("seed") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(seed = r)) |
-    (string("vars") *> sps *> regExp).map(r =>
-      (pi: PlotInfo) => pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
-    (string("height") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(height = r)) |
-    (string("runs") *> sps *> intP).map(r =>
-        (pi: PlotInfo) => pi.copy(runs = r)) |
-    (string("portrait") *> sps *>
-      (varName ~ (sps *> char(',') *> sps *>(varName <* sps)))
-        .repSep(char(';')*>sps)).map(lst =>
-        (pi: PlotInfo) => pi.copy(portrait = lst.toList ::: pi.portrait)) |
+    plotModBuild("until", realP, pi => r => 
+        pi.copy(maxTime = r)) |
+    plotModBuild("from" , realP, pi => r =>
+        pi.copy(minTime = r)) |
+    plotModBuild("iterations", intP, pi => r =>
+        pi.copy(maxLoops = r)) |
+    plotModBuild("samples", intP, pi => r =>
+        pi.copy(samples = r)) |
+    plotModBuild("rk-samples", intP, pi => r =>
+        pi.copy(rkSamples = r)) |
+    plotModBuild("seed", intP, pi => r =>
+        pi.copy(seed = r)) |
+    plotModBuild("vars", regExp, pi => r =>
+        pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
+    plotModBuild("height", intP, pi => r =>
+        pi.copy(height = r)) |
+    plotModBuild("runs", intP, pi => r =>
+        pi.copy(runs = r)) |
+    plotModBuild("monitor-sample-freq", realP, pi => r =>
+        pi.copy(monSampleFreq = r)) |
+    plotModBuild("monitor-sample-noise", realP, pi => r =>
+        pi.copy(monSampleNoise = r)) |
+    plotModBuild("portrait", portraitArgs, pi => lst =>
+        pi.copy(portrait = lst ::: pi.portrait)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
+
+  def portraitArgs: P[List[(String,String)]] =
+      (varName ~ (sps *> char(',') *> sps *>(varName <* sps))).repSep(char(';')*>sps)
+        .map(lst => lst.toList)
+
+  def plotModBuild[A](kw:String, args:P[A], upd:PlotInfo => A => PlotInfo): P[PlotInfo => PlotInfo] =
+    string(kw) *> sps *> args.map((as:A) => (pi: PlotInfo) => upd(pi)(as))
 
   //// Auxiliary functions
 

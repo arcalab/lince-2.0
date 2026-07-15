@@ -59,8 +59,10 @@ object Lince:
                        height: Int, // height in px
                        runs: Int, // number of times to repeat the run
                        portrait: List[(String,String)], // to change the variables in the x and y axis
+                       monSampleFreq: Double, // frequency of sampling for the monitor (in time units)
+                       monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,100,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil)
+    def default = PlotInfo(0,10,500,40,100,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil,1,0)
 
 
