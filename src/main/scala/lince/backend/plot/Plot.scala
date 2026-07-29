@@ -69,19 +69,29 @@ object Plot:
   private type St = SmallStep.St
 
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
+    // ???
+    var lastSt = st
     val ps = for run <- (1 to pinfo.runs).toList yield
       val pi2 = pinfo.copy(runs = run)
-      apply(Simulation(st.p,pi2).state, pi2).map(p => (p,pi2))
+      val initState = SmallStep.initial(Simulation(st.p,pi2)).copy(o = lastSt.o)
+      //println(s"[RUN $run] ${initState.o}")
+      apply(initState, pi2).map((p,stRun) =>
+          lastSt = stRun
+          (p,pi2)
+        )
     ps.flatten
 //      (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
-  def apply(st:St, pinfo:PlotInfo): List[Plot] =
-    val plot = apply(st, pinfo.minTime, pinfo.maxTime,
-                         pinfo.samples, pinfo.rkSamples, pinfo.showAll, pinfo.showVar)
+  def justPlot(st:St, pinfo:PlotInfo): List[Plot] =
+    apply(st,pinfo).map(_._1)
+
+  def apply(st:St, pinfo:PlotInfo): List[(Plot,St)] =
+    val (plot,st2) = apply(st, pinfo.minTime, pinfo.maxTime,
+                           pinfo.samples, pinfo.rkSamples, pinfo.showAll, pinfo.showVar)
     // transform it into a portrait plot if needed
     if pinfo.portrait.nonEmpty
-    then rearrange(plot,pinfo.portrait)
-    else List(plot)
+    then rearrange(plot,pinfo.portrait).map(_ -> st2)
+    else List(plot->st2)
 
   /**
    *  Calculate a plot by traversing the state-space while collecting points and action names.
@@ -95,7 +105,7 @@ object Plot:
    */
   def apply(st: St, from: Double, to: Double,
             samples:Int=50, rkSamples: Int=100,
-            showCont:Boolean=false,filter:String=>Boolean): Plot = {
+            showCont:Boolean=false,filter:String=>Boolean): (Plot,St) = {
 
     // need to traverse my trajectory
     // need a maxt
@@ -110,7 +120,8 @@ object Plot:
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, rkSamples, from, showCont, Plot.empty, filter).endTraces
+    val (plot,st2) = calcPlot(stInit, stepSize, rkSamples, from, showCont, Plot.empty, filter)
+    plot.endTraces -> st2
   }
 
   /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
@@ -128,7 +139,7 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def calcPlot(st: St, stepSize: Double, rkSamples: Int, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
+  def calcPlot(st: St, stepSize: Double, rkSamples: Int, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): (Plot,St) =
     var res = acc
     // run discrete steps
     val (as, st2) = discSteps(st)(using rkSamples)
@@ -149,7 +160,7 @@ object Plot:
     for ((time,valuation) <- points.reverse; (x,value) <- valuation if filter(x)) do
       res = res + (x -> time -> value)
 
-    if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
+    if SmallStep.accepting(st3) || st == st3 then  res -> st2 // res + "## Finished"
     else calcPlot(st3, stepSize, rkSamples, timePassed + (st2.t - st3.t), showCont, res, filter)
 
 

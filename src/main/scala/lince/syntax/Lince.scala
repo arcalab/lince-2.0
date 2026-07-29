@@ -1,7 +1,5 @@
 package lince.syntax
 
-import lince.backend.SmallStep
-
 import scala.util.Random
 
 /**
@@ -15,38 +13,36 @@ object Lince:
   enum Program:
     case Skip
     case Assign(v:String, e:Expr)
-    case EqDiff(eqs:Map[String,Expr], dur:Expr)
+    case StreamDef(v:String, s:Strm)
+    case EqDiff(eqs:Map[String,Expr], dur:Option[Expr])
     case Seq(p:Program, q:Program)
-    case ITE(b:Cond, pt:Program, pf:Program)
-    case While(b:Cond, p:Program)
-
-  enum Cond:
-    case True
-    case False
-    case Comp(op:String, e1:Expr, e2:Expr)
-    case And(c1: Cond, c2: Cond)
-    case Or(c1: Cond, c2: Cond)
-    case Not(c: Cond)
+    case ITE(b:Expr, pt:Program, pf:Program)
+    case While(b:Expr, p:Program)
 
   enum Expr:
     case Num(n:Double)
+    case True
+    case False
     case Var(x:String)
     case Func(op:String, es:List[Expr])
+
+  trait Strm(var keep: Boolean):
+    def pop: Option[(Expr,Strm)]
 
   ///// Actions ////
 
   enum Action:
     case Assign(v: String, n:Double)
+    case StrmDef(v: String, s:Strm)
     case DiffStop(eqs: Map[String, Expr], time: Double)
     case DiffSkip(eqs: Map[String, Expr], time: Double)
-    case CheckIf(b: Cond, res:Boolean)
-    case CheckWhile(b: Cond, res:Boolean)
+    case CheckIf(b: Expr, res:Boolean)
+    case CheckWhile(b: Expr, res:Boolean)
     override def toString: String = Show(this)
 
   ///// Plot configuration ////
 
-  case class Simulation(prog:Program, pi:PlotInfo):
-    def state = SmallStep.St(prog,Map(),pi.seed+(pi.runs-1), pi.maxTime,pi.maxLoops)
+  case class Simulation(prog:Program, pi:PlotInfo)
 
   case class PlotInfo( minTime:Double,
                        maxTime:Double,
@@ -63,6 +59,6 @@ object Lince:
                        monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,100,SmallStep.rand.nextLong(),false,_=>true,450,1,Nil,1,0)
+    def default = PlotInfo(0,10,500,40,100,(new Random).nextLong(),false,_=>true,450,1,Nil,1,0)
 
 

@@ -7,7 +7,7 @@ import lince.backend.*
 import lince.backend.plot.*
 import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation}
 import lince.syntax.{Lince, Show}
-import SmallStep.St
+import SmallStep.{St,initial}
 import caos.frontend.widgets.WidgetInfo.Custom
 
 import scala.util.Random
@@ -109,30 +109,30 @@ object CaosConfig extends Configurator[Simulation]:
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
-          val plots = Plot.allPlots(sim.state, sim.pi)
+          val plots = Plot.allPlots(initial(sim), sim.pi)
           val js = PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
                    plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           scala.scalajs.js.eval(js)
         }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
-      (_.state, SmallStep, Show.simpleSt, _.toString, Text),
+      (initial, SmallStep, Show.simpleSt, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
-      (_.state, SmallStep, Show.simpleSt, _.toString),
+      (initial, SmallStep, Show.simpleSt, _.toString),
     // "Run all steps (inf)" -> lts[Simulation,Action,St]
     //   (_.state, StillSmallStep, Show.simpleSt, _.toString),
-    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)(using sim.pi.rkSamples)._2),Text),
+    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(initial(sim),Nil)(using sim.pi.rkSamples)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=> {
-            val ps = Plot(sim.state, sim._2)
+            val ps = Plot.justPlot(initial(sim), sim._2)
             if sim.pi.portrait.nonEmpty then
-              Plot(sim.state, sim._2.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
+              Plot.justPlot(initial(sim), sim._2.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
             else
               ps.map(_.show).mkString("\n\n")
           },
           Text),
     "Plots JS"
       -> view(sim => {
-            val plots = Plot.allPlots(sim.state, sim.pi)
+            val plots = Plot.allPlots(initial(sim), sim.pi)
             PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
               plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           }, Text),
@@ -142,7 +142,7 @@ object CaosConfig extends Configurator[Simulation]:
               sim.copy(pi=sim.pi.copy(portrait=Nil,
                          showVar=sim.pi.portrait.flatMap(x=>List(x._1,x._2)).contains))
               else sim
-            val ps = Plot(sim2.state, sim2._2)
+            val ps = Plot.justPlot(initial(sim2), sim2._2)
             PlotToTrace(ps.head).map(kv => roundf(kv._1).toString + ": " +
                 kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n")
           },

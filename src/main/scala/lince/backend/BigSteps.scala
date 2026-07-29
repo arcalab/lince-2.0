@@ -79,7 +79,7 @@ object BigSteps:
 //        ok = false
 //        st.p
 //    if !ok then return Nil -> st
-    st.resetSeed
+    ////////st.resetSeed
 
     // Alternative (maybe preferred in the future):
     //  1. extract the diff-eqs (stop if not found) and extract the rest
@@ -99,12 +99,12 @@ object BigSteps:
             //            println(s"[CS] Diff-stop - reached the goal time (min t/ts*counter)\n   ${(baseTime+goalTime::hist) -> st2}")
             if goalTime == st.t // if it stopped because of the boundaries, then stop, otherwise keep on going
             then
-              val st3 = st2.nextSeed // update seed only at the end
+              val st3 = st2 //////.nextSeed // update seed only at the end
               (((baseTime+goalTime)->st3.v)::hist) -> st3
             else contStepsAux(counter+1, ((baseTime+goalTime) -> st2.v)::hist)
           case Some((Action.DiffSkip(_,timePassed),st2)) => // "diff-skip // reached duration
             //            println(s"[CS] reached duration\n    FROM ${Show.simpleSt(st)}\n    BY $a\n    TO ${Show.simpleSt(st2)}")
-            val st3 = st2.nextSeed // update seed only at the end
+            val st3 = st2 ////////.nextSeed // update seed only at the end
             (((baseTime+timePassed)->st3.v)::hist) -> st3.copy(t = st.t-timePassed)
           case Some((stp,_)) => sys.error(s"Expected continuous step but found ${Show(stp)}")
           case None => hist -> st
