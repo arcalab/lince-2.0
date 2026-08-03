@@ -141,16 +141,43 @@ object Parser :
         val strm = res._2._2
         strm.keep = res._1.isDefined
         StreamDef(res._2._1,strm)) 
+
   def stream: P[Strm] =
-    (char('[') *> expr.repSep(sps *> char(',') *> sps) <* char(']') <* sps <* char(';'))
-      .map(x => ListStrm(x.toList,false)) |
-    (char('{') *> sps *> realnP ~
-    (sps *> char(',') *> sps *> string("..") *> sps *> char(',') *>
-      sps *> realnP
-      ) <* sps <* char('}') <* sps <* char(';'))
-        .map((from,to) => SeqStrm(from,to,1.0,false)) |
+    // (char('[') *> realnP.repSep(sps *> char(',') *> sps) <* char(']') <* sps <* char(';'))
+    //   .map(x => ListStrm(x.toList,false)) |
+    (char('[') *> sps *> (seqOrList <* sps <* char(';'))) |
     (expr <* sps <* char(';'))
       .map(e => ExprStrm(e,false))
+
+  // parses either:
+  //   a real number,
+  //   a list of real numbers,
+  //   a range of real numbers (e.g., `1.0,...,5.0`),
+  //   a range of real numbers of real numbers with a step size (e.g., `1.0,1.5,...,5.0`), or
+  //   an open-ended range of real numbers (e.g., `1.0,...` or `1.0,1.5,...`).
+  def seqOrList: P[Strm] =
+    (char(']')).as(ListStrm(Nil,false)) |
+    (realnP.repSep0(sps *> char(',') *> sps).with1 <* char(']'))
+      .map(x => ListStrm(x.toList,false)).backtrack |
+    (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *>
+      (char(',') *> sps *> realnP).?) <* char(']'))
+      .map{
+        case (from,to) => SeqStrm(from,to,1.0,false)
+      }.backtrack |
+    (realnP ~ (sps *> char(',') *> sps *> realnP) ~
+      (sps *> char(',') *> sps *> string("...") *> sps *>
+      (char(',') *> sps *> realnP).?) <* char(']'))
+      .map{
+        case ((from1,from2),to) => SeqStrm(from1,to,from2-from1,false)
+      }
+
+    // (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *> char(',') *>
+    //   sps *> realnP).?).map{
+    //     case (from,Some(to)) => SeqStrm(from,to,1.0,false)
+    //     case (from,None) => SeqStrm(from,Double.PositiveInfinity,1.0,false)
+    //   } |
+    // (char('[') *> realnP.repSep(sps *> char(',') *> sps) <* char(']'))
+    //   .map(x => ListStrm(x.toList,false))
 
   def assign: P[String => Program] =
     (string(":=") *> sps *> expr <* sps <* char(';')).map(e => v => Assign(v,e))

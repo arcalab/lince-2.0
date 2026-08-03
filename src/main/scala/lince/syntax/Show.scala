@@ -37,8 +37,8 @@ object Show:
 
   def apply(s:Strm): String = s match
     case ExprStrm(e,k) => apply(e)+keep(s)
-    case ListStrm(l,k) => l.map(apply).mkString("[",",","]")+keep(s)
-    case SeqStrm(from,to,by,k) => s"{$from,..,$to by $by}"+keep(s)
+    case ListStrm(l,k) => l.mkString("[",",","]")+keep(s)
+    case SeqStrm(from,to,by,k) => s"[$from,..,${to.map(_.toString).getOrElse("inf")} by $by]"+keep(s)
     case RandomStrm(seed,k) => "#"+(seed % 1000)+keep(s)
   private def keep(s:Strm): String = "" //if s.keep then "@k" else ""
   

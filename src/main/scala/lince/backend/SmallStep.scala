@@ -37,12 +37,12 @@ object SmallStep extends SOS[Action,St]:
     def pop = 
       val rnd = new Random(seed)
       Some(Expr.Num(rnd.nextDouble) -> RandomStrm(rnd.nextLong,keep))
-  case class SeqStrm(from: Double, to: Double, step: Double, kp: Boolean) extends Strm(kp):
-    def pop = if from>to then None
+  case class SeqStrm(from: Double, to: Option[Double], step: Double, kp: Boolean) extends Strm(kp):
+    def pop = if to.nonEmpty && from>to.get then None
               else Some(Expr.Num(from) -> SeqStrm(from+step, to, step, keep))
-  case class ListStrm(lst: List[Expr], kp: Boolean) extends Strm(kp):
+  case class ListStrm(lst: List[Double], kp: Boolean) extends Strm(kp):
     def pop = if lst.isEmpty then None
-              else Some(lst.head -> ListStrm(lst.tail,keep))
+              else Some(Expr.Num(lst.head) -> ListStrm(lst.tail,keep))
   case class ExprStrm(e:Expr, kp: Boolean) extends Strm(kp):
     def pop = Some(e,this)
 
