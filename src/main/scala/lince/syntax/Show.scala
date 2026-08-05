@@ -17,6 +17,8 @@ object Show:
     case Program.EqDiff(eqs, dur) =>
       eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") +
                     s" for ${dur.map(apply).getOrElse("forever")}; "
+    case Program.Seq(Program.Skip, q) => apply(q)
+    case Program.Seq(Program.Seq(p,q),r) => apply(Program.Seq(p,Program.Seq(q,r)))
     case Program.Seq(p, q) => apply(p)+"\n"+apply(q)
     case Program.ITE(b, pt, Program.Skip) => s"if ${apply(b)}:\n${ind(apply(pt))}"
     case Program.ITE(b, pt, pf) => s"if ${apply(b)}:\n${ind(apply(pt))}\nelse\n${ind(apply(pf))}"
@@ -69,7 +71,7 @@ object Show:
 
   def simpleStatm(p: Program): String = p match {
     case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))
-    case Program.Seq(Program.Skip, p2) => "skip; "+simpleStatm(p2)
+    case Program.Seq(Program.Skip, p2) => /*"skip; "+*/simpleStatm(p2)
     case Program.Seq(p1, p2) => simpleStatm(p1)+"..."
     case Program.While(b, p2) => s"while ${apply(b)} {...}"
     case Program.ITE(b, pt, pf) => s"if ${apply(b)} {...} {...}"
@@ -79,4 +81,7 @@ object Show:
   def simpleSt(st: lince.backend.SmallStep.St): String =
     s"[${st.t}/${st.lp}] {${st.o.map(x=>s"${x._1}:${Show(x._2)}").mkString(",")}} {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
     //s"[${st.t}/${st.lp}/${st.s}] {${st._2.mkString(",")}} ${simpleStatm(st._1)}"
+
+  def simpleStML(st: lince.backend.SmallStep.St): String =
+    s"[${st.t}/${st.lp}] {${st.o.map(x=>s"${x._1}:${Show(x._2)}").mkString(",")}} {${st._2.mkString(",")}}\n${simpleStatm(st._1)}"
 

@@ -115,12 +115,12 @@ object CaosConfig extends Configurator[Simulation]:
           scala.scalajs.js.eval(js)
         }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
-      (initial, SmallStep, Show.simpleSt, _.toString, Text),
+      (initial, SmallStep, Show.simpleStML, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
-      (initial, SmallStep, Show.simpleSt, _.toString),
+      (initial, SmallStep, Show.simpleStML, _.toString),
     // "Run all steps (inf)" -> lts[Simulation,Action,St]
-    //   (_.state, StillSmallStep, Show.simpleSt, _.toString),
-    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(initial(sim),Nil)(using sim.pi.rkSamples)._2),Text),
+    //   (_.state, StillSmallStep, Show.simpleStML, _.toString),
+    "Final state" -> view[Simulation](sim => Show.simpleStML(BigSteps.bigStep(initial(sim),Nil)(using sim.pi.rkSamples)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=> {
             val ps = Plot.justPlot(initial(sim), sim._2)
@@ -191,14 +191,16 @@ object CaosConfig extends Configurator[Simulation]:
 
   override val documentation: Documentation = List(
     languageName -> "More information on the syntax of Lince 2.0" ->
+        // |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
       """<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:
         |<pre>
         |  p ::= a  |  skip  |  p p  |  if e [then] p else p  |  while e p  |  { p } 
-        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;
-        |  e ::= x  |  f(e,...,e)
-        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
+        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;  |  (@keep)? def x := s;
+        |  e ::= x  |  r  |  true  |  false  |  f(e,...,e)
+        |  s := e  |  [r1,r2,...]
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>
+        |<p> Where <code>r</code> is a real number, <code>(@keep)?</code> means that <code>@keep</code> is optional, and <code>def x:= s</code> defines a (possibly infinite or empty) stream of numbers or a constant (non-recursive) expression.</p>
+        |<p> Known functions for <code>f</code> include <code>&&</code>, <code>||</code>, <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---
