@@ -16,6 +16,9 @@ object Basic:
     "Broken composition"
         -> "p:=0; v:=0;\np'=v,v'= 2  for 5;\np:=5;\np'=v,v'=-2  for 5;\np:=0;"
         -> "Variation of the previous example, breaking the continuity of the trajectories.",
+    "Naive particle positioning"
+        -> "x:=0; v:=0;\nwhile true do {\n  if x<0\n  then x'=v,v'= 1 for 1;\n  else x'=v,v'=-1 for 1;\n}\n--\nuntil 50"
+        -> "A simple system that tries to position a particle at a target position (0). The particle accelerates or brakes depending on its current position.",
   )
 
   val scenarios: List[Example] = List(

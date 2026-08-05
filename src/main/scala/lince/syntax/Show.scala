@@ -41,7 +41,7 @@ object Show:
     case ExprStrm(e,k) => apply(e)+keep(s)
     case ListStrm(l,k) => l.mkString("[",",","]")+keep(s)
     case SeqStrm(from,to,by,k) => s"[$from,..,${to.map(_.toString).getOrElse("inf")} by $by]"+keep(s)
-    case RandomStrm(seed,k) => "#"+(seed % 1000)+keep(s)
+    case RandomStrm(seed,k) => s"${seed % 1000}${if seed<1000 && seed> -1000 then "" else ".."}"+keep(s)
   private def keep(s:Strm): String = "" //if s.keep then "@k" else ""
   
 
