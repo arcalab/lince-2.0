@@ -1,6 +1,6 @@
 package lince.syntax
 
-import scala.util.Random
+import lince.backend.Stream
 
 /**
  * Internal structure to represent terms in Lince 2.0.
@@ -13,7 +13,7 @@ object Lince:
   enum Program:
     case Skip
     case Assign(v:String, e:Expr)
-    case StreamDef(v:String, s:Strm)
+    case StreamDef(v:String, s:Stream)
     case EqDiff(eqs:Map[String,Expr], dur:Option[Expr])
     case Seq(p:Program, q:Program)
     case ITE(b:Expr, pt:Program, pf:Program)
@@ -26,14 +26,11 @@ object Lince:
     case Var(x:String)
     case Func(op:String, es:List[Expr])
 
-  trait Strm(var keep: Boolean):
-    def pop: Option[(Expr,Strm)]
-
   ///// Actions ////
 
   enum Action:
     case Assign(v: String, n:Double)
-    case StrmDef(v: String, s:Strm)
+    case StrmDef(v: String, s:Stream)
     case DiffStop(eqs: Map[String, Expr], time: Double)
     case DiffSkip(eqs: Map[String, Expr], time: Double)
     case CheckIf(b: Expr, res:Boolean)
@@ -59,6 +56,8 @@ object Lince:
                        monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,100,(new Random).nextLong(),false,_=>true,450,1,Nil,1,0)
+    def default = PlotInfo(0,10,500,40,100,
+      (new scala.util.Random).nextLong(),
+      false,_=>true,450,1,Nil,1,0)
 
 

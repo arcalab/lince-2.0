@@ -1,7 +1,8 @@
 package lince.syntax
 
 import lince.syntax.Lince.*
-import lince.backend.SmallStep.{ExprStrm,ListStrm,SeqStrm,RandomStrm}
+import lince.backend.Stream
+import lince.backend.Stream.{ExprStrm,ListStrm,SeqStrm,RandomStrm}
 
 /**
  * List of functions to produce textual representations of commands
@@ -37,26 +38,17 @@ object Show:
     case Expr.Func(op, es) =>
       s"$op(${es.map(apply).mkString(", ")})"
 
-  def apply(s:Strm): String = s match
+  def apply(s:Stream): String = s match
     case ExprStrm(e,k) => apply(e)+keep(s)
     case ListStrm(l,k) => l.mkString("[",",","]")+keep(s)
     case SeqStrm(from,to,by,k) => s"[$from,..,${to.map(_.toString).getOrElse("inf")} by $by]"+keep(s)
-    case RandomStrm(seed,k) => s"${seed % 1000}${if seed<1000 && seed> -1000 then "" else ".."}"+keep(s)
-  private def keep(s:Strm): String = "" //if s.keep then "@k" else ""
+    case RandomStrm(seed,k) => s"${seed % 1000}${if seed<1000 && seed> -1000 then "" else ".."}"//+keep(s)
+  private def keep(s:Stream): String = if s.keep then "@k" else ""
   
 
   def applyP(e: Expr): String = e match
     case Expr.Func(_,es) if es.size>1 => s"(${apply(e)})"
     case _ => apply(e)
-
-  // def apply(c: Cond): String = c match {
-  //   case Cond.True => "true"
-  //   case Cond.False => "false"
-  //   case Cond.Comp(op, e1, e2) => s"${apply(e1)} $op ${apply(e2)}"
-  //   case Cond.And(c1, c2) => s"${apply(c1)} && ${apply(c2)}"
-  //   case Cond.Or(c1, c2) => s"${apply(c1)} || ${apply(c2)}"
-  //   case Cond.Not(c) => s"!(${apply(c)})"
-  // }
 
   def apply(a:Action): String = a match {
     case Action.Assign(v, n) => s"$v:=$n"

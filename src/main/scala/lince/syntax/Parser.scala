@@ -3,9 +3,10 @@ package lince.syntax
 import cats.parse.Numbers.digits
 import cats.parse.Parser.*
 import cats.parse.{LocationMap, Parser as P, Parser0 as P0}
-import lince.syntax.Lince.{Expr, PlotInfo, Program, Simulation, Strm}
+import lince.syntax.Lince.{Expr, PlotInfo, Program, Simulation}
 import Program.*
-import lince.backend.SmallStep.{ListStrm,SeqStrm,ExprStrm}
+import lince.backend.Stream
+import Stream.{Streams,ListStrm,SeqStrm,ExprStrm}
 import caos.frontend.widgets.WidgetInfo.Simulate
 
 import scala.sys.{env, error}
@@ -138,16 +139,15 @@ object Parser :
     ((string("@keep") *> sps).?.with1 ~
      (string("def") *> sps *> (varName <* sps <* string(":=") <* sps) ~ stream))
       .map(res =>
-        val strm = res._2._2
-        strm.keep = res._1.isDefined
+        val strm = res._2._2(res._1.isDefined)
         StreamDef(res._2._1,strm)) 
 
-  def stream: P[Strm] =
+  def stream: P[Boolean => Stream] =
     // (char('[') *> realnP.repSep(sps *> char(',') *> sps) <* char(']') <* sps <* char(';'))
     //   .map(x => ListStrm(x.toList,false)) |
     (char('[') *> sps *> (seqOrList <* sps <* char(';'))) |
     (expr <* sps <* char(';'))
-      .map(e => ExprStrm(e,false))
+      .map(e => kp => ExprStrm(e,kp))
 
   // parses either:
   //   a real number,
@@ -155,20 +155,20 @@ object Parser :
   //   a range of real numbers (e.g., `1.0,...,5.0`),
   //   a range of real numbers of real numbers with a step size (e.g., `1.0,1.5,...,5.0`), or
   //   an open-ended range of real numbers (e.g., `1.0,...` or `1.0,1.5,...`).
-  def seqOrList: P[Strm] =
-    (char(']')).as(ListStrm(Nil,false)) |
+  def seqOrList: P[Boolean => Stream] =
+    (char(']')).as(ListStrm(Nil,_)) |
     (realnP.repSep0(sps *> char(',') *> sps).with1 <* char(']'))
-      .map(x => ListStrm(x.toList,false)).backtrack |
+      .map(x => ListStrm(x.toList,_)).backtrack |
     (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *>
       (char(',') *> sps *> realnP).?) <* char(']'))
       .map{
-        case (from,to) => SeqStrm(from,to,1.0,false)
+        case (from,to) => SeqStrm(from,to,1.0,_)
       }.backtrack |
     (realnP ~ (sps *> char(',') *> sps *> realnP) ~
       (sps *> char(',') *> sps *> string("...") *> sps *>
       (char(',') *> sps *> realnP).?) <* char(']'))
       .map{
-        case ((from1,from2),to) => SeqStrm(from1,to,from2-from1,false)
+        case ((from1,from2),to) => SeqStrm(from1,to,from2-from1,_)
       }
 
     // (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *> char(',') *>

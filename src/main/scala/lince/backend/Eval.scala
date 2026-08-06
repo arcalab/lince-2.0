@@ -1,8 +1,10 @@
 package lince.backend
 
 import lince.syntax.{Lince, Show}
-import Lince.{Expr,Strm}
-import lince.backend.SmallStep.Strms
+import Lince.Expr
+import lince.backend.Stream
+import Stream.{Streams,RandomStrm,SeqStrm,ListStrm,ExprStrm}
+
 
 import scala.util.Random
 
@@ -87,16 +89,16 @@ object Eval:
   //   case Expr.Func(n,es) => Expr.Func(n,es.map(rands))
   // }
 
-  def apply(e:Expr,ss:Strms)(using v:MValuation)
-        : Option[(Double | Boolean , Strms)] =
+  def apply(e:Expr,ss:Streams)(using v:MValuation)
+        : Option[(Double | Boolean , Streams)] =
     evalStreams(e,ss).map((e,ss2) => (apply(e),ss2))
 
-  def asBoolean(e:Expr,ss:Strms)(using v:MValuation)
-        : Option[(Boolean , Strms)] =
+  def asBoolean(e:Expr,ss:Streams)(using v:MValuation)
+        : Option[(Boolean , Streams)] =
     evalStreams(e,ss).map((e,ss2) => (asBoolean(e),ss2))
 
-  def asDouble(e:Expr,ss:Strms)(using v:MValuation)
-        : Option[(Double , Strms)] =
+  def asDouble(e:Expr,ss:Streams)(using v:MValuation)
+        : Option[(Double , Streams)] =
     evalStreams(e,ss).map((e,ss2) => (asDouble(e),ss2))
 
 
@@ -105,7 +107,7 @@ object Eval:
   //   println(s"[DEBUG] ${Show(e)} ===> ${Show(res.getOrElse((e,ss))._1)} (knowing ${ss.keys.mkString(",")})")
   //   res
 
-  def evalStreams(e:Expr, ss:Strms): Option[(Expr,Strms)] = e match
+  def evalStreams(e:Expr, ss:Streams): Option[(Expr,Streams)] = e match
     case Expr.Var(x:String) if ss contains x => ss(x).pop match
       case Some((e2,s2)) =>
         evalStreams(e2, ss-x).map((e3,ss3) => (e3,ss3+(x->s2)))

@@ -3,6 +3,8 @@ package lince.backend
 import caos.sos.SOS
 import lince.backend.Eval.Valuation
 import lince.backend.SmallStep.St
+import lince.backend.Stream
+import Stream.{Streams,RandomStrm,SeqStrm,ListStrm,ExprStrm}
 import lince.syntax.{Lince, Show}
 import lince.syntax.Lince.*
 import Program.*
@@ -15,7 +17,7 @@ object SmallStep extends SOS[Action,St]:
 
   case class St(p: Program   // input program
                ,v: Valuation // known variables
-               ,o: Strms     // known streams
+               ,o: Streams   // known streams
                ,t: Double    // maximum time
                ,lp:Int)     // maximum loops
 
@@ -31,20 +33,20 @@ object SmallStep extends SOS[Action,St]:
        Map("unif" -> RandomStrm((si.pi.seed))), //+(si.pi.runs-1)))),
        si.pi.maxTime,si.pi.maxLoops)
 
-  // streams in the state
-  type Strms = Map[String,Strm]
-  case class RandomStrm(seed: Long, kp: Boolean = true) extends Strm(kp):
-    def pop = 
-      val rnd = new Random(seed)
-      Some(Expr.Num(rnd.nextDouble) -> RandomStrm(rnd.nextLong,keep))
-  case class SeqStrm(from: Double, to: Option[Double], step: Double, kp: Boolean) extends Strm(kp):
-    def pop = if to.nonEmpty && from>to.get then None
-              else Some(Expr.Num(from) -> SeqStrm(from+step, to, step, keep))
-  case class ListStrm(lst: List[Double], kp: Boolean) extends Strm(kp):
-    def pop = if lst.isEmpty then None
-              else Some(Expr.Num(lst.head) -> ListStrm(lst.tail,keep))
-  case class ExprStrm(e:Expr, kp: Boolean) extends Strm(kp):
-    def pop = Some(e,this)
+  // // streams in the state
+  // type Strms = Map[String,Strm]
+  // case class RandomStrm(seed: Long, kp: Boolean = true) extends Strm(kp):
+  //   def pop = 
+  //     val rnd = new Random(seed)
+  //     Some(Expr.Num(rnd.nextDouble) -> RandomStrm(rnd.nextLong,keep))
+  // case class SeqStrm(from: Double, to: Option[Double], step: Double, kp: Boolean) extends Strm(kp):
+  //   def pop = if to.nonEmpty && from>to.get then None
+  //             else Some(Expr.Num(from) -> SeqStrm(from+step, to, step, keep))
+  // case class ListStrm(lst: List[Double], kp: Boolean) extends Strm(kp):
+  //   def pop = if lst.isEmpty then None
+  //             else Some(Expr.Num(lst.head) -> ListStrm(lst.tail,keep))
+  // case class ExprStrm(e:Expr, kp: Boolean) extends Strm(kp):
+  //   def pop = Some(e,this)
 
   override def accepting(s: St): Boolean =
     s.t<=0 || s.lp<=0
