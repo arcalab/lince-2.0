@@ -69,12 +69,11 @@ object Plot:
   private type St = SmallStep.St
 
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
-    // ???
     var lastSt = st
     val ps = for run <- (1 to pinfo.runs).toList yield
       val pi2 = pinfo.copy(runs = run)
-      val initState = SmallStep.initial(Simulation(st.p,pi2)).copy(o = lastSt.o)
-      //println(s"[RUN $run] ${initState.o}")
+      val initState = SmallStep.initial(Simulation(st.p,pi2)).copy(s = lastSt.s)
+      //println(s"[RUN $run] ${initState.s}")
       apply(initState, pi2).map((p,stRun) =>
           lastSt = stRun
           (p,pi2)

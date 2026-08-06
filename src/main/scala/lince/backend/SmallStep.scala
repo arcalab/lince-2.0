@@ -17,7 +17,7 @@ object SmallStep extends SOS[Action,St]:
 
   case class St(p: Program   // input program
                ,v: Valuation // known variables
-               ,o: Streams   // known streams
+               ,s: Streams   // known streams
                ,t: Double    // maximum time
                ,lp:Int)     // maximum loops
 
@@ -65,35 +65,35 @@ object SmallStep extends SOS[Action,St]:
     st.p match {
       case Skip => None
       case Assign(n, e) =>
-        if st.o contains n then sys.error(s"Variable definition ${Show(st.p)} overriding an existient stream.")
-        val ress = Eval.asDouble(e,st.o) // after Eval always update the seed of the state
+        if st.s contains n then sys.error(s"Variable definition ${Show(st.p)} overriding an existient stream.")
+        val ress = Eval.asDouble(e,st.s) // after Eval always update the seed of the state
         // println(s"#### evaluating ${Show(e)} --> got ${ress} (from ${Show.simpleSt(st)})")
         // Some(Action.Assign(n,res) ->  st.nextSeed.copy(p = Skip, v = v+(n->res)))
         ress.map((res,ss) =>
-          Action.Assign(n,res) ->  st.copy(p = Skip, v = v+(n->res), o = ss))
+          Action.Assign(n,res) ->  st.copy(p = Skip, v = v+(n->res), s = ss))
       case StreamDef(n, s) =>
         if st.v contains n then sys.error(s"Stream definition ${Show(st.p)} overriding an existient variable.")
-        st.o.get(n) match
+        st.s.get(n) match
           case Some(strm) if strm.keep =>
                     Some(Action.StrmDef(n,s) -> st.copy(p=Skip))
-          case _ => Some(Action.StrmDef(n,s) -> st.copy(p=Skip,o=st.o+(n->s)))
+          case _ => Some(Action.StrmDef(n,s) -> st.copy(p=Skip,s=st.s+(n->s)))
       case Seq(Skip, q) => step(st.copy(p=q))
       case Seq(p, q) =>
         for (a,st2) <- step(st.copy(p=p))
           yield a -> st2.copy(p=Seq(st2.p,q))
       case ITE(b, pt, pf) =>
-        Eval.asBoolean(b,st.o) match
-          case Some(true,ss)  => Some(Action.CheckIf(b,true)  -> st.copy(p=pt,o=ss))
-          case Some(false,ss) => Some(Action.CheckIf(b,false) -> st.copy(p=pf,o=ss))
+        Eval.asBoolean(b,st.s) match
+          case Some(true,ss)  => Some(Action.CheckIf(b,true)  -> st.copy(p=pt,s=ss))
+          case Some(false,ss) => Some(Action.CheckIf(b,false) -> st.copy(p=pf,s=ss))
           case None => None
       case wh@While(b, p) =>
-        Eval.asBoolean(b,st.o) match 
-          case Some(true,ss)  => Some(Action.CheckWhile(b,true)  -> st.copy(p=Seq(p,wh), lp=st.lp-1, o=ss))
-          case Some(false,ss) => Some(Action.CheckWhile(b,false) -> st.copy(p=Skip, o=ss))
+        Eval.asBoolean(b,st.s) match 
+          case Some(true,ss)  => Some(Action.CheckWhile(b,true)  -> st.copy(p=Seq(p,wh), lp=st.lp-1, s=ss))
+          case Some(false,ss) => Some(Action.CheckWhile(b,false) -> st.copy(p=Skip, s=ss))
           case None => None
       case EqDiff(eqs, durExp) =>
         // evaluate and update streams
-        var ss = st.o
+        var ss = st.s
         var stop = false
         val eqs2 = for (v,e) <- eqs yield
           Eval.evalStreams(e,ss) match
@@ -111,14 +111,14 @@ object SmallStep extends SOS[Action,St]:
             case Some(dur) if dur>st.t => // time to stop is before the duration
               val v2 = RungeKutta(v,eqs2,st.t,rkSamples)
               Some(Action.DiffStop(eqs2,st.t) ->
-                    st.copy(p=EqDiff(eqs2,Some(Expr.Num(dur-st.t))), v=v2, t=0, o=ss))
+                    st.copy(p=EqDiff(eqs2,Some(Expr.Num(dur-st.t))), v=v2, t=0, s=ss))
             case Some(dur) => // time to stop is after the duration
               val v2 = RungeKutta(v,eqs2,dur,rkSamples)
               Some(Action.DiffSkip(eqs2,dur) ->
-                    st.copy(p=Skip, v=v2, t=st.t-dur, o=ss))
+                    st.copy(p=Skip, v=v2, t=st.t-dur, s=ss))
             case None => // the time to stop is before the (infinite) duration
               val v2 = RungeKutta(v,eqs2,st.t,rkSamples)
               Some(Action.DiffStop(eqs2,st.t) ->
-                    st.copy(p=EqDiff(eqs2,None), v=v2, t=0, o=ss))
+                    st.copy(p=EqDiff(eqs2,None), v=v2, t=0, s=ss))
     }
 
