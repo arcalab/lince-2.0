@@ -1,8 +1,8 @@
 package lince.syntax
 
-import lince.backend.{SmallStep, BasicSmallStep, ConcurrentSmallStep}
+import lince.backend.{SmallStep, BasicSmallStep, ConcurrentSmallStep, Stream}
 
-import scala.util.Random
+import lince.backend.Stream.RandomStrm
 
 /**
  * Internal structure to represent terms in Lince 2.0.
@@ -21,21 +21,16 @@ object Lince:
   enum Program:
     case Skip
     case Assign(v:Location, e:Expr)
-    case EqDiff(eqs:Map[Location,Expr], dur:Expr)
+    case StreamDef(v:String, s:Stream)
+    case EqDiff(eqs:Map[Location,Expr], dur:Option[Expr])
     case Seq(p:Program, q:Program)
-    case ITE(b:Cond, pt:Program, pf:Program)
-    case While(b:Cond, p:Program)
-
-  enum Cond:
-    case True
-    case False
-    case Comp(op:String, e1:Expr, e2:Expr)
-    case And(c1: Cond, c2: Cond)
-    case Or(c1: Cond, c2: Cond)
-    case Not(c: Cond)
+    case ITE(b:Expr, pt:Program, pf:Program)
+    case While(b:Expr, p:Program)
 
   enum Expr:
     case Num(n:Double)
+    case True
+    case False
     case Var(x:Location)
     case Func(op:String, es:List[Expr])
 
@@ -43,35 +38,38 @@ object Lince:
 
   enum Action:
     case Assign(v: Location, n:Double)
+    case StrmDef(v: String, s:Stream)
     case DiffStop(eqs: Map[Location, Expr], time: Double)
     case DiffSkip(eqs: Map[Location, Expr], time: Double)
-    case CheckIf(b: Cond, res:Boolean)
-    case CheckWhile(b: Cond, res:Boolean)
+    case CheckIf(b: Expr, res:Boolean)
+    case CheckWhile(b: Expr, res:Boolean)
     override def toString: String = Show(this)
 
   ///// Plot configuration ////
 
   case class Simulation(progs:Map[String, Program], pi:PlotInfo):
-    def state =
+    def state: SmallStep.St =
+      val initialStreams = Map("unif" -> RandomStrm( pi.seed + (pi.runs - 1)))
       if progs.size == 1 && progs.contains("")
       then
         SmallStep.St.Basic(
           BasicSmallStep.BasicState(
-            progs(""),
-            Map(),
-            pi.seed + (pi.runs - 1),
-            pi.maxTime,
-            pi.maxLoops
+            p = progs(""),
+            v = Map(),
+            s = initialStreams,
+            t = pi.maxTime,
+            lp = pi.maxLoops
           )
         )
       else
         SmallStep.St.Concurrent(
           ConcurrentSmallStep.ConcurrentState(
-            progs,
-            Map(),
-            pi.seed + (pi.runs - 1),
-            pi.maxTime,
-            pi.maxLoops
+            progs = progs,
+            v = Map(),
+            s = initialStreams,
+            t = pi.maxTime,
+            lp = pi.maxLoops,
+            nextProcess = 0
           )
         )
 
@@ -90,8 +88,12 @@ object Lince:
                        height: Int, // height in px
                        runs: Int, // number of times to repeat the run
                        portrait: List[(String,String)], // to change the variables in the x and y axis
+                       monSampleFreq: Double, // frequency of sampling for the monitor (in time units)
+                       monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
   )
   object PlotInfo:
-    def default = PlotInfo(0,10,500,40,100,scala.util.Random.nextLong(),false,_=>true,450,1,Nil)
+    def default = PlotInfo(0,10,500,40,100,
+      (new scala.util.Random).nextLong(),
+      false,_=>true,450,1,Nil,1,0)
 
 

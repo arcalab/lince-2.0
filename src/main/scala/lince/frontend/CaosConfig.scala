@@ -5,7 +5,7 @@ import caos.frontend.{Configurator, Documentation}
 import caos.view.*
 import lince.backend.*
 import lince.backend.plot.*
-import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation, Location, Expr, Cond}
+import lince.syntax.Lince.{Action, PlotInfo, Program, Simulation, Location, Expr}
 import lince.syntax.{Lince, Show}
 import SmallStep.St
 import caos.frontend.widgets.WidgetInfo.Custom
@@ -41,22 +41,11 @@ object CaosConfig extends Configurator[Simulation]:
   def qualifyExpr(owner: String, e: Expr): Expr =
     e match
       case Expr.Num(_) => e
+      case Expr.True => e
+      case Expr.False => e
       case Expr.Var(x) => Expr.Var(qualifyLoc(owner, x))
       case Expr.Func(op, es) =>
         Expr.Func(op, es.map(qualifyExpr(owner, _)))
-
-  def qualifyCond(owner: String, c: Cond): Cond =
-    c match
-      case Cond.True => Cond.True
-      case Cond.False => Cond.False
-      case Cond.Comp(op, e1, e2) =>
-        Cond.Comp(op, qualifyExpr(owner, e1), qualifyExpr(owner, e2))
-      case Cond.And(c1, c2) =>
-        Cond.And(qualifyCond(owner, c1), qualifyCond(owner, c2))
-      case Cond.Or(c1, c2) =>
-        Cond.Or(qualifyCond(owner, c1), qualifyCond(owner, c2))
-      case Cond.Not(c1) =>
-        Cond.Not(qualifyCond(owner, c1))
 
   def qualifyProgram(owner: String, p: Program): Program =
     p match
@@ -68,13 +57,16 @@ object CaosConfig extends Configurator[Simulation]:
           qualifyLoc(owner, v),
           qualifyExpr(owner, e)
         )
+      
+      case Program.StreamDef(v, s) =>
+        Program.StreamDef(v, s)
 
       case Program.EqDiff(eqs, dur) =>
         Program.EqDiff(
           eqs.map { case (v, e) =>
             qualifyLoc(owner, v) -> qualifyExpr(owner, e)
           },
-          qualifyExpr(owner, dur)
+          dur.map(qualifyExpr(owner, _))
         )
 
       case Program.Seq(p, q) =>
@@ -85,14 +77,14 @@ object CaosConfig extends Configurator[Simulation]:
 
       case Program.ITE(b, pt, pf) =>
         Program.ITE(
-          qualifyCond(owner, b),
+          qualifyExpr(owner, b),
           qualifyProgram(owner, pt),
           qualifyProgram(owner, pf)
         )
 
       case Program.While(b, body) =>
         Program.While(
-          qualifyCond(owner, b),
+          qualifyExpr(owner, b),
           qualifyProgram(owner, body)
         )
 
@@ -107,13 +99,18 @@ object CaosConfig extends Configurator[Simulation]:
       case Program.Assign(v, e) =>
         s"${v.toString}:=${Show(e)};"
 
+      case Program.StreamDef(v, s) =>
+        s"def $v:=${Show(s)};"
+
       case Program.EqDiff(eqs, dur) =>
         val eqsStr =
           eqs.map { case (v, e) =>
             s"${v.toString}'=${Show(e)}"
           }.mkString(", ")
-
-        s"$eqsStr for ${Show(dur)};"
+        val durStr = dur match
+            case Some(d) => Show(d)
+            case None    => "forever"
+        s"$eqsStr for $durStr;"
 
       case Program.Seq(p, q) =>
         s"${showProgramWithOwner(owner, p)} ${showProgramWithOwner(owner, q)}"
@@ -224,17 +221,17 @@ object CaosConfig extends Configurator[Simulation]:
           scala.scalajs.js.eval(js)
         }, buttons = Nil).expand,
     "Run small-steps" -> steps[Simulation,Action,St]
-      (_.state, SmallStep, Show.simpleSt, _.toString, Text),
+      (_.state, SmallStep, Show.simpleStML, _.toString, Text),
     "Run all steps" -> lts[Simulation,Action,St]
-      (_.state, SmallStep, Show.simpleSt, _.toString),
+      (_.state, SmallStep, Show.simpleStML, _.toString),
     // "Run all steps (inf)" -> lts[Simulation,Action,St]
-    //   (_.state, StillSmallStep, Show.simpleSt, _.toString),
-    "Final state" -> view[Simulation](sim => Show.simpleSt(BigSteps.bigStep(sim.state,Nil)(using sim.pi.rkSamples)._2),Text),
+    //   (_.state, StillSmallStep, Show.simpleStML, _.toString),
+    "Final state" -> view[Simulation](sim => Show.simpleStML(BigSteps.bigStep(sim.state,Nil)(using sim.pi.rkSamples)._2),Text),
     "Plot debug"
       -> view[Simulation](sim=> {
-            val ps = Plot(sim.state, sim._2)
+            val ps = Plot.justPlot(sim.state, sim.pi)
             if sim.pi.portrait.nonEmpty then
-              Plot(sim.state, sim._2.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
+              Plot.justPlot(sim.state, sim.pi.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
             else
               ps.map(_.show).mkString("\n\n")
           },
@@ -251,11 +248,19 @@ object CaosConfig extends Configurator[Simulation]:
               sim.copy(pi=sim.pi.copy(portrait=Nil,
                          showVar=sim.pi.portrait.flatMap(x=>List(x._1,x._2)).contains))
               else sim
-            val ps = Plot(sim2.state, sim2._2)
+            val ps = Plot.justPlot(sim2.state, sim2.pi)
             PlotToTrace(ps.head).map(kv => roundf(kv._1).toString + ": " +
                 kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n")
           },
           Text),
+    // "Periodic samples"
+    //   -> view(sim => {
+    //         val ps = Plot(sim.state, sim._2)
+    //         val samples = sim.pi.monSampleFreq
+    //         ps.map(p => p.sample(samples).map(kv => roundf(kv._1).toString + ": " +
+    //             kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n\n")).mkString("\n\n")
+    //       },
+    //       Text),
 
 //    "Plot"
 //      -> Custom[Simulation](divName = "sim-plotly", reload = sim => {
@@ -293,14 +298,16 @@ object CaosConfig extends Configurator[Simulation]:
 
   override val documentation: Documentation = List(
     languageName -> "More information on the syntax of Lince 2.0" ->
+        // |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
       """<p>A program <code>p</code> in Lince 2.0 is given by the following grammar:
         |<pre>
-        |  p ::= a  |  skip  |  p p  |  if b [then] p else p  |  while b p  |  { p }
-        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;
-        |  e ::= x  |  f(e,...,e)
-        |  b ::= e <= e  |  b && b  |  b || b  |  true  |  false
+        |  p ::= a  |  skip  |  p p  |  if e [then] p else p  |  while e p  |  { p } 
+        |  a ::= x1'=e, ...,xn'=e for e;  |  x:=e;  |  (@keep)? def x := s;
+        |  e ::= x  |  r  |  true  |  false  |  f(e,...,e)
+        |  s := e  |  [r1,r2,...]
         |</pre></p>
-        |<p> Known functions for <code>f</code> include <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>
+        |<p> Where <code>r</code> is a real number, <code>(@keep)?</code> means that <code>@keep</code> is optional, and <code>def x:= s</code> defines a (possibly infinite or empty) stream of numbers or a constant (non-recursive) expression.</p>
+        |<p> Known functions for <code>f</code> include <code>&&</code>, <code>||</code>, <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>*</code>, <code>/</code>, <code>+</code>, <code>-</code>, <code>^</code>, <code>pow</code>, <code>sqrt</code>, <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>cosh</code>, <code>sinh</code>, <code>tanh</code>, <code>pi</code>, <code>unif</code>, <code>expn</code>, <code>normal</code>, <code>powerlaw</code>.</p>
         |<p> You can customize your plot by appending to the end of your program, e.g.,
         |<pre>
         |---

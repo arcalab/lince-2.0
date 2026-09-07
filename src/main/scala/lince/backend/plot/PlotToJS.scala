@@ -25,7 +25,6 @@ object PlotToJS:
 
   /** Adds a plot as an overlay to an existing plot */
   def addPlot(plot: Plot, divName: String, pi: PlotInfo): String =
-    println("ADDING PLOT")
     val vars = plot.traces.keys.toList.sorted
     s"""${setDataJS(plot, divName, pi, vars)}
        |Plotly.addTraces('$divName', data);

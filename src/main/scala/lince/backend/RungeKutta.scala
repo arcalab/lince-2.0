@@ -34,26 +34,26 @@ object RungeKutta:
 
       // Determination of k1 for all differential equations
       for ((v,exp) <- eqs)
-        k1(v)=h*Eval(exp)(using accum)
+        k1(v)=h*Eval.asDouble(exp)(using accum)
 
       // Determination of k2 for all differential equations
       for ((key, value) <- accum)
         accum(key) = stepValuation(key)+k1(key)/2
       for ((v,exp) <- eqs)
-        k2(v)=h*Eval(exp)(using accum)
+        k2(v)=h*Eval.asDouble(exp)(using accum)
 
       // Determination  k3 for all differential equations
       for ((key, value) <- accum)
         accum(key) = stepValuation(key)+k2(key)/2
       for ((v, exp) <- eqs)
-        k3(v) = h * Eval(exp)(using accum)
+        k3(v) = h * Eval.asDouble(exp)(using accum)
 
       // Determination of k4 for all differential equations
       for ((key, value) <- accum)
         accum(key) = stepValuation(key)+k3(key)
       //println("iteration_4:",accum)
       for ((v, exp) <- eqs)
-        k4(v) = h * Eval(exp)(using accum)
+        k4(v) = h * Eval.asDouble(exp)(using accum)
 
       //Update stepValuation
       for ((key, value) <- stepValuation)

@@ -3,8 +3,10 @@ package lince.syntax
 import cats.parse.Numbers.digits
 import cats.parse.Parser.*
 import cats.parse.{LocationMap, Parser as P, Parser0 as P0}
-import lince.syntax.Lince.{Cond, Expr, PlotInfo, Program, Simulation, Location}
+import lince.syntax.Lince.{Expr, PlotInfo, Program, Simulation, Location}
 import Program.*
+import lince.backend.Stream
+import Stream.{Streams,ListStrm,SeqStrm,ExprStrm}
 import caos.frontend.widgets.WidgetInfo.Simulate
 
 import scala.sys.{env, error}
@@ -80,32 +82,28 @@ object Parser :
 
   private def qualifyExpr(prog: String, e: Expr): Expr = e match
     case Expr.Num(_) => e
+    case Expr.True => e
+    case Expr.False => e
     case Expr.Var(x) => Expr.Var(qualifyLocation(prog, x))
     case Expr.Func(op, es) => Expr.Func(op, es.map(qualifyExpr(prog, _)))
-
-  private def qualifyCond(prog: String, c: Cond): Cond = c match
-    case Cond.True => c
-    case Cond.False => c
-    case Cond.Comp(op, e1, e2) => Cond.Comp(op, qualifyExpr(prog, e1), qualifyExpr(prog, e2))
-    case Cond.And(c1, c2) => Cond.And(qualifyCond(prog, c1), qualifyCond(prog, c2))
-    case Cond.Or(c1, c2) => Cond.Or(qualifyCond(prog, c1), qualifyCond(prog, c2))
-    case Cond.Not(c1) => Cond.Not(qualifyCond(prog, c1))
 
   private def qualifyProgram(progName: String, p: Program): Program = p match
     case Skip => Skip
     case Assign(v, e) =>
       Assign(qualifyLocation(progName, v), qualifyExpr(progName, e))
+    case StreamDef(v, s) =>
+      StreamDef(v, s)
     case EqDiff(eqs, dur) =>
       EqDiff(
         eqs.map { case (v, e) => qualifyLocation(progName, v) -> qualifyExpr(progName, e) },
-        qualifyExpr(progName, dur)
+        dur.map(qualifyExpr(progName, _))
       )
     case Seq(p, q) =>
       Seq(qualifyProgram(progName, p), qualifyProgram(progName, q))
     case ITE(b, pt, pf) =>
-      ITE(qualifyCond(progName, b), qualifyProgram(progName, pt), qualifyProgram(progName, pf))
+      ITE(qualifyExpr(progName, b), qualifyProgram(progName, pt), qualifyProgram(progName, pf))
     case While(b, p) =>
-      While(qualifyCond(progName, b), qualifyProgram(progName, p))
+      While(qualifyExpr(progName, b), qualifyProgram(progName, p))
 
   private def namedProgram: P[(String, Program)] =
   (procName <* sps).flatMap { name =>
@@ -123,6 +121,9 @@ object Parser :
   def realP: P[Double] =
     (digits ~ (charIn('.')*>digits.map("."+_)).?)
       .map(x=>(x._1+x._2.getOrElse("")).toDouble)
+  def realnP: P[Double] =
+    (char('-').?.with1 ~ (digits ~ (charIn('.')*>digits.map("."+_)).?))
+      .map(x=>(x._2._1+x._2._2.getOrElse("")).toDouble * (if x._1.isDefined then -1 else 1))
   /** Positive integer */
   def intP: P[Int] = digits.map(_.toInt)
 
@@ -185,6 +186,7 @@ object Parser :
     bern(recSt) |
     block(recSt) |
     waitP |
+    strmDef |
     ((location <* sps) ~ (assign | diffEq | suffix)).map(x => x._2(x._1)).backtrack
   })
 
@@ -202,7 +204,7 @@ object Parser :
     ((string("bernoulli") *> sps *> expr) ~
       (sps *> rec <* sps) ~
       rec)
-      .map(x => ITE(Cond.Comp("<",Expr.Func("unif",Nil),x._1._1),
+      .map(x => ITE(Expr.Func("<",List(Expr.Func("unif",Nil),x._1._1)),
                     x._1._2, x._2))
 
   def whileP(rec:P[Program]): P[Program] =
@@ -214,11 +216,55 @@ object Parser :
       .map(x => Seq(
         Assign(Location(None, "§c"),Expr.Num(0)),
         While(
-          Cond.Comp("<",Expr.Var(Location(None, "§c")),Expr.Num(x._1)),
+          Expr.Func("<",List(Expr.Var(Location(None, "§c")),Expr.Num(x._1))),
           Seq(x._2,Assign(Location(None, "§c"),Expr.Func("+",List(Expr.Var(Location(None, "§c")),Expr.Num(1))))))))
 
   def waitP: P[Program] =
-    string("wait") *> sps *> expr.map(e => EqDiff(Map(),e)) <* sps <* char(';')
+    string("wait") *> sps *> expr.map(e => EqDiff(Map(),Some(e))) <* sps <* char(';')
+
+  def strmDef: P[Program] =
+    ((string("@keep") *> sps).?.with1 ~
+     (string("def") *> sps *> (varName <* sps <* string(":=") <* sps) ~ stream))
+      .map(res =>
+        val strm = res._2._2(res._1.isDefined)
+        StreamDef(res._2._1,strm)) 
+
+  def stream: P[Boolean => Stream] =
+    // (char('[') *> realnP.repSep(sps *> char(',') *> sps) <* char(']') <* sps <* char(';'))
+    //   .map(x => ListStrm(x.toList,false)) |
+    (char('[') *> sps *> (seqOrList <* sps <* char(';'))) |
+    (expr <* sps <* char(';'))
+      .map(e => kp => ExprStrm(e,kp))
+
+  // parses either:
+  //   a real number,
+  //   a list of real numbers,
+  //   a range of real numbers (e.g., `1.0,...,5.0`),
+  //   a range of real numbers of real numbers with a step size (e.g., `1.0,1.5,...,5.0`), or
+  //   an open-ended range of real numbers (e.g., `1.0,...` or `1.0,1.5,...`).
+  def seqOrList: P[Boolean => Stream] =
+    (char(']')).as(ListStrm(Nil,_)) |
+    (realnP.repSep0(sps *> char(',') *> sps).with1 <* char(']'))
+      .map(x => ListStrm(x.toList,_)).backtrack |
+    (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *>
+      (char(',') *> sps *> realnP).?) <* char(']'))
+      .map{
+        case (from,to) => SeqStrm(from,to,1.0,_)
+      }.backtrack |
+    (realnP ~ (sps *> char(',') *> sps *> realnP) ~
+      (sps *> char(',') *> sps *> string("...") *> sps *>
+      (char(',') *> sps *> realnP).?) <* char(']'))
+      .map{
+        case ((from1,from2),to) => SeqStrm(from1,to,from2-from1,_)
+      }
+
+    // (realnP ~ (sps *> char(',') *> sps *> string("...") *> sps *> char(',') *>
+    //   sps *> realnP).?).map{
+    //     case (from,Some(to)) => SeqStrm(from,to,1.0,false)
+    //     case (from,None) => SeqStrm(from,Double.PositiveInfinity,1.0,false)
+    //   } |
+    // (char('[') *> realnP.repSep(sps *> char(',') *> sps) <* char(']'))
+    //   .map(x => ListStrm(x.toList,false))
 
   def assign: P[Location => Program] =
     (string(":=") *> sps *> expr <* sps <* char(';')).map(e => v => Assign(v,e))
@@ -233,11 +279,12 @@ object Parser :
       }
   // "for" or "until" (syntactic sugar)
   def duration: P[Map[Location,Expr] => Program] =
+    string("forever") *> sps *> char(';').as(eqs => EqDiff(eqs,None)) |
     string("for") *> sps *>
-      expr.map(dur => eqs => EqDiff(eqs,dur)) <*
+      expr.map(dur => eqs => EqDiff(eqs,Some(dur))) <*
       (sps <* char(';')) |
     ((string("until_") *> expr) ~ (sps *> cond <* (sps <* char(';'))))
-      .map((dur,c) => (eqs:Map[Location,Expr]) => While(Cond.Not(c), EqDiff(eqs, dur)))
+      .map((dur,c) => (eqs:Map[Location,Expr]) => While(Expr.Func("!",List(c)), EqDiff(eqs, Some(dur))))
 
 
   def suffix: P[Location => Program] =
@@ -250,11 +297,10 @@ object Parser :
     def literal: P[Expr] = P.recursive((recLit: P[Expr]) =>
       (char('(') *> recExpr.surroundedBy(sps) <* char(')')) |
       (char('-') ~ recLit).map(x => Expr.Func("*",List(Expr.Num(-1),x._2))) |
-      realP.map(Expr.Num.apply) |
-//      (string("expn") *> sps *> char('(') *> sps *> recExpr <* (sps <* char(')')))
-//        .map(lamb => Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
-//                       Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))) |
-          // - ln ( unif ) / lambda
+      (char('!') ~ recLit).map(x => Expr.Func("!",List(x._2))) | // cond NOT
+      realnP.map(Expr.Num.apply) |
+      string("true").as(Expr.True) |
+      string("false").as(Expr.False) |
       (location ~ (sps *> (char('(') *> sps *> recExpr.repSep0(sps ~ char(',') ~ sps) <* (sps <* char(')'))).?))
       .map {
         case (loc, None) => Expr.Var(loc)
@@ -275,11 +321,30 @@ object Parser :
       string("+").as((x: Expr, y: Expr) => Expr.Func("+",List(x,y))) |
       string("-").as((x: Expr, y: Expr) => Expr.Func("-",List(x,y)))
 
-    listSep(listSep(listSep(literal, pow), mult), sum)
+    def comp: P[(Expr, Expr) => Expr] =
+      (string("<=")| string(">=")| char('<')| char('>')| string("==")| string("!="))
+        .string
+        .map(op => ((e1,e2) => Expr.Func(op,List(e1,e2))))
+
+    def or: P[(Expr, Expr) => Expr] =
+      (string("||")|string("\\/")).as((x,y) => Expr.Func("||",List(x,y)))
+
+    def and: P[(Expr, Expr) => Expr] =
+      (string("&&")|string("/\\")).as((x,y) => Expr.Func("&&",List(x,y)))
+
+    listSep(listSep(listSep(listSep(listSep(listSep(
+      literal, pow), mult), sum), comp), and), or)
   })
 
   /** Replaces some functions with its pre-processed equivalent. */
   def preProcess(f:Expr.Func): Expr = f match {
+    case Expr.Func("unif",List(e1,e2)) =>
+      // unif*(e2-e1)+e1
+      Expr.Func("+",List(e1,
+        Expr.Func("*",List(Expr.Func("unif",Nil),
+          Expr.Func("-",List(e2,e1))
+        ))
+      )) 
     case Expr.Func("expn",List(lamb)) => // - ln ( unif ) / lambda
       Expr.Func("/",List(Expr.Func("*",List(Expr.Num(-1),
         Expr.Func("ln",List(Expr.Func("unif",Nil))))),lamb))
@@ -335,32 +400,10 @@ object Parser :
 
 
   /** Parse a boolean condition */
-  def cond: P[Cond] = P.recursive((recCond:P[Cond]) => {
-    def lit: P[Cond] = P.recursive( (recLit:P[Cond]) =>
-      string("true").as(Cond.True) |
-      string("false").as(Cond.False) |
-      (char('!') *> recLit).map(Cond.Not.apply) |
-      ineq.backtrack |
-      char('(') *> recCond.surroundedBy(sps) <* char(')')
-    )
+  def cond: P[Expr] = expr
 
-    def op: P[(Expr, Expr) => Cond] = {
-      (string("<=")| string(">=")| char('<')| char('>')| string("==")| string("!="))
-        .string
-        .map(op => ((e1,e2) => Cond.Comp(op,e1,e2)))
-    }
 
-    def ineq =
-      (expr ~ op.surroundedBy(sps) ~ expr).map(x => x._1._2(x._1._1, x._2))
 
-    def or: P[(Cond, Cond) => Cond] =
-      (string("||")|string("\\/")).as(Cond.Or.apply)
-
-    def and: P[(Cond, Cond) => Cond] =
-      (string("&&")|string("/\\")).as(Cond.And.apply)
-
-    listSep(listSep(lit, and), or)
-  })
 
   def plotInfo: P[PlotInfo] =
     (char('-').rep *> sps *> (plotMod<*sps).rep).map(lst =>
@@ -368,30 +411,39 @@ object Parser :
     )
 
   def plotMod: P[PlotInfo => PlotInfo] =
-    (string("until") *> sps *> realP).map(r =>
-      (pi:PlotInfo) => pi.copy(maxTime = r)) |
-    (string("from") *> sps *> realP).map(r =>
-      (pi:PlotInfo) => pi.copy(minTime = r)) |
-    (string("iterations") *> sps *> intP).map(r =>
-      (pi:PlotInfo) => pi.copy(maxLoops = r)) |
-    (string("samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(samples = r)) |
-    (string("samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(samples = r)) |
-    (string("rk-samples") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(rkSamples = r)) |
-    (string("seed") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(seed = r)) |
-    (string("vars") *> sps *> regExp).map(r =>
-      (pi: PlotInfo) => pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
-    (string("height") *> sps *> intP).map(r =>
-      (pi: PlotInfo) => pi.copy(height = r)) |
-    (string("runs") *> sps *> intP).map(r =>
-        (pi: PlotInfo) => pi.copy(runs = r)) |
-    (string("portrait") *> sps *> (location ~ (sps *> char(',') *> sps *> (location <* sps))) .repSep(char(';') *> sps)).map(lst =>
-      (pi: PlotInfo) => pi.copy( portrait = lst.toList.map { case (x, y) => (x.toString, y.toString) } ::: pi.portrait)) |
+    plotModBuild("until", realP, pi => r => 
+        pi.copy(maxTime = r)) |
+    plotModBuild("from" , realP, pi => r =>
+        pi.copy(minTime = r)) |
+    plotModBuild("iterations", intP, pi => r =>
+        pi.copy(maxLoops = r)) |
+    plotModBuild("samples", intP, pi => r =>
+        pi.copy(samples = r)) |
+    plotModBuild("rk-samples", intP, pi => r =>
+        pi.copy(rkSamples = r)) |
+    plotModBuild("seed", intP, pi => r =>
+        pi.copy(seed = r)) |
+    plotModBuild("vars", regExp, pi => r =>
+        pi.copy(showVar = str => r.exists(re => re.r.matches(str)))) |
+    plotModBuild("height", intP, pi => r =>
+        pi.copy(height = r)) |
+    plotModBuild("runs", intP, pi => r =>
+        pi.copy(runs = r)) |
+    plotModBuild("monitor-sample-freq", realP, pi => r =>
+        pi.copy(monSampleFreq = r)) |
+    plotModBuild("monitor-sample-noise", realP, pi => r =>
+        pi.copy(monSampleNoise = r)) |
+    plotModBuild("portrait", portraitArgs, pi => lst =>
+        pi.copy(portrait = lst ::: pi.portrait)) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
+
+  def portraitArgs: P[List[(String,String)]] =
+      (varName ~ (sps *> char(',') *> sps *>(varName <* sps))).repSep(char(';')*>sps)
+        .map(lst => lst.toList)
+
+  def plotModBuild[A](kw:String, args:P[A], upd:PlotInfo => A => PlotInfo): P[PlotInfo => PlotInfo] =
+    string(kw) *> sps *> args.map((as:A) => (pi: PlotInfo) => upd(pi)(as))
 
   //// Auxiliary functions
 
@@ -429,6 +481,8 @@ object Parser :
           )
         else
           Nil
+      case StreamDef(_, _) =>
+        Nil
       case EqDiff(eqs, _) =>
         eqs.keys.toList.collect {
           case loc if foreignWrite(loc) =>

@@ -76,39 +76,54 @@ object BigSteps:
    * @param hist accumulator to compile the valuations of points already sampled
    * @return list of valuations at the points sampled while traversing the continuous step
    */
-  def contSteps(st: St, timeStep: Double, baseTime: Double)(using rkSamples: Int): (List[(Double, Valuation)], St) =
-    SmallStep.resetSeed(st)
-
-    @tailrec
-    def contStepsAux(
-        counter: Int,
-        hist: List[(Double, Valuation)]
-    ): (List[(Double, Valuation)], St) =
-
-      val goalTime = SmallStep.time(st).min(timeStep * counter)
-
-      step(SmallStep.withTime(st, goalTime))(using rkSamples) match
-
-        case Some((Action.DiffStop(_, _), st2)) =>
-          if goalTime == SmallStep.time(st) then
-            val st3 = SmallStep.nextSeed(st2)
-            (((baseTime + goalTime) -> SmallStep.valuation(st3)) :: hist) -> st3
-          else
-            contStepsAux(
-              counter + 1,
-              ((baseTime + goalTime) -> SmallStep.valuation(st2)) :: hist
+  def contSteps(st: St, timeStep: Double, baseTime: Double )(using rkSamples: Int): (List[(Double, Valuation)], St) =
+      @tailrec
+      def contStepsAux(
+          counter: Int,
+          hist: List[(Double, Valuation)]
+      )(using rkSamples: Int): (List[(Double, Valuation)], St) =
+        val remainingTime =
+          SmallStep.time(st)
+        val goalTime =
+          remainingTime min (timeStep * counter)
+        val limitedState =
+          SmallStep.withTime(st, goalTime)
+        step(limitedState)(using rkSamples) match
+          case Some((Action.DiffStop(_, _), st2)) =>
+            if goalTime == remainingTime then
+              val point =
+                (
+                  baseTime + goalTime,
+                  SmallStep.valuation(st2)
+                )
+              (point :: hist) -> st2
+            else
+              contStepsAux(
+                counter + 1,
+                (
+                  (
+                    baseTime + goalTime,
+                    SmallStep.valuation(st2)
+                  ) :: hist
+                )
+              )
+          case Some((Action.DiffSkip(_, timePassed), st2)) =>
+            val restored =
+              SmallStep.withTime(
+                st2,
+                remainingTime - timePassed
+              )
+            val point =
+              (
+                baseTime + timePassed,
+                SmallStep.valuation(restored)
+              )
+            (point :: hist) -> restored
+          case Some((stp, _)) =>
+            sys.error(
+              s"Expected continuous step but found ${Show(stp)}"
             )
-
-        case Some((Action.DiffSkip(_, timePassed), st2)) =>
-          val st3 = SmallStep.nextSeed(st2)
-          (((baseTime + timePassed) -> SmallStep.valuation(st3)) :: hist) ->
-            SmallStep.withTime(st3, SmallStep.time(st) - timePassed)
-
-        case Some((act, _)) =>
-          sys.error(s"Expected continuous step but found ${Show(act)}")
-
-        case None =>
-          hist -> st
-
-    contStepsAux(1, Nil)
+          case None =>
+            hist -> st
+      contStepsAux(1, Nil)
 

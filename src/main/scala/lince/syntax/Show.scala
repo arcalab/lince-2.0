@@ -1,6 +1,8 @@
 package lince.syntax
 
 import lince.syntax.Lince.*
+import lince.backend.Stream
+import lince.backend.Stream.{ExprStrm,ListStrm,SeqStrm,RandomStrm}
 
 /**
  * List of functions to produce textual representations of commands
@@ -10,10 +12,14 @@ object Show:
   def apply(p: Program): String = p match
     case Program.Skip => "skip; "
     case Program.Assign(v, e) => s"$v:=${apply(e)}; "
+    case Program.StreamDef(v, s) => s"def $v:=${Show(s)}; "
     case Program.EqDiff(eqs, dur) if eqs.isEmpty =>
-       s"{} for ${apply(dur)}; "
+       s"{} for ${dur.map(apply).getOrElse("forever")}; "
     case Program.EqDiff(eqs, dur) =>
-      eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") + s" for ${apply(dur)}; "
+      eqs.map(kv => s"${kv._1}'=${apply(kv._2)}").mkString(", ") +
+                    s" for ${dur.map(apply).getOrElse("forever")}; "
+    case Program.Seq(Program.Skip, q) => apply(q)
+    case Program.Seq(Program.Seq(p,q),r) => apply(Program.Seq(p,Program.Seq(q,r)))
     case Program.Seq(p, q) => apply(p)+"\n"+apply(q)
     case Program.ITE(b, pt, Program.Skip) => s"if ${apply(b)}:\n${ind(apply(pt))}"
     case Program.ITE(b, pt, pf) => s"if ${apply(b)}:\n${ind(apply(pt))}\nelse\n${ind(apply(pf))}"
@@ -23,27 +29,30 @@ object Show:
 
   def apply(e: Expr): String = e match
     case Expr.Num(n) => n.toString
+    case Expr.True => "true"
+    case Expr.False => "false"
     case Expr.Var(x) => x.toString
-    case Expr.Func(op, es) if "+-/*^".contains(op.headOption.getOrElse(' ')) =>
+    case Expr.Func(op, es) if "+-/*^<>=|&".contains(op.headOption.getOrElse(' ')) =>
       es.map(applyP).mkString(s"$op")
+    case Expr.Func("!", List(e)) => s"!${applyP(e)}"
     case Expr.Func(op, es) =>
       s"$op(${es.map(apply).mkString(", ")})"
+
+  def apply(s:Stream): String = s match
+    case ExprStrm(e,k) => apply(e)+keep(s)
+    case ListStrm(l,k) => l.mkString("[",",","]")+keep(s)
+    case SeqStrm(from,to,by,k) => s"[$from,..,${to.map(_.toString).getOrElse("inf")} by $by]"+keep(s)
+    case RandomStrm(seed,k) => s"${seed % 1000}${if seed<1000 && seed> -1000 then "" else ".."}"//+keep(s)
+  private def keep(s:Stream): String = if s.keep then "@k" else ""
+  
 
   def applyP(e: Expr): String = e match
     case Expr.Func(_,es) if es.size>1 => s"(${apply(e)})"
     case _ => apply(e)
 
-  def apply(c: Cond): String = c match {
-    case Cond.True => "true"
-    case Cond.False => "false"
-    case Cond.Comp(op, e1, e2) => s"${apply(e1)} $op ${apply(e2)}"
-    case Cond.And(c1, c2) => s"${apply(c1)} && ${apply(c2)}"
-    case Cond.Or(c1, c2) => s"${apply(c1)} || ${apply(c2)}"
-    case Cond.Not(c) => s"!(${apply(c)})"
-  }
-
   def apply(a:Action): String = a match {
     case Action.Assign(v, n) => s"$v:=$n"
+    case Action.StrmDef(v, s) => s"def $v:=${Show(s)}"
     case Action.DiffStop(eqs, time) => s"diff-stop@$time"
     case Action.DiffSkip(eqs, time) => s"diff-skip@$time"
     case Action.CheckIf(b, true) => s"if-true: ${apply(b)}"
@@ -54,7 +63,7 @@ object Show:
 
   def simpleStatm(p: Program): String = p match {
     case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))
-    case Program.Seq(Program.Skip, p2) => "skip; "+simpleStatm(p2)
+    case Program.Seq(Program.Skip, p2) => /*"skip; "+*/simpleStatm(p2)
     case Program.Seq(p1, p2) => simpleStatm(p1)+"..."
     case Program.While(b, p2) => s"while ${apply(b)} {...}"
     case Program.ITE(b, pt, pf) => s"if ${apply(b)} {...} {...}"
@@ -66,12 +75,36 @@ object Show:
       st match
         case lince.backend.SmallStep.St.Basic(bst) =>
           simpleStatm(bst.p)
-
         case lince.backend.SmallStep.St.Concurrent(cst) =>
-          cst.progs.map { case (name, p) =>
-            val prefix = if name == "" then "" else s"$name: "
-            prefix + simpleStatm(p)
-          }.mkString(" | ")
+          cst.progs.toList
+            .sortBy { case (name, _) => if name == "" then " " else name }
+            .map { case (name, p) => val prefix = if name == "" then "" else s"$name: "
+            prefix + simpleStatm(p) }
+            .mkString(" | ")
+    s"[${lince.backend.SmallStep.time(st)}/${lince.backend.SmallStep.loops(st)}] " + s"{${lince.backend.SmallStep.valuation(st).mkString(",")}} $progStr"
 
-    s"[${lince.backend.SmallStep.time(st)}/${lince.backend.SmallStep.loops(st)}] {${lince.backend.SmallStep.valuation(st).mkString(",")}} $progStr"
+  def simpleStML(st: lince.backend.SmallStep.St): String =
+    val streams =
+      lince.backend.SmallStep
+        .streams(st)
+        .map { case (name, stream) => s"$name:${Show(stream)}" }
+        .mkString(",")
+
+    val valuation =
+      lince.backend.SmallStep
+        .valuation(st)
+        .map { case (loc, value) => s"$loc:$value" }
+        .mkString(",")
+
+    val progStr = st match
+        case lince.backend.SmallStep.St.Basic(bst) =>
+          simpleStatm(bst.p)
+        case lince.backend.SmallStep.St.Concurrent(cst) =>
+          cst.progs.toList
+            .sortBy { case (name, _) => if name == "" then " " else name }
+            .map { case (name, p) => val prefix = if name == "" then "" else s"$name: "
+            prefix + simpleStatm(p)}
+            .mkString(" | ")
+
+    s"[${lince.backend.SmallStep.time(st)}/${lince.backend.SmallStep.loops(st)}] " + s"{$streams} {$valuation}\n$progStr"
 

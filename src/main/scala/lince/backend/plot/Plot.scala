@@ -3,6 +3,9 @@ package lince.backend.plot
 import lince.backend.BigSteps.{contSteps, discSteps}
 import lince.backend.plot.Plot.{MarkedPoints, Points, Trace, Traces}
 import lince.backend.{BigSteps, SmallStep}
+import lince.backend.BasicSmallStep.BasicState
+import lince.backend.ConcurrentSmallStep.ConcurrentState
+import lince.backend.Stream.Streams
 import lince.syntax.Lince
 import lince.syntax.Lince.{Action, Expr, PlotInfo, Program, Simulation, Location}
 
@@ -15,6 +18,8 @@ import scala.annotation.tailrec
  * @param traces maps the collection of finished traces to each variable
  * @param endings maps the ending of traces to each variable
  * @param beginnings maps the beginning of traces to each variable
+ * @param xlabels labels used on the x axis
+ * @param ylabels labels used on the y axis
  */
 case class Plot(current: Map[String,Trace], traces: Map[String,Traces],
                 endings: Map[String,Points], beginnings: Map[String,MarkedPoints],
@@ -37,7 +42,7 @@ case class Plot(current: Map[String,Trace], traces: Map[String,Traces],
   @tailrec
   final def endTraces: Plot =
     current.headOption match {
-      case Some((v,trace)) => endTrace(v).endTraces
+      case Some((v,_)) => endTrace(v).endTraces
       case None => this
     }
 
@@ -68,21 +73,85 @@ object Plot:
 
   private type St = SmallStep.St
 
+
+  // ------------------------------------------------------------
+  // State helpers
+  // ------------------------------------------------------------
+
+  /**
+   * Creates a fresh execution state with the same program(s),
+   * but with an empty valuation and the supplied stream state.
+   *
+   * This replaces the old:
+   *
+   *   SmallStep.initial(Simulation(st.p, ...))
+   *
+   * which assumed that St contained exactly one program.
+   */
+  private def restartState(st: St,streams: Streams,pinfo: PlotInfo): St = st match
+      case SmallStep.St.Basic(bst) =>
+        SmallStep.St.Basic(
+          BasicState(
+            p = bst.p,
+            v = Map(),
+            s = streams,
+            t = pinfo.maxTime,
+            lp = pinfo.maxLoops
+          )
+        )
+      case SmallStep.St.Concurrent(cst) =>
+        SmallStep.St.Concurrent(
+          ConcurrentState(
+            progs = cst.progs,
+            v = Map(),
+            s = streams,
+            t = pinfo.maxTime,
+            lp = pinfo.maxLoops,
+            nextProcess = 0
+          )
+        )
+
+  /**
+   * Replaces the valuation of either kind of SmallStep state.
+   */
+  private def withValuation(st: SmallStep.St,valuation: lince.backend.Eval.Valuation): SmallStep.St =st match
+      case SmallStep.St.Basic(bst) =>
+        SmallStep.St.Basic(
+          bst.copy(
+            v = valuation
+          )
+        )
+      case SmallStep.St.Concurrent(cst) =>
+        SmallStep.St.Concurrent(
+          cst.copy(
+            v = valuation
+          )
+        )
+
   def allPlots(st:St, pinfo:PlotInfo): List[(Plot,PlotInfo)] =
-    (1 to pinfo.runs).toList.flatMap { run =>
-    val pi2 = pinfo.copy(runs = run)
-    val st2 = SmallStep.withSeed(st, pinfo.seed + (run - 1))
-    apply(st2, pi2).map(p => (p, pi2))
-  }
+    var lastStreams = SmallStep.streams(st)
+    val ps = for run <- (1 to pinfo.runs).toList yield
+      val pi2 = pinfo.copy(runs = run)
+      val initState = restartState(st, lastStreams, pi2)
+      //println(s"[RUN $run] ${initState.s}")
+      apply(initState, pi2).map{
+          case (plot, stRun) =>
+            lastStreams = SmallStep.streams(stRun)
+            plot -> pi2
+        }
+    ps.flatten
 //      (apply(Simulation(st.p,pi2).state, pi2),pi2)
 
-  def apply(st:St, pinfo:PlotInfo): List[Plot] =
-    val plot = apply(st, pinfo.minTime, pinfo.maxTime,
-                         pinfo.samples, pinfo.rkSamples, pinfo.showAll, pinfo.showVar)
+  def justPlot(st:St, pinfo:PlotInfo): List[Plot] =
+    apply(st,pinfo).map(_._1)
+
+  def apply(st:St, pinfo:PlotInfo): List[(Plot,St)] =
+    val (plot,st2) = apply(st, pinfo.minTime, pinfo.maxTime,
+                           pinfo.samples, pinfo.rkSamples, pinfo.showAll, pinfo.showVar)
     // transform it into a portrait plot if needed
     if pinfo.portrait.nonEmpty
-    then rearrange(plot,pinfo.portrait)
-    else List(plot)
+    then rearrange(plot,pinfo.portrait).map(_ -> st2)
+    else List(plot->st2)
 
   /**
    *  Calculate a plot by traversing the state-space while collecting points and action names.
@@ -96,7 +165,7 @@ object Plot:
    */
   def apply(st: St, from: Double, to: Double,
             samples:Int=50, rkSamples: Int=100,
-            showCont:Boolean=false,filter:String=>Boolean): Plot = {
+            showCont:Boolean=false,filter:String=>Boolean): (Plot,St) = {
 
     // need to traverse my trajectory
     // need a maxt
@@ -104,19 +173,21 @@ object Plot:
     // need a step size
     val stepSize: Double = (maxt - from) / samples
 
-    val stInit = if from!=0
-      then valToAssign(SmallStep.withTime(BigSteps.bigStep(SmallStep.withTime(st, from))(using rkSamples)._2, maxt - from))
+    val stInit = if from!=0 then
+      val stateAtFrom = BigSteps.bigStep(SmallStep.withTime(st,from))(using rkSamples)._2
+        valToAssign(SmallStep.withTime(stateAtFrom,maxt - from))
       else SmallStep.withTime(st, maxt)
 
 //    val stInit = st.copy(t = maxt) // need to start after navigating to time mint!
                                  // need bigstep to mint.
 //    apply(st, stepSize, mint, "")
-    calcPlot(stInit, stepSize, rkSamples, from, showCont, Plot.empty, filter).endTraces
+    val (plot,st2) = calcPlot(stInit, stepSize, rkSamples, from, showCont, Plot.empty, filter)
+    plot.endTraces -> st2
   }
 
   /** Converts the state of a program (given by the values of the variables) into an introductory sequence of assignments. */
   private def valToAssign(st: St): St =
-    SmallStep.withValuation(st, Map())
+    withValuation(st, Map())
 
   /**
    * Main function that produces the plot: at each run performs a collection of
@@ -128,21 +199,18 @@ object Plot:
    * @return plot from the run
    */
   @tailrec
-  def calcPlot(st: St, stepSize: Double, rkSamples: Int, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): Plot =
+  def calcPlot(st: St, stepSize: Double, rkSamples: Int, timePassed: Double, showCont:Boolean, acc: Plot, filter:String=>Boolean): (Plot,St) =
     var res = acc
     // run discrete steps
     val (as, st2) = discSteps(st)(using rkSamples)
     // update Plot
+    val valuation2 = SmallStep.valuation(st2)
     val setVars: Set[String]= if showCont
-      then SmallStep.valuation(st2).keySet.map(_.toString)
+      then valuation2.keySet.map(_.toString)
       else for (case Action.Assign(v,_) <- as.toSet) yield v.toString
     for (v <- setVars if filter(v)) do
-      val loc = SmallStep.valuation(st2).keys.find(_.toString == v).get
-      res = res.startTrace(v,
-        timePassed,
-        SmallStep.valuation(st2)(loc),
-        as
-      ).copy(ylabels = res.ylabels+v)
+      val loc = valuation2.keys.find(_.toString == v).foreach { loc =>
+          res = res.startTrace( v, timePassed, valuation2(loc), as).copy( ylabels = res.ylabels + v )}
 
     // run continuous steps while sampling
     val (points, st3) = contSteps(st2, stepSize, timePassed)(using rkSamples)
@@ -155,8 +223,10 @@ object Plot:
     do
       res = res + ((xStr, time) -> value)
 
-    if SmallStep.accepting(st3) || st == st3 then  res // res + "## Finished"
-    else calcPlot(st3, stepSize, rkSamples, timePassed + (SmallStep.time(st2) - SmallStep.time(st3)), showCont, res, filter)
+    if SmallStep.accepting(st3) || st == st3 then  res -> st3 // res + "## Finished"
+    else
+      val passed = SmallStep.time(st2) - SmallStep.time(st3)
+      calcPlot(st3, stepSize, rkSamples, timePassed + passed, showCont, res, filter)
 
 
   def rearrange(p:Plot, axis:List[(String,String)]): List[Plot] =

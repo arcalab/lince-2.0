@@ -2,96 +2,95 @@ package lince.backend
 
 import caos.sos.SOS
 import lince.backend.Eval.Valuation
+import lince.backend.Stream
+import Stream.Streams
 import lince.syntax.Lince.*
 import Program.*
-
-import scala.util.Random
 
 /**
  * Concurrent small-step semantics.
  *
- * Responsibilities:
- *   - coordinates multiple named programs
- *   - performs parallel continuous evolution when all programs are EqDiff
- *   - delegates ordinary single-program steps to BasicSmallStep
- *
- * Scheduling is currently deterministic: when no parallel flow is possible,
- * the first program in the map is stepped.
+ * - coordinates multiple named programs
+ * - schedules instantaneous steps deterministically
+ * - evolves active differential equations simultaneously
+ * - delegates ordinary program steps to BasicSmallStep
  */
-
-object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentState]:
+object ConcurrentSmallStep
+    extends SOS[Action, ConcurrentSmallStep.ConcurrentState]:
 
   case class ConcurrentState(
       progs: Map[String, Program],
       v: Valuation,
-      s: Long,
+      s: Streams,
       t: Double,
       lp: Int,
       nextProcess: Int = 0
-  ):
-    def nextSeed: ConcurrentState =
-      resetSeed
-      this.copy(s = rand.nextLong())
+  )
 
-    def resetSeed: Unit =
-      rand.setSeed(s)
-
-  val rand: Random = new Random
   val defaultRKSamples = 100
 
-  private def scheduledProgram(st: ConcurrentState): Option[(Int, String, Program)] =
+  override def accepting(
+      s: ConcurrentState
+  ): Boolean =
+    s.t <= 0 || s.lp <= 0
+
+  def next[A >: Action](
+      st: ConcurrentState
+  ): Set[(A, ConcurrentState)] =
+    step(st)(using defaultRKSamples).toSet
+
+  /**
+   * Deterministic round-robin selection of the next
+   * instantaneous component.
+   *
+   * Differential equations are not selected here because
+   * they are handled together by stepContinuous.
+   */
+  private def scheduledProgram(
+      st: ConcurrentState
+  ): Option[(Int, String, Program)] =
+
     val names = processOrder(st)
-    if names.isEmpty then None
+
+    if names.isEmpty then
+      None
     else
       val size = names.size
-      val start = Math.floorMod(st.nextProcess, size)
+      val start =
+        Math.floorMod(st.nextProcess, size)
+
       (0 until size).iterator
-        .map(offset => (start + offset) % size)
+        .map(offset =>
+          (start + offset) % size
+        )
         .flatMap { index =>
           val name = names(index)
-          st.progs.get(name).map { prog =>
-            (index, name, prog)
-          }
+
+          st.progs
+            .get(name)
+            .map { prog =>
+              (index, name, prog)
+            }
         }
         .find { case (_, _, prog) =>
           nextWithRest(prog)._1 match
-            case Skip         => false
-            case EqDiff(_, _) => false
-            case _            => true
+            case Skip =>
+              false
+
+            case EqDiff(_, _) =>
+              false
+
+            case _ =>
+              true
         }
-
-  override def accepting(s: ConcurrentState): Boolean =
-    s.t <= 0 || s.lp <= 0
-
-  def next[A >: Action](st: ConcurrentState): Set[(A, ConcurrentState)] =
-    step(st)(using defaultRKSamples).toSet
-
-  // Collect all differential equations if ALL programs are EqDiff
-  def collectFlows(
-      progs: Map[String, Program]
-  )(using v0: Valuation, r0: Random)
-      : Option[(Map[Location, Expr], Double)] =
-    val diffs = progs.collect {
-      case (_, EqDiff(eqs, dur)) => (eqs, dur)
-    }
-    if diffs.size != progs.size then None
-    else
-      val duration = Eval(diffs.head._2)(using v0, r0)
-      val merged =
-        diffs.flatMap { case (eqs, _) => eqs }.toMap
-      Some((merged, duration))
 
   def step(
       st: ConcurrentState
-  )(using rkSamples: Int): Option[(Action, ConcurrentState)] =
+  )(using rkSamples: Int)
+      : Option[(Action, ConcurrentState)] =
 
     if st.t <= 0 || st.lp <= 0 then
       return None
-
-    st.resetSeed
-
-    given r0: Random = rand
-    given v0: Valuation = st.v
 
     scheduledProgram(st) match
       case Some(_) =>
@@ -100,112 +99,264 @@ object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentSta
       case None =>
         stepContinuous(st)
 
+  /**
+   * A currently active continuous evolution.
+   *
+   * dur = Some(d) means a finite remaining duration.
+   * dur = None means an unbounded evolution.
+   */
   private case class Flow(
       name: String,
       eqs: Map[Location, Expr],
-      dur: Double,
+      dur: Option[Double],
       rest: Program
   )
 
   private def stepContinuous(
       st: ConcurrentState
-  )(using
-      r0: Random,
-      v0: Valuation,
-      rkSamples: Int
-  ): Option[(Action, ConcurrentState)] =
+  )(using rkSamples: Int)
+      : Option[(Action, ConcurrentState)] =
+
+    given v0: Valuation = st.v
+
+    var ss = st.s
+    var failed = false
 
     val flows: List[Flow] =
       processOrder(st).flatMap { name =>
+
         st.progs.get(name).flatMap { p =>
+
           nextWithRest(p) match
+
             case (EqDiff(eqs, durExp), rest) =>
-              val dur = Eval(durExp)(using v0, r0)
-              val eqs2 = eqs.map { case (x, e) =>
-                x -> Eval.rands(e)(using v0, r0)
-              }
-              Some(Flow(name, eqs2, dur, rest))
+
+              val eqs2 =
+                for (x, e) <- eqs yield
+                  Eval.evalStreams(e, ss) match
+
+                    case None =>
+                      failed = true
+                      x -> e
+
+                    case Some((e2, ss2)) =>
+                      ss = ss2
+                      x -> e2
+
+              val dur2: Option[Double] =
+                durExp match
+
+                  case None =>
+                    None
+
+                  case Some(d) =>
+                    Eval.evalStreams(d, ss) match
+
+                      case None =>
+                        failed = true
+                        None
+
+                      case Some((d2, ss2)) =>
+                        ss = ss2
+                        Some(Eval.asDouble(d2))
+
+              Some(
+                Flow(
+                  name,
+                  eqs2,
+                  dur2,
+                  rest
+                )
+              )
 
             case _ =>
               None
         }
       }
 
-    if flows.isEmpty then
+    if failed || flows.isEmpty then
       None
+
     else
-      val minDur: Double = flows.map(_.dur).min
-      val realDur: Double = minDur.min(st.t)
+
+      /*
+       * Only finite flows contribute to the next
+       * continuous boundary.
+       */
+      val finiteDurations =
+        flows.flatMap(_.dur)
+
+      val minDur: Option[Double] =
+        finiteDurations.minOption
+
+      /*
+       * Evolve either until:
+       *
+       *   - the first finite flow finishes, or
+       *   - the global simulation time expires.
+       *
+       * If every flow is infinite, evolve until st.t.
+       */
+      val realDur =
+        minDur match
+          case Some(d) =>
+            d.min(st.t)
+
+          case None =>
+            st.t
 
       val mergedEqs: Map[Location, Expr] =
-        flows.flatMap(_.eqs).toMap
+        flows
+          .flatMap(_.eqs)
+          .toMap
 
       val v2 =
-        RungeKutta(st.v, mergedEqs, realDur, rkSamples)
+        RungeKutta(
+          st.v,
+          mergedEqs,
+          realDur,
+          rkSamples
+        )
 
       val newProgs =
-        st.progs.map { case (name, oldProg) =>
-          flows.find(_.name == name) match
-            case None =>
-              name -> oldProg
+        st.progs.map {
+          case (name, oldProg) =>
 
-            case Some(flow) =>
-              val remaining = flow.dur - realDur
+            flows.find(_.name == name) match
 
-              if remaining <= 0 then
-                name -> flow.rest
-              else
-                name -> mkSeq(
-                  EqDiff(flow.eqs, Expr.Num(remaining)) ::
-                    flattenSeq(flow.rest)
-                )
+              case None =>
+                name -> oldProg
+
+              case Some(flow) =>
+
+                flow.dur match
+
+                  /*
+                   * Infinite ODE:
+                   * it remains active after this
+                   * continuous interval.
+                   */
+                  case None =>
+                    name ->
+                      mkSeq(
+                        EqDiff(
+                          flow.eqs,
+                          None
+                        ) ::
+                          flattenSeq(flow.rest)
+                      )
+
+                  /*
+                   * Finite ODE.
+                   */
+                  case Some(dur) =>
+                    val remaining =
+                      dur - realDur
+
+                    if remaining <= 0 then
+                      name -> flow.rest
+
+                    else
+                      name ->
+                        mkSeq(
+                          EqDiff(
+                            flow.eqs,
+                            Some(
+                              Expr.Num(remaining)
+                            )
+                          ) ::
+                            flattenSeq(flow.rest)
+                        )
         }
 
       val st2 =
-        st.nextSeed.copy(
+        st.copy(
           progs = newProgs,
           v = v2,
+          s = ss,
           t = st.t - realDur
         )
 
       val action =
-        if st.t <= minDur then
-          Action.DiffStop(mergedEqs, realDur)
-        else
-          Action.DiffSkip(mergedEqs, realDur)
+        minDur match
 
-      Some(action -> st2)
+          /*
+           * No finite ODE exists, so the only thing
+           * stopping us is the global time bound.
+           */
+          case None =>
+            Action.DiffStop(
+              mergedEqs,
+              realDur
+            )
+
+          case Some(d) if d > st.t =>
+            Action.DiffStop(
+              mergedEqs,
+              realDur
+            )
+
+          case Some(_) =>
+            Action.DiffSkip(
+              mergedEqs,
+              realDur
+            )
+
+      Some(
+        action -> st2
+      )
 
   def stepOne(
       st: ConcurrentState
-  )(using rkSamples: Int): Option[(Action, ConcurrentState)] =
+  )(using rkSamples: Int)
+      : Option[(Action, ConcurrentState)] =
+
     scheduledProgram(st) match
+
       case Some((index, name, prog)) =>
-        val names = processOrder(st)
+
+        val names =
+          processOrder(st)
+
         val nextIndex =
-          if names.isEmpty then 0
-          else (index + 1) % names.size
-        stepProgram(name, prog, st)(using rand, st.v, rkSamples)
+          if names.isEmpty then
+            0
+          else
+            (index + 1) % names.size
+
+        stepProgram(
+          name,
+          prog,
+          st
+        )(using rkSamples)
           .map { case (action, st2) =>
-            action -> st2.copy(nextProcess = nextIndex)
+            action ->
+              st2.copy(
+                nextProcess = nextIndex
+              )
           }
+
       case None =>
         None
 
+  /**
+   * Delegate one component's ordinary small step to
+   * the sequential semantics.
+   */
   def stepProgram(
       name: String,
       prog: Program,
       st: ConcurrentState
-      )(using
-      r0: Random,
-      v0: Valuation,
-      rkSamples: Int
-  ): Option[(Action, ConcurrentState)] =
+  )(using rkSamples: Int)
+      : Option[(Action, ConcurrentState)] =
 
     prog match
+
       case Skip =>
         None
+
       case _ =>
+
         val basic =
           BasicSmallStep.BasicState(
             prog,
@@ -215,44 +366,76 @@ object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentSta
             st.lp
           )
 
-        BasicSmallStep.step(basic).map {
-          case (a, basic2) =>
-            val updated =
-              st.copy(
-                progs =
-                  st.progs.updated(name, basic2.p),
-                v = basic2.v,
-                s = basic2.s,
-                t = basic2.t,
-                lp = basic2.lp
-              )
+        BasicSmallStep
+          .step(basic)(using rkSamples)
+          .map {
+            case (a, basic2) =>
 
-            a -> updated
-        }
+              val updated =
+                st.copy(
+                  progs =
+                    st.progs.updated(
+                      name,
+                      basic2.p
+                    ),
+                  v = basic2.v,
+                  s = basic2.s,
+                  t = basic2.t,
+                  lp = basic2.lp
+                )
 
-  private def flattenSeq(p: Program): List[Program] = p match
-    case Skip => Nil
-    case Seq(p, q) => flattenSeq(p) ++ flattenSeq(q)
-    case _ => List(p)
+              a -> updated
+          }
 
-  private def mkSeq(ps: List[Program]): Program =
+  private def flattenSeq(
+      p: Program
+  ): List[Program] =
+
+    p match
+      case Skip =>
+        Nil
+
+      case Seq(p, q) =>
+        flattenSeq(p) ++
+          flattenSeq(q)
+
+      case _ =>
+        List(p)
+
+  private def mkSeq(
+      ps: List[Program]
+  ): Program =
+
     ps match
-      case Nil => Skip
-      case h :: Nil => h
-      case h :: t => Seq(h, mkSeq(t))
+      case Nil =>
+        Skip
 
-  private def nextWithRest(p: Program): (Program, Program) =
+      case h :: Nil =>
+        h
+
+      case h :: t =>
+        Seq(
+          h,
+          mkSeq(t)
+        )
+
+  private def nextWithRest(
+      p: Program
+  ): (Program, Program) =
+
     flattenSeq(p) match
-      case Nil => Skip -> Skip
-      case h :: t => h -> mkSeq(t)
+      case Nil =>
+        Skip -> Skip
 
-  private def isContinuous(p: Program): Boolean =
-    nextWithRest(p)._1 match
-      case EqDiff(_, _) => true
-      case _ => false
+      case h :: t =>
+        h -> mkSeq(t)
 
-  private def isFinished(p: Program): Boolean =
-    nextWithRest(p)._1 == Skip
+  private def processOrder(
+      st: ConcurrentState
+  ): List[String] =
 
-  private def processOrder(st: ConcurrentState): List[String] =
-    st.progs.keys.toList.sortBy(name => if name == "" then " " else name)
+    st.progs.keys.toList.sortBy {
+      name =>
+        if name == "" then " "
+        else name
+    }
