@@ -123,3 +123,11 @@ object Basic:
     //   -> "while true {\n	// powerlaw distribution with exponent 2 and min 1\n  d:=powerlaw(2,1);\n  // try also a negative dist. mean 2:\n  //d:=expn(1/2);\n  // try also a normal dist. mean 5, s-dev 1:\n  //d:=normal(5,1);\n	wait 1;\n}\n---\nruns 50"
     //   -> "Sampling from a powerlaw distribution (or other).",
   )
+  val concurrent: List[Example] = List(
+    "Adaptive CC (Concurrent - no accel)"
+      -> "// Adaptive Cruise Control (ACC)\nL { // leader.\n  p:=50; v:= 10;\n  a:= 0;\n  p'= v, v'= a for 50; \n}\nF { // follower \n p:=0; v:=0; \n  while true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n   if (v-8)^2 + 4*(p- L.p +v-9) < 0\n   then p'=v, v'= 2 for 1;\n   else p'=v, v'=-2 for 1;\n }\n}\n----\nuntil 20\nvars L.*, F.*"
+      -> "Adaptive Cruise Control example, using concurrent semantics, where the leader can have a fixed constant acceleration.",
+    "Multiple Tanks"
+      -> "C {\n t:= 0.5;\n  while(true){\n    if(A.h >= 10 || B.h >= 10 || D.h >= 10 || E.h >= 10)\n    then t:= -0.5;\n    if(A.h <= 3 || B.h <= 3 || D.h <= 3 || E.h <= 3)\n    then t:= 0.5;\n   t' = 0 for 1; \n  }\n}\nA {\n h:=4;\n while(true){ h' = C.t for 1; }\n}\nB {\n h:=5;\n while(true){ h' = C.t for 1; }\n}\nD {\n h:=6;\n while(true){ h' = C.t for 1; }\n}\nE {\n h:=7;\n while(true){ h' = C.t for 1; }\n}\n---\nuntil 100"
+      -> "Multiple tanks example, using concurrent semantics, where the water level in each tank is controlled by a common controller (C). The controller adjusts the flow rate (t) based on the water levels in the tanks (A, B, D, E).",
+  )

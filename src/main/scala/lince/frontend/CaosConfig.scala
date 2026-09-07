@@ -27,6 +27,7 @@ object CaosConfig extends Configurator[Simulation]:
       Basic.toy ++
       Basic.scenarios ++
       Basic.prob ++
+      Basic.concurrent ++
       Basic.configs
 
 
@@ -95,9 +96,44 @@ object CaosConfig extends Configurator[Simulation]:
           qualifyProgram(owner, body)
         )
 
+  def showProgramWithOwner(owner: String, p: Program): String =
+    val prefix =
+      if owner.isEmpty then ""
+      else s"$owner."
+    p match
+      case Program.Skip =>
+        "skip"
+
+      case Program.Assign(v, e) =>
+        s"${v.toString}:=${Show(e)};"
+
+      case Program.EqDiff(eqs, dur) =>
+        val eqsStr =
+          eqs.map { case (v, e) =>
+            s"${v.toString}'=${Show(e)}"
+          }.mkString(", ")
+
+        s"$eqsStr for ${Show(dur)};"
+
+      case Program.Seq(p, q) =>
+        s"${showProgramWithOwner(owner, p)} ${showProgramWithOwner(owner, q)}"
+
+      case Program.ITE(b, pt, pf) =>
+        s"${prefix}if ${Show(b)} then " +
+          s"${showProgramWithOwner(owner, pt)} else " +
+          s"${showProgramWithOwner(owner, pf)}"
+
+      case Program.While(b, body) =>
+        s"${prefix}while ${Show(b)} " +
+          s"${showProgramWithOwner(owner, body)}"
+
+
   def showPreProcessed(sim: Simulation): String =
     sim.progs.toList.map { case (name, prog) =>
-      Show(qualifyProgram(name, prog))
+      showProgramWithOwner(
+        name,
+        qualifyProgram(name, prog)
+      )
     }.mkString("\n")
                  
 
@@ -177,7 +213,8 @@ object CaosConfig extends Configurator[Simulation]:
   /** Description of the widgets that appear in the dashboard. */
   val widgets = List(
     "View parsed" -> view(_.toString,Text).moveTo(1),
-    "View pretty" -> view[Simulation](s => s._1.map((k,v) => s"$k -> ${Show(v)}").mkString("\n"), Code("clicke")).moveTo(1),
+    "View pretty" ->
+  view[Simulation](s => s._1.map { case (name, prog) => s"$name -> ${showProgramWithOwner(name, prog)}" }.mkString("\n"), Code("clicke")).moveTo(1),
     "View pre-processed" -> view[Simulation](sim => showPreProcessed(sim), Code("clike")).moveTo(1),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
@@ -241,6 +278,7 @@ object CaosConfig extends Configurator[Simulation]:
     "Scenarios" -> Basic.scenarios.map(_.name).toSet,
     "Probab." -> Basic.prob.map(_.name).toSet,
     "Config." -> Basic.configs.map(_.name).toSet -> false,
+    "Independent Comp." -> Basic.concurrent.map(_.name).toSet-> false,
     "Debug" -> Set("Plot debug", "Plot2trace debug", "Plots JS", "View parsed", "View pretty", "View pre-processed") -> false
   )
 

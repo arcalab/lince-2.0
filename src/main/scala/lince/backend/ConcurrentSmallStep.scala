@@ -26,7 +26,8 @@ object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentSta
       v: Valuation,
       s: Long,
       t: Double,
-      lp: Int
+      lp: Int,
+      nextProcess: Int = 0
   ):
     def nextSeed: ConcurrentState =
       resetSeed
@@ -38,13 +39,26 @@ object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentSta
   val rand: Random = new Random
   val defaultRKSamples = 100
 
-  private def scheduledProgram(st: ConcurrentState): Option[(String, Program)] =
-    processOrder(st)
-      .flatMap(name => st.progs.get(name).map(p => name -> p))
-      .find { case (_, p) =>
-        val (next, _) = nextWithRest(p)
-        next != Skip && !isContinuous(p)
-      }
+  private def scheduledProgram(st: ConcurrentState): Option[(Int, String, Program)] =
+    val names = processOrder(st)
+    if names.isEmpty then None
+    else
+      val size = names.size
+      val start = Math.floorMod(st.nextProcess, size)
+      (0 until size).iterator
+        .map(offset => (start + offset) % size)
+        .flatMap { index =>
+          val name = names(index)
+          st.progs.get(name).map { prog =>
+            (index, name, prog)
+          }
+        }
+        .find { case (_, _, prog) =>
+          nextWithRest(prog)._1 match
+            case Skip         => false
+            case EqDiff(_, _) => false
+            case _            => true
+        }
 
   override def accepting(s: ConcurrentState): Boolean =
     s.t <= 0 || s.lp <= 0
@@ -165,11 +179,16 @@ object ConcurrentSmallStep extends SOS[Action, ConcurrentSmallStep.ConcurrentSta
   def stepOne(
       st: ConcurrentState
   )(using rkSamples: Int): Option[(Action, ConcurrentState)] =
-
     scheduledProgram(st) match
-      case Some((name, prog)) =>
+      case Some((index, name, prog)) =>
+        val names = processOrder(st)
+        val nextIndex =
+          if names.isEmpty then 0
+          else (index + 1) % names.size
         stepProgram(name, prog, st)(using rand, st.v, rkSamples)
-
+          .map { case (action, st2) =>
+            action -> st2.copy(nextProcess = nextIndex)
+          }
       case None =>
         None
 

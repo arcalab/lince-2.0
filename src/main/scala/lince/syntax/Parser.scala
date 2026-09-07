@@ -12,6 +12,17 @@ import scala.util.Random
 
 object Parser :
 
+  private case class OwnershipWarning(
+      program: String,
+      variable: Location,
+      operation: String
+  ):
+    override def toString: String =
+      val owner =
+        if program.isEmpty then "the main program"
+        else s"program $program"
+      s"$owner cannot $operation variable $variable because it belongs to another program"
+
   /** Parse a command  */
   def parseProgram(str:String):Program =
     pp(program,str) match {
@@ -139,16 +150,24 @@ object Parser :
             case Some(mainProg) => namedMap + ("" -> mainProg)
             case None           => namedMap
 
-        Simulation(progs, piOpt.getOrElse(PlotInfo.default))
-    }).backtrack |
-    ((((program <* sps) ~ namedBlock.rep0) ~ (sps *> plotInfo).?).map {
-      case ((mainProg, namedAfter), piOpt) =>
-        val namedList = namedAfter.toList
-        checkDuplicatePrograms(namedList)
-        val namedMap: Map[String, Program] = namedList.toMap
+        val warnings = validateOwnership(progs)
+        if warnings.nonEmpty then
+          sys.error(
+            warnings
+              .map(w => s"Warning: $w")
+              .mkString("\n")
+          )
+        else
+          Simulation(progs, piOpt.getOrElse(PlotInfo.default))
+      }).backtrack |
+      ((((program <* sps) ~ namedBlock.rep0) ~ (sps *> plotInfo).?).map {
+        case ((mainProg, namedAfter), piOpt) =>
+          val namedList = namedAfter.toList
+          checkDuplicatePrograms(namedList)
+          val namedMap: Map[String, Program] = namedList.toMap
 
-        Simulation(namedMap + ("" -> mainProg), piOpt.getOrElse(PlotInfo.default))
-    }))
+          Simulation(namedMap + ("" -> mainProg), piOpt.getOrElse(PlotInfo.default))
+      }))
 
   /** A program is a command with possible spaces or comments around. */
   private def program: P[Program] =
@@ -383,3 +402,54 @@ object Parser :
         val first = x._1;
         pairlist.foldLeft(first)((rest, pair) => pair._1(rest, pair._2))
       })
+  private def ownershipWarnings(
+      owner: String,
+      program: Program
+  ): List[OwnershipWarning] =
+    def foreignWrite(loc: Location): Boolean =
+      loc.prog match
+        case None =>
+          // An unqualified variable is valid for the main program.
+          // Named-program variables should already have been qualified
+          // by qualifyProgram.
+          owner.nonEmpty
+        case Some(variableOwner) =>
+          variableOwner != owner
+    program match
+      case Skip =>
+        Nil
+      case Assign(loc, _) =>
+        if foreignWrite(loc) then
+          List(
+            OwnershipWarning(
+              owner,
+              loc,
+              "assign to"
+            )
+          )
+        else
+          Nil
+      case EqDiff(eqs, _) =>
+        eqs.keys.toList.collect {
+          case loc if foreignWrite(loc) =>
+            OwnershipWarning(
+              owner,
+              loc,
+              "define the derivative of"
+            )
+        }
+      case Seq(p, q) =>
+        ownershipWarnings(owner, p) :::
+          ownershipWarnings(owner, q)
+      case ITE(_, pt, pf) =>
+        ownershipWarnings(owner, pt) :::
+          ownershipWarnings(owner, pf)
+      case While(_, body) =>
+        ownershipWarnings(owner, body)
+
+  private def validateOwnership(
+      programs: Map[String, Program]
+  ): List[OwnershipWarning] =
+    programs.toList.flatMap { case (name, program) =>
+      ownershipWarnings(name, program)
+    }
