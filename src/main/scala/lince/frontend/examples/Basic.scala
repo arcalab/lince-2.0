@@ -139,10 +139,16 @@ object Basic:
     //   -> "Sampling from a powerlaw distribution (or other).",
   )
   val concurrent: List[Example] = List(
-    "Adaptive CC (Concurrent - no accel)"
+    "Adaptive CC (IC - no accel)"
       -> "// Adaptive Cruise Control (ACC)\nL { // leader.\n  p:=50; v:= 10;\n  a:= 0;\n  p'= v, v'= a for 50; \n}\nF { // follower \n p:=0; v:=0; \n  while true {\n  // decide to speed up (acc=2) or brake (acc=-2)\n   if (v-8)^2 + 4*(p- L.p +v-9) < 0\n   then p'=v, v'= 2 for 1;\n   else p'=v, v'=-2 for 1;\n }\n}\n----\nuntil 20\nvars L.*, F.*"
       -> "Adaptive Cruise Control example, using concurrent semantics, where the leader can have a fixed constant acceleration.",
-    "Multiple Tanks"
-      -> "C {\n t:= 0.5;\n  while(true){\n    if(A.h >= 10 || B.h >= 10 || D.h >= 10 || E.h >= 10)\n    then t:= -0.5;\n    if(A.h <= 3 || B.h <= 3 || D.h <= 3 || E.h <= 3)\n    then t:= 0.5;\n   t' = 0 for 1; \n  }\n}\nA {\n h:=4;\n while(true){ h' = C.t for 1; }\n}\nB {\n h:=5;\n while(true){ h' = C.t for 1; }\n}\nD {\n h:=6;\n while(true){ h' = C.t for 1; }\n}\nE {\n h:=7;\n while(true){ h' = C.t for 1; }\n}\n---\nuntil 100"
+    "Multiple Tanks (IC)"
+      -> "C {\n t:= 0.5;\n  while(true){\n    if(A.h >= 10 || B.h >= 10 || D.h >= 10 || E.h >= 10)\n    then t:= -0.5;\n    if(A.h <= 3 || B.h <= 3 || D.h <= 3 || E.h <= 3)\n    then t:= 0.5;\n   t' = 0 for 1;\n  }\n}\nA {\n h:=4;\n while(true){ h' = C.t for 1; }\n}\nB {\n h:=5;\n while(true){ h' = C.t for 1; }\n}\nD {\n h:=6;\n while(true){ h' = C.t for 1; }\n}\nE {\n h:=7;\n while(true){ h' = C.t for 1; }\n}\n---\nuntil 100"
       -> "Multiple tanks example, using concurrent semantics, where the water level in each tank is controlled by a common controller (C). The controller adjusts the flow rate (t) based on the water levels in the tanks (A, B, D, E).",
+    "Car Controller (IC)"
+      -> "\nCTR{ //Controller\n  a:=2;\n  wait 5;\n  a:=0;\n  wait 5;\n  a:=-2;\n  wait 5;\n}\nCAR{ //Car\n  v:=0;\n  p:=0;\n  v'=CTR.a, p'=v for 15;\n}\n\n---\nuntil 15"
+      -> "Car Controller models a vehicle and its controller as two concurrent components. The controller changes the vehicle's acceleration through three phases: acceleration, constant speed, and braking. Meanwhile, the car continuously evolves its velocity and position by reading the acceleration owned by the controller.",
+    "Four-Tank Controller (IC)"
+      -> "CTR { //Controller\n  d:=0.5;\n  while(true){\n    if(TA.h + TB.h + TC.h + TD.h >= 27)\n    then d:=-0.5;\n    if(TA.h + TB.h + TC.h + TD.h <= 21)\n    then d:=0.5;\n    wait 1;\n  }\n}\nTA { //Tank A\n  h:=5;\n  while(true){\n    h'=CTR.d for 1;\n  }\n}\nTB { //Tank B\n  h:=6;\n  while(true){\n    h'=CTR.d for 1;\n  }\n}\nTC { //Tank C\n  h:=7;\n  while(true){\n    h'=CTR.d for 1;\n  }\n}\nTD { //Tank D\n  h:=8;\n  while(true){\n    h'=CTR.d for 1;\n  }\n}\n---\nuntil 100"
+      ->"Four-Tank Controller models four continuously evolving tanks coordinated by a separate controller. Each tank owns its water level, while the controller observes the levels of all four components and changes the desired flow direction according to their combined state. The tanks read the controller's command during their continuous evolution.",
   )
