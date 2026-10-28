@@ -24,7 +24,7 @@ object Stream:
   /**
     * Creates a new random stream with the given seed and keep flag.
     * @param seed the seed for the random number generator
-    * @param keep whether to keep the stream in memory (default is true)
+    * @param kp whether to keep the stream in memory (default is true)
     */
   case class RandomStrm(seed: Long, kp: Boolean = true) extends Stream(kp):
     def pop = 
@@ -36,7 +36,7 @@ object Stream:
     * @param from the starting value
     * @param to the ending value (optional)
     * @param step the increment between values
-    * @param keep whether to keep the stream in memory (default is false)
+    * @param kp whether to keep the stream in memory (default is false)
     */
   case class SeqStrm(from: Double, to: Option[Double], step: Double, kp: Boolean = false) extends Stream(kp):
     def pop = if to.nonEmpty && from>to.get then None
@@ -45,7 +45,7 @@ object Stream:
   /**
     * Creates a new list stream with the given parameters.
     * @param lst the list of values
-    * @param keep whether to keep the stream in memory (default is false)
+    * @param kp whether to keep the stream in memory (default is false)
     */
   case class ListStrm(lst: List[Double], kp: Boolean = false) extends Stream(kp):
     def pop = if lst.isEmpty then None
@@ -54,7 +54,7 @@ object Stream:
   /**
     * Creates a new expression stream with the given parameters.
     * @param e the expression
-    * @param keep whether to keep the stream in memory (default is false)
+    * @param kp whether to keep the stream in memory (default is false)
     */
   case class ExprStrm(e:Expr, kp: Boolean = false) extends Stream(kp):
     def pop = Some(e,this)

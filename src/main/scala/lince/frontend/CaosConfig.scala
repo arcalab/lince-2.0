@@ -27,7 +27,8 @@ object CaosConfig extends Configurator[Simulation]:
       Basic.toy ++
       Basic.scenarios ++
       Basic.prob ++
-      Basic.configs
+      Basic.configs ++
+      Basic.monitors
                  
 
   // val examples = List(
@@ -103,10 +104,24 @@ object CaosConfig extends Configurator[Simulation]:
   //     -> "Example with a solution that requires enough precision to be computed correctly. Increase the number of <code>rk-samples</code> (used in the Runge Kutta), e.g., to <code>100</code>, to improve precision.",
   // )
 
+  def myrun(sim:Simulation): String =
+    import scala.scalajs.js
+    val t1: Double = js.Date.now()
+    val plots = Plot.allPlots(initial(sim), sim.pi)
+    // val js = PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
+    //                   plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
+    val t2: Double = js.Date.now()
+    //scala.scalajs.js.eval(js)
+    s"run started at ${t1}, ended at ${t2} - totaltime: ${t2 - t1} ms. "
+
   /** Description of the widgets that appear in the dashboard. */
   val widgets = List(
+    //"teste!!!" -> view[Simulation](sim => myrun(sim), Text),
     "View parsed" -> view(_.toString,Text).moveTo(1),
     "View pretty" -> view[Simulation](s=>Show(s._1),Code("clike")).moveTo(1),
+    // "View signals" -> view[Simulation](
+    //     s=>s.pi.mon.map(kv => kv._1 + " -> " + kv._2).mkString("\n"),
+    //     Code("clike")),
     "Plots"
       -> Custom[Simulation](divName = "sim-plotlys", reload = sim => {
           val plots = Plot.allPlots(initial(sim), sim.pi)
@@ -114,29 +129,78 @@ object CaosConfig extends Configurator[Simulation]:
                    plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
           scala.scalajs.js.eval(js)
         }, buttons = Nil).expand,
-    "Run small-steps" -> steps[Simulation,Action,St]
-      (initial, SmallStep, Show.simpleStML, _.toString, Text),
+    // "Run small-steps" -> steps[Simulation,Action,St]
+    //   (initial, SmallStep, Show.simpleStML, _.toString, Text),
+    "Signals: starting point" -> view[Simulation](
+        si =>
+          if si.pi.mon.isEmpty then "No signals found." else 
+          si.pi.mon.map( m =>
+            m._1 +": "+ Monitor.okPP(Monitor(m._2, si).check)
+          ).mkString("\n"),
+        Text),
+    "Signals: all points" -> view[Simulation](
+        si => 
+          if si.pi.mon.isEmpty then "No signals found." else 
+          si.pi.mon.map( m =>
+            m._1 +": "+ Monitor(m._2, si).checkAll.map(x=>
+              s"\n - ${Monitor.okPP(x._2)} ${x._1}").mkString("")
+          ).mkString("\n"),
+        Text),
+    // "Signals (all - swaps)" -> view[Simulation](
+    //     si => si.pi.mon.map( m => 
+    //         Monitor.monToGroupedTrPP(m._1,m._2,si)).mkString("\n"),
+    //     Text),
+    // "Signals: diagram-debug" -> view[Simulation](
+    //     si => Monitor.mermHeaderNew + si.pi.mon.map( m => 
+    //         Monitor.monToMerm(m._1,m._2,si)).mkString("\n"),
+    //     Text),
+    "Signals: diagram (WiP)" -> view[Simulation](
+        si => 
+          if si.pi.mon.isEmpty then
+            "flowchart TD\nA(No signals found.)" else           
+          Monitor.mermHeaderNew + si.pi.mon.map( m => 
+            Monitor.monToMerm(m._1,m._2,si)).mkString("\n"),
+        Mermaid),
+    "Run small-steps" -> steps[Simulation,List[Action],Driver.St]
+      (Driver.initial,
+       Driver.SmallStepDriver(100),
+       dst => dst.t.toString + ": " + Show.simpleStML(dst.sst),
+       _.mkString(""),
+       Text),
+    "Run big-steps" -> steps[Simulation,List[Action],Driver.St]
+      (Driver.initial,
+       Driver.BigStepDriver(100),
+       dst => dst.t.toString + ": " + Show.simpleStML(dst.sst),
+       _.mkString("; "),
+       Text),
+    // "Run time-steps (0.5)" -> steps[Simulation,List[Action],Driver.St]
+    //   (Driver.initial,
+    //    Driver.TimeStepDriver(0.5,100),
+    //    dst => dst.t.toString + ": " + Show.simpleStML(dst.sst),
+    //    _.mkString("; "),
+    //    Text),
+
     "Run all steps" -> lts[Simulation,Action,St]
       (initial, SmallStep, Show.simpleStML, _.toString),
     // "Run all steps (inf)" -> lts[Simulation,Action,St]
     //   (_.state, StillSmallStep, Show.simpleStML, _.toString),
     "Final state" -> view[Simulation](sim => Show.simpleStML(BigSteps.bigStep(initial(sim),Nil)(using sim.pi.rkSamples)._2),Text),
-    "Plot debug"
-      -> view[Simulation](sim=> {
-            val ps = Plot.justPlot(initial(sim), sim._2)
-            if sim.pi.portrait.nonEmpty then
-              Plot.justPlot(initial(sim), sim._2.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
-            else
-              ps.map(_.show).mkString("\n\n")
-          },
-          Text),
-    "Plots JS"
-      -> view(sim => {
-            val plots = Plot.allPlots(initial(sim), sim.pi)
-            PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
-              plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
-          }, Text),
-    "Plot2trace debug"
+    // "Plot debug"
+    //   -> view[Simulation](sim=> {
+    //         val ps = Plot.justPlot(initial(sim), sim._2)
+    //         if sim.pi.portrait.nonEmpty then
+    //           Plot.justPlot(initial(sim), sim._2.copy(portrait=Nil)).head.show + "\n---\n" + ps.map(_.show).mkString("\n\n")
+    //         else
+    //           ps.map(_.show).mkString("\n\n")
+    //       },
+    //       Text),
+    // "Plots JS"
+    //   -> view(sim => {
+    //         val plots = Plot.allPlots(initial(sim), sim.pi)
+    //         PlotToJS(plots.head._1, "sim-plotlys", plots.head._2) + "\n" +
+    //           plots.tail.map(p=>PlotToJS.addPlot(p._1, "sim-plotlys", p._2)).mkString("\n")
+    //       }, Text),
+    "Trace: from plot"
       -> view(sim => {
             val sim2 = if sim.pi.portrait.nonEmpty then
               sim.copy(pi=sim.pi.copy(portrait=Nil,
@@ -147,6 +211,25 @@ object CaosConfig extends Configurator[Simulation]:
                 kv._2.map(x => s"${x._1} -> ${roundf(x._2)}").mkString(", ")).mkString("\n")
           },
           Text),
+    "Trace: Small-step" -> view[Simulation](sim =>
+        val sd = Driver.SmallStepDriver(sim.pi.rkSamples)
+        val tr = sd.getTrace(sim)
+        Driver.prettyTr(tr,sim.pi.showVar),
+      Text
+      ),
+    "Trace: Big-step" -> view[Simulation](sim =>
+        val sd = Driver.BigStepDriver(sim.pi.rkSamples)
+        val tr = sd.getTrace(sim)
+        Driver.prettyTr(tr,sim.pi.showVar),
+      Text
+      ),
+    "Trace: Periodically" -> view[Simulation](sim =>
+        val sd = Driver.TimeStepDriver((sim.pi.maxTime - sim.pi.minTime) / sim.pi.samples,sim.pi.rkSamples)
+        val tr = sd.getTrace(sim)
+        Driver.prettyTr(tr,sim.pi.showVar),
+      Text
+      ),
+
     // "Periodic samples"
     //   -> view(sim => {
     //         val ps = Plot(sim.state, sim._2)
@@ -176,8 +259,15 @@ object CaosConfig extends Configurator[Simulation]:
     "Basic" -> Basic.toy.map(_.name).toSet -> false,
     "Scenarios" -> Basic.scenarios.map(_.name).toSet,
     "Probab." -> Basic.prob.map(_.name).toSet,
-    "Config." -> Basic.configs.map(_.name).toSet -> false,
-    "Debug" -> Set("Plot debug", "Plot2trace debug", "Plots JS", "View parsed", "View pretty") -> false
+    "Config." -> (Basic.configs.map(_.name).toSet ++
+                  Basic.monitors.map(_.name).toSet) -> false,
+    "Debug" -> Set("Trace: from plot", "Trace: Big-step", "Trace: Periodically",
+                    "Trace: Small-step", "View parsed", "View pretty",
+                    "Run big-steps", //"Run time-steps (0.5)",
+                    "Signals: starting point",
+                    "Signals: all points",
+                    "Signals: diagram (WiP)",
+                    ) -> false
   )
 
   //// Documentation below
@@ -228,6 +318,8 @@ object CaosConfig extends Configurator[Simulation]:
           </ul>
         |</p>
         |""".stripMargin,
+    "test monitors (all points)" -> "Semantics used for STL monitors" -> "Using the standard semantics of STL, also used in Lilo (explained at <a href=\"https://docs.imiron.io/v/0.5.10/en/semantics.html#temporal-operators-and-their-semantics\">https://docs.imiron.io/v/0.5.10/en/semantics.html#temporal-operators-and-their-semantics</a>.",
+    "test monitors (all - swaps)" -> "Semantics used for STL monitors" -> "Using the standard semantics of STL, also used in Lilo (explained at <a href=\"https://docs.imiron.io/v/0.5.10/en/semantics.html#temporal-operators-and-their-semantics\">https://docs.imiron.io/v/0.5.10/en/semantics.html#temporal-operators-and-their-semantics</a>.",
     "Run small-steps" -> "Information on the semantics rules used by Lince" ->
       "<p>The operational rules, borrowed from a <a href=\"https://jose.proenca.org/publication/ppdp-stochastic-lince-2025/\">PPDP'25 publication</a>, can be found below.</p><img src=\"img/lince-semantics.svg\" style: width=50%;s/>"
 //      "<object class=\"pdf\" data=\"img/lince-semantics.pdf\" width=\"800\" height=\"500\"></object>",

@@ -1,6 +1,6 @@
 package lince.syntax
 
-import lince.backend.Stream
+import lince.backend.{Stream,Monitor}
 
 /**
  * Internal structure to represent terms in Lince 2.0.
@@ -37,6 +37,27 @@ object Lince:
     case CheckWhile(b: Expr, res:Boolean)
     override def toString: String = Show(this)
 
+  ///// STL /////
+  enum STL:
+    case Cond(e:Expr)
+    case E(i:Intr,s:STL)
+    case G(i:Intr,s:STL)
+    case U(i:Intr,s1:STL,s2:STL)
+    case And(s1:STL,s2:STL)
+    case Or(s1:STL,s2:STL)
+    case Imply(s1:STL,s2:STL)
+    case Not(s:STL)
+    def until(i:Intr)(s:STL) = U(i,this,s)
+
+  type Intr = (Double,Option[Double]) // from x to/inf
+
+  enum MonSched:
+    case SmallSteps
+    case BigSteps
+    case Periodic(p:Double, err:Double=0)
+
+  case class MonBuilder(stl: STL, sch: MonSched)
+
   ///// Plot configuration ////
 
   case class Simulation(prog:Program, pi:PlotInfo)
@@ -52,12 +73,13 @@ object Lince:
                        height: Int, // height in px
                        runs: Int, // number of times to repeat the run
                        portrait: List[(String,String)], // to change the variables in the x and y axis
-                       monSampleFreq: Double, // frequency of sampling for the monitor (in time units)
-                       monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
+                      //  monSampleFreq: Double, // frequency of sampling for the monitor (in time units)
+                      //  monSampleNoise: Double, // noise to add to the monitor sampling time (e.g., 0.1 means that sampling time is uniformly distributed in [t-0.1, t+0.1])
+                       mon: List[(String,MonBuilder)]
   )
   object PlotInfo:
     def default = PlotInfo(0,10,500,40,100,
       (new scala.util.Random).nextLong(),
-      false,_=>true,450,1,Nil,1,0)
+      false,_=>true,450,1,Nil,Nil)
 
 

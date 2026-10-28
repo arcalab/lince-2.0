@@ -1,8 +1,8 @@
 package lince.syntax
 
 import lince.syntax.Lince.*
-import lince.backend.Stream
-import lince.backend.Stream.{ExprStrm,ListStrm,SeqStrm,RandomStrm}
+import lince.backend.{Stream,Monitor}
+import Stream.{ExprStrm,ListStrm,SeqStrm,RandomStrm}
 
 /**
  * List of functions to produce textual representations of commands
@@ -50,7 +50,7 @@ object Show:
     case Expr.Func(_,es) if es.size>1 => s"(${apply(e)})"
     case _ => apply(e)
 
-  def apply(a:Action): String = a match {
+  def apply(a:Action): String = a match
     case Action.Assign(v, n) => s"$v:=$n"
     case Action.StrmDef(v, s) => s"def $v:=${Show(s)}"
     case Action.DiffStop(eqs, time) => s"diff-stop@$time"
@@ -59,7 +59,32 @@ object Show:
     case Action.CheckIf(b, false) => s"if-false: ${apply(b)}"
     case Action.CheckWhile(b, true) => s"wh-true: ${apply(b)}"
     case Action.CheckWhile(b, false) => s"wh-false: ${apply(b)}"
-  }
+
+  def apply(stl:STL): String = stl match
+    case STL.Cond(e) => apply(e)
+    case STL.E(i,s2) => s"E${showIntr(i)} ${applyP(s2)}"
+    case STL.G(i,s2) => s"G${showIntr(i)} ${applyP(s2)}"
+    case STL.U(i,s1,s2) => s"${applyP(s1)} U${showIntr(i)} ${applyP(s2)}"
+    case STL.And(s1,s2) => s"${applyP(s1)} && ${applyP(s2)}"
+    case STL.Or(s1,s2) => s"${applyP(s1)} || ${applyP(s2)}"
+    case STL.Imply(s1,s2) => s"${applyP(s1)} => ${applyP(s2)}"
+    case STL.Not(s) => s"!${applyP(s)}"
+
+  
+  def applyP(s:STL): String = s match
+    case STL.Cond(e) => applyP(e)
+    case STL.Not(s2) => s"!${applyP(s2)}"
+    // case _:(STL.E | STL.G | STL.U) => s"(${apply(s)})"
+    case _ => s"(${apply(s)})" //apply(s)
+ 
+  def showIntr(i:(Double,Option[Double])) = i match
+    // case (0,None) => ""
+    case (from,Some(to)) => s"[${from},${to}]"
+    case (from,None) => s"[${from},...]"
+
+  // def apply(m: Monitor): String = apply(m.stl)+" @ "+m.d
+  def apply(m: MonBuilder): String = apply(m.stl)+" @ "+m.sch
+
 
   def simpleStatm(p: Program): String = p match {
     case Program.Seq(Program.Seq(p1,p2), p3) => simpleStatm(Program.Seq(p1,Program.Seq(p2,p3)))

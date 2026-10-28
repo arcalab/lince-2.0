@@ -3,9 +3,9 @@ package lince.syntax
 import cats.parse.Numbers.digits
 import cats.parse.Parser.*
 import cats.parse.{LocationMap, Parser as P, Parser0 as P0}
-import lince.syntax.Lince.{Expr, PlotInfo, Program, Simulation}
+import lince.syntax.Lince.{Expr, PlotInfo, Program, Simulation, STL, MonBuilder, MonSched, Intr}
 import Program.*
-import lince.backend.Stream
+import lince.backend.{Stream,Monitor,Driver}
 import Stream.{Streams,ListStrm,SeqStrm,ExprStrm}
 import caos.frontend.widgets.WidgetInfo.Simulate
 
@@ -311,8 +311,40 @@ object Parser :
   /** Parse a boolean condition */
   def cond: P[Expr] = expr
 
+  /** Parse an STL expression */
+  def stl: P[STL] = P.recursive((recStl: P[STL]) => {
+    ((lit(recStl) <* sps) ~
+     stlCont(recStl).?).map(ab => ab._2.getOrElse(s=>s)(ab._1))
+  })
+  
+  def stlCont(recStl: P[STL]): P[STL => STL] =
+    ((string("U")|string("until")) *> intrv.? ~ (sps *> recStl)).map{
+      case (None,s2) => (s:STL) => STL.U(0.0 -> None, s, s2)
+      case (Some(i),s2) => (s:STL) => STL.U(i, s, s2)
+    } |
+    (string("&&") *> sps *> recStl).map(s2 => s1 => STL.And(s1,s2)) |
+    (string("||") *> sps *> recStl).map(s2 => s1 => STL.Or(s1,s2)) |
+    (string("->") *> sps *> recStl).map(s2 => s1 => STL.Imply(s1,s2))
 
 
+  def lit(recStl: P[STL]): P[STL] =
+    char('(')  *> sps *> (recStl <* sps <* char(')')) |
+    ((char('F')|string("eventually")) *> intrv.? ~
+      (sps *> recStl)).map(is => STL.E(is._1.getOrElse(0.0->None), is._2)) |
+    ((char('G')|string("always")) *> intrv.? ~
+      (sps *> recStl)).map(is => STL.G(is._1.getOrElse(0.0->None), is._2)) |
+    expr.map(STL.Cond(_))
+
+  def intrv: P[Intr] =
+    ((char('[') *> sps *> realP) ~
+    ((sps *> char(',') *> sps *> realOrInf) <*
+    (sps *> char(']')))).map{
+      case (from,Some(to)) if from>to => sys.error(s"Bad interval (${from},${to}).")
+      case x => x
+    }
+  def realOrInf: P[Option[Double]] =
+    realP.map(Some.apply) |
+    string("infinity").as(None)
 
   def plotInfo: P[PlotInfo] =
     (char('-').rep *> sps *> (plotMod<*sps).rep).map(lst =>
@@ -324,12 +356,15 @@ object Parser :
         pi.copy(maxTime = r)) |
     plotModBuild("from" , realP, pi => r =>
         pi.copy(minTime = r)) |
+          // mon = pi.mon.map(m => Monitor.fix(pi.copy(minTime = r),m)))) |
     plotModBuild("iterations", intP, pi => r =>
         pi.copy(maxLoops = r)) |
     plotModBuild("samples", intP, pi => r =>
         pi.copy(samples = r)) |
     plotModBuild("rk-samples", intP, pi => r =>
         pi.copy(rkSamples = r)) |
+          // mon = pi.mon.map(m => Monitor.fix(pi.copy(rkSamples = r),m)))) |
+        //pi.copy(rkSamples = r)) |
     plotModBuild("seed", intP, pi => r =>
         pi.copy(seed = r)) |
     plotModBuild("vars", regExp, pi => r =>
@@ -338,18 +373,34 @@ object Parser :
         pi.copy(height = r)) |
     plotModBuild("runs", intP, pi => r =>
         pi.copy(runs = r)) |
-    plotModBuild("monitor-sample-freq", realP, pi => r =>
-        pi.copy(monSampleFreq = r)) |
-    plotModBuild("monitor-sample-noise", realP, pi => r =>
-        pi.copy(monSampleNoise = r)) |
+    // plotModBuild("monitor-sample-freq", realP, pi => r =>
+    //     pi.copy(monSampleFreq = r)) |
+    // plotModBuild("monitor-sample-noise", realP, pi => r =>
+    //     pi.copy(monSampleNoise = r)) |
     plotModBuild("portrait", portraitArgs, pi => lst =>
         pi.copy(portrait = lst ::: pi.portrait)) |
+    plotModBuild("signal", checkArgs, pi => gmon =>
+        val mon = gmon(pi)
+        pi.copy(mon = pi.mon ::: List(mon))) |
     string("verbose").map(r =>
       (pi: PlotInfo) => pi.copy(showAll = true))
 
   def portraitArgs: P[List[(String,String)]] =
       (varName ~ (sps *> char(',') *> sps *>(varName <* sps))).repSep(char(';')*>sps)
         .map(lst => lst.toList)
+
+  def checkArgs: P[PlotInfo => (String,MonBuilder)] =
+    (varName ~ (sps *> char(':') *> sps *> (stl <* sps)) ~ sched.?)
+      .map{case ((n,s),sc) => pi => (n -> 
+        //Monitor(s,Driver.SmallStepDriver(100)))) // (n,Monitor.plotMonitor(s,pi)))
+        MonBuilder(s,sc.getOrElse(
+          MonSched.Periodic((pi.maxTime-pi.minTime)/pi.samples))))}
+
+  def sched:P[MonSched] =
+    char('@') *> sps *>
+      (string("small-steps").as(MonSched.SmallSteps) |
+       string("big-steps").as(MonSched.SmallSteps) |
+       string("every")*>sps*>realP.map(x=>MonSched.Periodic(x)))
 
   def plotModBuild[A](kw:String, args:P[A], upd:PlotInfo => A => PlotInfo): P[PlotInfo => PlotInfo] =
     string(kw) *> sps *> args.map((as:A) => (pi: PlotInfo) => upd(pi)(as))

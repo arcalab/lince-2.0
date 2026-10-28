@@ -49,7 +49,17 @@ object SmallStep extends SOS[Action,St]:
   //   def pop = Some(e,this)
 
   override def accepting(s: St): Boolean =
-    s.t<=0 || s.lp<=0
+    (s.t<=0 && cont(s.p)) || s.lp<=0 || accepting(s.p)
+  
+  private def cont(p: Program): Boolean = p match
+    case _:EqDiff => true
+    case Seq(p1,p2) => cont(p1)
+    case _ => false
+
+  def accepting(p: Program): Boolean = p match
+      case Skip => true
+      case Seq(p1,p2) => accepting(p1) && accepting(p2)
+      case _ => false
 
   /** What are the set of possible evolutions (label and new state) */
   def next[A>:Action](st: St): Set[(A, St)] =
@@ -57,12 +67,13 @@ object SmallStep extends SOS[Action,St]:
 
   /** Performs a single (deterministic) small step */
   def step(st: St)(using rkSamples: Int): Option[(Action, St)] =
-    if st.t<=0 || st.lp<=0 then
+    if //st.t<=0 ||
+       st.lp<=0 then
       return None
 
     given v:Valuation = st.v
 
-    st.p match {
+    val ast = st.p match {
       case Skip => None
       case Assign(n, e) =>
         if st.s contains n then sys.error(s"Variable definition ${Show(st.p)} overriding an existient stream.")
@@ -94,7 +105,7 @@ object SmallStep extends SOS[Action,St]:
       case EqDiff(eqs, durExp) =>
         // evaluate and update streams
         var ss = st.s
-        var stop = false
+        var stop = st.t <= 0 // should be false, unless we reached the end. 
         val eqs2 = for (v,e) <- eqs yield
           Eval.evalStreams(e,ss) match
             case None => {stop = true; (v,e)}
@@ -120,5 +131,10 @@ object SmallStep extends SOS[Action,St]:
               val v2 = RungeKutta(v,eqs2,st.t,rkSamples)
               Some(Action.DiffStop(eqs2,st.t) ->
                     st.copy(p=EqDiff(eqs2,None), v=v2, t=0, s=ss))
+    
     }
+    // println(s"comparing ${ast.map(_._2)} with ${Some(st.p)}")
+    // if ast.map(_._2.p) == Some(st.p) then None // FIX type
+    // else ast 
+    ast
 

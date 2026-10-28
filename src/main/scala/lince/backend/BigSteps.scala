@@ -16,10 +16,11 @@ import scala.annotation.tailrec
 object BigSteps:
 
   /** Performs all steps until no more step can be taken. */
+  @tailrec
   def bigStep(st: St, hist: List[Action] = Nil)(using rkSamples: Int): (List[Action], St) =
     step(st)(using rkSamples) match
-      case Some((act, st2)) => bigStep(st2, act :: hist)
-      case None => hist -> st
+      case Some((act, st2)) if st2!=st => bigStep(st2, act :: hist)
+      case _ => hist -> st
 
   /**
    * Checks the next statement in a sequence of statements, and jumping over Skips.
